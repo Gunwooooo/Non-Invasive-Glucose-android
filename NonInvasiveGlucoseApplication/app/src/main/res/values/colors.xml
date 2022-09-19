@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="StatusBarColor">#FAFAFA</color>
 
     <color name="toss_blue_100">#eaf3fe</color>
     <color name="toss_blue_200">#487fee</color>

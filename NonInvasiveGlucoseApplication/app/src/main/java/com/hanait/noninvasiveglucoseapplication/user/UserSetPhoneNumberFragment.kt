@@ -8,7 +8,7 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
 
 
-class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate) {
+class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,5 +23,16 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        binding.userBtnSetPhoneNumber.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when(v) {
+            binding.userBtnSetPhoneNumber -> {
+                val mActivity = activity as UserActivity
+                mActivity.changeFragment("UserSetAuthorizationFragment")
+            }
+        }
     }
 }

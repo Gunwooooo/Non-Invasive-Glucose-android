@@ -31,6 +31,13 @@ class UserActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetPhoneNumberFragment()).commitAllowingStateLoss()
     }
 
+    //프래그먼트 이동 메서드
+    fun changeFragment(fragmentName: String) {
+        when(fragmentName) {
+            "UserSetAuthorizationFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
+        }
+    }
+
     //toolbar 클릭 리스너
     @Override
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
