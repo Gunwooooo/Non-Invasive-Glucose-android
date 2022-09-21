@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.UserSetPhoneNumberFragment"
+    tools:context=".user.UserSetSexFragment"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -21,27 +21,35 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/ps_bold"
-        android:text="환영합니다!\n휴대전화 번호를 입력해 주세요."
+        android:text="성별을\n입력해주세요."
         android:textColor="@color/toss_black_700"
         android:textSize="22dp" />
 
-
-    <EditText
-        android:hint="휴대전화 번호"
-        android:paddingStart="16dp"
+    <Button
+        android:text="여성"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ps_bold"
         android:layout_width="match_parent"
         android:layout_height="63dp"
-        android:textSize="22dp"
-        android:importantForAutofill="no"
-        android:background="@drawable/user_edittext_border"
-        android:inputType="number">
+        android:stateListAnimator="@null"
+        android:background="@drawable/btn_border_gray"/>
 
-        <requestFocus />
-    </EditText>
     <Button
-        android:id="@+id/userSetPhoneNumber_btn_next"
         android:layout_marginTop="15dp"
-        android:text="확인"
+        android:text="남성"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ps_bold"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:stateListAnimator="@null"
+        android:background="@drawable/btn_border_gray"/>
+
+    <Button
+        android:id="@+id/userSetSex_btn_next"
+        android:layout_marginTop="15dp"
+        android:text="다음"
         android:textSize="22dp"
         android:textColor="@color/white"
         android:fontFamily="@font/ps_bold"

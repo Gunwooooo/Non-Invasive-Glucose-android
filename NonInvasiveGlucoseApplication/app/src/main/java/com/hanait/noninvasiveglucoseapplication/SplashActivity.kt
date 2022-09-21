@@ -10,7 +10,7 @@ import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
-    private val SPLASH_TIME_OUT:Long = 2000 //2초
+    private val SPLASH_TIME_OUT:Long = 1000 //2초
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -24,12 +24,12 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-        binding.userBtnSetPhoneNumber.setOnClickListener(this)
+        binding.userSetPhoneNumberBtnNext.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.userBtnSetPhoneNumber -> {
+            binding.userSetPhoneNumberBtnNext -> {
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetAuthorizationFragment")
             }

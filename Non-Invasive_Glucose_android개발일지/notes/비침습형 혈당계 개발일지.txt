@@ -1,7 +1,7 @@
 ---
 title: 비침습형 혈당계 개발일지
 created: '2022-09-15T07:11:59.800Z'
-modified: '2022-09-19T07:43:34.268Z'
+modified: '2022-09-21T08:10:44.883Z'
 ---
 
 # 비침습형 혈당계 개발일지
@@ -14,3 +14,20 @@ modified: '2022-09-19T07:43:34.268Z'
  - 키패드 자동으로 올라오도록 구현 및 화면 사이즈 조정
 3. 폰트 등록
 4. 프로그래스바, 툴바 등록
+
+
+2022-09-21
+
+1. 화면 windowSoftInputMode="adjustresize"에 따른 화면 크기 자동 조절
+ - weight를 공백에다가만 주고 작은 공백은 dp로 직접 처리
+ - view들의 크기는 wrab_content로 처리
+
+2. UserSetAuthorization fragment 화면 만들기
+ - framelayout을 이용해 editText 위에 button 올리기
+
+3. 화면 세로로 고정
+ - manifest에서 screenOrientation="portrait" 설정
+
+4. 생일 입력 받는 UserSetBirthdayFragment 작성 완료
+
+5. 성별 입력 받는 UserSetSexFragment 작성

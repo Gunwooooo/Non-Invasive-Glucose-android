@@ -18,4 +18,21 @@
     <color name="toss_black_500">#505866</color>
     <color name="toss_black_700">#1a1e27</color>
 
+
+    <color name="text_red_100">#f4c6c9</color>
+    <color name="text_red_200">#d0252e</color>
+    <color name="text_red_500">#d0252e</color>
+    <color name="text_blue_100">#c0ddeb</color>
+    <color name="text_blue_200">#51a6cb</color>
+    <color name="text_blue_500">#0482bd</color>
+
+    <!--    달력 내부 구분선 칼라-->
+    <color name="border_yellow_200">#e4c441</color>
+    <color name="border_avocado_200">#c0ca33</color>
+    <color name="border_pistachio_200">#7cb342</color>
+    <color name="border_sage_200">#33b679</color>
+
+    <!--    캘린더 circle 색상-->
+    <color name="circle_red_100">#ff5b49</color>
+
 </resources>

@@ -35,6 +35,9 @@ class UserActivity : AppCompatActivity() {
     fun changeFragment(fragmentName: String) {
         when(fragmentName) {
             "UserSetAuthorizationFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
+            "UserSetPasswordFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
+            "UserSetBirthdayFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
+            "UserSetSexFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
         }
     }
 

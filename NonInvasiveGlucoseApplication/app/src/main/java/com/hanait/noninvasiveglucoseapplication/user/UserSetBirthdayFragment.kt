@@ -5,14 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
 
-class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
+class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -20,22 +22,17 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
     }
 
     private fun init() {
-        prevFragment = UserSetPhoneNumberFragment()
-        progressBar.progress = 40
+        prevFragment = UserSetPasswordFragment()
+        progressBar.progress = 80
 
-
-        //액션바 다시 보이게하기(뒤로가기)
-        val mActivity = activity as UserActivity
-        mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        binding.userSetAuthorizationBtnNext.setOnClickListener(this)
+        binding.userSetBirthdayBtnNext.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.userSetAuthorizationBtnNext -> {
+            binding.userSetBirthdayBtnNext -> {
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetPasswordFragment")
+                mActivity.changeFragment("UserSetSexFragment")
             }
         }
     }
