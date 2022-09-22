@@ -18,7 +18,7 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
 
     private fun init(){
         prevFragment = UserSetPhoneNumberFragment()
-        progressBar.progress = 20
+        progressBar.progress = 16
 
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity

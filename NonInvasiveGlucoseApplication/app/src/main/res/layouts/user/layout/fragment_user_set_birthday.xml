@@ -27,11 +27,13 @@
 
 
     <LinearLayout
+        android:id="@+id/userSetBirthday_btn_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1">
         <TextView
+            android:id="@+id/userSetBirthday_textView_year"
             android:gravity="center"
             android:text="- - - - 년"
             android:paddingStart="16dp"
@@ -40,9 +42,10 @@
             android:layout_height="63dp"
             android:textSize="22dp"
             android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_200"
+            android:textColor="@color/toss_black_700"
             android:background="@drawable/user_edittext_border"/>
         <TextView
+            android:id="@+id/userSetBirthday_textView_month"
             android:gravity="center"
             android:text="- - 월"
             android:layout_marginStart="8dp"
@@ -52,9 +55,10 @@
             android:layout_height="63dp"
             android:textSize="22dp"
             android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_200"
+            android:textColor="@color/toss_black_700"
             android:background="@drawable/user_edittext_border"/>
         <TextView
+            android:id="@+id/userSetBirthday_textView_day"
             android:gravity="center"
             android:text="- - 일"
             android:layout_marginStart="8dp"
@@ -64,7 +68,7 @@
             android:layout_height="63dp"
             android:textSize="22dp"
             android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_200"
+            android:textColor="@color/toss_black_700"
             android:background="@drawable/user_edittext_border"/>
     </LinearLayout>
 

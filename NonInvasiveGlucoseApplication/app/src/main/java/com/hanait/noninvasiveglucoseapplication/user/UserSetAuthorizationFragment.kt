@@ -21,7 +21,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
 
     private fun init() {
         prevFragment = UserSetPhoneNumberFragment()
-        progressBar.progress = 40
+        progressBar.progress = 32
 
 
         //액션바 다시 보이게하기(뒤로가기)

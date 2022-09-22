@@ -6,33 +6,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
 
 
-class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(FragmentUserSetPasswordBinding::inflate), View.OnClickListener {
-
+class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(FragmentUserSetAgreementBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         init()
     }
 
-    private fun init() {
-        prevFragment = UserSetAuthorizationFragment()
-        progressBar.progress = 48
 
-        binding.userSetPasswordBtnNext.setOnClickListener(this)
+    private fun init() {
+        prevFragment = UserSetSexFragment()
+        progressBar.visibility = View.VISIBLE
+        progressBar.progress = 96
+
+
+        binding.userSetAgreementTextViewAgreement1.setOnClickListener(this)
+        binding.userSetAgreementTextViewAgreement2.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.userSetPasswordBtnNext -> {
+            binding.userSetAgreementTextViewAgreement1 -> {
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetBirthdayFragment")
+                mActivity.changeFragment("Agreement1Fragment")
+            }
+            binding.userSetAgreementTextViewAgreement2 -> {
+                val mActivity = activity as UserActivity
+                mActivity.changeFragment("Agreement2Fragment")
             }
         }
     }

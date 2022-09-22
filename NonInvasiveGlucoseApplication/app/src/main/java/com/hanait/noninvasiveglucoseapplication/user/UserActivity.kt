@@ -38,6 +38,9 @@ class UserActivity : AppCompatActivity() {
             "UserSetPasswordFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
             "UserSetBirthdayFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
             "UserSetSexFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
+            "UserSetAgreementFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetAgreementFragment()).commitAllowingStateLoss()
+            "Agreement1Fragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, Agreement1Fragment()).commitAllowingStateLoss()
+            "Agreement2Fragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, Agreement2Fragment()).commitAllowingStateLoss()
         }
     }
 
@@ -58,7 +61,13 @@ class UserActivity : AppCompatActivity() {
 
     @Override
     override fun onBackPressed() {
-        super.onBackPressed()
-        changePrevFragment()
+        if(System.currentTimeMillis() - waitTime >=1500 ) {
+            waitTime = System.currentTimeMillis()
+            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            moveTaskToBack(true); // 태스크를 백그라운드로 이동
+            finishAffinity()
+            exitProcess(0)
+        }
     }
 }

@@ -1,7 +1,7 @@
 ---
 title: 비침습형 혈당계 개발일지
 created: '2022-09-15T07:11:59.800Z'
-modified: '2022-09-21T08:10:44.883Z'
+modified: '2022-09-22T08:12:12.994Z'
 ---
 
 # 비침습형 혈당계 개발일지
@@ -31,3 +31,15 @@ modified: '2022-09-21T08:10:44.883Z'
 4. 생일 입력 받는 UserSetBirthdayFragment 작성 완료
 
 5. 성별 입력 받는 UserSetSexFragment 작성
+
+2022-09-22
+
+1. edittext 스타일 변경
+
+2. 성별 선택 토글 기능 구현
+
+3. 약관 동의 fragment 구현
+ - fragment로 이용약관 및 개인정보처리방침 프래그먼트 연결 완료
+
+4. 생일 선택 datepicker 구현 완료
+ - 화면 작아서 다른 dialog 탐색 필요

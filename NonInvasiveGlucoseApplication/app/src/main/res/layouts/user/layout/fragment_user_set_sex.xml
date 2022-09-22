@@ -26,25 +26,27 @@
         android:textSize="22dp" />
 
     <Button
+        android:id="@+id/userSetSex_btn_female"
         android:text="여성"
         android:textSize="22dp"
-        android:textColor="@color/white"
+        android:textColor="@color/toss_black_500"
         android:fontFamily="@font/ps_bold"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:stateListAnimator="@null"
-        android:background="@drawable/btn_border_gray"/>
+        android:background="@drawable/btn_border_light_gray"/>
 
     <Button
+        android:id="@+id/userSetSex_btn_male"
         android:layout_marginTop="15dp"
         android:text="남성"
         android:textSize="22dp"
-        android:textColor="@color/white"
+        android:textColor="@color/toss_black_500"
         android:fontFamily="@font/ps_bold"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:stateListAnimator="@null"
-        android:background="@drawable/btn_border_gray"/>
+        android:background="@drawable/btn_border_light_gray"/>
 
     <Button
         android:id="@+id/userSetSex_btn_next"

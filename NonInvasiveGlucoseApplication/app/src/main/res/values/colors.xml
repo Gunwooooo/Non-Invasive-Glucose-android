@@ -15,7 +15,9 @@
     <color name="toss_black_100">#f2f4f6</color>
     <color name="toss_black_150">#c7c7c7</color>
     <color name="toss_black_200">#6d7582</color>
+
     <color name="toss_black_500">#505866</color>
+    <color name="toss_black_600">#364357</color>
     <color name="toss_black_700">#1a1e27</color>
 
 
