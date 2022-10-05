@@ -5,8 +5,8 @@ import android.view.View
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentAgreement1Binding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 import java.io.IOException
 import java.io.InputStream
 
@@ -29,7 +29,7 @@ class Agreement1Fragment : BaseFragment<FragmentAgreement1Binding>(FragmentAgree
     }
 
     private fun init() {
-        prevFragment = UserSetAgreementFragment()
-        progressBar.visibility = View.GONE
+        mPrevFragment = UserSetAgreementFragment()
+        mProgressBar.visibility = View.GONE
     }
 }

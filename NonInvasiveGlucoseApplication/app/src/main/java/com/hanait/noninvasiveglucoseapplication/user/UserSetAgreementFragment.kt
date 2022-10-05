@@ -1,16 +1,12 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
+
 
 
 class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(FragmentUserSetAgreementBinding::inflate), View.OnClickListener {
@@ -22,13 +18,14 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
 
 
     private fun init() {
-        prevFragment = UserSetSexFragment()
-        progressBar.visibility = View.VISIBLE
-        progressBar.progress = 96
+        mPrevFragment = UserSetSexFragment()
+        mProgressBar.visibility = View.VISIBLE
+        mProgressBar.progress = 96
 
 
         binding.userSetAgreementTextViewAgreement1.setOnClickListener(this)
         binding.userSetAgreementTextViewAgreement2.setOnClickListener(this)
+        binding.userSetAgreementBtnNext.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -40,6 +37,10 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
             binding.userSetAgreementTextViewAgreement2 -> {
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("Agreement2Fragment")
+            }
+            binding.userSetAgreementBtnNext -> {
+                val mActivity = activity as UserActivity
+                mActivity.changeFragment("UserSetConnectDeviceFragment")
             }
         }
     }

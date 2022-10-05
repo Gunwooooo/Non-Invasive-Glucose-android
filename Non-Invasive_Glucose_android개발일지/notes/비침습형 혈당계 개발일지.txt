@@ -1,7 +1,7 @@
 ---
 title: 비침습형 혈당계 개발일지
 created: '2022-09-15T07:11:59.800Z'
-modified: '2022-09-22T08:12:12.994Z'
+modified: '2022-10-05T07:17:06.648Z'
 ---
 
 # 비침습형 혈당계 개발일지
@@ -43,3 +43,9 @@ modified: '2022-09-22T08:12:12.994Z'
 
 4. 생일 선택 datepicker 구현 완료
  - 화면 작아서 다른 dialog 탐색 필요
+
+2022-10-05
+
+1. LiveData 및 Databinding 스터디
+
+2. edittext에서 textChanged event 처리로 버튼 background 변경 처리

@@ -1,16 +1,13 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mUserData
 
 class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,22 +17,29 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
     }
 
     private fun init() {
-        prevFragment = UserSetPhoneNumberFragment()
-        progressBar.progress = 32
-
+        mPrevFragment = UserSetPhoneNumberFragment()
+        mProgressBar.progress = 32
 
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.userSetAuthorizationBtnNext.setOnClickListener(this)
+
+        //입력받은 휴대전화 번호 넣어놓기
+        binding.userSetAuthorizationEditTextPhoneNumber.hint = mUserData.phoneNumber
+        binding.userSetAuthorizationEditTextPhoneNumber.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
+        val mActivity = activity as UserActivity
         when(v) {
             binding.userSetAuthorizationBtnNext -> {
-                val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetPasswordFragment")
+            }
+
+            binding.userSetAuthorizationEditTextPhoneNumber -> {
+                mActivity.changePrevFragment()
             }
         }
     }

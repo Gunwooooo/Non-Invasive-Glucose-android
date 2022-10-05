@@ -1,16 +1,11 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 
 
 class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(FragmentUserSetPasswordBinding::inflate), View.OnClickListener {
@@ -22,8 +17,8 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
     }
 
     private fun init() {
-        prevFragment = UserSetAuthorizationFragment()
-        progressBar.progress = 48
+        mPrevFragment = UserSetAuthorizationFragment()
+        mProgressBar.progress = 48
 
         binding.userSetPasswordBtnNext.setOnClickListener(this)
     }

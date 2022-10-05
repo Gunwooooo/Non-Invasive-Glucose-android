@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:id="@+id/userSetAuthorization_editText_phoneNumber"
             android:hint="휴대전화 번호"
             android:paddingStart="16dp"
             android:layout_width="match_parent"

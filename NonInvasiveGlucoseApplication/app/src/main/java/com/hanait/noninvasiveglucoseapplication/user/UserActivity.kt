@@ -7,8 +7,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityUserBinding
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 import kotlin.system.exitProcess
 
 class UserActivity : AppCompatActivity() {
@@ -20,8 +20,8 @@ class UserActivity : AppCompatActivity() {
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        progressBar = binding.userProgressBar
-        progressBar.indeterminateDrawable
+        mProgressBar = binding.userProgressBar
+        mProgressBar.indeterminateDrawable
 
         //toolbar 생성
         setSupportActionBar(binding.userToolbar)
@@ -41,6 +41,7 @@ class UserActivity : AppCompatActivity() {
             "UserSetAgreementFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetAgreementFragment()).commitAllowingStateLoss()
             "Agreement1Fragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, Agreement1Fragment()).commitAllowingStateLoss()
             "Agreement2Fragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, Agreement2Fragment()).commitAllowingStateLoss()
+            "UserSetConnectDeviceFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetConnectDeviceFragment()).commitAllowingStateLoss()
         }
     }
 
@@ -55,8 +56,8 @@ class UserActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun changePrevFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.user_frameId, prevFragment).commitAllowingStateLoss()
+    fun changePrevFragment() {
+        supportFragmentManager.beginTransaction().replace(R.id.user_frameId, mPrevFragment).commitAllowingStateLoss()
     }
 
     @Override

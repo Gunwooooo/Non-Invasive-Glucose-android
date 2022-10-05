@@ -1,18 +1,14 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetSexBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 
 class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserSetSexBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,8 +18,8 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
     }
 
     private fun init() {
-        prevFragment = UserSetBirthdayFragment()
-        progressBar.progress = 80
+        mPrevFragment = UserSetBirthdayFragment()
+        mProgressBar.progress = 80
 
         binding.userSetSexBtnNext.setOnClickListener(this)
         binding.userSetSexBtnFemale.setOnClickListener(this)
