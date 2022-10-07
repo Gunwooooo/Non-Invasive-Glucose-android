@@ -1,11 +1,16 @@
 package com.hanait.noninvasiveglucoseapplication.util
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
+import android.os.CountDownTimer
+import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.hanait.noninvasiveglucoseapplication.user.UserSetAuthorizationFragment.Companion.smsAuthCode
 import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_SERVICE_ID
 import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_SMS_FROM_NUMBER
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONArray
@@ -19,6 +24,7 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 class NaverCloudServiceManager {
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         var INSTANCE: NaverCloudServiceManager? = null
@@ -30,9 +36,9 @@ class NaverCloudServiceManager {
         }
     }
 
+    //메시지 전송에 필요한 signature 생성
     @RequiresApi(Build.VERSION_CODES.O)
-    fun makeSignature(): String {
-        val timestamp = System.currentTimeMillis()
+    fun makeSignature(timestamp: String): String {
         val accessKey = Constants.NAVER_ACCESS_KEY
         val secretKey = Constants.NAVER_SECRET_KEY
         val method = "POST"
@@ -58,6 +64,7 @@ class NaverCloudServiceManager {
         return encoder.encodeToString(Objects.requireNonNull(mac)?.doFinal(message.toByteArray(StandardCharsets.UTF_8)))
     }
 
+    //인증 번호 생성
     fun makeSMSAuthCode(): String {
         val result = StringBuilder()
         val max = 10
@@ -70,15 +77,19 @@ class NaverCloudServiceManager {
         return result.toString()
     }
 
-    fun makeBodyRequest(phoneNumber: String, content: String) : RequestBody {
+    //메시지 body 만들기
+    fun makeBodyRequest(phoneNumber: String, authNumber: String) : RequestBody {
         val bodyJson = JSONObject()
         try {
             bodyJson.put("type", "SMS")
+            //bodyJson.put("countryCode", "82");
             bodyJson.put("from", NAVER_SMS_FROM_NUMBER)
-            bodyJson.put("content", content)
+            //bodyJson.put("contentType", "COMM");
+            bodyJson.put("content", "안녕하세요. 웰링크입니다.\n고객님의 인증번호는 [$authNumber].\n감사합니다.")
             val message = JSONArray()
             val attributes = JSONObject()
             attributes.put("to", phoneNumber)
+            //attributes.put("content", content);
             message.put(attributes)
             bodyJson.put("messages", message)
         } catch (e: JSONException) {
@@ -87,4 +98,30 @@ class NaverCloudServiceManager {
         val bodyJsonString = bodyJson.toString()
         return RequestBody.create("application/json".toMediaTypeOrNull(), bodyJsonString)
     }
+
+    fun countDownTimer(millisInFuture: Long, countDownInterval: Long, v: TextView, context: Context) : CountDownTimer {
+        Log.d("로그", "NaverCloudServiceManager - countDownTimer : 호출됨!!")
+
+        var hour : Long = 0
+        var minute = ""
+        val timer = object : CountDownTimer(millisInFuture, countDownInterval) {
+            @SuppressLint("SetTextI18n")
+            override fun onTick(millisUntilFinished: Long) {
+                val millisInFutureToTime = millisUntilFinished / 1000
+                Log.d("로그", "NaverCloudServiceManager - onTick : $millisInFutureToTime")
+                hour = millisInFutureToTime / 60
+                minute = String.format("%02d", (millisInFutureToTime % 60))
+                v.text = "$hour : $minute"
+            }
+
+            override fun onFinish() {
+                //결과 인증코드 초기화
+                smsAuthCode = ""
+                Toast.makeText(context, "인증시간이 만료됐어요. 다시 인증해주세요.", Toast.LENGTH_SHORT).show()
+                Log.d("로그", "NaverCloudServiceManager - onFinish : 시간 끝!@!")
+            }
+        }
+        return timer
+    }
+
 }

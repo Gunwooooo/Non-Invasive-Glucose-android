@@ -2,25 +2,36 @@ package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_ACCESS_KEY
-import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_SECRET_KEY
-import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_SERVICE_ID
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mUserData
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
 class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
+
+    companion object {
+        //결과 인증 코드
+        var smsAuthCode = ""
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         init()
+
+        setEditTextTextChanged()
     }
 
     private fun init() {
@@ -45,18 +56,69 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         when(v) {
             binding.userSetAuthorizationBtnNext -> {
                 mActivity.changeFragment("UserSetPasswordFragment")
+                //인증번호가 일치할 경우, 불일치 경우
+//                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
+//                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
+//                    mActivity.changeFragment("UserSetPasswordFragment")
+//                } else {
+//                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
+//                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
+//                }
             }
 
             binding.userSetAuthorizationEditTextPhoneNumber -> {
                 mActivity.changePrevFragment()
             }
             binding.userSetAuthorizationBtnGetAuthNum -> {
-                val timestamp = System.currentTimeMillis().toString()
+                //인증 번호 생성 후 retrofit으로 사용자에게 문자 전송
+               sendSMSAuthCode()
 
-                val signature = NaverCloudServiceManager.getInstance().makeSignature()
-                val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest()
-                RetrofitManager.instance.sendSMS(timestamp, signature, NAVER_ACCESS_KEY, NAVER_SERVICE_ID, )
             }
         }
+    }
+
+    //텍스트 비어있을 경우 버튼 색상 변경 이벤트
+    private fun setEditTextTextChanged() {
+        binding.userSetAuthorizationEditTextInputAuthNum.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s?.length != 0)
+                    binding.userSetAuthorizationBtnNext.setBackgroundResource(R.drawable.btn_border_blue)
+                else
+                    binding.userSetAuthorizationBtnNext.setBackgroundResource(R.drawable.btn_border_light_gray_on_view)
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+
+
+    //인증 번호 보내는 함수
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun sendSMSAuthCode() {
+        val timestamp = System.currentTimeMillis().toString()
+        val naverCloudServiceManager = NaverCloudServiceManager.getInstance()
+
+        val signature = naverCloudServiceManager.makeSignature(timestamp)
+        smsAuthCode = naverCloudServiceManager.makeSMSAuthCode()
+        val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(mUserData.phoneNumber, smsAuthCode)
+        RetrofitManager.instance.sendSMS(timestamp, signature, bodyRequest, completion = {
+                completionResponse, s ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "UserSetAuthorizationFragment - onClick : OK!")
+                    binding.userSetAuthorizationTextViewCountTime.visibility = View.VISIBLE
+                    binding.userSetAuthorizationBtnGetAuthNum.setBackgroundResource(R.drawable.btn_border_gray)
+                    binding.userSetAuthorizationBtnGetAuthNum.text = "재발송"
+
+                    //타이머 3분 작동
+                    naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userSetAuthorizationTextViewCountTime, requireContext()).start()
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "UserSetAuthorizationFragment - onClick : FAIL!")
+                }
+            }
+        })
     }
 }

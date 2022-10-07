@@ -1,6 +1,10 @@
 package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.BASE_URL
+import com.hanait.noninvasiveglucoseapplication.retrofit.API.URL_NAVER_SMS
+import com.hanait.noninvasiveglucoseapplication.util.Constants
+import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_ACCESS_KEY
+import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_SERVICE_ID
 import okhttp3.Callback
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -13,10 +17,11 @@ class RetrofitManager {
         val instance = RetrofitManager()
     }
 
-    private val apiNaverCloudService: APINaverCloudService? = RetrofitClient.getClient(BASE_URL)?.create(APINaverCloudService::class.java)
+    private val apiNaverCloudService: APINaverCloudService? = RetrofitClient.getClient(URL_NAVER_SMS)?.create(APINaverCloudService::class.java)
 
-    public fun sendSMS(timestamp: String, accessKey: String, signature: String, serviceId: String, body: RequestBody, completion: (CompletionResponse, String) -> Unit) {
-        val call = apiNaverCloudService?.sendSMS(timestamp, accessKey, signature, serviceId, body) ?: return
+    //인증번호 전송
+    public fun sendSMS(timestamp: String, signature: String, body: RequestBody, completion: (CompletionResponse, String) -> Unit) {
+        val call = apiNaverCloudService?.sendSMS(timestamp, NAVER_ACCESS_KEY, signature, NAVER_SERVICE_ID, body) ?: return
         call.enqueue(object: retrofit2.Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response.body().toString())
