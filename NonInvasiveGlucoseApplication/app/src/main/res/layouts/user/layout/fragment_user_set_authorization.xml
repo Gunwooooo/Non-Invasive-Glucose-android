@@ -97,6 +97,7 @@
                 android:background="@drawable/btn_border_light_gray_on_view"
                 android:fontFamily="@font/ps_regular"
                 android:text="인증하기"
+                android:enabled="false"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
         </LinearLayout>

@@ -27,15 +27,10 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
     private fun setEditTextTextChanged() {
         binding.userSetPhoneNumberEditTextPhoneNumber.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s?.length != 0)
-                    binding.userSetPhoneNumberBtnNext.setBackgroundResource(R.drawable.btn_border_blue)
-                else 
-                    binding.userSetPhoneNumberBtnNext.setBackgroundResource(R.drawable.btn_border_light_gray)
+                binding.userSetPhoneNumberBtnNext.isEnabled = s?.length != 0
             }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun afterTextChanged(s: Editable?) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 

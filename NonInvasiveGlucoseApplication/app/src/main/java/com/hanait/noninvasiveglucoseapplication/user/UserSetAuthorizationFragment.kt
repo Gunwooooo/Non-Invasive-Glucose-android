@@ -81,15 +81,10 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
     private fun setEditTextTextChanged() {
         binding.userSetAuthorizationEditTextInputAuthNum.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s?.length != 0)
-                    binding.userSetAuthorizationBtnNext.setBackgroundResource(R.drawable.btn_border_blue)
-                else
-                    binding.userSetAuthorizationBtnNext.setBackgroundResource(R.drawable.btn_border_light_gray_on_view)
+                binding.userSetAuthorizationBtnNext.isEnabled = s?.length != 0
             }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun afterTextChanged(s: Editable?) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 

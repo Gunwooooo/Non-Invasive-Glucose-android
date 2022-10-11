@@ -99,16 +99,14 @@ class NaverCloudServiceManager {
         return RequestBody.create("application/json".toMediaTypeOrNull(), bodyJsonString)
     }
 
+    //인증 시간 만료 타이머 작동
     fun countDownTimer(millisInFuture: Long, countDownInterval: Long, v: TextView, context: Context) : CountDownTimer {
-        Log.d("로그", "NaverCloudServiceManager - countDownTimer : 호출됨!!")
-
         var hour : Long = 0
         var minute = ""
         val timer = object : CountDownTimer(millisInFuture, countDownInterval) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 val millisInFutureToTime = millisUntilFinished / 1000
-                Log.d("로그", "NaverCloudServiceManager - onTick : $millisInFutureToTime")
                 hour = millisInFutureToTime / 60
                 minute = String.format("%02d", (millisInFutureToTime % 60))
                 v.text = "$hour : $minute"
@@ -118,7 +116,6 @@ class NaverCloudServiceManager {
                 //결과 인증코드 초기화
                 smsAuthCode = ""
                 Toast.makeText(context, "인증시간이 만료됐어요. 다시 인증해주세요.", Toast.LENGTH_SHORT).show()
-                Log.d("로그", "NaverCloudServiceManager - onFinish : 시간 끝!@!")
             }
         }
         return timer

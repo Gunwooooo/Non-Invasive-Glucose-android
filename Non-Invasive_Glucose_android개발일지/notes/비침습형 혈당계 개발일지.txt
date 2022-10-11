@@ -1,7 +1,7 @@
 ---
 title: 비침습형 혈당계 개발일지
 created: '2022-09-15T07:11:59.800Z'
-modified: '2022-10-07T06:24:20.232Z'
+modified: '2022-10-11T07:51:37.916Z'
 ---
 
 # 비침습형 혈당계 개발일지
@@ -48,7 +48,7 @@ modified: '2022-10-07T06:24:20.232Z'
 
 1. LiveData 및 Databinding 스터디
 
-2. edittext에서 textChanged event 처리로 버튼 background 변경 처리
+2. edittext에서 textChanged event 처리로 버튼 backgroㅠ  und 변경 처리
 
 2022-10-07
 
@@ -58,4 +58,14 @@ modified: '2022-10-07T06:24:20.232Z'
 
 2. 인증번호 전송 및 인증 시간 countDownTimer로 구현
  - 일치 
+
+2022-10-11
+
+1. 버튼 비활성 시 clickable 설정
+
+2. 비밀번호 입력 화면 구성
+ - 비밀번호 정규식 구성
+ - Pattern과 Matcher 이용
+
+3. 생년월일 선택 다이어로그 positive 버튼 이벤트 구현 중입니다.
 
