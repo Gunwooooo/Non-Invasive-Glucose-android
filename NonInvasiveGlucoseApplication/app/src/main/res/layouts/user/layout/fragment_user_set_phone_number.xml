@@ -50,7 +50,7 @@
             android:layout_height="63dp"
             android:stateListAnimator="@null"
             android:enabled="false"
-            android:background="@drawable/btn_border_light_gray"/>
+            android:background="@drawable/btn_border_blue"/>
 
         <LinearLayout
             android:layout_width="match_parent"

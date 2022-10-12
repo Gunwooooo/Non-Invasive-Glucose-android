@@ -14,7 +14,6 @@ import java.util.*
 
 class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -33,21 +32,21 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     @SuppressLint("SetTextI18n")
     private fun makeDatePickDialog() {
         val today = GregorianCalendar()
-        val year: Int = today.get(Calendar.YEAR)
-        val month: Int = today.get(Calendar.MONTH)
-        val date: Int = today.get(Calendar.DATE)
-        val datePickerDialog = DatePickerDialog(requireContext(), listener,  year, month, date)
+        val todayYear: Int = today.get(Calendar.YEAR)
+        val todayMonth: Int = today.get(Calendar.MONTH)
+        val todayDate: Int = today.get(Calendar.DATE)
+
+        val dateSetListener : DatePickerDialog.OnDateSetListener =
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                binding.userSetBirthdayTextViewYear.text = "$year 년"
+                binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
+                binding.userSetBirthdayTextViewDay.text = "$dayOfMonth 일"
+                binding.userSetBirthdayBtnNext.isEnabled = true
+            }
+        val datePickerDialog = DatePickerDialog(requireContext(), dateSetListener,  todayYear, todayMonth, todayDate)
         datePickerDialog.show()
-        val positiveButton = datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE)
-        positiveButton.setOnClickListener {
-            Log.d("로그", "UserSetBirthdayFragment - makeDatePickDialog : @@@@@")
-            binding.userSetBirthdayTextViewYear.text = "$year 년"
-            binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
-            binding.userSetBirthdayTextViewDay.text = "$date 일"
-            datePickerDialog.dismiss()
-            binding.userSetBirthdayBtnNext.isEnabled = true
-        }
     }
+
 
 
     override fun onClick(v: View?) {

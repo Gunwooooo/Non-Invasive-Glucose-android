@@ -8,7 +8,7 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 
 
-class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBinding>(FragmentUserSetConnectDeviceBinding::inflate) {
+class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBinding>(FragmentUserSetConnectDeviceBinding::inflate), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,5 +19,16 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     private fun init() {
         mPrevFragment = UserSetAgreementFragment()
         mProgressBar.visibility = View.GONE
+
+        binding.userSetConnectDeviceBtnNext.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when(v){
+            binding.userSetConnectDeviceBtnNext -> {
+                val mActivity = activity as UserActivity
+                mActivity.changeFragment("ConnectionLoadingFragment")
+            }
+        }
     }
 }

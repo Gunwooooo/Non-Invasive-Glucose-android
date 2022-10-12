@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
@@ -104,7 +103,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : OK!")
                     binding.userSetAuthorizationTextViewCountTime.visibility = View.VISIBLE
-                    binding.userSetAuthorizationBtnGetAuthNum.setBackgroundResource(R.drawable.btn_border_gray)
+                    binding.userSetAuthorizationBtnGetAuthNum.setBackgroundResource(R.drawable.btn_border_gray_reverse)
                     binding.userSetAuthorizationBtnGetAuthNum.text = "재발송"
 
                     //타이머 3분 작동

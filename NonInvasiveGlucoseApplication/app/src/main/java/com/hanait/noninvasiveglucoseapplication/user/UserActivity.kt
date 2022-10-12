@@ -1,6 +1,5 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -33,15 +32,18 @@ class UserActivity : AppCompatActivity() {
 
     //프래그먼트 이동 메서드
     fun changeFragment(fragmentName: String) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
         when(fragmentName) {
-            "UserSetAuthorizationFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
-            "UserSetPasswordFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
-            "UserSetBirthdayFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
-            "UserSetSexFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
-            "UserSetAgreementFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetAgreementFragment()).commitAllowingStateLoss()
-            "Agreement1Fragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, Agreement1Fragment()).commitAllowingStateLoss()
-            "Agreement2Fragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, Agreement2Fragment()).commitAllowingStateLoss()
-            "UserSetConnectDeviceFragment" -> supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetConnectDeviceFragment()).commitAllowingStateLoss()
+            "UserSetAuthorizationFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
+            "UserSetPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
+            "UserSetBirthdayFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
+            "UserSetSexFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
+            "UserSetAgreementFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAgreementFragment()).commitAllowingStateLoss()
+            "Agreement1Fragment" -> fragmentTransaction.replace(R.id.user_frameId, Agreement1Fragment()).commitAllowingStateLoss()
+            "Agreement2Fragment" -> fragmentTransaction.replace(R.id.user_frameId, Agreement2Fragment()).commitAllowingStateLoss()
+            "UserSetConnectDeviceFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetConnectDeviceFragment()).commitAllowingStateLoss()
+            "ConnectionLoadingFragment" -> fragmentTransaction.replace(R.id.user_frameId, ConnectionLoadingFragment()).commitAllowingStateLoss()
         }
     }
 
@@ -57,7 +59,9 @@ class UserActivity : AppCompatActivity() {
     }
 
     fun changePrevFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.user_frameId, mPrevFragment).commitAllowingStateLoss()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.left_to_center_anim, R.anim.center_to_right_anim, R.anim.left_to_center_anim, R.anim.center_to_right_anim)
+        fragmentTransaction.replace(R.id.user_frameId, mPrevFragment).commitAllowingStateLoss()
     }
 
     @Override

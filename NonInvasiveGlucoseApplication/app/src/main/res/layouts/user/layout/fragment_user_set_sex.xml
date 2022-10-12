@@ -34,7 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:stateListAnimator="@null"
-        android:background="@drawable/btn_border_light_gray"/>
+        android:enabled="true"
+        android:background="@drawable/btn_border_gray_reverse"/>
 
     <Button
         android:id="@+id/userSetSex_btn_male"
@@ -46,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:stateListAnimator="@null"
-        android:background="@drawable/btn_border_light_gray"/>
+        android:enabled="true"
+        android:background="@drawable/btn_border_gray_reverse"/>
 
     <Button
         android:id="@+id/userSetSex_btn_next"
@@ -58,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:stateListAnimator="@null"
+        android:enabled="false"
         android:background="@drawable/btn_border_blue"/>
 
     <LinearLayout
