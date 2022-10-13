@@ -9,11 +9,16 @@
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable-v24/btn_border_light_blue.xml" value="0.3325" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable-v24/btn_border_light_gray.xml" value="0.225" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable-v24/btn_border_light_gray_on_view.xml" value="0.225" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.2" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/ic_baseline_insert_chart_24.xml" value="0.2" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/ic_baseline_manage_accounts_24.xml" value="0.2" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2045" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/ic_ripple.xml" value="0.2" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/user_edittext_border.xml" value="0.2045" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/user_textView_border.xml" value="0.2045" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/user_textview_border.xml" value="0.2045" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_custom_dialog.xml" value="0.15520833333333334" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_user_agreement.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/init/layout/activity_main.xml" value="0.322463768115942" />
@@ -30,6 +35,9 @@
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/user/layout/fragment_user_set_password.xml" value="0.264" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/user/layout/fragment_user_set_phone_number.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/user/layout/fragment_user_set_sex.xml" value="0.322463768115942" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/menu/appbar_home.xml" value="0.3338541666666667" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/menu/appbar_like.xml" value="0.3338541666666667" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/menu/bottom_navbar.xml" value="0.3338541666666667" />
       </map>
     </option>
   </component>

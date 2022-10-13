@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.HomeActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <androidx.appcompat.widget.Toolbar
+        android:visibility="visible"
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo_home" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/home_frameId"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+
+        app:layout_constraintBottom_toTopOf="@+id/home_bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_toolbar" />
+
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/home_appBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        app:fabAlignmentMode="center"
+        app:backgroundTint="@color/StatusBarColor"
+        app:fabCradleMargin="7dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_marginEnd="30dp"
+                    app:itemIconTint = "@color/menu_selector_color"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/ps_regular"
+                    android:text="대쉬보드"
+                    android:textAllCaps="false"
+                    android:textColor="@color/toss_black_700"
+                    android:background="@drawable/ic_ripple"
+                    app:drawableTopCompat="@drawable/ic_baseline_dashboard_24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                    <TextView
+                        android:layout_marginStart="30dp"
+                        app:itemIconTint = "@color/menu_selector_color"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="보호자"
+                        android:fontFamily="@font/ps_regular"
+                        android:textAllCaps="false"
+                        android:textColor="@color/toss_black_700"
+                        android:background="@drawable/ic_ripple"
+                        app:drawableTopCompat="@drawable/ic_baseline_dashboard_24" />
+                </LinearLayout>
+            </LinearLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:maxImageSize="50dp"
+        android:src="@drawable/ic_baseline_insert_chart_24"
+        android:elevation="0dp"
+        app:fabCustomSize="80dp"
+        android:tint="@color/white"
+        app:backgroundTint="@color/toss_blue_200"
+        app:layout_anchor="@+id/home_appBar"
+        app:layout_anchorGravity="center" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

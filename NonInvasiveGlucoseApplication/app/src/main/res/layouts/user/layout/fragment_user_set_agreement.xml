@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".user.UserSetAgreementFragment"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
 
 
 
