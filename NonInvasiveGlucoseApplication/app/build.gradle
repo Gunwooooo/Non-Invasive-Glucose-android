@@ -76,4 +76,10 @@ dependencies {
 
     //cardView
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //snake graph
+    implementation 'com.txusballesteros:snake:1.0'
+
+    //mpchart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

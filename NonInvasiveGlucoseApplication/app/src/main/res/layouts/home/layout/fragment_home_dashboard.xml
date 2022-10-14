@@ -6,20 +6,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.HomeDashboardFragment"
     android:weightSum="1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="0.33">
         <androidx.cardview.widget.CardView
-            android:layout_margin="16dp"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <LinearLayout
 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/thermometer"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7">
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center_vertical|left"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="체온"
+                                android:textSize="18dp"
+                                android:fontFamily="@font/ps_regular"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/ps_bold"
+                            android:gravity="center"
+                            android:text="36.5"
+                            android:textColor="@color/toss_black_700"
+                            android:textSize="32dp" />
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/ps_regular"
+                            android:gravity="center"
+                            android:text="℃"
+                            android:textSize="24dp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/homeDashboard_lineChart_thermometer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
@@ -28,14 +108,92 @@
         android:layout_height="0dip"
         android:layout_weight="0.33">
         <androidx.cardview.widget.CardView
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/heart_beat"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7">
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center_vertical|left"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="심박수"
+                                android:textSize="18dp"
+                                android:fontFamily="@font/ps_regular"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="86"
+                            android:fontFamily="@font/ps_bold"
+                            android:textSize="32dp"
+                            android:textColor="@color/toss_black_700"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="bpm"
+                            android:fontFamily="@font/ps_regular"
+                            android:textSize="24dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/homeDashboard_lineChart_heart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
@@ -44,14 +202,91 @@
         android:layout_height="0dip"
         android:layout_weight="0.33">
         <androidx.cardview.widget.CardView
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/sugar_blood"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7">
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center_vertical|left"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="혈당"
+                                android:textSize="18dp"
+                                android:fontFamily="@font/ps_regular"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="82"
+                            android:fontFamily="@font/ps_bold"
+                            android:textColor="@color/toss_black_700"
+                            android:textSize="32dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="mg/dL"
+                            android:fontFamily="@font/ps_regular"
+                            android:textSize="18dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="그래프 표시"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
