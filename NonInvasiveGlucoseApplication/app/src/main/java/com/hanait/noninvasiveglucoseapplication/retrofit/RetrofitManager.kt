@@ -30,7 +30,6 @@ class RetrofitManager {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 completion(CompletionResponse.FAIL, t.toString())
             }
-
         })
     }
 

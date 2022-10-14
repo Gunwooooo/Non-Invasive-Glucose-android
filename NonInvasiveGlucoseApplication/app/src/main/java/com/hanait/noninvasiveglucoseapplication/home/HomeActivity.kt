@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.homeToolbar)
         supportActionBar?.title = ""
-//        supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeCalendarFragment()).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
     }
 
     @Override

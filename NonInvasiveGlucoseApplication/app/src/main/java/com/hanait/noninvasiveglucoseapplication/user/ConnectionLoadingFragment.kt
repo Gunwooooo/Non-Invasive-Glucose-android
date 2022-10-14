@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentConnectionLoadingBinding
+import com.hanait.noninvasiveglucoseapplication.home.HomeActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
@@ -21,7 +22,7 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
         init()
 
         Handler().postDelayed({
-            startActivity(Intent(context, UserActivity::class.java))
+            startActivity(Intent(context, HomeActivity::class.java))
             val mActivity = activity as UserActivity
             mActivity.finish()
         }, 1000)
