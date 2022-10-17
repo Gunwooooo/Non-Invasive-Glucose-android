@@ -37,6 +37,10 @@ class HomeActivity : AppCompatActivity() {
 //                val intent = Intent(this, HomeAccountActivity::class.java)
 //                startActivity(intent)
             }
+            R.id.home_toolbar_bluetooth -> {
+//                val intent = Intent(this, HomeAccountActivity::class.java)
+//                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

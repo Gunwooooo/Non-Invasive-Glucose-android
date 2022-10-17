@@ -280,11 +280,11 @@
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="0.7">
-                    <TextView
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/homeDashboard_barChart_sugarBlood"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="그래프 표시"
-                        android:gravity="center"/>
+                        android:layout_height="match_parent" />
+
                 </LinearLayout>
             </LinearLayout>
 

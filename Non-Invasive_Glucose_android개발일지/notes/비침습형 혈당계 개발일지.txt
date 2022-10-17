@@ -1,7 +1,7 @@
 ---
 title: 비침습형 혈당계 개발일지
 created: '2022-09-15T07:11:59.800Z'
-modified: '2022-10-13T08:01:45.792Z'
+modified: '2022-10-17T07:37:06.577Z'
 ---
 
 # 비침습형 혈당계 개발일지
@@ -87,4 +87,12 @@ modified: '2022-10-13T08:01:45.792Z'
  - floatingButton이 가운데 올라가도록
  - coordinationlayout으로 구현
  - Appbar이용
+
+ 2022-10-18
+
+ 1. 차트 소수 첫재자리까지 데이터 표시
+  - setValueFormatter 이용
+  - fomatter 클래스 생성 후 적용
+
+2. 혈당 막대그래프 표시 
 

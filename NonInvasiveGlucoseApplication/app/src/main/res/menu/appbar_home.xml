@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/home_toolbar_bluetooth"
+        android:icon="@drawable/ic_baseline_bluetooth_connected_24"
+        android:title="Bluetooth"
+        android:iconTint="@color/toss_blue_200"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/home_toolbar_account"
         android:icon="@drawable/ic_baseline_manage_accounts_24"
         android:title="Accounts"
