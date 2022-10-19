@@ -20,8 +20,13 @@
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/user_textview_border.xml" value="0.2045" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_blank1.xml" value="0.30978260869565216" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_custom_dialog.xml" value="0.15520833333333334" />
-        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_home_dashboard.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_home_dashboard.xml" value="0.2" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_home_thermometer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_home_thermometer_day.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_home_thermometer_month.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_home_thermometer_year.xml" value="0.30978260869565216" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_user_agreement.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/init/layout/activity_main.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/init/layout/activity_splash.xml" value="0.322463768115942" />

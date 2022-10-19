@@ -26,4 +26,9 @@
     <style name="CustomDatePicker">
         <item name="android:datePickerMode">spinner</item>
     </style>
+
+<!--    탭 텍스트 크기 조절-->
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20dp</item>
+    </style>
 </resources>

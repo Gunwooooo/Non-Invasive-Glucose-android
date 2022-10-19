@@ -37,4 +37,9 @@
     <!--    캘린더 circle 색상-->
     <color name="circle_red_100">#ff5b49</color>
 
+<!--    그래프 색상-->
+    <color name="graph_blue_100">#1ca392</color>
+    <color name="graph_red_100">#f15628</color>
+    <color name="graph_orange_100">#ffc81b</color>
+
 </resources>

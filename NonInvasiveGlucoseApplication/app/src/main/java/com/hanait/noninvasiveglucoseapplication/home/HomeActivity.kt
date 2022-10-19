@@ -3,14 +3,20 @@ package com.hanait.noninvasiveglucoseapplication.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
+import com.hanait.noninvasiveglucoseapplication.user.*
 import kotlin.system.exitProcess
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), View.OnClickListener{
+
+
     private lateinit var binding: ActivityHomeBinding
     private var waitTime = 0L
 
@@ -20,9 +26,39 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+        init()
+
+
+    }
+
+    private fun init() {
+        //툴바 보이도록 설정
         setSupportActionBar(binding.homeToolbar)
         supportActionBar?.title = ""
+        //대쉬보드 프래그먼트 시랳ㅇ
         supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
+
+        binding.homeTextViewDashboard.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when(v) {
+            //대쉬보드 하단 네비바 클릭
+            binding.homeTextViewDashboard -> {
+                setTextViewTitle("대쉬보드")
+                changeFragment("HomeDashboardFragment")
+            }
+        }
+    }
+
+    //프래그먼트 이동 메서드
+    fun changeFragment(fragmentName: String) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
+        when(fragmentName) {
+            "HomeDashboardFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
+            "HomeThermometerFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeThermometerFragment()).commitAllowingStateLoss()
+        }
     }
 
     @Override
@@ -55,5 +91,15 @@ class HomeActivity : AppCompatActivity() {
             finishAffinity()
             exitProcess(0)
         }
+    }
+
+    //타이틀 설명 이름 변경하기
+    fun setTextViewTitle(title: String) {
+        binding.homeTextViewTitle.text = title
+    }
+
+    //바텀 네비바 숨기기
+    fun setBottomNavVisible(visible: Boolean) {
+        binding.homeCoordinatorLayout.isVisible = visible
     }
 }
