@@ -5,7 +5,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ThermometerViewPagerFragmentAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-    private val fragmentList = listOf(Blank1Fragment(), Blank2Fragment(), Blank3Fragment())
+    private val fragmentList = listOf(HomeThermometerDayFragment(), HomeThermometerMonthFragment(), HomeThermometerYearFragment())
+
     override fun getItemCount(): Int {
         return fragmentList.size
     }

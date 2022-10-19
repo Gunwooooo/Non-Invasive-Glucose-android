@@ -54,7 +54,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     //프래그먼트 이동 메서드
     fun changeFragment(fragmentName: String) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
+//        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
         when(fragmentName) {
             "HomeDashboardFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
             "HomeThermometerFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeThermometerFragment()).commitAllowingStateLoss()
