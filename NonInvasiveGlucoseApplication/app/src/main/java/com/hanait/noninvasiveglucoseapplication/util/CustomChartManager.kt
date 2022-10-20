@@ -34,7 +34,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 10) {
+        for (i in 0 until 20) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "심박수")
@@ -70,12 +70,12 @@ class CustomChartManager(context: Context) {
 
     //=================================================================================================
     //심박수 막대 데이터 생성성
-    fun setThermometerLineData() : LineDataSet {
+    fun setThermometerDashboardLineData() : LineDataSet {
         val lineDataSet = makeThermometerDataSet()
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineDataSet.cubicIntensity = 0.2F
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.drawable.fade_red)
+        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)
         lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_blue_100))
         lineDataSet.lineWidth = 2F //선 굵기
@@ -120,4 +120,26 @@ class CustomChartManager(context: Context) {
         return barDataSet
     }
 
+//==================================================================================================
+    //심박수 막대 데이터 생성성
+    fun setThermometerDayLineData() : LineDataSet {
+        val lineDataSet = makeThermometerDataSet()
+        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+        lineDataSet.setDrawFilled(true)
+        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
+        lineDataSet.setDrawHorizontalHighlightIndicator(false)
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_blue_100))
+        lineDataSet.lineWidth = 2F //선 굵기
+//        lineDataSet.enableDashedLine(10f, 5f, 0f)
+        lineDataSet.valueFormatter = MyValueFormatter()
+        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawValues(true)
+        lineDataSet.valueTextSize = 0F
+        lineDataSet.fillAlpha = 50
+        lineDataSet.highLightColor = Color.RED
+        lineDataSet.highlightLineWidth = 1.0F
+        lineDataSet.setDrawCircleHole(true)
+        return lineDataSet
+    }
 }

@@ -57,7 +57,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 //        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
         when(fragmentName) {
             "HomeDashboardFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
-            "HomeThermometerFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeThermometerFragment()).commitAllowingStateLoss()
         }
     }
 

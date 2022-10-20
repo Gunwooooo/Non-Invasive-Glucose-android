@@ -4,10 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeThermometerDayFragment">
+    tools:context=".home.HomeThermometerDayFragment"
+    android:weightSum="1"
+    android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/homeThermometer_lineChart_day"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dip"
+        android:layout_weight="0.15"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_marginStart="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2:30am 체온"
+                android:fontFamily="@font/ps_regular"
+                android:textSize="21dp"/>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="37.5℃"
+                android:fontFamily="@font/ps_bold"
+                android:textColor="@color/toss_black_700"
+                android:textSize="32dp"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginStart="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="평균 체온"
+                android:fontFamily="@font/ps_regular"
+                android:textSize="21dp"/>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_marginStart="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="36.3℃"
+                android:fontFamily="@font/ps_bold"
+                android:textColor="@color/toss_black_700"
+                android:textSize="32dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.15"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginStart="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="평균 체온"
+            android:fontFamily="@font/ps_regular"
+            android:textSize="21dp"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:layout_marginStart="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="37.5℃"
+            android:fontFamily="@font/ps_bold"
+            android:textColor="@color/toss_black_700"
+            android:textSize="36dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.7">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/homeThermometer_lineChart_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </LinearLayout>

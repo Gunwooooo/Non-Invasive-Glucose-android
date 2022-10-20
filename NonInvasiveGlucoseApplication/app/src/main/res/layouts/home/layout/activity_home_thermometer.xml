@@ -5,12 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeThermometerFragment"
+    tools:context=".home.HomeThermometerActivity"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp">
+    android:weightSum="1">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/homeThermometer_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <com.google.android.material.tabs.TabLayout
         app:tabTextAppearance="@style/tab_text"
@@ -39,40 +44,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.85">
+        android:layout_weight="1">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
-
+            app:cardUseCompatPadding="false"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="32dp">
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/homeThermometer_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-<!--            <com.github.mikephil.charting.charts.LineChart-->
-<!--                android:id="@+id/homeDashboard_lineChart_thermometer"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
-
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.15">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="164℃"
-            android:gravity="center"
-            android:textSize="54dp"/>
-    </LinearLayout>
-
-
-
-
 </LinearLayout>

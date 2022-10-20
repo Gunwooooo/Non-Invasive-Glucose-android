@@ -1,9 +1,11 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -45,8 +47,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     override fun onClick(v: View?) {
         when (v) {
             binding.homeDashboardCardViewThermometer -> {
-                val mActivity = activity as HomeActivity
-                mActivity.changeFragment("HomeThermometerFragment")
+                val intent = Intent(context, HomeThermometerActivity::class.java)
+                startActivity(intent)
             }
             binding.homeDashboardCardViewHeart -> {
 
@@ -62,18 +64,19 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     //체온 차트 설정
     private fun setThermometerLineChart() {
-        val thermometerLineData =  customChartManager.setThermometerLineData()
+        val thermometerLineData =  customChartManager.setThermometerDashboardLineData()
         val lineData = LineData(thermometerLineData)
         val lineThermometerHeart = binding.homeDashboardLineChartThermometer
         lineThermometerHeart.data = lineData
-        lineThermometerHeart.setDrawGridBackground(false)
         lineThermometerHeart.setPinchZoom(false)
         lineThermometerHeart.description.isEnabled = false
         lineThermometerHeart.legend.isEnabled = false
         lineThermometerHeart.setTouchEnabled(false)
-//        lineThermometerHeart.xAxis.setDrawGridLines(false)
+        lineThermometerHeart.setDrawGridBackground(false)
+        lineThermometerHeart.xAxis.setDrawGridLines(false)
+        lineThermometerHeart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         //        lineThermometerHeart.axisLeft.setDrawGridLines(false)
-//        lineThermometerHeart.axisRight.isEnabled = false
+        lineThermometerHeart.axisRight.isEnabled = false
 //        lineThermometerHeart.axisLeft.isEnabled = false
         lineThermometerHeart.animateXY(1000, 1000)
     }
@@ -88,13 +91,12 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         lineChartHeart.description.isEnabled = false
         lineChartHeart.legend.isEnabled = false
         lineChartHeart.setTouchEnabled(false)
+        lineChartHeart.xAxis.position = XAxis.XAxisPosition.BOTTOM //x값 아래로 이동
 //        lineChartHeart.axisLeft.setDrawGridLines(false)
 //        lineChartHeart.setDrawGridBackground(false)
-//        lineChartHeart.axisRight.isEnabled = false
+        lineChartHeart.axisRight.isEnabled = false
 //        lineChartHeart.axisLeft.isEnabled = false
-
         lineChartHeart.xAxis.setDrawGridLines(false)
-
         lineChartHeart.animateXY(1000, 1000)
     }
     //혈당 차트 설정
@@ -106,6 +108,9 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         barChartSugarBlood.legend.isEnabled = false //하단에 레전드 없애기
         barChartSugarBlood.setTouchEnabled(false)
         barChartSugarBlood.data = barData
+        barChartSugarBlood.xAxis.setDrawGridLines(false) //세로줄 없애기
+        barChartSugarBlood.xAxis.position = XAxis.XAxisPosition.BOTTOM //x값 아래로 이동
+        barChartSugarBlood.axisRight.isEnabled = false //오른쪽 y축 없애기
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeThermometerDayBinding
@@ -28,7 +29,7 @@ class HomeThermometerDayFragment : BaseFragment<FragmentHomeThermometerDayBindin
 
     //체온 차트 설정
     private fun setThermometerDayLineChart() {
-        val thermometerLineData =  customChartManager.setThermometerLineData()
+        val thermometerLineData =  customChartManager.setThermometerDayLineData()
         val lineData = LineData(thermometerLineData)
         val lineThermometerHeart = binding.homeThermometerLineChartDay
         lineThermometerHeart.data = lineData
@@ -36,11 +37,19 @@ class HomeThermometerDayFragment : BaseFragment<FragmentHomeThermometerDayBindin
         lineThermometerHeart.setPinchZoom(false)
         lineThermometerHeart.description.isEnabled = false
         lineThermometerHeart.legend.isEnabled = false
-        lineThermometerHeart.setTouchEnabled(false)
-//        lineThermometerHeart.xAxis.setDrawGridLines(false)
+        lineThermometerHeart.xAxis.setDrawGridLines(false)
+        lineThermometerHeart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        lineThermometerHeart.isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
+
+        //가로 세로 꽉채우기
+        lineThermometerHeart.setViewPortOffsets(0f, 0f, 0f, 0f)
+        lineThermometerHeart.xAxis.axisMaximum = lineThermometerHeart.data.getDataSetByIndex(0).xMax
+        lineThermometerHeart.xAxis.axisMinimum = 0f
+        //        lineThermometerHeart.setTouchEnabled(false)
+//        lineThermometerHeart.xAxis.textSize = 13f 가로출 텍스트 사이즈
         //        lineThermometerHeart.axisLeft.setDrawGridLines(false)
-//        lineThermometerHeart.axisRight.isEnabled = false
-//        lineThermometerHeart.axisLeft.isEnabled = false
+        lineThermometerHeart.axisRight.isEnabled = false
+        lineThermometerHeart.axisLeft.isEnabled = false
         lineThermometerHeart.animateXY(1000, 1000)
     }
 }

@@ -17,11 +17,10 @@
             android:id="@+id/homeDashboard_cardView_thermometer"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
+            app:cardElevation="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -112,7 +111,7 @@
             android:id="@+id/homeDashboard_cardView_heart"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
+            app:cardElevation="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -208,7 +207,7 @@
             android:id="@+id/homeDashboard_cardView_sugarBlood"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
+            app:cardElevation="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -7,19 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeActivity"
     android:orientation="vertical"
-    android:backgroundTint="@color/toss_black_500"
     android:weightSum="1">
 
     <androidx.appcompat.widget.Toolbar
-        android:visibility="visible"
         android:id="@+id/home_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="417dp"
+        android:layout_height="58dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="50dp"
