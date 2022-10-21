@@ -38,8 +38,8 @@
     <color name="circle_red_100">#ff5b49</color>
 
 <!--    그래프 색상-->
-    <color name="graph_blue_100">#10cf6f</color>
-    <color name="graph_red_100">#ff399f</color>
-    <color name="graph_orange_100">#4da9ff</color>
+    <color name="graph_blue_100">#7f77e4</color>
+    <color name="graph_red_100">#de3478</color>
+    <color name="graph_orange_100">#fecf5c</color>
 
 </resources>

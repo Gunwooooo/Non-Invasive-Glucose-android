@@ -126,11 +126,11 @@ class CustomChartManager(context: Context) {
         val lineDataSet = makeThermometerDataSet()
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-        lineDataSet.setDrawFilled(true)
-        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
+//        lineDataSet.setDrawFilled(true)
+//        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)
         lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_blue_100))
-        lineDataSet.lineWidth = 2F //선 굵기
+        lineDataSet.lineWidth = 3F //선 굵기
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.valueFormatter = MyValueFormatter()
         lineDataSet.setDrawCircles(false)
