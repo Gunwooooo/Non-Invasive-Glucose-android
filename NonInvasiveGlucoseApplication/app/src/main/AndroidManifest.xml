@@ -16,7 +16,7 @@
         android:theme="@style/Theme.NonInvasiveGlucoseApplication.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".home.HomeThermometerActivity"
+            android:name=".home.HomeAnalisticActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

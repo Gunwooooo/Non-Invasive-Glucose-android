@@ -1,23 +1,17 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ViewPortHandler
-import com.google.android.material.shape.CutCornerTreatment
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboardBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import java.text.DecimalFormat
-import java.util.*
-import kotlin.math.roundToInt
 
 
 class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(FragmentHomeDashboardBinding::inflate), View.OnClickListener {
@@ -47,7 +41,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     override fun onClick(v: View?) {
         when (v) {
             binding.homeDashboardCardViewThermometer -> {
-                val intent = Intent(context, HomeThermometerActivity::class.java)
+                val intent = Intent(context, HomeAnalysisActivity::class.java)
                 startActivity(intent)
             }
             binding.homeDashboardCardViewHeart -> {

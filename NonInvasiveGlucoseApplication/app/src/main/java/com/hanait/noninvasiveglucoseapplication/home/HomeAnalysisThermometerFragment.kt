@@ -1,18 +1,14 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
-import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeThermometerDayBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisThermometerBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 
-class HomeThermometerDayFragment : BaseFragment<FragmentHomeThermometerDayBinding>(FragmentHomeThermometerDayBinding::inflate) {
+class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermometerBinding>(FragmentHomeAnalysisThermometerBinding::inflate) {
     lateinit var customChartManager: CustomChartManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeThermometerYearBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisSugarBloodBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 
-
-class HomeThermometerYearFragment : BaseFragment<FragmentHomeThermometerYearBinding>(FragmentHomeThermometerYearBinding::inflate) {
+class HomeAnalysisSugarBloodFragment : BaseFragment<FragmentHomeAnalysisSugarBloodBinding>(FragmentHomeAnalysisSugarBloodBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }

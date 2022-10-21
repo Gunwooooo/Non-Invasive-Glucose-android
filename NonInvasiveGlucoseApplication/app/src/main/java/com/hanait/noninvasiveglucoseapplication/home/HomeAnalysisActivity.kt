@@ -6,14 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeThermometerBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAnalysisBinding
 
-class HomeThermometerActivity : AppCompatActivity() {
-    lateinit var binding : ActivityHomeThermometerBinding
+class HomeAnalysisActivity : AppCompatActivity() {
+    lateinit var binding : ActivityHomeAnalysisBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeThermometerBinding.inflate(layoutInflater)
+        binding = ActivityHomeAnalysisBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
