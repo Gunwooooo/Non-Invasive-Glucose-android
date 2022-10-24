@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAnalysisBinding
@@ -26,13 +27,16 @@ class HomeAnalysisActivity : AppCompatActivity() {
         //toolbar 표시
         setSupportActionBar(binding.homeThermometerToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "체온"
+        supportActionBar?.title = "상세보기"
+
+        //스테이터스바 색깔 변경
+        this.window.statusBarColor = ContextCompat.getColor(this, R.color.graph_thermometer_bar_100)
     }
 
     private fun setViewPagerAndTabLayout() {
         binding.homeThermometerViewPager.adapter = ThermometerViewPagerFragmentAdapter(this)
-
-        val tabTitles = listOf("일", "월", "년")
+        binding.homeThermometerViewPager.isUserInputEnabled = false
+        val tabTitles = listOf("체온", "심박수", "혈당")
         TabLayoutMediator(binding.homeThermometerTabLayout, binding.homeThermometerViewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
@@ -46,10 +50,6 @@ class HomeAnalysisActivity : AppCompatActivity() {
                 finish()
             }
             R.id.home_toolbar_account -> {
-//                val intent = Intent(this, HomeAccountActivity::class.java)
-//                startActivity(intent)
-            }
-            R.id.home_toolbar_bluetooth -> {
 //                val intent = Intent(this, HomeAccountActivity::class.java)
 //                startActivity(intent)
             }

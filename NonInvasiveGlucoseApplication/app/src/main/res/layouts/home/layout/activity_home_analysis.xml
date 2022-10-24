@@ -10,20 +10,22 @@
     android:weightSum="1">
 
     <androidx.appcompat.widget.Toolbar
+        android:background="@color/graph_thermometer_bar_100"
         android:id="@+id/homeThermometer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/ToolbarColoredIcon"
         app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <com.google.android.material.tabs.TabLayout
         app:tabTextAppearance="@style/tab_text"
-
         android:id="@+id/homeThermometer_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="@color/graph_thermometer_bar_100"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
         app:tabIndicatorHeight="5dp"
         app:tabGravity="fill">
         <!-- TabItem은 탭메뉴 하나를 의미한다. -->

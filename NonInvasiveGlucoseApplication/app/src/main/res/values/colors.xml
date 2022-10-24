@@ -42,4 +42,11 @@
     <color name="graph_red_100">#de3478</color>
     <color name="graph_orange_100">#fecf5c</color>
 
+    <!--    그래프 색상2-->
+    <color name="graph_thermometer_bar_100">#57ba83</color>
+    <color name="graph_thermometer_line_100">#3c885a</color>
+    <color name="graph_heart_100">#de3478</color>
+    <color name="graph_sugar_blood_100">#fecf5c</color>
+
+
 </resources>
