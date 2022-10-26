@@ -34,11 +34,10 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 0 until 100) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
-        return LineDataSet(entry, "심박수")
-
+        return LineDataSet(entry, "체온")
     }
 
     //실수 난수 생성
@@ -72,22 +71,28 @@ class CustomChartManager(context: Context) {
     //심박수 막대 데이터 생성성
     fun setThermometerDashboardLineData() : LineDataSet {
         val lineDataSet = makeThermometerDataSet()
-        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        lineDataSet.cubicIntensity = 0.2F
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
+//        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_blue_100))
+        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_thermometer_line_100))
         lineDataSet.lineWidth = 2F //선 굵기
+//        lineDataSet.circleRadius = 7F
+//        lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.valueFormatter = MyValueFormatter()
-        lineDataSet.setDrawCircles(false)
-        lineDataSet.setDrawValues(true)
+        lineDataSet.setDrawCircles(false)   //동그란거 없애기
+        lineDataSet.setDrawValues(false)
+//        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_line_100))
         lineDataSet.valueTextSize = 0F
-        lineDataSet.fillAlpha = 50
-        lineDataSet.highLightColor = Color.RED
-        lineDataSet.highlightLineWidth = 1.0F
-        lineDataSet.setDrawCircleHole(true)
+//        lineDataSet.fillAlpha = 50
+//        lineDataSet.highLightColor = Color.BLACK
+//        lineDataSet.highlightLineWidth = 2F
+        lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
+        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+        lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+        lineDataSet.setDrawCircleHole(false)
         return lineDataSet
     }
 
@@ -142,7 +147,9 @@ class CustomChartManager(context: Context) {
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
 //        lineDataSet.highlightLineWidth = 2F
-        lineDataSet.isHighlightEnabled = false
+        lineDataSet.isHighlightEnabled = true
+        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+        lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
         lineDataSet.setDrawCircleHole(true)
         return lineDataSet
     }

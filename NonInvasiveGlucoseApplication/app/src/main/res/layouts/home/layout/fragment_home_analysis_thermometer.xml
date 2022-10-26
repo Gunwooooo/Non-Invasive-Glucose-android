@@ -67,7 +67,7 @@
             android:layout_weight="0.33"
             android:backgroundTint="@color/toss_blue_100">
             <TextView
-                android:id="@+id/homeAnalysisThermometer_textView_day"
+                android:id="@+id/homeAnalysisThermometer_btn_day"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -86,7 +86,7 @@
             android:layout_height="60dp"
             android:layout_weight="0.33">
             <TextView
-                android:id="@+id/homeAnalysisThermometer_textView_month"
+                android:id="@+id/homeAnalysisThermometer_btn_month"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,7 +106,7 @@
             android:layout_height="60dp"
             android:layout_weight="0.33">
             <TextView
-                android:id="@+id/homeAnalysisThermometer_textView_year"
+                android:id="@+id/homeAnalysisThermometer_btn_year"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -176,6 +176,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.23">
             <TextView
+                android:id="@+id/homeAnalysisThermometer_textView_maxThermometer"
                 android:gravity="center_vertical|right"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -222,6 +223,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.23">
             <TextView
+                android:id="@+id/homeAnalysisThermometer_textView_minThermometer"
                 android:gravity="center_vertical|right"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

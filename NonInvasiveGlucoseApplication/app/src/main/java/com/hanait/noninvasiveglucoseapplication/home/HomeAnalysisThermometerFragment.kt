@@ -15,6 +15,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisThermometerBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
+import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
 
 class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermometerBinding>(FragmentHomeAnalysisThermometerBinding::inflate), View.OnClickListener {
     lateinit var customChartManager: CustomChartManager
@@ -30,13 +31,10 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
 
-        textViewList = listOf(binding.homeAnalysisThermometerTextViewDay, binding.homeAnalysisThermometerTextViewMonth, binding.homeAnalysisThermometerTextViewYear)
-
-
-
-        binding.homeAnalysisThermometerTextViewDay.setOnClickListener(this)
-        binding.homeAnalysisThermometerTextViewMonth.setOnClickListener(this)
-        binding.homeAnalysisThermometerTextViewYear.setOnClickListener(this)
+        textViewList = listOf(binding.homeAnalysisThermometerBtnDay, binding.homeAnalysisThermometerBtnMonth, binding.homeAnalysisThermometerBtnYear)
+        binding.homeAnalysisThermometerBtnDay.setOnClickListener(this)
+        binding.homeAnalysisThermometerBtnMonth.setOnClickListener(this)
+        binding.homeAnalysisThermometerBtnYear.setOnClickListener(this)
     }
 
     //체온 차트 설정
@@ -46,19 +44,23 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
         val lineData = LineData(thermometerLineData)
         val barData = BarData(thermometerBarData)
         val lineThermometerDay = binding.homeThermometerLineChartDay
-        Log.d("로그", "HomeAnalysisThermometerFragment - setThermometerDayLineChart : ${lineData.dataSets}   ${barData.dataSets}")
         val combinedData = CombinedData()
         combinedData.setData(lineData)
         combinedData.setData(barData)
+
+        //마커 뷰 설정
+        val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
         lineThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = combinedData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
-            isScaleXEnabled = true
+            isScaleXEnabled = false //가로 확대 없애기
             enableScroll()
             setVisibleXRangeMaximum(7f) //
+
+            marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
@@ -73,13 +75,14 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
                 axisMinimum = 32F   //최소값
                 axisMaximum = 42F   //최대값
                 isEnabled = true
-                animateXY(2000, 1500)
+                animateX(2000)
+                animateY(2000)
                 textSize = 16f
                 gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기
-           }
+            }
             legend.run {
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
@@ -87,24 +90,26 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
+            invalidate()
         }
     }
 
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeAnalysisThermometerTextViewDay -> {
+            binding.homeAnalysisThermometerBtnDay -> {
                 changeTextViewBackgroundColor(0)
             }
-            binding.homeAnalysisThermometerTextViewMonth -> {
+            binding.homeAnalysisThermometerBtnMonth -> {
                 changeTextViewBackgroundColor(1)
             }
-            binding.homeAnalysisThermometerTextViewYear -> {
+            binding.homeAnalysisThermometerBtnYear -> {
                 changeTextViewBackgroundColor(2)
             }
         }
     }
 
+    //일, 월, 년 토글 버튼 구현
     private fun changeTextViewBackgroundColor(index : Int) {
         for(i in 0 until 3) {
             if(i == index) {

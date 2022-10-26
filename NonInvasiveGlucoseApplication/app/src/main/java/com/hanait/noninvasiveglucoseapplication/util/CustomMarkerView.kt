@@ -1,29 +1,32 @@
 package com.hanait.noninvasiveglucoseapplication.util
 
-import android.R
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.CandleEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Utils
+import com.hanait.noninvasiveglucoseapplication.R
 
 
-class MyMarkerView(context: Context?, layoutResource: Int) :
+@SuppressLint("ViewConstructor")
+class CustomMarkerView(context: Context?, layoutResource: Int) :
     MarkerView(context, layoutResource) {
-    private val tvContent: TextView
+    private val tvContent: TextView = findViewById<View>(R.id.customMarkerView_textView) as TextView
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
-    fun refreshContent(e: Map.Entry<*, *>, highlight: Highlight?) {
+    @SuppressLint("SetTextI18n")
+    override fun refreshContent(e: Entry, highlight: Highlight) {
         if (e is CandleEntry) {
-            val ce = e as CandleEntry
-            tvContent.text =
-                "" + Utils.formatNumber(ce.high.toInt().toFloat(), 0, true) + "시간"
+            tvContent.text = "" + e.high + "℃"
         } else {
-            tvContent.text = "" + Utils.formatNumber(e.getY() as Int.toFloat(), 0, true) + "시간"
+            tvContent.text = "" + e.y + "℃"
         }
         super.refreshContent(e, highlight)
     }
@@ -32,7 +35,4 @@ class MyMarkerView(context: Context?, layoutResource: Int) :
         return MPPointF((-(width / 2)).toFloat(), (-height).toFloat())
     }
 
-    init {
-        tvContent = findViewById<View>(R.id.tvContentHead) as TextView
-    }
 }

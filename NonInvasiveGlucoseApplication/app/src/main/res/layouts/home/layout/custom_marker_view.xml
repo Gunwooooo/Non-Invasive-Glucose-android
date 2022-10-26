@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tvContent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/customMarkerView_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:background="@drawable/bg_marker"
+            android:padding="4dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/ps_bold"/>
+
+        <ImageView
+            android:id="@+id/tvContentTail"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_marker_tail"
+            app:layout_constraintTop_toBottomOf="@+id/tvContentHead" />
+    </LinearLayout>
+</RelativeLayout>
