@@ -6,298 +6,288 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.HomeDashboardFragment"
     android:weightSum="1"
-    android:orientation="vertical"
-    android:layout_margin="8dp">
-
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.33">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/homeDashboard_cardView_thermometer"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
+        android:layout_weight="0.5">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/homeDashboard_mainChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1">
-                <LinearLayout
-                    android:paddingStart="20dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:layout_marginTop="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.3">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/thermometer"
-                                app:tint="@color/graph_thermometer_bar_100" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7">
-                            <TextView
-                                android:layout_marginLeft="5dp"
-                                android:gravity="center_vertical|left"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="체온"
-                                android:textSize="18dp"
-                                android:fontFamily="@font/ps_regular"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/ps_bold"
-                            android:gravity="center"
-                            android:text="36.5"
-                            android:textColor="@color/toss_black_700"
-                            android:textSize="32dp" />
-                        <TextView
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/ps_regular"
-                            android:gravity="center"
-                            android:text="℃"
-                            android:textSize="24dp" />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:padding="10dp"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.7">
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/homeDashboard_lineChart_thermometer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            android:layout_height="match_parent"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.33">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/homeDashboard_cardView_heart"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
+        android:layout_weight="0.5"
+        android:background="@drawable/top_radius_border"
+        android:weightSum="1"
+        android:orientation="vertical"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="16dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
+            android:layout_height="0dip"
+            android:layout_weight="0.06"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.1">
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1">
-                <LinearLayout
-                    android:paddingStart="20dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:layout_marginTop="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.3">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/heart"
-                                app:tint="@color/graph_red_100" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7">
-                            <TextView
-                                android:layout_marginLeft="5dp"
-                                android:gravity="center_vertical|left"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="심박수"
-                                android:textSize="18dp"
-                                android:fontFamily="@font/ps_regular"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="86"
-                            android:fontFamily="@font/ps_bold"
-                            android:textSize="32dp"
-                            android:textColor="@color/toss_black_700"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="bpm"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="24dp"
-                            android:gravity="center"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:padding="10dp"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.7">
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/homeDashboard_lineChart_heart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.33">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/homeDashboard_cardView_sugarBlood"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
+                android:text="2022.10.27"
+                android:textColor="@color/toss_black_700"
+                android:fontFamily="@font/ps_bold"
+                android:textSize="24dp"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="0dip"
+            android:layout_weight="0.06"/>
+        <LinearLayout
+            android:id="@+id/homeDashboard_btn_thermometer"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.26"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:background="@drawable/image_radius_border_thermometer"
+                android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:layout_weight="0.16">
+                <ImageView
+                    android:padding="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thermometer"
+                    app:tint="@color/white" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.03"/>
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.43"
+                android:orientation="vertical"
                 android:weightSum="1">
                 <LinearLayout
-                    android:paddingStart="20dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5">
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.3">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/sugar_blood"
-                                app:tint="@color/graph_orange_100" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7">
-                            <TextView
-                                android:layout_marginLeft="5dp"
-                                android:gravity="center_vertical|left"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="혈당"
-                                android:textSize="18dp"
-                                android:fontFamily="@font/ps_regular"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="82"
-                            android:fontFamily="@font/ps_bold"
-                            android:textColor="@color/toss_black_700"
-                            android:textSize="32dp"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="mg/dL"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="18dp"
-                            android:gravity="center"/>
-                    </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:text="체온"
+                        android:fontFamily="@font/ps_bold"
+                        android:textSize="21dp"
+                        android:textColor="@color/toss_black_600"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:padding="10dp"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.7">
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/homeDashboard_barChart_sugarBlood"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
+                        android:layout_height="match_parent"
+                        android:text="오후 2시 37분"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"
+                        android:textColor="@color/toss_black_200"/>
                 </LinearLayout>
             </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:gravity="right"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.37">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="36.5"
+                    android:textColor="@color/toss_black_700"
+                    android:fontFamily="@font/ps_bold"
+                    android:textSize="24dp"/>
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="℃"
+                    android:textColor="@color/toss_black_600"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="18dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/homeDashboard_btn_heart"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.26"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+            <LinearLayout
+                android:background="@drawable/image_radius_border_heart"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.16">
+                <ImageView
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/heart"
+                    app:tint="@color/white" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.04"/>
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.43"
+                android:orientation="vertical"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="심박수"
+                        android:fontFamily="@font/ps_bold"
+                        android:textSize="21dp"
+                        android:textColor="@color/toss_black_600"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="오후 2시 37분"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"
+                        android:textColor="@color/toss_black_200"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="right"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.37">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="81"
+                    android:textColor="@color/toss_black_700"
+                    android:fontFamily="@font/ps_bold"
+                    android:textSize="24dp"/>
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="bpm"
+                    android:textColor="@color/toss_black_600"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="18dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/homeDashboard_btn_glucose"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.26"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+            <LinearLayout
+                android:background="@drawable/image_radius_border_glucose"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.16">
+                <ImageView
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/glucose"
+                    app:tint="@color/white" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.04"/>
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.43"
+                android:orientation="vertical"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="혈당"
+                        android:fontFamily="@font/ps_bold"
+                        android:textSize="21dp"
+                        android:textColor="@color/toss_black_600"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="오후 2시 37분"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"
+                        android:textColor="@color/toss_black_200"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="right"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.37">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="78"
+                    android:textColor="@color/toss_black_700"
+                    android:fontFamily="@font/ps_bold"
+                    android:textSize="24dp"/>
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="mg/dL"
+                    android:textColor="@color/toss_black_600"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="18dp"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-
-
 </LinearLayout>

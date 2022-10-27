@@ -31,12 +31,12 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         customChartManager = CustomChartManager.getInstance(requireContext())
 
         setThermometerLineChart()
-        setHeartLineChart()
-        setSugarBloodBarChart()
+//        setHeartLineChart()
+//        setGlucoseBarChart()
 
-        binding.homeDashboardCardViewThermometer.setOnClickListener(this)
-        binding.homeDashboardCardViewHeart.setOnClickListener(this)
-        binding.homeDashboardCardViewSugarBlood.setOnClickListener(this)
+        binding.homeDashboardBtnThermometer.setOnClickListener(this)
+        binding.homeDashboardBtnHeart.setOnClickListener(this)
+        binding.homeDashboardBtnGlucose.setOnClickListener(this)
 
 
     }
@@ -44,17 +44,17 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.homeDashboardCardViewThermometer -> {
+            binding.homeDashboardBtnThermometer -> {
                 val intent = Intent(context, HomeAnalysisActivity::class.java)
                 intent.putExtra("TabNumber", 0)
                 startActivity(intent)
             }
-            binding.homeDashboardCardViewHeart -> {
+            binding.homeDashboardBtnHeart -> {
                 val intent = Intent(context, HomeAnalysisActivity::class.java)
                 intent.putExtra("TabNumber", 1)
                 startActivity(intent)
             }
-            binding.homeDashboardCardViewSugarBlood -> {
+            binding.homeDashboardBtnGlucose -> {
                 val intent = Intent(context, HomeAnalysisActivity::class.java)
                 intent.putExtra("TabNumber", 2)
                 startActivity(intent)
@@ -69,7 +69,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun setThermometerLineChart() {
         val thermometerLineData =  customChartManager.setThermometerDashboardLineData()
         val lineData = LineData(thermometerLineData)
-        val lineThermometerDay = binding.homeDashboardLineChartThermometer
+        val lineThermometerDay = binding.homeDashboardMainChart
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
         lineThermometerDay.run {
@@ -117,37 +117,37 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         }
     }
 
-    //심박수 차트 설정
-    private fun setHeartLineChart() {
-        val heartLineData = customChartManager.setHeartLineData()
-        val lineData = LineData(heartLineData)
-        val lineChartHeart = binding.homeDashboardLineChartHeart
-        lineChartHeart.data = lineData
-        lineChartHeart.setPinchZoom(false)
-        lineChartHeart.description.isEnabled = false
-        lineChartHeart.legend.isEnabled = false
-        lineChartHeart.setTouchEnabled(false)
-        lineChartHeart.xAxis.position = XAxis.XAxisPosition.BOTTOM //x값 아래로 이동
-//        lineChartHeart.axisLeft.setDrawGridLines(false)
-//        lineChartHeart.setDrawGridBackground(false)
-        lineChartHeart.axisRight.isEnabled = false
-//        lineChartHeart.axisLeft.isEnabled = false
-        lineChartHeart.xAxis.setDrawGridLines(false)
-        lineChartHeart.animateXY(1000, 1000)
-    }
-    //혈당 차트 설정
-    private fun setSugarBloodBarChart() {
-        val sugarBloodData = customChartManager.setSugarBloodBarData()
-        val barData = BarData(sugarBloodData)
-        val barChartSugarBlood = binding.homeDashboardBarChartSugarBlood
-        barChartSugarBlood.description.isEnabled = false //오른쪽 하단 설명 글 없애기
-        barChartSugarBlood.legend.isEnabled = false //하단에 레전드 없애기
-        barChartSugarBlood.setTouchEnabled(false)
-        barChartSugarBlood.data = barData
-        barChartSugarBlood.xAxis.setDrawGridLines(false) //세로줄 없애기
-        barChartSugarBlood.xAxis.position = XAxis.XAxisPosition.BOTTOM //x값 아래로 이동
-        barChartSugarBlood.axisRight.isEnabled = false //오른쪽 y축 없애기
-    }
+//    //심박수 차트 설정
+//    private fun setHeartLineChart() {
+//        val heartLineData = customChartManager.setHeartLineData()
+//        val lineData = LineData(heartLineData)
+//        val lineChartHeart = binding.homeDashboardLineChartHeart
+//        lineChartHeart.data = lineData
+//        lineChartHeart.setPinchZoom(false)
+//        lineChartHeart.description.isEnabled = false
+//        lineChartHeart.legend.isEnabled = false
+//        lineChartHeart.setTouchEnabled(false)
+//        lineChartHeart.xAxis.position = XAxis.XAxisPosition.BOTTOM //x값 아래로 이동
+////        lineChartHeart.axisLeft.setDrawGridLines(false)
+////        lineChartHeart.setDrawGridBackground(false)
+//        lineChartHeart.axisRight.isEnabled = false
+////        lineChartHeart.axisLeft.isEnabled = false
+//        lineChartHeart.xAxis.setDrawGridLines(false)
+//        lineChartHeart.animateXY(1000, 1000)
+//    }
+//    //혈당 차트 설정
+//    private fun setGlucoseBarChart() {
+//        val glucoseData = customChartManager.setGlucoseBarData()
+//        val barData = BarData(glucoseData)
+//        val barGlucoseBlood = binding.homeDashboardBarChartGlucose
+//        barGlucoseBlood.description.isEnabled = false //오른쪽 하단 설명 글 없애기
+//        barGlucoseBlood.legend.isEnabled = false //하단에 레전드 없애기
+//        barGlucoseBlood.setTouchEnabled(false)
+//        barGlucoseBlood.data = barData
+//        barGlucoseBlood.xAxis.setDrawGridLines(false) //세로줄 없애기
+//        barGlucoseBlood.xAxis.position = XAxis.XAxisPosition.BOTTOM //x값 아래로 이동
+//        barGlucoseBlood.axisRight.isEnabled = false //오른쪽 y축 없애기
+//    }
 }
 
 // 소숫점 한 자리까지 보이기 위한 Formatter

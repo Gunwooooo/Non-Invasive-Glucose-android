@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ThermometerViewPagerFragmentAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-    private val fragmentList = listOf(HomeAnalysisThermometerFragment(), HomeAnalysisHeartFragment(), HomeAnalysisSugarBloodFragment())
+    private val fragmentList = listOf(HomeAnalysisThermometerFragment(), HomeAnalysisHeartFragment(), HomeAnalysisGlucoseFragment())
 
     override fun getItemCount(): Int {
         return fragmentList.size

@@ -117,7 +117,7 @@ class CustomChartManager(context: Context) {
     }
 
     //체온 막대 데이터 생성
-    fun setSugarBloodBarData() : BarDataSet {
+    fun setGlucoseBarData() : BarDataSet {
         val barDataSet = makeBarDataSet()
         barDataSet.valueFormatter = MyValueFormatter()  //소수 첫째 자리까지 표시
         barDataSet.setColor(ContextCompat.getColor(context, R.color.graph_orange_100))
