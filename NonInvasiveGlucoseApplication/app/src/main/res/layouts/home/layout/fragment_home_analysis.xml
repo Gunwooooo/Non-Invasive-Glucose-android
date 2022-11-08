@@ -5,28 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeAnalysisActivity"
+    tools:context=".home.HomeAnalysisFragment"
     android:orientation="vertical"
     android:weightSum="1">
 
-    <androidx.appcompat.widget.Toolbar
-        android:background="@color/graph_thermometer_bar_100"
-        android:id="@+id/homeThermometer_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ToolbarColoredIcon"
-        app:titleTextAppearance="@style/Toolbar.TitleText"/>
-
     <com.google.android.material.tabs.TabLayout
+        app:tabRippleColor="@android:color/transparent"
         app:tabTextAppearance="@style/tab_text"
         android:id="@+id/homeThermometer_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/graph_thermometer_bar_100"
-        app:tabTextColor="@color/white"
-        app:tabIndicatorColor="@color/white"
-        app:tabIndicatorHeight="5dp"
+        android:background="@color/StatusBarColor"
+        app:tabTextColor="@color/toss_black_700"
+        app:tabIndicatorColor="@color/toss_black_700"
+        app:tabIndicatorHeight="2dp"
         app:tabGravity="fill">
         <!-- TabItem은 탭메뉴 하나를 의미한다. -->
         <com.google.android.material.tabs.TabItem
@@ -45,11 +37,11 @@
             android:text="혈당" />
     </com.google.android.material.tabs.TabLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/toolbar_dropshadow"
-        />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="5dp"-->
+<!--        android:background="@drawable/toolbar_dropshadow"-->
+<!--        />-->
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -8,13 +8,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.android.material.navigation.NavigationBarView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
 import com.hanait.noninvasiveglucoseapplication.user.*
 import kotlin.system.exitProcess
 
-class HomeActivity : AppCompatActivity(), View.OnClickListener{
+class HomeActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityHomeBinding
@@ -25,39 +27,45 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         init()
-
-
     }
 
     private fun init() {
         //툴바 보이도록 설정
         setSupportActionBar(binding.homeToolbar)
         supportActionBar?.title = ""
-        //대쉬보드 프래그먼트 시랳ㅇ
+        //대쉬보드 프래그먼트 실행
         supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
 
-        binding.homeTextViewDashboard.setOnClickListener(this)
-    }
+        //스테이터스바 색깔 변경
+        this.window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBarColor)
 
-    override fun onClick(v: View?) {
-        when(v) {
-            //대쉬보드 하단 네비바 클릭
-            binding.homeTextViewDashboard -> {
-                setTextViewTitle("대쉬보드")
-                changeFragment("HomeDashboardFragment")
+        //바텀 네비게이션 리스너
+        binding.homeBottomNav.setOnItemSelectedListener(object: NavigationBarView.OnItemSelectedListener {
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    R.id.bottomNav_dashboard -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.home_frameId, HomeDashboardFragment())
+                            .commitAllowingStateLoss()
+                        return true
+                    }
+                    R.id.bottomNav_analysis -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.home_frameId, HomeAnalysisFragment())
+                            .commitAllowingStateLoss()
+                        return true
+                    }
+//                    R.id.bottomNav_protector -> {
+//                        supportFragmentManager.beginTransaction()
+//                            .replace(R.id.home_frameId, HomeSearchFragment())
+//                            .commitAllowingStateLoss()
+//                        return true
+//                    }
+                    else -> return false
+                }
             }
-        }
-    }
-
-    //프래그먼트 이동 메서드
-    fun changeFragment(fragmentName: String) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-//        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
-        when(fragmentName) {
-            "HomeDashboardFragment" -> fragmentTransaction.replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
-        }
+        })
     }
 
     @Override
@@ -88,13 +96,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
         }
     }
 
-    //타이틀 설명 이름 변경하기
-    fun setTextViewTitle(title: String) {
-        binding.homeTextViewTitle.text = title
-    }
+//    //바텀 네비바 숨기기
+//    fun setBottomNavVisible(visible: Boolean) {
+//        binding.homeCoordinatorLayout.isVisible = visible
+//    }
 
-    //바텀 네비바 숨기기
-    fun setBottomNavVisible(visible: Boolean) {
-        binding.homeCoordinatorLayout.isVisible = visible
+    fun setTitleVisible(flag: Boolean) {
+        if(flag)
+            binding.homeTextViewTitle.visibility = View.VISIBLE
+        else binding.homeTextViewTitle.visibility = View.GONE
     }
 }

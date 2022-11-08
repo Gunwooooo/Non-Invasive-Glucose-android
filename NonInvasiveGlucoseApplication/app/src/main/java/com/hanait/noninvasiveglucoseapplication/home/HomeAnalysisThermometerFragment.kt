@@ -25,34 +25,31 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
 
         init()
 
-        setThermometerDayLineChart()
+        setThermometer7DayLineChart()
 
     }
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
 
-        textViewList = listOf(binding.homeAnalysisThermometerBtnDay, binding.homeAnalysisThermometerBtnMonth, binding.homeAnalysisThermometerBtnYear)
-        binding.homeAnalysisThermometerBtnDay.setOnClickListener(this)
-        binding.homeAnalysisThermometerBtnMonth.setOnClickListener(this)
-        binding.homeAnalysisThermometerBtnYear.setOnClickListener(this)
+        textViewList = listOf(binding.homeAnalysisThermometerBtn7day, binding.homeAnalysisThermometerBtn30day, binding.homeAnalysisThermometerBtn90day)
+        binding.homeAnalysisThermometerBtn7day.setOnClickListener(this)
+        binding.homeAnalysisThermometerBtn30day.setOnClickListener(this)
+        binding.homeAnalysisThermometerBtn90day.setOnClickListener(this)
     }
 
     //체온 차트 설정
-    private fun setThermometerDayLineChart() {
-        val thermometerLineData =  customChartManager.setThermometerDayLineData()
-        val thermometerBarData = customChartManager.setThermometerBarData()
+    private fun setThermometer7DayLineChart() {
+        val thermometerLineData =  customChartManager.setThermometer7DayLineData()
         val lineData = LineData(thermometerLineData)
-        val barData = BarData(thermometerBarData)
         val lineThermometerDay = binding.homeThermometerLineChartDay
-        val combinedData = CombinedData()
-        combinedData.setData(lineData)
-        combinedData.setData(barData)
+//        val combinedData = LineData()
+//        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
         lineThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
-            data = combinedData
+            data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
@@ -65,7 +62,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
-                textSize = 16f
+                textSize = 12f
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -75,9 +72,9 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
                 axisMinimum = 32F   //최소값
                 axisMaximum = 42F   //최대값
                 isEnabled = true
-                animateX(2000)
-                animateY(2000)
-                textSize = 16f
+                animateX(1000)
+                animateY(1000)
+                textSize = 12f
                 gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
@@ -97,13 +94,13 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeAnalysisThermometerBtnDay -> {
+            binding.homeAnalysisThermometerBtn7day -> {
                 changeTextViewBackgroundColor(0)
             }
-            binding.homeAnalysisThermometerBtnMonth -> {
+            binding.homeAnalysisThermometerBtn30day -> {
                 changeTextViewBackgroundColor(1)
             }
-            binding.homeAnalysisThermometerBtnYear -> {
+            binding.homeAnalysisThermometerBtn90day -> {
                 changeTextViewBackgroundColor(2)
             }
         }

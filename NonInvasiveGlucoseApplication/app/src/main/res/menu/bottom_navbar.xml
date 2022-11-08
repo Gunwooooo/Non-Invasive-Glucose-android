@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottomNav_calendar"
+        android:id="@+id/bottomNav_dashboard"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="복약 달력"/>
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="대쉬보드"/>
 
     <item
-        android:id="@+id/bottomNav_search"
+        android:id="@+id/bottomNav_analysis"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="약/약물 검색"/>
+        android:icon="@drawable/ic_baseline_insert_chart_24"
+        android:title="분석"/>
+
+    <item
+        android:id="@+id/bottomNav_protector"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="보호자"/>
 
 </menu>
