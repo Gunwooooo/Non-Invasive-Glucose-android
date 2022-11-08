@@ -9,6 +9,7 @@ import androidx.core.view.marginBottom
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CombinedData
 import com.github.mikephil.charting.data.LineData
 import com.hanait.noninvasiveglucoseapplication.R
@@ -39,20 +40,20 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
 
     //체온 차트 설정
     private fun setThermometer7DayLineChart() {
-        val thermometerLineData =  customChartManager.setThermometer7DayLineData()
-        val lineData = LineData(thermometerLineData)
-        val lineThermometerDay = binding.homeThermometerLineChartDay
+        val thermometerCandleData =  customChartManager.setThermometer7DayCandleData()
+        val candleData = CandleData(thermometerCandleData)
+        val candleThermometerDay = binding.homeThermometerCandleChartDay
 //        val combinedData = LineData()
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
-        lineThermometerDay.run {
+        candleThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
-            data = lineData
+            data = candleData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+            isDragEnabled = true    //드래그 가능
             isScaleXEnabled = false //가로 확대 없애기
             enableScroll()
             setVisibleXRangeMaximum(7f) //

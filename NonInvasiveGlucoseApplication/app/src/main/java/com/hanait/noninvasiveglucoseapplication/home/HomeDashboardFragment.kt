@@ -72,16 +72,19 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-//            isDragEnabled = true
+            isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
-//            enableScroll()
-//            setVisibleXRangeMaximum(7f) //
+            enableScroll()
+            setVisibleXRangeMaximum(6f) //
 
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
+                valueFormatter = CustomChartManager.CustomXAxisFormatter()
+//                labelCount = 10
+                granularity = 3f
                 textSize = 12f
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경

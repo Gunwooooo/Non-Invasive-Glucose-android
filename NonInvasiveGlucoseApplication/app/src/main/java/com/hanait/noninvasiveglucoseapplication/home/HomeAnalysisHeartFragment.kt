@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.LineData
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisHeartBinding
@@ -41,17 +42,17 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
 
     //체온 차트 설정
     private fun setHeart7DayLineChart() {
-        val thermometerLineData = customChartManager.setHeart7DayLineData()
-        val lineData = LineData(thermometerLineData)
-        val lineThermometerDay = binding.homeHeartLineChartDay
+        val heartCandleData = customChartManager.setHeart7DayCandleData()
+        val candleData = CandleData(heartCandleData)
+        val candleHeartDay = binding.homeHeartCandleChartDay
 //        val combinedData = LineData()
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
-        lineThermometerDay.run {
+        candleHeartDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
-            data = lineData
+            data = candleData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
