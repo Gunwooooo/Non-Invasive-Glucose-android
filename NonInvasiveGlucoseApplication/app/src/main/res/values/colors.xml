@@ -28,6 +28,11 @@
     <color name="text_blue_200">#51a6cb</color>
     <color name="text_blue_500">#0482bd</color>
 
+<!--    수치 정상, 경고, 위험 색상-->
+    <color name="text_value_normal">#0f995d</color>
+    <color name="text_value_warn">#ffb53e</color>
+    <color name="text_value_danger">#ff2020</color>
+
     <!--    달력 내부 구분선 칼라-->
     <color name="border_yellow_200">#e4c441</color>
     <color name="border_avocado_200">#c0ca33</color>

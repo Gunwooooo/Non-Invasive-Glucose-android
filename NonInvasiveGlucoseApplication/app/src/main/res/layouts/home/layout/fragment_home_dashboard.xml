@@ -132,6 +132,7 @@
                     android:fontFamily="@font/ps_bold"
                     android:textSize="24dp"/>
                 <TextView
+                    android:layout_marginTop="4dp"
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -226,6 +227,7 @@
                     android:fontFamily="@font/ps_bold"
                     android:textSize="24dp"/>
                 <TextView
+                    android:layout_marginTop="4dp"
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -320,6 +322,7 @@
                     android:fontFamily="@font/ps_bold"
                     android:textSize="24dp"/>
                 <TextView
+                    android:layout_marginTop="4dp"
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

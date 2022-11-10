@@ -86,9 +86,4 @@ class HomeAnalysisFragment : BaseFragment<FragmentHomeAnalysisBinding>(FragmentH
         }
         return super.onOptionsItemSelected(item)
     }
-
-    fun setAnalysisValueText(minValue: String, maxValue: String) {
-        binding.homeAnalysisTextViewMinValue.text = minValue
-        binding.homeAnalysisTextViewMaxValue.text = maxValue
-    }
 }

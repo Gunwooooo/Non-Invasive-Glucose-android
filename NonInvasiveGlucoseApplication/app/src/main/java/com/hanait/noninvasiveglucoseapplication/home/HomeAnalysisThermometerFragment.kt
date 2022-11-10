@@ -1,5 +1,6 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,8 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysis
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
+import kotlin.math.max
+import kotlin.math.min
 
 class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermometerBinding>(FragmentHomeAnalysisThermometerBinding::inflate), OnChartValueSelectedListener {
     lateinit var customChartManager: CustomChartManager
@@ -28,9 +31,9 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
         setThermometer7DayLineChart()
 
     }
+
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
-        
     }
 
     //체온 차트 설정
@@ -90,14 +93,40 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
         }
     }
 
+    //그래프 터치시 리스너
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        Log.d("로그", "HomeAnalysisThermometerFragment - onValueSelected : ${e?.y}  ${e?.x}   ${e?.data}")
-//        binding.homeAnalysisThermometerTextViewMinValue.text = "${e?.}"
+        if (e is CandleEntry) {
+            val minVal = min(e.open, e.close)
+            val maxVal = max(e.open, e.close)
+
+
+            binding.homeAnalysisThermometerTextViewMinValue.text = "$minVal"
+            binding.homeAnalysisThermometerTextViewMaxValue.text = "$maxVal"
+
+            setMinMaxTextColor(minVal, binding.homeAnalysisThermometerTextViewMinValue)
+            setMinMaxTextColor(maxVal, binding.homeAnalysisThermometerTextViewMaxValue)
+//            binding.homeAnalysisThermometerTextViewMinValue.setTextColor(ContextCompat.getColor(R.color.))
+        }
     }
 
     override fun onNothingSelected() {
     }
+
+    private fun setMinMaxTextColor(value : Float, v: TextView) {
+        if(value in 36.0..37.5) {
+            v.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_value_normal))
+            return
+        }
+        if((value > 37.5 && value <= 38.5) || (value >= 35 && value < 36)) {
+            v.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_value_warn))
+            return
+        }
+        else {
+            v.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_value_danger))
+        }
+    }
 }
+
 
 
 //        lineThermometerHeart.setDrawGridBackground(true)    //배경 색 추가하기

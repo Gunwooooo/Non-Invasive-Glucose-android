@@ -13,7 +13,7 @@
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.78">
+        android:layout_weight="0.6">
         <com.github.mikephil.charting.charts.CandleStickChart
             android:id="@+id/homeThermometer_candleChart_day"
             android:layout_width="match_parent"
@@ -23,22 +23,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.22"
+        android:layout_weight="0.4"
         android:orientation="vertical"
         android:weightSum="1"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="16dp"
         android:background="@drawable/top_radius_border">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="0.13"/>
+            android:layout_weight="0.1"/>
+
         <LinearLayout
-            android:layout_marginTop="24dp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="0.4"
+            android:layout_weight="0.15">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="2022.10.27"
+                android:textColor="@color/toss_black_700"
+                android:fontFamily="@font/ps_bold"
+                android:textSize="24dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.06"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.3"
             android:orientation="horizontal"
             android:weightSum="1">
             <LinearLayout
@@ -53,41 +72,47 @@
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.7">
+                android:layout_weight="0.63">
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="2022-10-24 최저 체온"
+                    android:text="최고 체온"
                     android:textSize="21dp"
                     android:fontFamily="@font/ps_regular"
                     android:textColor="@color/toss_black_600"/>
             </LinearLayout>
             <LinearLayout
+                android:gravity="right"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.23">
+                android:layout_weight="0.3">
                 <TextView
                     android:id="@+id/homeAnalysisThermometer_textView_maxValue"
-                    android:gravity="center_vertical|right"
-                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="35.3℃"
+                    android:text="37.7"
                     android:textSize="21dp"
                     android:fontFamily="@font/ps_bold"
-                    android:textColor="@color/toss_black_500"/>
+                    android:textColor="@color/text_value_normal"/>
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" ℃"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/ps_regular"
+                    android:textColor="@color/toss_black_200"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="16dp"
             android:gravity="center_vertical"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="0.4"
+            android:layout_weight="0.3"
             android:orientation="horizontal"
             android:weightSum="1">
             <LinearLayout
@@ -102,30 +127,44 @@
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.7">
+                android:layout_weight="0.63">
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="2022-10-24 최고 체온"
+                    android:text="최저 체온"
                     android:textSize="21dp"
                     android:fontFamily="@font/ps_regular"
                     android:textColor="@color/toss_black_600"/>
             </LinearLayout>
             <LinearLayout
+                android:gravity="right"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.23">
+                android:layout_weight="0.3">
                 <TextView
                     android:id="@+id/homeAnalysisThermometer_textView_minValue"
-                    android:gravity="center_vertical|right"
-                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="37.7℃"
+                    android:text="35.3"
                     android:textSize="21dp"
                     android:fontFamily="@font/ps_bold"
-                    android:textColor="@color/toss_black_500"/>
+                    android:textColor="@color/text_value_normal"/>
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" ℃"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/ps_regular"
+                    android:textColor="@color/toss_black_200"/>
             </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.09"/>
     </LinearLayout>
 </LinearLayout>

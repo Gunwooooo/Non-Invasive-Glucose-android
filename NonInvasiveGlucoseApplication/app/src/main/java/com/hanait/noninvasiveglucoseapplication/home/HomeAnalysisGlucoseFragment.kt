@@ -7,14 +7,18 @@ import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CandleData
+import com.github.mikephil.charting.data.CandleEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisGlucoseBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
 
-class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBinding>(FragmentHomeAnalysisGlucoseBinding::inflate) {
+class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBinding>(FragmentHomeAnalysisGlucoseBinding::inflate),OnChartValueSelectedListener {
     lateinit var customChartManager: CustomChartManager
 
 
@@ -41,6 +45,7 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
 
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
+        candleGlucoseDay.setOnChartValueSelectedListener(this)
         candleGlucoseDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = candleData
@@ -85,5 +90,18 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
             }
             invalidate()
         }
+    }
+
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        if (e is CandleEntry) {
+            val minVal = Math.min(e.open, e.close)
+            val maxVal = Math.max(e.open, e.close)
+            binding.homeAnalysisGlucoseTextViewMinValue.text = "$minVal"
+            binding.homeAnalysisGlucoseTextViewMaxValue.text = "$maxVal"
+        }
+    }
+
+    override fun onNothingSelected() {
+
     }
 }

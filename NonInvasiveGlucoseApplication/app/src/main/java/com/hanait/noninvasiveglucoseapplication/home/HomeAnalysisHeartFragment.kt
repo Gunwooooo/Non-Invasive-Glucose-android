@@ -10,7 +10,11 @@ import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CandleData
+import com.github.mikephil.charting.data.CandleEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisHeartBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
@@ -18,7 +22,7 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
 
 
-class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>(FragmentHomeAnalysisHeartBinding::inflate) {
+class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>(FragmentHomeAnalysisHeartBinding::inflate),OnChartValueSelectedListener {
     lateinit var customChartManager: CustomChartManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +48,7 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
 
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
+        candleHeartDay.setOnChartValueSelectedListener(this)
         candleHeartDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = candleData
@@ -88,5 +93,17 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
             }
             invalidate()
         }
+    }
+
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        if (e is CandleEntry) {
+            val minVal = Math.min(e.open, e.close)
+            val maxVal = Math.max(e.open, e.close)
+            binding.homeAnalysisHeartTextViewMinValue.text = "$minVal"
+            binding.homeAnalysisHeartTextViewMaxValue.text = "$maxVal"
+        }
+    }
+
+    override fun onNothingSelected() {
     }
 }
