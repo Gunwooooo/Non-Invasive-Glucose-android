@@ -29,11 +29,18 @@ class CustomChartManager(context: Context) {
         }
     }
 
-    class CustomXAxisFormatter : ValueFormatter() {
+    class CustomTimeXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val time = value.toInt()
 //            if(time )
             return "오후${time}시"
+        }
+    }
+    
+    class CustomDateXAxisFormatter : ValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+            val time = value.toInt()
+            return "${time}일"
         }
     }
 
@@ -44,7 +51,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 1 until 50) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "체온")
@@ -57,7 +64,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 1 until 50) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "심박수")
@@ -70,7 +77,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 1 until 50) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "혈당")
@@ -84,7 +91,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 1 until 50) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             entry.add(CandleEntry(i.toFloat(), shadowHigh,  shadowLow, shadowLow, shadowHigh))
@@ -99,7 +106,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 1 until 50) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             entry.add(CandleEntry(i.toFloat(), shadowHigh,  shadowLow, shadowLow, shadowHigh))
@@ -114,7 +121,7 @@ class CustomChartManager(context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 0 until 50) {
+        for (i in 1 until 50) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             entry.add(CandleEntry(i.toFloat(), shadowHigh,  shadowLow, shadowLow, shadowHigh))
@@ -131,14 +138,14 @@ class CustomChartManager(context: Context) {
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_thermometer_bar_100))
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
         lineDataSet.lineWidth = 3F //선 굵기
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.setDrawCircles(true)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_bar_100))
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
         lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
@@ -146,7 +153,7 @@ class CustomChartManager(context: Context) {
         lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
         lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-        lineDataSet.setDrawCircleHole(false)
+        lineDataSet.setDrawCircleHole(true)
         return lineDataSet
     }
 
@@ -173,7 +180,7 @@ class CustomChartManager(context: Context) {
         lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
         lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-        lineDataSet.setDrawCircleHole(false)
+        lineDataSet.setDrawCircleHole(true)
         return lineDataSet
     }
 
@@ -200,7 +207,7 @@ class CustomChartManager(context: Context) {
         lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
         lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-        lineDataSet.setDrawCircleHole(false)
+        lineDataSet.setDrawCircleHole(true)
         return lineDataSet
     }
 
@@ -214,11 +221,11 @@ class CustomChartManager(context: Context) {
             shadowWidth = 1f
 
             //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_bar_100)
+            decreasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_100)
             decreasingPaintStyle = Paint.Style.FILL
 
             //양봉
-            increasingColor = ContextCompat.getColor(context, R.color.graph_glucose_100)
+            increasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_100)
             increasingPaintStyle = Paint.Style.FILL
 
             neutralColor = Color.DKGRAY
@@ -239,11 +246,11 @@ class CustomChartManager(context: Context) {
             shadowWidth = 1f
 
             //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_bar_100)
+            decreasingColor = ContextCompat.getColor(context, R.color.graph_heart_100)
             decreasingPaintStyle = Paint.Style.FILL
 
             //양봉
-            increasingColor = ContextCompat.getColor(context, R.color.graph_glucose_100)
+            increasingColor = ContextCompat.getColor(context, R.color.graph_heart_100)
             increasingPaintStyle = Paint.Style.FILL
 
             neutralColor = Color.DKGRAY
@@ -264,7 +271,7 @@ class CustomChartManager(context: Context) {
             shadowWidth = 1f
 
             //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_bar_100)
+            decreasingColor = ContextCompat.getColor(context, R.color.graph_glucose_100)
             decreasingPaintStyle = Paint.Style.FILL
 
             //양봉

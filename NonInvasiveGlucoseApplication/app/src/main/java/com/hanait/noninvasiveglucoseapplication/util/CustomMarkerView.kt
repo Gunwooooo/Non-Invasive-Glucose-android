@@ -17,16 +17,21 @@ import com.hanait.noninvasiveglucoseapplication.R
 @SuppressLint("ViewConstructor")
 class CustomMarkerView(context: Context?, layoutResource: Int) :
     MarkerView(context, layoutResource) {
-    private val tvContent: TextView = findViewById<View>(R.id.customMarkerView_textView) as TextView
-
+    private val customMarkerViewTextView: TextView = findViewById<View>(R.id.customMarkerView_textView) as TextView
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @SuppressLint("SetTextI18n")
     override fun refreshContent(e: Entry, highlight: Highlight) {
         if (e is CandleEntry) {
-            tvContent.text = "" + e.high + "℃"
+            val text = StringBuilder()
+            text.append("10월 ${e.x.toInt()}일\n")
+            text.append("평균 체온 ${String.format("%.1f", e.y)}")
+            customMarkerViewTextView.text = text
         } else {
-            tvContent.text = "" + e.y + "℃"
+            val text = StringBuilder()
+            text.append("10월 ${e.x.toInt()}일\n")
+            text.append("평균 체온 ${e.y}")
+            customMarkerViewTextView.text = "${e.y}℃"
         }
         super.refreshContent(e, highlight)
     }

@@ -8,19 +8,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.CandleData
-import com.github.mikephil.charting.data.CombinedData
-import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisThermometerBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
 
-class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermometerBinding>(FragmentHomeAnalysisThermometerBinding::inflate), View.OnClickListener {
+class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermometerBinding>(FragmentHomeAnalysisThermometerBinding::inflate), OnChartValueSelectedListener {
     lateinit var customChartManager: CustomChartManager
-    private lateinit var textViewList : List<TextView>
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -31,11 +30,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
     }
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
-
-        textViewList = listOf(binding.homeAnalysisThermometerBtn7day, binding.homeAnalysisThermometerBtn30day, binding.homeAnalysisThermometerBtn90day)
-        binding.homeAnalysisThermometerBtn7day.setOnClickListener(this)
-        binding.homeAnalysisThermometerBtn30day.setOnClickListener(this)
-        binding.homeAnalysisThermometerBtn90day.setOnClickListener(this)
+        
     }
 
     //체온 차트 설정
@@ -48,6 +43,9 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
 
         //마커 뷰 설정
         val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
+
+        //클릭 리스너 설정
+        candleThermometerDay.setOnChartValueSelectedListener(this)
         candleThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = candleData
@@ -57,13 +55,13 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
             isScaleXEnabled = false //가로 확대 없애기
             enableScroll()
             setVisibleXRangeMaximum(7f) //
-
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
+                valueFormatter = CustomChartManager.CustomDateXAxisFormatter()
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -71,7 +69,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
                 axisMinimum = 32F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMaximum = 50F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -92,32 +90,12 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
         }
     }
 
-
-    override fun onClick(v: View?) {
-        when(v) {
-            binding.homeAnalysisThermometerBtn7day -> {
-                changeTextViewBackgroundColor(0)
-            }
-            binding.homeAnalysisThermometerBtn30day -> {
-                changeTextViewBackgroundColor(1)
-            }
-            binding.homeAnalysisThermometerBtn90day -> {
-                changeTextViewBackgroundColor(2)
-            }
-        }
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        Log.d("로그", "HomeAnalysisThermometerFragment - onValueSelected : ${e?.y}  ${e?.x}   ${e?.data}")
+//        binding.homeAnalysisThermometerTextViewMinValue.text = "${e?.}"
     }
 
-    //일, 월, 년 토글 버튼 구현
-    private fun changeTextViewBackgroundColor(index : Int) {
-        for(i in 0 until 3) {
-            if(i == index) {
-                textViewList[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_blue_200))
-                textViewList[i].setBackgroundResource(R.color.toss_blue_100)
-                continue
-            }
-            textViewList[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
-            textViewList[i].setBackgroundResource(R.color.white)
-        }
+    override fun onNothingSelected() {
     }
 }
 

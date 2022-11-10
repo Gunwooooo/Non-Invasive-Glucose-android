@@ -82,7 +82,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
-                valueFormatter = CustomChartManager.CustomXAxisFormatter()
+                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                labelCount = 10
                 granularity = 3f
                 textSize = 12f
@@ -136,6 +136,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
+                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -185,6 +186,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
+                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)

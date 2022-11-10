@@ -14,9 +14,9 @@ import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
 
-class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBinding>(FragmentHomeAnalysisGlucoseBinding::inflate), View.OnClickListener {
+class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBinding>(FragmentHomeAnalysisGlucoseBinding::inflate) {
     lateinit var customChartManager: CustomChartManager
-    private lateinit var textViewList : List<TextView>
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,11 +29,6 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
 
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
-
-        textViewList = listOf(binding.homeAnalysisGlucoseBtn7day, binding.homeAnalysisGlucoseBtn30day, binding.homeAnalysisGlucoseBtn90day)
-        binding.homeAnalysisGlucoseBtn7day.setOnClickListener(this)
-        binding.homeAnalysisGlucoseBtn30day.setOnClickListener(this)
-        binding.homeAnalysisGlucoseBtn90day.setOnClickListener(this)
     }
 
     //체온 차트 설정
@@ -62,6 +57,7 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
+                valueFormatter = CustomChartManager.CustomDateXAxisFormatter()
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -90,32 +86,4 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
             invalidate()
         }
     }
-
-    override fun onClick(v: View?) {
-        when(v) {
-            binding.homeAnalysisGlucoseBtn7day -> {
-                changeTextViewBackgroundColor(0)
-            }
-            binding.homeAnalysisGlucoseBtn30day -> {
-                changeTextViewBackgroundColor(1)
-            }
-            binding.homeAnalysisGlucoseBtn90day -> {
-                changeTextViewBackgroundColor(2)
-            }
-        }
-    }
-
-    //일, 월, 년 토글 버튼 구현
-    private fun changeTextViewBackgroundColor(index : Int) {
-        for(i in 0 until 3) {
-            if(i == index) {
-                textViewList[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_blue_200))
-                textViewList[i].setBackgroundResource(R.color.toss_blue_100)
-                continue
-            }
-            textViewList[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
-            textViewList[i].setBackgroundResource(R.color.white)
-        }
-    }
-
 }

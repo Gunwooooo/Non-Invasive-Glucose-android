@@ -37,16 +37,13 @@
     <!--    캘린더 circle 색상-->
     <color name="circle_red_100">#ff5b49</color>
 
-<!--    그래프 색상-->
-    <color name="graph_blue_100">#7f77e4</color>
-    <color name="graph_red_100">#de3478</color>
-    <color name="graph_orange_100">#fecf5c</color>
-
-    <!--    그래프 색상2-->
-    <color name="graph_thermometer_bar_100">#57ba83</color>
-    <color name="graph_thermometer_line_100">#3c885a</color>
+    <!--    그래프 색상-->
+    <color name="graph_thermometer_100">#57ba83</color>
     <color name="graph_heart_100">#de3478</color>
     <color name="graph_glucose_100">#fecf5c</color>
 
-
+<!--    그래프 색상 보색-->
+    <color name="graph_thermometer_opposite_100">#A8457C</color>
+    <color name="graph_heart_opposite_100">#21CB87</color>
+    <color name="graph_glucose_opposite_100">#0130A3</color>
 </resources>
