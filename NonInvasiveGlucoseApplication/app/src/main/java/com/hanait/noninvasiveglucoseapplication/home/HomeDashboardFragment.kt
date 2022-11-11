@@ -39,7 +39,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
 
         val mActivity = activity as HomeActivity
-        mActivity.setTitleVisible(true)
+        mActivity.setTitleVisible(true, "대쉬보드")
     }
 
 

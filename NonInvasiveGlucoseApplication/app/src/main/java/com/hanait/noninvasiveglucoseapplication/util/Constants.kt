@@ -3,6 +3,7 @@ package com.hanait.noninvasiveglucoseapplication.util
 import android.annotation.SuppressLint
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import com.hanait.noninvasiveglucoseapplication.model.UserData
 
 
 @SuppressLint("StaticFieldLeak")
@@ -23,4 +24,3 @@ object Constants {
     var NAVER_SMS_FROM_NUMBER = "0537453860"
 }
 
-data class UserData(var phoneNumber: String, var password: String, var birthDay: String, var sex: String)

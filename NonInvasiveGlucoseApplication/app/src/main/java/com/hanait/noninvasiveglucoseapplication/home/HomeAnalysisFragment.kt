@@ -23,7 +23,7 @@ class HomeAnalysisFragment : BaseFragment<FragmentHomeAnalysisBinding>(FragmentH
 
         //toolbar 표시
         val mActivity = activity as HomeActivity
-        mActivity.setTitleVisible(false)
+        mActivity.setTitleVisible(false, "")
 
         textViewList = listOf(binding.homeAnalysisBtn7day, binding.homeAnalysisBtn30day, binding.homeAnalysisBtn90day)
         binding.homeAnalysisBtn7day.setOnClickListener(this)

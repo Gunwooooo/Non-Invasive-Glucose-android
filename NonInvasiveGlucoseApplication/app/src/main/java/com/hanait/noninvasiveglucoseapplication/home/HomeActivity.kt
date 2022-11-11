@@ -56,12 +56,12 @@ class HomeActivity : AppCompatActivity() {
                             .commitAllowingStateLoss()
                         return true
                     }
-//                    R.id.bottomNav_protector -> {
-//                        supportFragmentManager.beginTransaction()
-//                            .replace(R.id.home_frameId, HomeSearchFragment())
-//                            .commitAllowingStateLoss()
-//                        return true
-//                    }
+                    R.id.bottomNav_protector -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.home_frameId, HomeProtectorFragment())
+                            .commitAllowingStateLoss()
+                        return true
+                    }
                     else -> return false
                 }
             }
@@ -96,12 +96,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-//    //바텀 네비바 숨기기
-//    fun setBottomNavVisible(visible: Boolean) {
-//        binding.homeCoordinatorLayout.isVisible = visible
-//    }
-
-    fun setTitleVisible(flag: Boolean) {
+    fun setTitleVisible(flag: Boolean, title: String) {
+        binding.homeTextViewTitle.text = title
         if(flag)
             binding.homeTextViewTitle.visibility = View.VISIBLE
         else binding.homeTextViewTitle.visibility = View.GONE
