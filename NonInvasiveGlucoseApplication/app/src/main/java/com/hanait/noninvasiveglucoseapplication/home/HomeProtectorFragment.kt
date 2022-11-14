@@ -3,11 +3,13 @@ package com.hanait.noninvasiveglucoseapplication.home
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtectorBinding
 import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 
-class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate) {
+class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
     var protectorList: ArrayList<ProtectorData> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -19,15 +21,20 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     private fun init() {
         //타이틀 다시 표시
         val mActivity = activity as HomeActivity
-        mActivity.setTitleVisible(true, "등록된 번호")
+        mActivity.setTitleVisible(true, "등록된 보호자")
 
-        protectorList.add(ProtectorData("010-4054-7199"))
-        protectorList.add(ProtectorData("010-4567-1234"))
-        protectorList.add(ProtectorData("010-2307-5423"))
-        protectorList.add(ProtectorData("010-2345-3456"))
-        protectorList.add(ProtectorData("010-6543-2456"))
+        protectorList.add(ProtectorData("010-****-7199"))
+        protectorList.add(ProtectorData("010-****-1234"))
+        protectorList.add(ProtectorData("010-****-5423"))
+        protectorList.add(ProtectorData("010-****-3456"))
+        protectorList.add(ProtectorData("010-****-2456"))
+        protectorList.add(ProtectorData("010-****-7654"))
+        protectorList.add(ProtectorData("010-****-4324"))
+        protectorList.add(ProtectorData("010-****-6432"))
 
         recyclerViewCreate()
+
+        binding.homeProtectorFloatingButton.setOnClickListener(this)
     }
 
     private fun recyclerViewCreate() {
@@ -37,5 +44,16 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         val layoutManager = LinearLayoutManager(context)
         protectorRecyclerView.layoutManager = layoutManager
         protectorRecyclerView.adapter = protectorAdapter
+    }
+
+    override fun onClick(v: View?) {
+        when(v) {
+            binding.homeProtectorFloatingButton -> {
+                val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
+                val bottomSheetDialog = BottomSheetDialog(requireContext())
+                bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.show()
+            }
+        }
     }
 }

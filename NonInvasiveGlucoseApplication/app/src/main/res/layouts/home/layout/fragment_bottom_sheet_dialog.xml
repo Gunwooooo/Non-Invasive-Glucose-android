@@ -1,80 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetDashBoardLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="24dp"
+    android:layout_height="match_parent"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="56dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:behavior_draggable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="보호자 검색"
+            android:fontFamily="@font/ps_regular"
+            android:textSize="24dp"
+            android:textColor="@color/toss_black_700"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <EditText
+            android:layout_margin="16dp"
+            android:id="@+id/homeSearch_editText"
+            android:imeOptions="actionSearch"
+            android:inputType="phone"
+            android:padding="13dp"
+            android:textSize="18dp"
+            android:drawableEnd="@drawable/ic_baseline_search_24"
+            android:fontFamily="@font/ps_regular"
+            android:hint="보호자 전화번호를 입력해주세요('-'없이)"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/search_edittext_border"/>
+    </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
-        android:text="정렬"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_recommend_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:text="추천순"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_order" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_review_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="리뷰순"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_recommend_order"
-        app:layout_goneMarginStart="28dp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_save_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="저장순"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_review_order" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_price_low_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="가격 낮은순"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_save_order" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_price_high_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="가격 높은순"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_price_low_order"
-        app:layout_goneMarginStart="28dp" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"/>
+</LinearLayout>

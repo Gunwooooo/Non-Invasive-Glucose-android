@@ -74,11 +74,12 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
+    //툴바 클릭 리스너
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.home_toolbar_account -> {
-//                val intent = Intent(this, HomeAccountActivity::class.java)
-//                startActivity(intent)
+                val intent = Intent(this, HomeAccountActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

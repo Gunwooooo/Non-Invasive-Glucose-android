@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPhoneNumberBinding
+import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants.mUserData
-import com.hanait.noninvasiveglucoseapplication.util.UserData
 
 
 class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {
