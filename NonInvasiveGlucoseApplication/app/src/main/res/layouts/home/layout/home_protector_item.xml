@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="96dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="3dp"
+    app:contentPadding="21dp"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="16dp">
-    <TextView
-        android:id="@+id/homeProtectorItem_textView_phoneNumber"
+    <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="보호자 정보"
-        android:textSize="21dp"
-        android:fontFamily="@font/ps_regular"
-        android:textColor="@color/toss_black_700"/>
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/human"/>
+
+        <TextView
+            android:layout_marginStart="36dp"
+            android:id="@+id/homeProtectorItem_textView_phoneNumber"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="보호 대상자 정보"
+            android:textSize="21dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_700"/>
+
+        <TextView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginStart="36dp"
+            android:id="@+id/homeProtectorItem_btn_delete"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="해제"
+            android:textSize="18dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_200"/>
+    </LinearLayout>
+
+
 </androidx.cardview.widget.CardView>

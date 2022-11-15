@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="대쉬보드"
         android:fontFamily="@font/ps_bold"
-        android:textSize="26dp"
+        android:textSize="24dp"
         android:textColor="@color/toss_black_700"
         app:layout_constraintTop_toBottomOf="@id/home_toolbar"
         app:layout_constraintStart_toStartOf="parent"
