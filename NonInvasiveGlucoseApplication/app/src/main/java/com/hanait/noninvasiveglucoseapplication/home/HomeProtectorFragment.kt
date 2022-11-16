@@ -1,11 +1,8 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hanait.noninvasiveglucoseapplication.R
@@ -49,7 +46,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         //클릭 이벤트 리스너 처리
         protectorAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onDeleteItem(v: View, pos: Int) {
-                showDialog(protectorAdapter, pos)
+                showDeleteProtectingDialog(protectorAdapter, pos)
             }
         })
 
@@ -67,32 +64,31 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 bottomSheetDialog.show()
             }
             binding.homeProtectorBtnDelete -> {
-                showDeleteProtectorDialog(c)
+                showDeleteProtectorDialog()
             }
         }
     }
 
-    //삭제 다이어로그 호출
-    fun showDeleteProtectorDialog(protectorAdapter: ProtectorAdapter, pos: Int) {
+    //보호자 삭제 다이어로그 호출
+    private fun showDeleteProtectorDialog() {
         val customDialog = CustomDialogFragment(R.layout.home_protector_delete_dialog)
         customDialog.setDialogListener(object : CustomDialogFragment.DeleteDialogListener{
             override fun onPositiveClicked() {
-                protectorList.removeAt(pos - 1)
-                protectorAdapter.notifyItemRemoved(pos - 1)
-                protectorAdapter.notifyItemRangeChanged(pos -1, protectorList.size)
+                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
                 customDialog.dismiss()
             }
 
             override fun onNegativeClicked() {
+                Log.d("로그", "HomeProtectorFragment - onNegativeClicked : 아니오 버튼 클릭")
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_alarm_delete_dialog")
+        customDialog.show(childFragmentManager, "home_protector_delete_dialog")
     }
 
-    //삭제 다이어로그 호출
+    //보호 대상자 삭제 다이어로그 호출
     fun showDeleteProtectingDialog(protectorAdapter: ProtectorAdapter, pos: Int) {
-        val customDialog = CustomDialogFragment(R.layout.home_protector_delete_dialog)
+        val customDialog = CustomDialogFragment(R.layout.home_protecting_delete_dialog)
         customDialog.setDialogListener(object : CustomDialogFragment.DeleteDialogListener{
             override fun onPositiveClicked() {
                 protectorList.removeAt(pos - 1)
@@ -105,6 +101,6 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_alarm_delete_dialog")
+        customDialog.show(childFragmentManager, "home_protecting_delete_dialog")
     }
 }

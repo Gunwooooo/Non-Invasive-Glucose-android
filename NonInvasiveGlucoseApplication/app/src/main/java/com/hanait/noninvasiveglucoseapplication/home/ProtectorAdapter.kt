@@ -24,7 +24,7 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>)
         private lateinit var protectorPhoneNumber: TextView
         private lateinit var protectorDeleteBtn : TextView
         fun setTextView(protectorData: ProtectorData, position: Int) {
-            protectorPhoneNumber = itemView.findViewById(R.id.homeProtectorItem_textView_phoneNumber)
+            protectorPhoneNumber = itemView.findViewById(R.id.homeProtectingItem_textView_phoneNumber)
             protectorDeleteBtn = itemView.findViewById(R.id.homeProtectorItem_btn_delete)
 
             protectorPhoneNumber.text = protectorData.phoneNumber
@@ -37,7 +37,7 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        return VH(LayoutInflater.from(context).inflate(R.layout.home_protector_item, parent, false))
+        return VH(LayoutInflater.from(context).inflate(R.layout.home_protecting_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {

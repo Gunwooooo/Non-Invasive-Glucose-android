@@ -14,7 +14,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="보호자를 해제할까요?"
+            android:text="해당 보호 대상자를 해제할까요?"
             android:textSize="20dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeProtectorDeleteDialog_btn_negative"
+                android:id="@+id/homeProtectingDeleteDialog_btn_negative"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_gray_reverse"
@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeProtectorDeleteDialog_btn_positive"
+                android:id="@+id/homeProtectingDeleteDialog_btn_positive"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_blue"
