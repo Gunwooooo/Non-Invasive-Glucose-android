@@ -22,6 +22,7 @@ class CustomDialogFragment(private val layout: Int) : DialogFragment(), View.OnC
         fun onPositiveClicked()
         fun onNegativeClicked()
     }
+
     fun setDialogListener(customDialogListener: DeleteDialogListener) {
         this.protectingDeleteListener = customDialogListener
     }

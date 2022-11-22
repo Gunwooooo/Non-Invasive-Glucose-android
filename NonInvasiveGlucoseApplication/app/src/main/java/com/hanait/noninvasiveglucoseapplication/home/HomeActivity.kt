@@ -56,12 +56,19 @@ class HomeActivity : AppCompatActivity() {
                             .commitAllowingStateLoss()
                         return true
                     }
+                    R.id.bottomNav_analysis2 -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.home_frameId, HomeAnalysis2Fragment())
+                            .commitAllowingStateLoss()
+                        return true
+                    }
                     R.id.bottomNav_protector -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.home_frameId, HomeProtectorFragment())
                             .commitAllowingStateLoss()
                         return true
                     }
+
                     else -> return false
                 }
             }
