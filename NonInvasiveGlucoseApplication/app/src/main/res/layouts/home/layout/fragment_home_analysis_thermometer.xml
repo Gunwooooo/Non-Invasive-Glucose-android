@@ -61,19 +61,10 @@
             android:orientation="horizontal"
             android:weightSum="1">
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/image_radius_border_thermometer"
+                android:background="@drawable/layout_border_thermometer"
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="0.13">
-                <ImageView
-                    android:padding="3dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/thermometer"
-                    app:tint="@color/white" />
-            </LinearLayout>
+                android:layout_height="32dp"
+                android:layout_weight="0.02"/>
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
@@ -125,19 +116,10 @@
             android:orientation="horizontal"
             android:weightSum="1">
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/image_radius_border_thermometer"
+                android:background="@drawable/layout_border_thermometer"
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="0.13">
-                <ImageView
-                    android:padding="3dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/thermometer"
-                    app:tint="@color/white" />
-            </LinearLayout>
+                android:layout_height="32dp"
+                android:layout_weight="0.02"/>
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"

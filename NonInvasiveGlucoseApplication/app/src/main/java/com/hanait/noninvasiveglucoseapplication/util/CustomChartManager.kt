@@ -287,5 +287,3 @@ class CustomChartManager(context: Context) {
         return candleDataSet
     }
 }
-
-data class CandleData(var data: Float = 0f, var open: Float, var close: Float)

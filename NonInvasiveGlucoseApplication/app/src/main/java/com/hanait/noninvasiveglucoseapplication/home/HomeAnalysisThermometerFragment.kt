@@ -1,12 +1,9 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -16,7 +13,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisThermometerBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
+import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 import kotlin.math.max
 import kotlin.math.min
 
@@ -45,7 +42,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
-        val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
 
         //클릭 리스너 설정
         candleThermometerDay.setOnChartValueSelectedListener(this)

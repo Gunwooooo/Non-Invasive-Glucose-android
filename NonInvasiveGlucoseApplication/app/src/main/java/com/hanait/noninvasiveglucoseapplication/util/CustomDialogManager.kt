@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.hanait.noninvasiveglucoseapplication.R
 
 
-class CustomDialogFragment(private val layout: Int) : DialogFragment(), View.OnClickListener {
+class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
 
     //보호자 삭제 다이어로그
     private var protectingDeleteListener: DeleteDialogListener? = null

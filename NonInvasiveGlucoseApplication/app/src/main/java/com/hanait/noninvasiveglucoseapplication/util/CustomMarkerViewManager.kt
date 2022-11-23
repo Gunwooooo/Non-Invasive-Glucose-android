@@ -15,7 +15,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 
 
 @SuppressLint("ViewConstructor")
-class CustomMarkerView(context: Context?, layoutResource: Int) :
+class CustomMarkerViewManager(context: Context?, layoutResource: Int) :
     MarkerView(context, layoutResource) {
     private val customMarkerViewTextView: TextView = findViewById<View>(R.id.customMarkerView_textView) as TextView
     // callbacks everytime the MarkerView is redrawn, can be used to update the

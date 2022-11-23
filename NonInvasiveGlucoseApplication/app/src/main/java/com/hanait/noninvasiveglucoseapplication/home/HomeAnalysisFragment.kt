@@ -21,10 +21,6 @@ class HomeAnalysisFragment : BaseFragment<FragmentHomeAnalysisBinding>(FragmentH
     private fun init() {
         setViewPagerAndTabLayout()
 
-        //toolbar 표시
-        val mActivity = activity as HomeActivity
-        mActivity.setTitleVisible(false, "")
-
         textViewList = listOf(binding.homeAnalysisBtn7day, binding.homeAnalysisBtn30day, binding.homeAnalysisBtn90day)
         binding.homeAnalysisBtn7day.setOnClickListener(this)
         binding.homeAnalysisBtn30day.setOnClickListener(this)

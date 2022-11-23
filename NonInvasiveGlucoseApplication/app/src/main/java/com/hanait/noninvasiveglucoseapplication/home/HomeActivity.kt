@@ -3,17 +3,14 @@ package com.hanait.noninvasiveglucoseapplication.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationBarView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
-import com.hanait.noninvasiveglucoseapplication.user.*
 import kotlin.system.exitProcess
 
 class HomeActivity : AppCompatActivity() {
@@ -53,12 +50,6 @@ class HomeActivity : AppCompatActivity() {
                     R.id.bottomNav_analysis -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.home_frameId, HomeAnalysisFragment())
-                            .commitAllowingStateLoss()
-                        return true
-                    }
-                    R.id.bottomNav_analysis2 -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.home_frameId, HomeAnalysis2Fragment())
                             .commitAllowingStateLoss()
                         return true
                     }
@@ -102,12 +93,5 @@ class HomeActivity : AppCompatActivity() {
             finishAffinity()
             exitProcess(0)
         }
-    }
-
-    fun setTitleVisible(flag: Boolean, title: String) {
-        binding.homeTextViewTitle.text = title
-        if(flag)
-            binding.homeTextViewTitle.visibility = View.VISIBLE
-        else binding.homeTextViewTitle.visibility = View.GONE
     }
 }

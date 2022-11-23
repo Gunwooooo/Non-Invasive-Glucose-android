@@ -2,21 +2,19 @@ package com.hanait.noninvasiveglucoseapplication.home
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisGlucoseBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
+import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 
 class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBinding>(FragmentHomeAnalysisGlucoseBinding::inflate),OnChartValueSelectedListener {
     lateinit var customChartManager: CustomChartManager
@@ -44,7 +42,7 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
-        val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
         candleGlucoseDay.setOnChartValueSelectedListener(this)
         candleGlucoseDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록

@@ -1,27 +1,24 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
-import android.content.Intent
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.utils.ViewPortHandler
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboardBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerView
-import java.text.DecimalFormat
+import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
+import java.util.*
 
 
 class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(FragmentHomeDashboardBinding::inflate), View.OnClickListener {
     lateinit var customChartManager: CustomChartManager
+    lateinit var datePickerDialogListener: DatePickerDialog.OnDateSetListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +26,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
 
@@ -37,9 +35,15 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
         binding.homeDashboardBtnHeart.setOnClickListener(this)
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
+        binding.homeDashboardBtnCalendar.setOnClickListener(this)
 
-        val mActivity = activity as HomeActivity
-        mActivity.setTitleVisible(true, "대쉬보드")
+        //오늘 날짜 설정
+        setTodayDate()
+        //데이터피커 리스너 설정
+        datePickerDialogListener =
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                binding.homeDashboardTextViewDate.text = "${year}.${month+1}.${dayOfMonth}"
+            }
     }
 
 
@@ -54,9 +58,30 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             binding.homeDashboardBtnGlucose -> {
                 setGlucoseLineChart()
             }
+            binding.homeDashboardBtnCalendar -> {
+                makeDatePickerDialog()
+            }
         }
     }
 
+    //달력 날짜 선택 다이어로그 생성
+    private fun makeDatePickerDialog() {
+        val gregorianCalendar = GregorianCalendar()
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(requireContext(), datePickerDialogListener, year, month, dayOfMonth)
+        datePickerDialog.show()
+    }
+
+
+    fun setTodayDate() {
+        val gregorianCalendar = GregorianCalendar()
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
+        binding.homeDashboardTextViewDate.text = "${year}.${month + 1}.${dayOfMonth}"
+    }
 
     //=================================================================================================
 
@@ -66,7 +91,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         val lineData = LineData(thermometerLineData)
         val lineThermometerDay = binding.homeDashboardMainChart
         //마커 뷰 설정
-        val markerView = CustomMarkerView(context, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
         lineThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = lineData

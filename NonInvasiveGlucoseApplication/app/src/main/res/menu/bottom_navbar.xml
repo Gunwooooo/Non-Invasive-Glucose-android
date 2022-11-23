@@ -13,12 +13,6 @@
         android:title="분석"/>
 
     <item
-        android:id="@+id/bottomNav_dailyGraph"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_insert_chart_24"
-        android:title="날짜 조회"/>
-
-    <item
         android:id="@+id/bottomNav_protector"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_people_24"
