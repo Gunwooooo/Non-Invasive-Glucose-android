@@ -8,13 +8,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
 import kotlin.system.exitProcess
 
 class HomeActivity : AppCompatActivity() {
-
 
     private lateinit var binding: ActivityHomeBinding
     private var waitTime = 0L
@@ -38,32 +38,25 @@ class HomeActivity : AppCompatActivity() {
         this.window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBarColor)
 
         //바텀 네비게이션 리스너
-        binding.homeBottomNav.setOnItemSelectedListener(object: NavigationBarView.OnItemSelectedListener {
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                when (item.itemId) {
-                    R.id.bottomNav_dashboard -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.home_frameId, HomeDashboardFragment())
-                            .commitAllowingStateLoss()
-                        return true
-                    }
-                    R.id.bottomNav_analysis -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.home_frameId, HomeAnalysisFragment())
-                            .commitAllowingStateLoss()
-                        return true
-                    }
-                    R.id.bottomNav_protector -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.home_frameId, HomeProtectorFragment())
-                            .commitAllowingStateLoss()
-                        return true
-                    }
-
-                    else -> return false
-                }
+        binding.homeBottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bottomNav_dashboard ->
+                    changeFragmentTransaction(HomeDashboardFragment())
+                R.id.bottomNav_analysis ->
+                    changeFragmentTransaction(HomeAnalysisFragment())
+                R.id.bottomNav_analysis2 ->
+                    changeFragmentTransaction(HomeAnalysis2Fragment())
+                R.id.bottomNav_protector ->
+                    changeFragmentTransaction(HomeProtectorFragment())
+                else -> false
             }
-        })
+        }
+    }
+
+    //프래그먼트 전환
+    private fun changeFragmentTransaction(fragment: Fragment) : Boolean {
+        supportFragmentManager.beginTransaction().replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
+        return true
     }
 
     @Override
@@ -83,6 +76,7 @@ class HomeActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //뒤로가기 키 눌렸을 때 종료
     @Override
     override fun onBackPressed() {
         if(System.currentTimeMillis() - waitTime >=1500 ) {
