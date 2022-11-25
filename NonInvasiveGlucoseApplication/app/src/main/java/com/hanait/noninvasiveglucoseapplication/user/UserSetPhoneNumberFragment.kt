@@ -19,7 +19,7 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
 
         init()
 
-        setEditTextTextChanged()
+
     }
 
     //텍스트 비어있을 경우 버튼 색상 변경 이벤트
@@ -35,13 +35,15 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
 
     private fun init(){
         _prevFragment = UserSetPhoneNumberFragment()
-        _progressBar.progress = 16
+        _progressBar.progress = 14
 
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         binding.userSetPhoneNumberBtnNext.setOnClickListener(this)
+
+        setEditTextTextChanged()
 
         //유저 데이터 클래스 초기화
         _userData = UserData("", "", "", "", "T")

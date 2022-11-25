@@ -8,8 +8,10 @@ import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetSexBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants
 import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
 class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserSetSexBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -19,7 +21,7 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
 
     private fun init() {
         _prevFragment = UserSetBirthdayFragment()
-        _progressBar.progress = 80
+        _progressBar.progress = 84
         binding.userSetSexBtnNext.setOnClickListener(this)
         binding.userSetSexBtnFemale.setOnClickListener(this)
         binding.userSetSexBtnMale.setOnClickListener(this)
@@ -29,6 +31,11 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetSexBtnNext -> {
+                var tmpSex = "F"
+                if(binding.userSetSexBtnMale.isEnabled)
+                    tmpSex = "T"
+                _userData.sex = tmpSex
+
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetAgreementFragment")
             }
@@ -49,5 +56,4 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
         offButton.isEnabled = true
         offButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
     }
-
 }

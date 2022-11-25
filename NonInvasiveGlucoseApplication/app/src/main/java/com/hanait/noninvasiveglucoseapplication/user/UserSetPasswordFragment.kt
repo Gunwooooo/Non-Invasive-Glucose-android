@@ -9,8 +9,10 @@ import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants
 import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import java.util.regex.Pattern
 
 
@@ -21,14 +23,16 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
 
         init()
 
-        setEditTextTextChanged()
+
     }
 
     private fun init() {
-        _prevFragment = UserSetAuthorizationFragment()
-        _progressBar.progress = 48
+        _prevFragment = UserSetNickNameFragment()
+        _progressBar.progress = 56
 
         binding.userSetPasswordBtnNext.setOnClickListener(this)
+
+        setEditTextTextChanged()
     }
 
     private fun setEditTextTextChanged() {
@@ -83,6 +87,8 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
 //                    resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
 //                    return
 //                }
+
+                _userData.password = binding.userSetPasswordEditTextPassword.text.toString()
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetBirthdayFragment")

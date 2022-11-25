@@ -30,12 +30,12 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
 
         init()
 
-        setEditTextTextChanged()
+
     }
 
     private fun init() {
         _prevFragment = UserSetPhoneNumberFragment()
-        _progressBar.progress = 32
+        _progressBar.progress = 28
 
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
@@ -47,6 +47,8 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         binding.userSetAuthorizationEditTextPhoneNumber.hint = _userData.phoneNumber
         binding.userSetAuthorizationEditTextPhoneNumber.setOnClickListener(this)
         binding.userSetAuthorizationBtnGetAuthNum.setOnClickListener(this)
+
+        setEditTextTextChanged()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -70,7 +72,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
             }
             binding.userSetAuthorizationBtnGetAuthNum -> {
                 //인증 번호 생성 후 retrofit으로 사용자에게 문자 전송
-               sendSMSAuthCode()
+                retrofitSendSMSAuthCode()
 
             }
         }
@@ -90,7 +92,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
 
     //인증 번호 보내는 함수
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun sendSMSAuthCode() {
+    private fun retrofitSendSMSAuthCode() {
         val timestamp = System.currentTimeMillis().toString()
         val naverCloudServiceManager = NaverCloudServiceManager.getInstance()
 

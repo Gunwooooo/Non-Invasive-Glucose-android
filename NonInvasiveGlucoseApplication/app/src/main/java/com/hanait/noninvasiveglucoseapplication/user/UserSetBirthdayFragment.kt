@@ -8,8 +8,10 @@ import android.view.View
 import android.widget.DatePicker
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants
 import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import java.util.*
 
 class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
@@ -22,7 +24,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
 
     private fun init() {
         _prevFragment = UserSetPasswordFragment()
-        _progressBar.progress = 64
+        _progressBar.progress = 70
 
         binding.userSetBirthdayBtnNext.setOnClickListener(this)
         binding.userSetBirthdayBtnCalendar.setOnClickListener(this)
@@ -52,6 +54,8 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetBirthdayBtnNext -> {
+                _userData.birthDay = "${binding.userSetBirthdayTextViewYear.text}-${binding.userSetBirthdayTextViewMonth.text}-${binding.userSetBirthdayTextViewDay.text}"
+
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetSexFragment")
             }

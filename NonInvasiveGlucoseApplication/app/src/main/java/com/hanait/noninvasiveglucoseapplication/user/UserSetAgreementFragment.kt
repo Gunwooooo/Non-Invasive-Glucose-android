@@ -5,11 +5,12 @@ import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
-
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
 
 class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(FragmentUserSetAgreementBinding::inflate), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -23,7 +24,7 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
     private fun init() {
         _prevFragment = UserSetSexFragment()
         _progressBar.visibility = View.VISIBLE
-        _progressBar.progress = 96
+        _progressBar.progress = 98
 
 
         binding.userSetAgreementTextViewAgreement1.setOnClickListener(this)
@@ -51,7 +52,9 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
                 binding.userSetAgreementBtnNext.isEnabled = true
             }
             binding.userSetAgreementBtnNext -> {
-                RetrofitManager.instance.joinUser()
+//                retrofitJoinUser()
+
+                retrofitFindAllUser()
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetConnectDeviceFragment")
@@ -66,5 +69,33 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
                 binding.userSetAgreementBtnNext.isEnabled = binding.userSetAgreementCheckBoxAgreement1.isChecked && binding.userSetAgreementCheckBoxAgreement2.isChecked
             }
         }
+    }
+    
+    private fun retrofitJoinUser() {
+        RetrofitManager.instance.joinUser(_userData, completion = {
+            completionResponse, s -> 
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 성공 $s")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 에러")
+                }
+            }
+        })
+    }
+
+    private fun retrofitFindAllUser() {
+        RetrofitManager.instance.findAllUser(_userData, completion = {
+                completionResponse, s ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 성공 $s")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 에러")
+                }
+            }
+        })
     }
 }
