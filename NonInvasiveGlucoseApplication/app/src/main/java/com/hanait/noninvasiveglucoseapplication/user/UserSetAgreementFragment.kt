@@ -5,9 +5,10 @@ import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 
 
 
@@ -20,9 +21,9 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
 
 
     private fun init() {
-        mPrevFragment = UserSetSexFragment()
-        mProgressBar.visibility = View.VISIBLE
-        mProgressBar.progress = 96
+        _prevFragment = UserSetSexFragment()
+        _progressBar.visibility = View.VISIBLE
+        _progressBar.progress = 96
 
 
         binding.userSetAgreementTextViewAgreement1.setOnClickListener(this)
@@ -50,6 +51,8 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
                 binding.userSetAgreementBtnNext.isEnabled = true
             }
             binding.userSetAgreementBtnNext -> {
+                RetrofitManager.instance.joinUser()
+
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetConnectDeviceFragment")
             }

@@ -8,10 +8,9 @@ import com.hanait.noninvasiveglucoseapplication.model.UserData
 
 @SuppressLint("StaticFieldLeak")
 object Constants {
-    lateinit var mProgressBar: ProgressBar
-    lateinit var mPrevFragment: Fragment
-
-    lateinit var mUserData: UserData
+    lateinit var _progressBar: ProgressBar
+    lateinit var _prevFragment: Fragment
+    lateinit var _userData: UserData
 
 
 

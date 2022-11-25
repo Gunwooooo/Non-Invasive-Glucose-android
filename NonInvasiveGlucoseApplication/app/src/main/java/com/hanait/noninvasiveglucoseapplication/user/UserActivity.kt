@@ -6,8 +6,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityUserBinding
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import kotlin.system.exitProcess
 
 class UserActivity : AppCompatActivity() {
@@ -19,8 +19,8 @@ class UserActivity : AppCompatActivity() {
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mProgressBar = binding.userProgressBar
-        mProgressBar.indeterminateDrawable
+        _progressBar = binding.userProgressBar
+        _progressBar.indeterminateDrawable
 
         //toolbar 생성
         setSupportActionBar(binding.userToolbar)
@@ -36,6 +36,7 @@ class UserActivity : AppCompatActivity() {
         fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
         when(fragmentName) {
             "UserSetAuthorizationFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
+            "UserSetNickNameFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetNickNameFragment()).commitAllowingStateLoss()
             "UserSetPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
             "UserSetBirthdayFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
             "UserSetSexFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
@@ -61,7 +62,7 @@ class UserActivity : AppCompatActivity() {
     fun changePrevFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(R.anim.left_to_center_anim, R.anim.center_to_right_anim, R.anim.left_to_center_anim, R.anim.center_to_right_anim)
-        fragmentTransaction.replace(R.id.user_frameId, mPrevFragment).commitAllowingStateLoss()
+        fragmentTransaction.replace(R.id.user_frameId, _prevFragment).commitAllowingStateLoss()
     }
 
     @Override

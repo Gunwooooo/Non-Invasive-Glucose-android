@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.DatePicker
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import java.util.*
 
 class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
@@ -21,8 +21,8 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     }
 
     private fun init() {
-        mPrevFragment = UserSetPasswordFragment()
-        mProgressBar.progress = 64
+        _prevFragment = UserSetPasswordFragment()
+        _progressBar.progress = 64
 
         binding.userSetBirthdayBtnNext.setOnClickListener(this)
         binding.userSetBirthdayBtnCalendar.setOnClickListener(this)

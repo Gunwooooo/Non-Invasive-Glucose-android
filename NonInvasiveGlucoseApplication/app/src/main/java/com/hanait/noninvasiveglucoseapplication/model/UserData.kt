@@ -1,6 +1,6 @@
 package com.hanait.noninvasiveglucoseapplication.model
 
-data class UserData(var phoneNumber: String, var password: String, var birthDay: String, var sex: String)
+data class UserData(var nickName: String, var phoneNumber: String, var password: String, var birthDay: String, var sex: String)
 
 //남자 true, 여자 false
 

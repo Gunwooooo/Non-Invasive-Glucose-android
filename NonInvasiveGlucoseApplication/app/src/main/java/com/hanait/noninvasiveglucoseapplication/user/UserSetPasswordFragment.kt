@@ -9,8 +9,8 @@ import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import java.util.regex.Pattern
 
 
@@ -25,8 +25,8 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
     }
 
     private fun init() {
-        mPrevFragment = UserSetAuthorizationFragment()
-        mProgressBar.progress = 48
+        _prevFragment = UserSetAuthorizationFragment()
+        _progressBar.progress = 48
 
         binding.userSetPasswordBtnNext.setOnClickListener(this)
     }

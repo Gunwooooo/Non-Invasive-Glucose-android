@@ -19,7 +19,7 @@
             android:name=".home.HomeAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".user.UserActivity"
@@ -28,7 +28,7 @@
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">

@@ -12,9 +12,9 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAutho
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mUserData
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
 class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
@@ -34,8 +34,8 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
     }
 
     private fun init() {
-        mPrevFragment = UserSetPhoneNumberFragment()
-        mProgressBar.progress = 32
+        _prevFragment = UserSetPhoneNumberFragment()
+        _progressBar.progress = 32
 
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
@@ -44,7 +44,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         binding.userSetAuthorizationBtnNext.setOnClickListener(this)
 
         //입력받은 휴대전화 번호 넣어놓기
-        binding.userSetAuthorizationEditTextPhoneNumber.hint = mUserData.phoneNumber
+        binding.userSetAuthorizationEditTextPhoneNumber.hint = _userData.phoneNumber
         binding.userSetAuthorizationEditTextPhoneNumber.setOnClickListener(this)
         binding.userSetAuthorizationBtnGetAuthNum.setOnClickListener(this)
     }
@@ -54,7 +54,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         val mActivity = activity as UserActivity
         when(v) {
             binding.userSetAuthorizationBtnNext -> {
-                mActivity.changeFragment("UserSetPasswordFragment")
+                mActivity.changeFragment("UserSetNickNameFragment")
                 //인증번호가 일치할 경우, 불일치 경우
 //                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
 //                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
@@ -96,7 +96,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
 
         val signature = naverCloudServiceManager.makeSignature(timestamp)
         smsAuthCode = naverCloudServiceManager.makeSMSAuthCode()
-        val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(mUserData.phoneNumber, smsAuthCode)
+        val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(_userData.phoneNumber, smsAuthCode)
         RetrofitManager.instance.sendSMS(timestamp, signature, bodyRequest, completion = {
                 completionResponse, s ->
             when(completionResponse) {

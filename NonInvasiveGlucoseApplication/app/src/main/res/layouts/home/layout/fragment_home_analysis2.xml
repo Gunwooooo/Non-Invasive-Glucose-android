@@ -8,11 +8,10 @@
     tools:context=".home.HomeAnalysis2Fragment"
     android:orientation="vertical"
     android:weightSum="1"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="16dp">
+>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="0.1">

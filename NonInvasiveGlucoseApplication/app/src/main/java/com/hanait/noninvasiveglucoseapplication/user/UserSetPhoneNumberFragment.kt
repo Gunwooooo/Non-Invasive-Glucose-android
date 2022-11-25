@@ -7,9 +7,9 @@ import android.view.View
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPhoneNumberBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mPrevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mProgressBar
-import com.hanait.noninvasiveglucoseapplication.util.Constants.mUserData
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
 
 class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {
@@ -34,8 +34,8 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
     }
 
     private fun init(){
-        mPrevFragment = UserSetPhoneNumberFragment()
-        mProgressBar.progress = 16
+        _prevFragment = UserSetPhoneNumberFragment()
+        _progressBar.progress = 16
 
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
@@ -44,13 +44,13 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         binding.userSetPhoneNumberBtnNext.setOnClickListener(this)
 
         //유저 데이터 클래스 초기화
-        mUserData = UserData("", "", "", "")
+        _userData = UserData("", "", "", "", "T")
     }
 
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetPhoneNumberBtnNext -> {
-                mUserData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
+                _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetAuthorizationFragment")

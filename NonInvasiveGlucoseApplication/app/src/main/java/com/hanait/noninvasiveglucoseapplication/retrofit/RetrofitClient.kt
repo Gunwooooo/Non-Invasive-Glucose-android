@@ -13,11 +13,12 @@ object RetrofitClient {
     fun getClient(baseUrl: String): Retrofit?{
         val client = OkHttpClient.Builder()
 
-        val loggingInterceptor = HttpLoggingInterceptor(object: HttpLoggingInterceptor.Logger{
-            override fun log(message: String) {
-                Log.d("로그", "RetrofitClient - log : $message")
-            }
-        })
+        val loggingInterceptor = HttpLoggingInterceptor { message ->
+            Log.d(
+                "로그",
+                "RetrofitClient - log : $message"
+            )
+        }
 
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         client.addInterceptor(loggingInterceptor)
