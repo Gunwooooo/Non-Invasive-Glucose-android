@@ -15,17 +15,20 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 
 
-class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>(FragmentConnectionLoadingBinding::inflate) {
+class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>(FragmentConnectionLoadingBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         init()
 
         Handler().postDelayed({
-            startActivity(Intent(context, HomeActivity::class.java))
-            val mActivity = activity as UserActivity
-            mActivity.finish()
-        }, 1000)
+            binding.connectionLoadingTextViewTitle.text = "연결을 완료했습니다.\n건강 관리를 시작해보세요."
+            binding.connectionLoadingLottie.visibility = View.GONE
+            binding.connectionLoadingImageView.visibility = View.VISIBLE
+            binding.connectionLoadingBtnNext.isEnabled = true
+
+
+        }, 3000)
 
     }
 
@@ -36,6 +39,17 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        binding.connectionLoadingBtnNext.setOnClickListener(this)
     }
 
+    override fun onClick(v: View?) {
+        when(v) {
+            binding.connectionLoadingBtnNext -> {
+                startActivity(Intent(context, HomeActivity::class.java))
+                val mActivity = activity as UserActivity
+                mActivity.finish()
+            }
+        }
+    }
 }

@@ -52,9 +52,9 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
                 binding.userSetAgreementBtnNext.isEnabled = true
             }
             binding.userSetAgreementBtnNext -> {
-//                retrofitJoinUser()
+                retrofitJoinUser()
 
-                retrofitFindAllUser()
+//                retrofitFindAllUser()
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetConnectDeviceFragment")

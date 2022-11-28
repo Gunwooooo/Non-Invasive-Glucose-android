@@ -7,19 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeAnalysis2Fragment"
     android:orientation="vertical"
-    android:weightSum="1"
->
+    android:weightSum="1">
+
+    <com.google.android.material.tabs.TabLayout
+        app:tabRippleColor="@android:color/transparent"
+        app:tabTextAppearance="@style/tab_text"
+        android:id="@+id/homeThermometer_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/StatusBarColor"
+        app:tabTextColor="@color/toss_black_700"
+        app:tabIndicatorColor="@color/toss_black_700"
+        app:tabIndicatorHeight="2dp"
+        app:tabGravity="fill">
+        <!-- TabItem은 탭메뉴 하나를 의미한다. -->
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="체온" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="심박수" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="혈당" />
+    </com.google.android.material.tabs.TabLayout>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.1">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="정상 혈당 빈도수"/>
-    </LinearLayout>
+        android:layout_weight="0.03"/>
 
     <LinearLayout
         android:gravity="center_vertical"
@@ -93,9 +114,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.7">
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/homeAnalysis2_mainChart"
+        android:layout_weight="0.87">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/homeAnalysis2_viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

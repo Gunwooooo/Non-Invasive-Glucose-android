@@ -31,11 +31,12 @@ class HomeAnalysisFragment : BaseFragment<FragmentHomeAnalysisBinding>(FragmentH
 
     }
 
+    //뷰페이저 탭레이아웃 연결
     private fun setViewPagerAndTabLayout() {
-        binding.homeThermometerViewPager.adapter = ThermometerViewPagerFragmentAdapter(requireActivity())
-        binding.homeThermometerViewPager.isUserInputEnabled = false //뷰페이저 스와이프 안되도록
+        binding.homeAnalysisViewPager.adapter = ThermometerViewPagerFragmentAdapter(requireActivity())
+        binding.homeAnalysisViewPager.isUserInputEnabled = false //뷰페이저 스와이프 안되도록
         val tabTitles = listOf("체온", "심박수", "혈당")
-        TabLayoutMediator(binding.homeThermometerTabLayout, binding.homeThermometerViewPager) { tab, position ->
+        TabLayoutMediator(binding.homeAnalysisTabLayout, binding.homeAnalysisViewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
     }

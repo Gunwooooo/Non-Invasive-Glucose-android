@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtectorBinding
@@ -54,10 +55,12 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     override fun onClick(v: View?) {
         when(v) {
+            //바텀 시트 다이어로그 호출
             binding.homeProtectorBtnAdd -> {
                 val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
                 val bottomSheetDialog = BottomSheetDialog(requireContext())
                 bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 bottomSheetDialog.show()
             }
             binding.homeProtectorBtnDelete -> {

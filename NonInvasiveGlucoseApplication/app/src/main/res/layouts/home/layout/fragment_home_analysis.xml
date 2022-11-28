@@ -12,7 +12,7 @@
     <com.google.android.material.tabs.TabLayout
         app:tabRippleColor="@android:color/transparent"
         app:tabTextAppearance="@style/tab_text"
-        android:id="@+id/homeThermometer_tabLayout"
+        android:id="@+id/homeAnalysis_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/StatusBarColor"
@@ -122,7 +122,7 @@
         android:layout_height="0dip"
         android:layout_weight="0.87">
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/homeThermometer_viewPager"
+            android:id="@+id/homeAnalysis_viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

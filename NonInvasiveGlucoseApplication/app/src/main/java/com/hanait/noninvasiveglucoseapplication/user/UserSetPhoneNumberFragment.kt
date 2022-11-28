@@ -59,6 +59,4 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             }
         }
     }
-
-
 }

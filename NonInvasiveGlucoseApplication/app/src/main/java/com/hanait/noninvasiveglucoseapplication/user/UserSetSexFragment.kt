@@ -32,7 +32,7 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
         when(v) {
             binding.userSetSexBtnNext -> {
                 var tmpSex = "F"
-                if(binding.userSetSexBtnMale.isEnabled)
+                if(!binding.userSetSexBtnMale.isEnabled)
                     tmpSex = "T"
                 _userData.sex = tmpSex
 
