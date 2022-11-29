@@ -16,6 +16,10 @@ import java.util.*
 
 class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
 
+    private var selectedYear = ""
+    private var selectedMonth = ""
+    private var selectedDayOfMonth = ""
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,6 +48,10 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
                 binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
                 binding.userSetBirthdayTextViewDay.text = "$dayOfMonth 일"
                 binding.userSetBirthdayBtnNext.isEnabled = true
+
+                selectedYear = year.toString()
+                selectedMonth = (month + 1).toString()
+                selectedDayOfMonth = dayOfMonth.toString()
             }
         val datePickerDialog = DatePickerDialog(requireContext(), dateSetListener,  todayYear, todayMonth, todayDate)
         datePickerDialog.show()
@@ -54,7 +62,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetBirthdayBtnNext -> {
-                _userData.birthDay = "${binding.userSetBirthdayTextViewYear.text}-${binding.userSetBirthdayTextViewMonth.text}-${binding.userSetBirthdayTextViewDay.text}"
+                _userData.birthDay = "$selectedYear-$selectedMonth-$selectedDayOfMonth"
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetSexFragment")

@@ -37,7 +37,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
     private fun setThermometer7DayLineChart() {
         val thermometerCandleData =  customChartManager.setThermometer7DayCandleData()
         val candleData = CandleData(thermometerCandleData)
-        val candleThermometerDay = binding.homeThermometerCandleChartDay
+        val candleThermometerDay = binding.homeAnalysisThermometerCandleChart
 //        val combinedData = LineData()
 //        lineThermometerDay.setData(lineData)
 
@@ -69,7 +69,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
                 axisMinimum = 32F   //최소값
-                axisMaximum = 50F   //최대값
+                axisMaximum = 42F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)

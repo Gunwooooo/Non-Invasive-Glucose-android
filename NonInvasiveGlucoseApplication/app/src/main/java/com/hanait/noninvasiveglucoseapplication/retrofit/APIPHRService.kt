@@ -17,7 +17,7 @@ interface APIPHRService {
     @POST("/api/v1/join")
     fun joinUser(@Body userData: UserData): Call<ResponseBody>
 
-    //회원가입
-    @POST("/api/v1/admin/users")
-    fun findAllUser(@Body userData: UserData): Call<ResponseBody>
+    //가입된 유저 체크
+    @POST("/api/v1/check")
+    fun checkJoinedUser(@Body userData: UserData): Call<ResponseBody>
 }

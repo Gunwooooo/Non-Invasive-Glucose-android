@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeAnalysisGlucoseFragment"
+    tools:context=".home.HomeAnalysisThermometerFragment"
     android:weightSum="1"
     android:orientation="vertical">
-
 
     <LinearLayout
         android:layout_margin="16dp"
@@ -16,7 +15,7 @@
         android:layout_height="0dip"
         android:layout_weight="0.6">
         <com.github.mikephil.charting.charts.CandleStickChart
-            android:id="@+id/homeGlucose_candleChart_day"
+            android:id="@+id/homeAnalysisGlucose_candleChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
@@ -73,7 +72,7 @@
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.63">
+                android:layout_weight="0.52">
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
@@ -93,7 +92,7 @@
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="100.6"
+                    android:text="37.7"
                     android:textSize="21dp"
                     android:fontFamily="@font/ps_bold"
                     android:textColor="@color/text_value_normal"/>
@@ -102,8 +101,8 @@
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text=" mg/dL"
-                    android:textSize="16dp"
+                    android:text=" ℃"
+                    android:textSize="18dp"
                     android:fontFamily="@font/ps_regular"
                     android:textColor="@color/toss_black_200"/>
             </LinearLayout>
@@ -128,7 +127,7 @@
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.63">
+                android:layout_weight="0.52">
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
@@ -148,7 +147,7 @@
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="67.7"
+                    android:text="35.3"
                     android:textSize="21dp"
                     android:fontFamily="@font/ps_bold"
                     android:textColor="@color/text_value_normal"/>
@@ -157,8 +156,8 @@
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text=" mg/dL"
-                    android:textSize="16dp"
+                    android:text=" ℃"
+                    android:textSize="18dp"
                     android:fontFamily="@font/ps_regular"
                     android:textColor="@color/toss_black_200"/>
             </LinearLayout>

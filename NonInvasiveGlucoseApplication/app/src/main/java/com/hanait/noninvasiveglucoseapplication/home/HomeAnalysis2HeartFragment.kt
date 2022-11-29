@@ -5,19 +5,17 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.CandleData
-import com.github.mikephil.charting.data.CandleEntry
-import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisHeartBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysis2HeartBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 
 
-class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>(FragmentHomeAnalysisHeartBinding::inflate),OnChartValueSelectedListener {
+class HomeAnalysis2HeartFragment : BaseFragment<FragmentHomeAnalysis2HeartBinding>(FragmentHomeAnalysis2HeartBinding::inflate) {
     lateinit var customChartManager: CustomChartManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,7 +24,7 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
 
         init()
 
-        setHeart7DayLineChart()
+        setHeart7DayBarChart()
     }
 
     private fun init() {
@@ -34,25 +32,25 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
     }
 
     //체온 차트 설정
-    private fun setHeart7DayLineChart() {
-        val heartCandleData = customChartManager.setHeart7DayCandleData()
-        val candleData = CandleData(heartCandleData)
-        val candleHeartDay = binding.homeAnalysisHeartCandleChart
+    private fun setHeart7DayBarChart() {
+        val heartBarData =  customChartManager.setHeartAnalysis2BarData()
+        val barData = BarData(heartBarData)
+        val barHeartDay = binding.homeAnalysis2HeartBarChart
 //        val combinedData = LineData()
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
-        candleHeartDay.setOnChartValueSelectedListener(this)
-        candleHeartDay.run {
+        barHeartDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
-            data = candleData
+            data = barData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+
             isScaleXEnabled = false //가로 확대 없애기
-            enableScroll()
-            setVisibleXRangeMaximum(7f) //
+//            isDragEnabled = true
+//            enableScroll()
+//            setVisibleXRangeMaximum(7f)
 
             marker = markerView
 //            moveViewToX(3f);
@@ -60,15 +58,15 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-                valueFormatter = CustomChartManager.CustomDateXAxisFormatter()
+                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 32F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 0F   //최소값
+                axisMaximum = 20F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -88,17 +86,5 @@ class HomeAnalysisHeartFragment : BaseFragment<FragmentHomeAnalysisHeartBinding>
             }
             invalidate()
         }
-    }
-
-    override fun onValueSelected(e: Entry?, h: Highlight?) {
-        if (e is CandleEntry) {
-            val minVal = Math.min(e.open, e.close)
-            val maxVal = Math.max(e.open, e.close)
-            binding.homeAnalysisHeartTextViewMinValue.text = "$minVal"
-            binding.homeAnalysisHeartTextViewMaxValue.text = "$maxVal"
-        }
-    }
-
-    override fun onNothingSelected() {
     }
 }

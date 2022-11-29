@@ -6,10 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.data.CandleDataSet
-import com.github.mikephil.charting.data.CandleEntry
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.hanait.noninvasiveglucoseapplication.R
 import java.util.*
@@ -32,8 +29,8 @@ class CustomChartManager(context: Context) {
     class CustomTimeXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val time = value.toInt()
-//            if(time )
-            return "오후${time}시"
+//            if(0<time)
+            return "${time}시"
         }
     }
     
@@ -45,7 +42,7 @@ class CustomChartManager(context: Context) {
     }
 
     //실수 난수 생성
-    fun makeThermometerDashboardLineDataSet() : LineDataSet {
+    private fun makeThermometerDashboardLineDataSet() : LineDataSet {
         val entry: MutableList<Entry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -58,7 +55,7 @@ class CustomChartManager(context: Context) {
     }
 
     //실수 난수 생성
-    fun makeHeartDashboardLineDataSet() : LineDataSet {
+    private fun makeHeartDashboardLineDataSet() : LineDataSet {
         val entry: MutableList<Entry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -71,7 +68,7 @@ class CustomChartManager(context: Context) {
     }
 
     //실수 난수 생성
-    fun makeGlucoseDashboardLineDataSet() : LineDataSet {
+    private fun makeGlucoseDashboardLineDataSet() : LineDataSet {
         val entry: MutableList<Entry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -85,7 +82,7 @@ class CustomChartManager(context: Context) {
 
     //==============================================================================================
     //캔들 데이터 생성
-    fun makeThermometer7dayCandleDataSet() : CandleDataSet {
+    private fun makeThermometer7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -100,7 +97,7 @@ class CustomChartManager(context: Context) {
     }
 
     //캔들 데이터 생성
-    fun makeHeart7dayCandleDataSet() : CandleDataSet {
+    private fun makeHeart7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -115,7 +112,7 @@ class CustomChartManager(context: Context) {
     }
 
     //캔들 데이터 생성
-    fun makeGlucose7dayCandleDataSet() : CandleDataSet {
+    private fun makeGlucose7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -128,9 +125,43 @@ class CustomChartManager(context: Context) {
         }
         return CandleDataSet(entry, "혈당")
     }
+    //================================================================================================
+    //분석2 BarChart 데이터 생성
+
+    private fun makeThermometerAnalysis2BarDataSet() : BarDataSet {
+        val entry: MutableList<BarEntry> = ArrayList()
+        val random = Random()
+        random.setSeed(Date().time)
+        for (i in 1 until 9) {
+            entry.add(BarEntry(i.toFloat(), random.nextInt(18).toFloat()))
+        }
+        return BarDataSet(entry, "체온")
+    }
+
+    //실수 난수 생성
+    private fun makeHeartAnalysis2BarDataSet() : BarDataSet {
+        val entry: MutableList<BarEntry> = ArrayList()
+        val random = Random()
+        random.setSeed(Date().time)
+        for (i in 1 until 9) {
+            entry.add(BarEntry(i.toFloat(), random.nextInt(20).toFloat()))
+        }
+        return BarDataSet(entry, "심박수")
+    }
+
+    //실수 난수 생성
+    private fun makeGlucoseAnalysis2BarDataSet() : BarDataSet {
+        val entry: MutableList<BarEntry> = ArrayList()
+        val random = Random()
+        random.setSeed(Date().time)
+        for (i in 1 until 9) {
+            entry.add(BarEntry(i.toFloat(), random.nextInt(20).toFloat()))
+        }
+        return BarDataSet(entry, "혈당")
+    }
 
     //=================================================================================================
-    //심박수 막대 데이터 생성성
+    //심박수 라인 데이터 생성성
     fun setThermometerDashboardLineData() : LineDataSet {
         val lineDataSet = makeThermometerDashboardLineDataSet()
         lineDataSet.mode = LineDataSet.Mode.LINEAR
@@ -157,7 +188,6 @@ class CustomChartManager(context: Context) {
         return lineDataSet
     }
 
-    //체온 라인데이터 생성
     fun setHeartLineData() : LineDataSet {
         val lineDataSet = makeHeartDashboardLineDataSet()
         lineDataSet.mode = LineDataSet.Mode.LINEAR
@@ -184,7 +214,6 @@ class CustomChartManager(context: Context) {
         return lineDataSet
     }
 
-    //체온 라인데이터 생성
     fun setGlucoseLineData() : LineDataSet {
         val lineDataSet = makeGlucoseDashboardLineDataSet()
         lineDataSet.mode = LineDataSet.Mode.LINEAR
@@ -285,5 +314,76 @@ class CustomChartManager(context: Context) {
             highLightColor = Color.TRANSPARENT
         }
         return candleDataSet
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //analysis2 bar chart 데이터셋 생성
+    //심박수 막대 데이터 생성성
+    fun setThermometerAnalysis2BarData() : BarDataSet {
+        val barDataSet = makeThermometerAnalysis2BarDataSet()
+//        barDataSet.mode = LineDataSet.Mode.LINEAR
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+        barDataSet.setColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
+//        barDataSet.lineWidth = 3F //선 굵기
+//        barDataSet.circleRadius = 7F
+//        barDataSet.circleHoleRadius = 4F
+//        barDataSet.setDrawCircles(true)   //동그란거 없애기
+        barDataSet.setDrawValues(true)
+//        barDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
+        barDataSet.valueTextSize = 12F
+//        lineDataSet.fillAlpha = 50
+//        lineDataSet.highLightColor = Color.BLACK
+//        lineDataSet.highlightLineWidth = 2F
+        barDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+//        barDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+//        barDataSet.setDrawCircleHole(true)
+        return barDataSet
+    }
+
+    //체온 라인데이터 생성
+    fun setHeartAnalysis2BarData() : BarDataSet {
+        val barDataSet = makeHeartAnalysis2BarDataSet()
+//        barDataSet.mode = LineDataSet.Mode.LINEAR
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+        barDataSet.setColor(ContextCompat.getColor(context, R.color.graph_heart_100))
+//        barDataSet.lineWidth = 3F //선 굵기
+//        barDataSet.circleRadius = 7F
+//        barDataSet.circleHoleRadius = 4F
+//        barDataSet.setDrawCircles(true)   //동그란거 없애기
+        barDataSet.setDrawValues(true)
+//        barDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_heart_100))
+        barDataSet.valueTextSize = 12F
+//        lineDataSet.fillAlpha = 50
+//        lineDataSet.highLightColor = Color.BLACK
+//        lineDataSet.highlightLineWidth = 2F
+        barDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+//        barDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+//        barDataSet.setDrawCircleHole(true)
+        return barDataSet
+    }
+
+    //체온 라인데이터 생성
+    fun setGlucoseAnalysis2BarData() : BarDataSet {
+        val barDataSet = makeGlucoseAnalysis2BarDataSet()
+//        barDataSet.mode = LineDataSet.Mode.LINEAR
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+        barDataSet.setColor(ContextCompat.getColor(context, R.color.graph_glucose_100))
+//        barDataSet.lineWidth = 3F //선 굵기
+//        barDataSet.circleRadius = 7F
+//        barDataSet.circleHoleRadius = 4F
+//        barDataSet.setDrawCircles(true)   //동그란거 없애기
+        barDataSet.setDrawValues(true)
+//        barDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_glucose_100))
+        barDataSet.valueTextSize = 12F
+//        lineDataSet.fillAlpha = 50
+//        lineDataSet.highLightColor = Color.BLACK
+//        lineDataSet.highlightLineWidth = 2F
+        barDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+//        barDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+//        barDataSet.setDrawCircleHole(true)
+        return barDataSet
     }
 }

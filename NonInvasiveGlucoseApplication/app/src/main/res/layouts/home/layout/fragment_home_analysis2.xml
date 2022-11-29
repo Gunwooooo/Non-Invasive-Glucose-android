@@ -12,7 +12,7 @@
     <com.google.android.material.tabs.TabLayout
         app:tabRippleColor="@android:color/transparent"
         app:tabTextAppearance="@style/tab_text"
-        android:id="@+id/homeThermometer_tabLayout"
+        android:id="@+id/homeAnalysis2_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/StatusBarColor"

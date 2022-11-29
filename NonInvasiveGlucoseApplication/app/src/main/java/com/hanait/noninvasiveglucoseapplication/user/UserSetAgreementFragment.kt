@@ -84,18 +84,4 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
             }
         })
     }
-
-    private fun retrofitFindAllUser() {
-        RetrofitManager.instance.findAllUser(_userData, completion = {
-                completionResponse, s ->
-            when(completionResponse) {
-                CompletionResponse.OK -> {
-                    Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 성공 $s")
-                }
-                CompletionResponse.FAIL -> {
-                    Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 에러")
-                }
-            }
-        })
-    }
 }

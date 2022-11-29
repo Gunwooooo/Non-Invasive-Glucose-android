@@ -34,7 +34,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
         recyclerViewCreate()
 
-        binding.homeProtectorBtnAdd.setOnClickListener(this)
+//        binding.homeProtectorBtnAdd.setOnClickListener(this)
         binding.homeProtectorBtnDelete.setOnClickListener(this)
     }
 
@@ -56,13 +56,13 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     override fun onClick(v: View?) {
         when(v) {
             //바텀 시트 다이어로그 호출
-            binding.homeProtectorBtnAdd -> {
-                val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
-                val bottomSheetDialog = BottomSheetDialog(requireContext())
-                bottomSheetDialog.setContentView(bottomSheetView)
-                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                bottomSheetDialog.show()
-            }
+//            binding.homeProtectorBtnAdd -> {
+//                val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
+//                val bottomSheetDialog = BottomSheetDialog(requireContext())
+//                bottomSheetDialog.setContentView(bottomSheetView)
+//                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+//                bottomSheetDialog.show()
+//            }
             binding.homeProtectorBtnDelete -> {
                 showDeleteProtectorDialog()
             }

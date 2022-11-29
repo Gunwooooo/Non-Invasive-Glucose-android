@@ -80,15 +80,15 @@ class RetrofitManager {
 
 
     //회원 로그인
-    fun findAllUser(userData: UserData, completion: (CompletionResponse, String) -> Unit) {
-        val call = apiPHRService?.findAllUser(userData) ?: return
+    fun checkJoinedUser(userData: UserData, completion: (CompletionResponse, String) -> Unit) {
+        val call = apiPHRService?.checkJoinedUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if(response.code() != 200) {
                     completion(CompletionResponse.FAIL, "잘못된 요청, 에러 코드 확인")
                     return
                 }
-                completion(CompletionResponse.OK, response.body().toString())
+                completion(CompletionResponse.OK, response.toString())
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 completion(CompletionResponse.FAIL, "통신 실패")

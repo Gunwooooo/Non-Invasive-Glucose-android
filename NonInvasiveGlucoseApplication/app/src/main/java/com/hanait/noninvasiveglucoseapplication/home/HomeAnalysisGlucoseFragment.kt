@@ -37,7 +37,7 @@ class HomeAnalysisGlucoseFragment : BaseFragment<FragmentHomeAnalysisGlucoseBind
     private fun setHeart7DayLineChart() {
         val glucoseCandleData = customChartManager.setGlucose7DayCandleData()
         val candleData = CandleData(glucoseCandleData)
-        val candleGlucoseDay = binding.homeGlucoseCandleChartDay
+        val candleGlucoseDay = binding.homeAnalysisGlucoseCandleChart
 //        val combinedData = LineData()
 //        lineThermometerDay.setData(lineData)
 

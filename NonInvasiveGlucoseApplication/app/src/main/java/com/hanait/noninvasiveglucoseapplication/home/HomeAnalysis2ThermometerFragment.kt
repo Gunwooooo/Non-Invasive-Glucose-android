@@ -10,14 +10,14 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysisThermometerBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeAnalysis2ThermometerBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 import kotlin.math.max
 import kotlin.math.min
 
-class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermometerBinding>(FragmentHomeAnalysisThermometerBinding::inflate), OnChartValueSelectedListener {
+class HomeAnalysis2ThermometerFragment : BaseFragment<FragmentHomeAnalysis2ThermometerBinding>(FragmentHomeAnalysis2ThermometerBinding::inflate) {
     lateinit var customChartManager: CustomChartManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
 
         init()
 
-        setThermometer7DayLineChart()
+        setThermometer7DayBarChart()
 
     }
 
@@ -34,42 +34,40 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
     }
 
     //체온 차트 설정
-    private fun setThermometer7DayLineChart() {
-        val thermometerCandleData =  customChartManager.setThermometer7DayCandleData()
-        val candleData = CandleData(thermometerCandleData)
-        val candleThermometerDay = binding.homeThermometerCandleChartDay
+    private fun setThermometer7DayBarChart() {
+        val thermometerBarData =  customChartManager.setThermometerAnalysis2BarData()
+        val barData = BarData(thermometerBarData)
+        val barThermometerDay = binding.homeAnalysis2ThermometerBarChart
 //        val combinedData = LineData()
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
 
-        //클릭 리스너 설정
-        candleThermometerDay.setOnChartValueSelectedListener(this)
-        candleThermometerDay.run {
+        barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
-            data = candleData
+            data = barData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true    //드래그 가능
             isScaleXEnabled = false //가로 확대 없애기
-            enableScroll()
-            setVisibleXRangeMaximum(7f) //
+//            isDragEnabled = true    //드래그 가능
+//            enableScroll()
+//            setVisibleXRangeMaximum(7f)
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-                valueFormatter = CustomChartManager.CustomDateXAxisFormatter()
+                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 32F   //최소값
-                axisMaximum = 50F   //최대값
+                axisMinimum = 0F   //최소값
+                axisMaximum = 20F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -89,50 +87,4 @@ class HomeAnalysisThermometerFragment : BaseFragment<FragmentHomeAnalysisThermom
             invalidate()
         }
     }
-
-    //그래프 터치시 리스너
-    override fun onValueSelected(e: Entry?, h: Highlight?) {
-        if (e is CandleEntry) {
-            val minVal = min(e.open, e.close)
-            val maxVal = max(e.open, e.close)
-
-
-            binding.homeAnalysisThermometerTextViewMinValue.text = "$minVal"
-            binding.homeAnalysisThermometerTextViewMaxValue.text = "$maxVal"
-
-            setMinMaxTextColor(minVal, binding.homeAnalysisThermometerTextViewMinValue)
-            setMinMaxTextColor(maxVal, binding.homeAnalysisThermometerTextViewMaxValue)
-//            binding.homeAnalysisThermometerTextViewMinValue.setTextColor(ContextCompat.getColor(R.color.))
-        }
-    }
-
-    override fun onNothingSelected() {
-    }
-
-    private fun setMinMaxTextColor(value : Float, v: TextView) {
-        if(value in 36.0..37.5) {
-            v.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_value_normal))
-            return
-        }
-        if((value > 37.5 && value <= 38.5) || (value >= 35 && value < 36)) {
-            v.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_value_warn))
-            return
-        }
-        else {
-            v.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_value_danger))
-        }
-    }
 }
-
-
-
-//        lineThermometerHeart.setDrawGridBackground(true)    //배경 색 추가하기
-
-//가로 세로 꽉채우기
-//        lineThermometerDay.setViewPortOffsets(0f, 0f, 0f, 0f)
-//        lineThermometerDay.xAxis.axisMaximum = lineThermometerDay.data.getDataSetByIndex(0).xMax
-//        lineThermometerDay.xAxis.axisMinimum = 0f
-
-//        lineThermometerHeart.setTouchEnabled(false)
-//        lineThermometerHeart.xAxis.textSize = 13f 가로출 텍스트 사이즈
-//        lineThermometerHeart.axisLeft.setDrawGridLines(false)

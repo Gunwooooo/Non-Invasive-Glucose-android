@@ -3,9 +3,12 @@ package com.hanait.noninvasiveglucoseapplication.user
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPhoneNumberBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
@@ -54,9 +57,26 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             binding.userSetPhoneNumberBtnNext -> {
                 _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
 
+                retrofitCheckJoinedUser()
+
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetAuthorizationFragment")
             }
         }
+    }
+
+    //가입된 유저 체크
+    private fun retrofitCheckJoinedUser() {
+        RetrofitManager.instance.checkJoinedUser(_userData, completion = {
+            completionResponse, s ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : 통신 성공 $s")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : 통신 실패")
+                }
+            }
+        })
     }
 }
