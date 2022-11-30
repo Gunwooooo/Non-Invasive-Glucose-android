@@ -12,9 +12,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 import java.util.*
 import kotlin.math.roundToInt
 
-class CustomChartManager(context: Context) {
-    var context: Context = context
-
+class CustomChartManager(val context: Context) {
     companion object {
         @SuppressLint("StaticFieldLeak")
         var INSTANCE: CustomChartManager? = null
@@ -33,7 +31,7 @@ class CustomChartManager(context: Context) {
             return "${time}시"
         }
     }
-    
+
     class CustomDateXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val time = value.toInt()
@@ -57,6 +55,7 @@ class CustomChartManager(context: Context) {
     //실수 난수 생성
     private fun makeHeartDashboardLineDataSet() : LineDataSet {
         val entry: MutableList<Entry> = ArrayList()
+        var mutableList = mutableListOf("", "", "")
         val max = 40.0
         val min = 35.0
         val random = Random()

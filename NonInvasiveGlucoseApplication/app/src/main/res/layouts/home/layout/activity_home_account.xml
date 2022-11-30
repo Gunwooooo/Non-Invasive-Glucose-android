@@ -78,7 +78,7 @@
                         android:text="010-4054-7199"
                         android:textColor="@color/toss_black_600"
                         android:fontFamily="@font/ps_regular"
-                        android:textSize="24dp"/>
+                        android:textSize="21dp"/>
                 </LinearLayout>
                 <View
                     android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
                         android:text="남성"
                         android:textColor="@color/toss_black_600"
                         android:fontFamily="@font/ps_regular"
-                        android:textSize="24dp"/>
+                        android:textSize="21dp"/>
                 </LinearLayout>
                 <View
                     android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
                     android:gravity="center_vertical"
                     android:text="비밀번호 변경"
                     android:textColor="@color/toss_black_600"
-                    android:textSize="24dp" />
+                    android:textSize="21dp" />
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="0.5dp"
@@ -166,7 +166,7 @@
                     android:gravity="center_vertical"
                     android:text="로그아웃"
                     android:textColor="@color/toss_black_600"
-                    android:textSize="24dp" />
+                    android:textSize="21dp" />
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="0.5dp"
@@ -183,7 +183,7 @@
                     android:gravity="center_vertical"
                     android:text="회원 탈퇴"
                     android:textColor="@color/circle_red_100"
-                    android:textSize="24dp" />
+                    android:textSize="21dp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
