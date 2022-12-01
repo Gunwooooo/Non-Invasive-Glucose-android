@@ -75,9 +75,9 @@
             android:orientation="horizontal"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/my_ripple"
             android:weightSum="1"
-            android:padding="16dp">
+            android:layout_margin="16dp">
             <LinearLayout
                 android:background="@drawable/image_radius_border_thermometer"
                 android:layout_width="0dip"
@@ -169,14 +169,15 @@
         <LinearLayout
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/my_ripple"
             android:id="@+id/homeDashboard_btn_heart"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="0.31"
             android:orientation="horizontal"
             android:weightSum="1"
-            android:padding="16dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
             <LinearLayout
                 android:background="@drawable/image_radius_border_heart"
                 android:layout_width="0dip"
@@ -267,14 +268,14 @@
         <LinearLayout
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/my_ripple"
             android:id="@+id/homeDashboard_btn_glucose"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="0.31"
             android:orientation="horizontal"
             android:weightSum="1"
-            android:padding="16dp">
+            android:layout_margin="16dp">
             <LinearLayout
                 android:background="@drawable/image_radius_border_glucose"
                 android:layout_width="0dip"

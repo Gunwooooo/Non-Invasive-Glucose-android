@@ -1,43 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/my_ripple"
     android:clickable="true"
     android:focusable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:padding="31dp"
+    android:layout_height="75dp"
+    android:padding="16dp"
     android:orientation="horizontal"
     android:weightSum="1">
-    <ImageView
-        android:layout_width="50dp"
+    <LinearLayout
+        android:gravity="start"
+        android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:src="@drawable/human"/>
+        android:layout_weight="0.2">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/human"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_marginStart="36dp"
-        android:id="@+id/homeProtectingItem_textView_phoneNumber"
+    <LinearLayout
         android:gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:text="보호 대상자 정보"
-        android:textSize="21dp"
-        android:fontFamily="@font/ps_regular"
-        android:textColor="@color/toss_black_700"/>
+        android:layout_weight="0.6">
+        <TextView
+            android:layout_marginStart="5dp"
+            android:id="@+id/homeProtectingItem_textView_phoneNumber"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="이름"
+            android:textSize="21dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_700"/>
+    </LinearLayout>
 
-    <TextView
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_marginStart="36dp"
-        android:id="@+id/homeProtectorItem_btn_delete"
-        android:gravity="center"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:gravity="end"
+        android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:text="해제"
-        android:textSize="18dp"
-        android:fontFamily="@font/ps_regular"
-        android:textColor="@color/toss_black_200"/>
+        android:layout_weight="0.2">
+        <TextView
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/homeProtectorItem_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="해제"
+            android:textSize="18dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_200"/>
+    </LinearLayout>
+
 </LinearLayout>

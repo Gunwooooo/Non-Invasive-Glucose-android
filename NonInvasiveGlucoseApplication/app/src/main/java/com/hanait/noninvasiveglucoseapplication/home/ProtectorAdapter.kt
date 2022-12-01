@@ -1,5 +1,6 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -23,11 +24,12 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>)
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var protectorPhoneNumber: TextView
         private lateinit var protectorDeleteBtn : TextView
+        @SuppressLint("SetTextI18n")
         fun setTextView(protectorData: ProtectorData, position: Int) {
             protectorPhoneNumber = itemView.findViewById(R.id.homeProtectingItem_textView_phoneNumber)
             protectorDeleteBtn = itemView.findViewById(R.id.homeProtectorItem_btn_delete)
 
-            protectorPhoneNumber.text = protectorData.phoneNumber
+            protectorPhoneNumber.text = protectorData.nickName + " 님"
 
             //삭제 클릭 리스너
             protectorDeleteBtn.setOnClickListener {

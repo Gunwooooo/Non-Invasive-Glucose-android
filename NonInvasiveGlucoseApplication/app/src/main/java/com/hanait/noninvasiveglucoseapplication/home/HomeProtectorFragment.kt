@@ -23,14 +23,14 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     private fun init() {
 
-        protectorList.add(ProtectorData("010-****-7199"))
-        protectorList.add(ProtectorData("010-****-1234"))
-        protectorList.add(ProtectorData("010-****-5423"))
-        protectorList.add(ProtectorData("010-****-3456"))
-        protectorList.add(ProtectorData("010-****-2456"))
-        protectorList.add(ProtectorData("010-****-7654"))
-        protectorList.add(ProtectorData("010-****-4324"))
-        protectorList.add(ProtectorData("010-****-6432"))
+        protectorList.add(ProtectorData("010-****-7199", "김건우"))
+        protectorList.add(ProtectorData("010-****-1234", "홍길동"))
+        protectorList.add(ProtectorData("010-****-5423", "홍길동"))
+        protectorList.add(ProtectorData("010-****-3456", "홍길동"))
+        protectorList.add(ProtectorData("010-****-2456", "홍길동"))
+        protectorList.add(ProtectorData("010-****-7654", "홍길동"))
+        protectorList.add(ProtectorData("010-****-4324", "홍길동"))
+        protectorList.add(ProtectorData("010-****-6432", "홍길동"))
 
         recyclerViewCreate()
 

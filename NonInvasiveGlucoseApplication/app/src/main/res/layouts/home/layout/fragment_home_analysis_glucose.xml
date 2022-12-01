@@ -83,7 +83,7 @@
                     android:textColor="@color/toss_black_600"/>
             </LinearLayout>
             <LinearLayout
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3">
@@ -138,7 +138,7 @@
                     android:textColor="@color/toss_black_600"/>
             </LinearLayout>
             <LinearLayout
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3">
