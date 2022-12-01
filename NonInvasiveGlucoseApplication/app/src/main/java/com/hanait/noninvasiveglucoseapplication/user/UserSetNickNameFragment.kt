@@ -6,8 +6,6 @@ import android.text.TextWatcher
 import android.view.View
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetNickNameBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
 class UserSetNickNameFragment : BaseFragment<FragmentUserSetNickNameBinding>(FragmentUserSetNickNameBinding::inflate), View.OnClickListener {
@@ -19,8 +17,9 @@ class UserSetNickNameFragment : BaseFragment<FragmentUserSetNickNameBinding>(Fra
     }
 
     private fun init() {
-        _prevFragment = UserSetAuthorizationFragment()
-        _progressBar.progress = 42
+        val mActivity = activity as UserActivity
+        mActivity.setProgressDialogValueAndVisible(42, View.VISIBLE)
+        mActivity.setPrevFragment(UserSetAuthorizationFragment())
 
         binding.userSetNickNameBtnNext.setOnClickListener(this)
 

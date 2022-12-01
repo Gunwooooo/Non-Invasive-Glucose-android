@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetConnectDeviceBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 
 
 class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBinding>(FragmentUserSetConnectDeviceBinding::inflate), View.OnClickListener {
@@ -17,12 +15,11 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     }
 
     private fun init() {
-        _prevFragment = UserSetAgreementFragment()
-        _progressBar.visibility = View.GONE
-
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mActivity.setProgressDialogValueAndVisible(42, View.GONE)
+        mActivity.setPrevFragment(UserSetAgreementFragment())
 
         binding.userSetConnectDeviceBtnNext.setOnClickListener(this)
     }

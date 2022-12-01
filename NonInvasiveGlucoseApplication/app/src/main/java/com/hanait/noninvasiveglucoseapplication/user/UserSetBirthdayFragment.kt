@@ -3,14 +3,9 @@ package com.hanait.noninvasiveglucoseapplication.user
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.DatePicker
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import java.util.*
 
@@ -27,8 +22,10 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     }
 
     private fun init() {
-        _prevFragment = UserSetPasswordFragment()
-        _progressBar.progress = 70
+        val mActivity = activity as UserActivity
+        mActivity.setProgressDialogValueAndVisible(70, View.VISIBLE)
+        mActivity.setPrevFragment(UserSetPasswordFragment())
+
 
         binding.userSetBirthdayBtnNext.setOnClickListener(this)
         binding.userSetBirthdayBtnCalendar.setOnClickListener(this)

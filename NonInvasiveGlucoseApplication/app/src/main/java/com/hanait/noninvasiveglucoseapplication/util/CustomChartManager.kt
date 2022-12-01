@@ -23,7 +23,7 @@ class CustomChartManager(val context: Context) {
             return INSTANCE as CustomChartManager
         }
     }
-
+    
     class CustomTimeXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val time = value.toInt()

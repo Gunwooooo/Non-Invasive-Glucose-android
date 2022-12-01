@@ -12,8 +12,6 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAutho
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
@@ -24,22 +22,18 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         var smsAuthCode = ""
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         init()
-
-
     }
 
     private fun init() {
-        _prevFragment = UserSetPhoneNumberFragment()
-        _progressBar.progress = 28
-
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mActivity.setProgressDialogValueAndVisible(28, View.VISIBLE)
+        mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
         binding.userSetAuthorizationBtnNext.setOnClickListener(this)
 

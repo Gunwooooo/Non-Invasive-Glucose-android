@@ -1,26 +1,34 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityUserBinding
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import kotlin.system.exitProcess
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
     private var waitTime = 0L
+    private lateinit var prevFragment: Fragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        _progressBar = binding.userProgressBar
-        _progressBar.indeterminateDrawable
+        init()
+    }
+
+    private fun init() {
+        //프로그래스 바 설정
+        binding.userProgressBar.indeterminateDrawable
+
+        //prevFragment 초기화
+        prevFragment = UserSetPhoneNumberFragment()
 
         //toolbar 생성
         setSupportActionBar(binding.userToolbar)
@@ -59,10 +67,21 @@ class UserActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    fun setPrevFragment(fragment: Fragment) {
+        prevFragment = fragment
+    }
+
+    //프로그래스바 게이지 및 비져빌리티 설정
+    fun setProgressDialogValueAndVisible(value: Int, visibility: Int) {
+        binding.userProgressBar.progress = value
+        binding.userProgressBar.visibility = visibility
+    }
+
+    //이전 프래그먼트로 이동
     fun changePrevFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(R.anim.left_to_center_anim, R.anim.center_to_right_anim, R.anim.left_to_center_anim, R.anim.center_to_right_anim)
-        fragmentTransaction.replace(R.id.user_frameId, _prevFragment).commitAllowingStateLoss()
+        fragmentTransaction.replace(R.id.user_frameId, prevFragment).commitAllowingStateLoss()
     }
 
     @Override

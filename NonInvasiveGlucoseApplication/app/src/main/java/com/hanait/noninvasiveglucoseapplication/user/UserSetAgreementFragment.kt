@@ -5,11 +5,10 @@ import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
+import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
 
@@ -22,9 +21,9 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
 
 
     private fun init() {
-        _prevFragment = UserSetSexFragment()
-        _progressBar.visibility = View.VISIBLE
-        _progressBar.progress = 98
+        val mActivity = activity as UserActivity
+        mActivity.setProgressDialogValueAndVisible(98, View.VISIBLE)
+        mActivity.setPrevFragment(UserSetSexFragment())
 
 
         binding.userSetAgreementTextViewAgreement1.setOnClickListener(this)
@@ -53,6 +52,8 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
             }
             binding.userSetAgreementBtnNext -> {
                 retrofitJoinUser()
+                //전역 유저 데이터 초기화
+                _userData = UserData("", "", "", "", "T")
 
 //                retrofitFindAllUser()
 

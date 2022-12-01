@@ -78,7 +78,7 @@ class NaverCloudServiceManager {
     }
 
     //메시지 body 만들기
-    fun makeBodyRequest(phoneNumber: String, authNumber: String) : RequestBody {
+    fun makeBodyRequest(phoneNumber: String?, authNumber: String) : RequestBody {
         val bodyJson = JSONObject()
         try {
             bodyJson.put("type", "SMS")

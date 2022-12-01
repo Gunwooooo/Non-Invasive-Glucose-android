@@ -6,14 +6,10 @@ import androidx.fragment.app.Fragment
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 
 
-@SuppressLint("StaticFieldLeak")
+
 object Constants {
-    lateinit var _progressBar: ProgressBar
-    lateinit var _prevFragment: Fragment
     lateinit var _userData: UserData
-
-
-
+    
     // 네이버 API 정보
     var NAVER_SERVICE_ID = "ncp:sms:kr:276214123809:hanait-noti"
     //String NAVER_SERVICE_ID = Uri.encode("ncp:sms:kr:276214123809:hanait-noti");

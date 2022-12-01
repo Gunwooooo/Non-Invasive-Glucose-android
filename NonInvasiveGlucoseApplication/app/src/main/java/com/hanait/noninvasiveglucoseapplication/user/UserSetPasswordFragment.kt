@@ -3,15 +3,10 @@ package com.hanait.noninvasiveglucoseapplication.user
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import java.util.regex.Pattern
 
@@ -27,8 +22,9 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
     }
 
     private fun init() {
-        _prevFragment = UserSetNickNameFragment()
-        _progressBar.progress = 56
+        val mActivity = activity as UserActivity
+        mActivity.setProgressDialogValueAndVisible(56, View.VISIBLE)
+        mActivity.setPrevFragment(UserSetNickNameFragment())
 
         binding.userSetPasswordBtnNext.setOnClickListener(this)
 

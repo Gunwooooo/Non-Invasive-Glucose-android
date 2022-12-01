@@ -10,8 +10,6 @@ import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
 
@@ -37,14 +35,15 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
     }
 
     private fun init(){
-        _prevFragment = UserSetPhoneNumberFragment()
-        _progressBar.progress = 14
-
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
+        mActivity.setProgressDialogValueAndVisible(14, View.VISIBLE)
+        mActivity.setPrevFragment(UserSetPhoneNumberFragment())
+        //프로그래스바 셋
         binding.userSetPhoneNumberBtnNext.setOnClickListener(this)
+
+
 
         setEditTextTextChanged()
 

@@ -1,21 +1,17 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentConnectionLoadingBinding
 import com.hanait.noninvasiveglucoseapplication.home.HomeActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._prevFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants._progressBar
 
 
 class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>(FragmentConnectionLoadingBinding::inflate), View.OnClickListener {
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -26,19 +22,16 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
             binding.connectionLoadingLottie.visibility = View.GONE
             binding.connectionLoadingImageView.visibility = View.VISIBLE
             binding.connectionLoadingBtnNext.isEnabled = true
-
-
         }, 3000)
 
     }
 
     private fun init() {
-        _prevFragment = UserSetConnectDeviceFragment()
-        _progressBar.visibility = View.GONE
-
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mActivity.setProgressDialogValueAndVisible(100, View.GONE)
+        mActivity.setPrevFragment(UserSetConnectDeviceFragment())
 
         binding.connectionLoadingBtnNext.setOnClickListener(this)
     }
