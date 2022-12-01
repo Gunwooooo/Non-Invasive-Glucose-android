@@ -70,7 +70,10 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             completionResponse, s ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : 통신 성공 $s")
+                    Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : $s")
+//                    when(s) {
+//
+//                    }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : 통신 실패")

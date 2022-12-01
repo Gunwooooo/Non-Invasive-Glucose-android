@@ -28,7 +28,6 @@ class HomeAnalysisFragment : BaseFragment<FragmentHomeAnalysisBinding>(FragmentH
 
         //스테이터스바 색깔 변경
 //        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.StatusBarColor)
-
     }
 
     //뷰페이저 탭레이아웃 연결
@@ -40,7 +39,6 @@ class HomeAnalysisFragment : BaseFragment<FragmentHomeAnalysisBinding>(FragmentH
             tab.text = tabTitles[position]
         }.attach()
     }
-
 
     override fun onClick(v: View?) {
         when(v) {
