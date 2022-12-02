@@ -63,16 +63,17 @@ class RetrofitManager {
     }
 
     //회원 로그인
-    fun loginUser(userData: UserData, completion: (CompletionResponse, String) -> Unit) {
+    fun loginUser(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         val call = apiPHRService?.loginUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("로그", "RetrofitManager - onResponse : response : ${response}")
-                Log.d("로그", "RetrofitManager - onResponse : ${response.body()}")
-                completion(CompletionResponse.OK, response.body().toString())
+                Log.d("로그", "RetrofitManager - onResponse : response.header : ${response.headers()}")
+                Log.d("로그", "RetrofitManager - onResponse : response.body : ${response.body()}")
+                completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                completion(CompletionResponse.FAIL, "통신 실패")
+                completion(CompletionResponse.FAIL, null)
             }
         })
     }

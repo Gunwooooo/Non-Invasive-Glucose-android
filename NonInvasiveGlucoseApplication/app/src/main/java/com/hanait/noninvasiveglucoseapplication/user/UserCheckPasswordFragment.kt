@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserCheckPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
@@ -55,22 +56,30 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                 _userData.password = binding.userCheckPasswordEditTextPassword.text.toString()
                 
                 retrofitLoginUser()
-                
-                val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetConnectDeviceFragment")
             }
         }
     }
     
     private fun retrofitLoginUser() {
         RetrofitManager.instance.loginUser(_userData, completion = {
-            completionResponse, s -> 
+            completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : 로그인 성공")
+                    when(response?.code()) {
+                        //로그인 실패 했을 경우
+                        401 -> {
+                            Toast.makeText(requireContext(), "회원 정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        //로그인 성공
+                        200 -> {
+                            Toast.makeText(requireContext(), "${_userData.nickName}님 환영합니다.", Toast.LENGTH_SHORT).show()
+                            val mActivity = activity as UserActivity
+                            mActivity.changeFragment("UserSetConnectDeviceFragment")
+                        }
+                    }
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : 로그인 실패")
+                    Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : 로그인 통신 실패")
                 }
             }
         })
