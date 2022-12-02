@@ -69,6 +69,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                         //로그인 실패 했을 경우
                         401 -> {
                             Toast.makeText(requireContext(), "회원 정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                            binding.userCheckPasswordEditTextPassword.setText("")
                         }
                         //로그인 성공
                         200 -> {
