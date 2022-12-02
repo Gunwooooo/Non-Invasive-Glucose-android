@@ -64,12 +64,11 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
     //가입된 유저 체크
     private fun retrofitCheckJoinedUser() {
         RetrofitManager.instance.checkJoinedUser(_userData, completion = {
-            completionResponse, s ->
+            completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : $s")
                     val mActivity = activity as UserActivity
-                    when(s) {
+                    when(response?.code()) {
                         //존재하지 않는 아이디일 경우 전화번호 인증화면으로 이동
                         200 -> {
                             mActivity.changeFragment("UserSetAuthorizationFragment")

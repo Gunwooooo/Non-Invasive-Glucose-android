@@ -47,8 +47,6 @@ class RetrofitManager {
         val call = apiPHRService?.joinUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.d("로그", "RetrofitManager - onResponse : ${response}")
-                Log.d("로그", "RetrofitManager - onResponse : ${response.body().toString()}")
                 if(response.code() != 200) {
                     completion(CompletionResponse.FAIL, "잘못된 요청, 에러 코드 확인")
                     return
@@ -68,8 +66,7 @@ class RetrofitManager {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("로그", "RetrofitManager - onResponse : response : ${response}")
-                Log.d("로그", "RetrofitManager - onResponse : response.header : ${response.headers()}")
-                Log.d("로그", "RetrofitManager - onResponse : response.body : ${response.body()}")
+                Log.d("로그", "RetrofitManager - onResponse : response.header : ${response.headers()["Authorization"]}")
                 completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -80,15 +77,15 @@ class RetrofitManager {
 
 
     //회원 로그인
-    fun checkJoinedUser(userData: UserData, completion: (CompletionResponse, Int) -> Unit) {
+    fun checkJoinedUser(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         val call = apiPHRService?.checkJoinedUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("로그", "RetrofitManager - onResponse : ${response.body()}")
-                completion(CompletionResponse.OK, response.code())
+                completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                completion(CompletionResponse.FAIL, 500)
+                completion(CompletionResponse.FAIL, null)
             }
         })
     }
