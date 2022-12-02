@@ -1,6 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import android.util.Log
+import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.NAVER_SMS_URL
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
@@ -66,10 +67,8 @@ class RetrofitManager {
         val call = apiPHRService?.loginUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if(response.code() != 200) {
-                    completion(CompletionResponse.FAIL, "잘못된 요청, 에러 코드 확인")
-                    return
-                }
+                Log.d("로그", "RetrofitManager - onResponse : response : ${response}")
+                Log.d("로그", "RetrofitManager - onResponse : ${response.body()}")
                 completion(CompletionResponse.OK, response.body().toString())
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

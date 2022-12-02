@@ -3,12 +3,15 @@ package com.hanait.noninvasiveglucoseapplication.user
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserCheckPasswordBinding
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
@@ -49,9 +52,27 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
     override fun onClick(v: View?) {
         when(v) {
             binding.userCheckPasswordBtnNext -> {
+                _userData.password = binding.userCheckPasswordEditTextPassword.text.toString()
+                
+                retrofitLoginUser()
+                
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetConnectDeviceFragment")
             }
         }
+    }
+    
+    private fun retrofitLoginUser() {
+        RetrofitManager.instance.loginUser(_userData, completion = {
+            completionResponse, s -> 
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : 로그인 성공")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : 로그인 실패")
+                }
+            }
+        })
     }
 }
