@@ -46,6 +46,7 @@ class UserActivity : AppCompatActivity() {
             "UserSetAuthorizationFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
             "UserSetNickNameFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetNickNameFragment()).commitAllowingStateLoss()
             "UserSetPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
+            "UserCheckPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserCheckPasswordFragment()).commitAllowingStateLoss()
             "UserSetBirthdayFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
             "UserSetSexFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
             "UserSetAgreementFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAgreementFragment()).commitAllowingStateLoss()

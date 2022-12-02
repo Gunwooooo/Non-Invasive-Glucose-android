@@ -32,7 +32,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mActivity.setProgressDialogValueAndVisible(28, View.VISIBLE)
+        mActivity.setProgressDialogValueAndVisible(96, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
         binding.userSetAuthorizationBtnNext.setOnClickListener(this)

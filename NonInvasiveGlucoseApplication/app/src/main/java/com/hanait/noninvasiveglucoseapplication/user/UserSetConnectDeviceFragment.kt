@@ -18,7 +18,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        mActivity.setProgressDialogValueAndVisible(42, View.GONE)
+        mActivity.setProgressDialogValueAndVisible(99, View.GONE)
         mActivity.setPrevFragment(UserSetAgreementFragment())
 
         binding.userSetConnectDeviceBtnNext.setOnClickListener(this)

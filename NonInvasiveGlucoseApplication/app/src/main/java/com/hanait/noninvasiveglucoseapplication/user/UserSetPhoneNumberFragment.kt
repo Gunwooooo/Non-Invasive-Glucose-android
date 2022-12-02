@@ -57,9 +57,6 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
                 _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
 
                 retrofitCheckJoinedUser()
-
-                val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetAuthorizationFragment")
             }
         }
     }
@@ -71,9 +68,17 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : $s")
-//                    when(s) {
-//
-//                    }
+                    val mActivity = activity as UserActivity
+                    when(s) {
+                        //존재하지 않는 아이디일 경우 전화번호 인증화면으로 이동
+                        200 -> {
+                            mActivity.changeFragment("UserSetAuthorizationFragment")
+                        }
+                        //존재하는 아이디일 경우 로그인 화면으로 이동
+                        400 -> {
+                            mActivity.changeFragment("UserCheckPasswordFragment")
+                        }
+                    }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "UserSetPhoneNumberFragment - retrofitCheckJoinedUser : 통신 실패")
