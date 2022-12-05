@@ -73,7 +73,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                         }
                         //로그인 성공
                         200 -> {
-                            Toast.makeText(requireContext(), "${_userData.nickName}님 환영합니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "로그인 성공!", Toast.LENGTH_SHORT).show()
                             val mActivity = activity as UserActivity
                             mActivity.changeFragment("UserSetConnectDeviceFragment")
                         }

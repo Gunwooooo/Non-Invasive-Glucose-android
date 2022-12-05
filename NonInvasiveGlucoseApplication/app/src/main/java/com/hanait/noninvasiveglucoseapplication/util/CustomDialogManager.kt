@@ -17,15 +17,26 @@ import com.hanait.noninvasiveglucoseapplication.R
 class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
 
     //보호자 삭제 다이어로그
-    private var protectingDeleteListener: DeleteDialogListener? = null
-    interface DeleteDialogListener {
+    private var protectorDeleteDialogListener: ProtectorDeleteDialogListener? = null
+    interface ProtectorDeleteDialogListener {
         fun onPositiveClicked()
         fun onNegativeClicked()
     }
-
-    fun setDialogListener(customDialogListener: DeleteDialogListener) {
-        this.protectingDeleteListener = customDialogListener
+    fun setProtectorDeleteDialogListener(customDialogListener: ProtectorDeleteDialogListener) {
+        this.protectorDeleteDialogListener = customDialogListener
     }
+
+
+    //보호자 정보 확인 다이어로그
+    private var protectorInfoDialogListener: ProtectorInfoDialogListener? = null
+    interface ProtectorInfoDialogListener {
+        fun onPositiveClicked()
+    }
+    fun setProtectorInfoDialogListener(customDialogListener: ProtectorInfoDialogListener) {
+        this.protectorInfoDialogListener = customDialogListener
+    }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,13 +63,17 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 positiveButton.setOnClickListener(this)
                 negativeButton.setOnClickListener(this)
             }
-            ////////////////////////////////////////////////////////
             //보호자 삭제 다이어로그
             R.layout.home_protector_delete_dialog -> {
                 val positiveButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_positive) as Button
                 val negativeButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_negative) as Button
                 positiveButton.setOnClickListener(this)
                 negativeButton.setOnClickListener(this)
+            }
+            ////////////////////////////////////////////////////////
+            R.layout.home_protector_info_dialog -> {
+                val positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
+                positiveButton.setOnClickListener(this)
             }
         }
         return builder.create()
@@ -67,10 +82,15 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
     //다이어로그 버튼 별 클릭 리스너 등록
     override fun onClick(v: View?) {
         when(v?.id) {
+            //보호자 보호 대샂아 삭제 다이어로그 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive ->
-                protectingDeleteListener?.onPositiveClicked()
-            R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative -> 
-                protectingDeleteListener?.onNegativeClicked()
+                protectorDeleteDialogListener?.onPositiveClicked()
+            R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative ->
+                protectorDeleteDialogListener?.onNegativeClicked()
+            //보호자 보호 대상자 정보 다이어로그 연결
+            R.id.homeProtectorInfoDialog_btn_positive -> {
+                protectorInfoDialogListener?.onPositiveClicked()
+            }
         }
     }
 

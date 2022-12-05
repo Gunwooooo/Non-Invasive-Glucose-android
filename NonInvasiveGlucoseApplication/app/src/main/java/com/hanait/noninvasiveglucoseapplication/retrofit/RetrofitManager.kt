@@ -65,6 +65,7 @@ class RetrofitManager {
         val call = apiPHRService?.loginUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("로그", "RetrofitManager - onResponse : @#$@#$@dtfyhtdyhydh#$@#$")
                 Log.d("로그", "RetrofitManager - onResponse : response : ${response}")
                 Log.d("로그", "RetrofitManager - onResponse : response.header : ${response.headers()["Authorization"]}")
                 completion(CompletionResponse.OK, response)

@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/radius_border20"
+    android:padding="16dp"
+    android:backgroundTint="@color/white">
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사용자 정보"
+            android:textSize="20dp"
+            android:fontFamily="@font/ps_bold"
+            android:textColor="@color/toss_black_700"/>
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나이 : 만27세"
+            android:textSize="20dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_700"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="성별 : 남"
+            android:textSize="20dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_700"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="전화번호 뒷자리 : 7199"
+            android:textSize="20dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_700"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/homeProtectorInfoDialog_btn_positive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_border_blue"
+            android:fontFamily="@font/ps_regular"
+            android:stateListAnimator="@null"
+            android:text="확인"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+        </LinearLayout>
+
+</LinearLayout>
