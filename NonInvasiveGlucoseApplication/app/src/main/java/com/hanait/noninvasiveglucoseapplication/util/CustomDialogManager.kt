@@ -36,7 +36,19 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
         this.protectorInfoDialogListener = customDialogListener
     }
 
+    //내 페이지 성별 수정 다이어로그
+    private var accountModifySexDialogListener: AccountModifySexDialogListener? = null
+    interface AccountModifySexDialogListener {
+        fun onPositiveClicked()
+        fun onNegativeClicked()
+        fun onMaleBtnClicked()
+        fun onFemaleBtnClicked()
+    }
+    fun setAccountModifySexDialogListener(customDialogListener: AccountModifySexDialogListener) {
+        this.accountModifySexDialogListener = customDialogListener
+    }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,10 +82,22 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 positiveButton.setOnClickListener(this)
                 negativeButton.setOnClickListener(this)
             }
-            ////////////////////////////////////////////////////////
+            //보호자, 보호 대상자 정보 보기 다이어로그
             R.layout.home_protector_info_dialog -> {
                 val positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
                 positiveButton.setOnClickListener(this)
+            }
+            ///////////////////////////////////////////////////////////////////////////////////////
+            //사용자 성별 수정 다이어로그
+            R.layout.home_account_modify_sex_dialog -> {
+                val positiveButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_positive) as Button
+                val negativeButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_negative) as Button
+                val maleButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_male) as Button
+                val femaleButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_female) as Button
+                positiveButton.setOnClickListener(this)
+                negativeButton.setOnClickListener(this)
+                maleButton.setOnClickListener(this)
+                femaleButton.setOnClickListener(this)
             }
         }
         return builder.create()
@@ -87,10 +111,22 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 protectorDeleteDialogListener?.onPositiveClicked()
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative ->
                 protectorDeleteDialogListener?.onNegativeClicked()
+
             //보호자 보호 대상자 정보 다이어로그 연결
-            R.id.homeProtectorInfoDialog_btn_positive -> {
+            R.id.homeProtectorInfoDialog_btn_positive ->
                 protectorInfoDialogListener?.onPositiveClicked()
-            }
+
+
+            //사용자 성별 수정 다이어로그 리스너 연결
+            R.id.homeAccountModifySexDialog_btn_positive ->
+                accountModifySexDialogListener?.onPositiveClicked()
+
+            R.id.homeAccountModifySexDialog_btn_negative ->
+                accountModifySexDialogListener?.onNegativeClicked()
+            R.id.homeAccountModifySexDialog_btn_male ->
+                accountModifySexDialogListener?.onMaleBtnClicked()
+            R.id.homeAccountModifySexDialog_btn_female ->
+                accountModifySexDialogListener?.onFemaleBtnClicked()
         }
     }
 

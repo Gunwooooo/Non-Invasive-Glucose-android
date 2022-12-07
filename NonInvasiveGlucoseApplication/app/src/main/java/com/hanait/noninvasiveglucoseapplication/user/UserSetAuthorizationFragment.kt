@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
@@ -54,7 +55,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
                 //인증번호가 일치할 경우, 불일치 경우
 //                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
 //                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
-//                    mActivity.changeFragment("UserSetPasswordFragment")
+//                    mActivity.changeFragment("UserSetNickNameFragment")
 //                } else {
 //                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
 //                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")

@@ -24,23 +24,24 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>)
     }
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var protectorPhoneNumber: TextView
-        private lateinit var protectorDeleteBtn : TextView
-        private lateinit var protectorInfoBtn: LinearLayout
+        private lateinit var protectingPhoneNumber: TextView
+        private lateinit var protectingDeleteBtn : TextView
+        private lateinit var protectingInfoBtn: LinearLayout
         @SuppressLint("SetTextI18n")
         fun setTextView(protectorData: ProtectorData, position: Int) {
-            protectorPhoneNumber = itemView.findViewById(R.id.homeProtectingItem_textView_phoneNumber)
-            protectorDeleteBtn = itemView.findViewById(R.id.homeProtectorItem_btn_delete)
-            protectorInfoBtn = itemView.findViewById(R.id.homeProtectingItem_layout_Info)
+            protectingPhoneNumber = itemView.findViewById(R.id.homeProtectingItem_textView_phoneNumber)
+            protectingDeleteBtn = itemView.findViewById(R.id.homeProtectingItem_btn_delete)
+            protectingInfoBtn = itemView.findViewById(R.id.homeProtectingItem_layout_Info)
 
-            protectorPhoneNumber.text = protectorData.nickName + " 님"
+            //text넣기
+            protectingPhoneNumber.text = protectorData.nickName + " 님"
 
             //삭제 클릭 리스너
-            protectorDeleteBtn.setOnClickListener {
+            protectingDeleteBtn.setOnClickListener {
                 mListener?.onDeleteItem(it, position)
             }
             //보호 대상자 정보 보기 리스너
-            protectorInfoBtn.setOnClickListener {
+            protectingInfoBtn.setOnClickListener {
                 mListener?.onInfoItem(it, position)
             }
         }

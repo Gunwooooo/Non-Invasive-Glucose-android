@@ -1,7 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import android.util.Log
-import android.widget.Toast
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.NAVER_SMS_URL
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
@@ -12,7 +12,6 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
 
 class RetrofitManager {
 
@@ -65,9 +64,8 @@ class RetrofitManager {
         val call = apiPHRService?.loginUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.d("로그", "RetrofitManager - onResponse : @#$@#$@dtfyhtdyhydh#$@#$")
-                Log.d("로그", "RetrofitManager - onResponse : response : ${response}")
-                Log.d("로그", "RetrofitManager - onResponse : response.header : ${response.headers()["Authorization"]}")
+                Log.d("로그", "RetrofitManager - onResponse : response.header.authorization : ${response.headers()["Authorization"]}")
+                LoginedUserClient.loginedUsertoken = response.headers()["Authorization"]
                 completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -82,6 +80,22 @@ class RetrofitManager {
         val call = apiPHRService?.checkJoinedUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("로그", "RetrofitManager - onResponse : ${response.body()}")
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //로그인 유저 데이터 가져오기
+    fun infoLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        Log.d("로그", "RetrofitManager - infoLoginedUser : 토큰값 : ${LoginedUserClient.loginedUsertoken}")
+        val call = apiPHRService?.infoLoginedUser(LoginedUserClient.loginedUsertoken) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("로그", "RetrofitManager - onResponse : ${response}")
                 Log.d("로그", "RetrofitManager - onResponse : ${response.body()}")
                 completion(CompletionResponse.OK, response)
             }

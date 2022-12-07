@@ -1,5 +1,6 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +14,7 @@ import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 
 class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
-    var protectorList: ArrayList<ProtectorData> = ArrayList()
+    var protectingList: ArrayList<ProtectorData> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,27 +22,31 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
 
-        protectorList.add(ProtectorData("010-****-7199", "김건우"))
-        protectorList.add(ProtectorData("010-****-1234", "홍길동"))
-        protectorList.add(ProtectorData("010-****-5423", "홍길동"))
-        protectorList.add(ProtectorData("010-****-3456", "홍길동"))
-        protectorList.add(ProtectorData("010-****-2456", "홍길동"))
-        protectorList.add(ProtectorData("010-****-7654", "홍길동"))
-        protectorList.add(ProtectorData("010-****-4324", "홍길동"))
-        protectorList.add(ProtectorData("010-****-6432", "홍길동"))
+        protectingList.add(ProtectorData("010-****-7199", "김건우"))
+        protectingList.add(ProtectorData("010-****-1234", "손흥민"))
+        protectingList.add(ProtectorData("010-****-5423", "황의조"))
+        protectingList.add(ProtectorData("010-****-3456", "황희찬"))
+        protectingList.add(ProtectorData("010-****-2456", "백승호"))
+        protectingList.add(ProtectorData("010-****-7654", "이강인"))
+        protectingList.add(ProtectorData("010-****-4324", "김진수"))
+        protectingList.add(ProtectorData("010-****-6432", "권창훈"))
+
+        binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
 
         recyclerViewCreate()
 
 //        binding.homeProtectorBtnAdd.setOnClickListener(this)
         binding.homeProtectorBtnDelete.setOnClickListener(this)
         binding.homeProtectorLayoutProtectorInfo.setOnClickListener(this)
+        binding.homeProtectorLayoutProtectorAdd.setOnClickListener(this)
     }
 
     private fun recyclerViewCreate() {
         val protectorRecyclerView = binding.homeProtectorRecyclerView
-        val protectorAdapter = ProtectorAdapter(requireContext(), protectorList)
+        val protectorAdapter = ProtectorAdapter(requireContext(), protectingList)
         //클릭 이벤트 리스너 처리
         protectorAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
@@ -61,13 +66,13 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     override fun onClick(v: View?) {
         when(v) {
             //바텀 시트 다이어로그 호출
-//            binding.homeProtectorBtnAdd -> {
-//                val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
-//                val bottomSheetDialog = BottomSheetDialog(requireContext())
-//                bottomSheetDialog.setContentView(bottomSheetView)
-//                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//                bottomSheetDialog.show()
-//            }
+            binding.homeProtectorLayoutProtectorAdd -> {
+                val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
+                val bottomSheetDialog = BottomSheetDialog(requireContext())
+                bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                bottomSheetDialog.show()
+            }
             binding.homeProtectorBtnDelete -> {
                 showDeleteProtectorDialog()
             }
@@ -110,10 +115,12 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     fun showDeleteProtectingDialog(protectorAdapter: ProtectorAdapter, pos: Int) {
         val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog)
         customDialog.setProtectorDeleteDialogListener(object : CustomDialogManager.ProtectorDeleteDialogListener{
+            @SuppressLint("SetTextI18n")
             override fun onPositiveClicked() {
-                protectorList.removeAt(pos - 1)
+                protectingList.removeAt(pos - 1)
                 protectorAdapter.notifyItemRemoved(pos - 1)
-                protectorAdapter.notifyItemRangeChanged(pos -1, protectorList.size)
+                protectorAdapter.notifyItemRangeChanged(pos -1, protectingList.size)
+                binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
                 customDialog.dismiss()
             }
 

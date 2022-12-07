@@ -41,15 +41,26 @@
             android:layout_height="120dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
-
-            <TextView
+            <LinearLayout
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="김건우님"
-                android:textColor="@color/toss_black_700"
-                android:fontFamily="@font/ps_bold"
-                android:textSize="32dp"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/policeman"/>
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="김건우님"
+                    android:textColor="@color/toss_black_700"
+                    android:fontFamily="@font/ps_bold"
+                    android:textSize="32dp"/>
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -69,14 +80,14 @@
                     android:layout_height="0dip"
                     android:layout_weight="0.333">
                     <TextView
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/my_ripple"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="010-4054-7199"
-                        android:textColor="@color/toss_black_600"
+                        android:textColor="@color/toss_black_200"
                         android:fontFamily="@font/ps_regular"
                         android:textSize="21dp"/>
                 </LinearLayout>
@@ -85,11 +96,12 @@
                     android:layout_height="0.5dp"
                     android:background="@color/toss_black_150" />
                 <LinearLayout
+                    android:id="@+id/homeAccount_layout_modifySex"
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="0.333">
                     <TextView
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/my_ripple"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
@@ -109,7 +121,7 @@
                     android:layout_height="0dip"
                     android:layout_weight="0.333">
                     <TextView
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/my_ripple"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
@@ -138,7 +150,7 @@
                 android:orientation="vertical"
                 android:weightSum="1">
                 <TextView
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/my_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:id="@+id/homeAccount_btn_changePassword"
@@ -155,7 +167,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/toss_black_150" />
                 <TextView
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/my_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:id="@+id/homeAccount_btn_logout"
@@ -172,7 +184,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/toss_black_150" />
                 <TextView
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/my_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:id="@+id/homeAccount_btn_deleteUser"

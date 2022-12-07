@@ -30,6 +30,7 @@
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
+
             android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"

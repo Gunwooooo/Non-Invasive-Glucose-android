@@ -11,13 +11,24 @@ interface APIPHRService {
 
     //로그인
     @POST("/login")
-    fun loginUser(@Body userData: UserData): Call<ResponseBody>
+    fun loginUser(
+        @Body userData: UserData
+    ): Call<ResponseBody>
 
     //회원가입
     @POST("/api/v1/join")
-    fun joinUser(@Body userData: UserData): Call<ResponseBody>
+    fun joinUser(
+        @Body userData: UserData
+    ): Call<ResponseBody>
 
-    //가입된 유저 체크
+    //가입된 유저 체크(처음에 등록된 전화번호인지 확인)
     @POST("/api/v1/check")
-    fun checkJoinedUser(@Body userData: UserData): Call<ResponseBody>
+    fun checkJoinedUser(
+        @Body userData: UserData
+    ): Call<ResponseBody>
+
+    @POST("/api/v1/userinfo")
+    fun infoLoginedUser(
+        @Header("Authorization") authorization : String?
+    ): Call<ResponseBody>
 }
