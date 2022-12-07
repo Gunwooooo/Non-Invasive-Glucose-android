@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="사용자 정보"
-            android:textSize="20dp"
+            android:textSize="27dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
 
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="나이 : 만27세"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:fontFamily="@font/ps_regular"
             android:textColor="@color/toss_black_700"/>
 
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="성별 : 남"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:fontFamily="@font/ps_regular"
             android:textColor="@color/toss_black_700"/>
         <TextView
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="전화번호 뒷자리 : 7199"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:fontFamily="@font/ps_regular"
             android:textColor="@color/toss_black_700"/>
 

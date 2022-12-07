@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.*
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboardBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 import java.util.*
@@ -30,6 +31,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
 
+        //데이터 차트 설정
         setThermometerLineChart()
 
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
@@ -39,14 +41,11 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
         //오늘 날짜 설정
         setTodayDate()
+        
         //데이터피커 리스너 설정
-        datePickerDialogListener =
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.homeDashboardTextViewDate.text = "${year}.${month+1}.${dayOfMonth}"
-            }
+        setDatePickerDialogListener()
     }
-
-
+    
     override fun onClick(v: View?) {
         when (v) {
             binding.homeDashboardBtnThermometer -> {
@@ -64,23 +63,28 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         }
     }
 
-    //달력 날짜 선택 다이어로그 생성
-    private fun makeDatePickerDialog() {
-        val gregorianCalendar = GregorianCalendar()
-        val year = gregorianCalendar.get(Calendar.YEAR)
-        val month = gregorianCalendar.get(Calendar.MONTH)
-        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        val datePickerDialog = DatePickerDialog(requireContext(), datePickerDialogListener, year, month, dayOfMonth)
-        datePickerDialog.show()
-    }
-
-
-    fun setTodayDate() {
+    //초기 오늘 날짜 표시 되도록 설정
+    @SuppressLint("SetTextI18n")
+    private fun setTodayDate() {
         val gregorianCalendar = GregorianCalendar()
         val year = gregorianCalendar.get(Calendar.YEAR)
         val month = gregorianCalendar.get(Calendar.MONTH)
         val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
         binding.homeDashboardTextViewDate.text = "${year}.${month + 1}.${dayOfMonth}"
+    }
+    
+    //데이터피커 리스너 설정
+    @SuppressLint("SetTextI18n")
+    private fun setDatePickerDialogListener() {
+        datePickerDialogListener =
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                binding.homeDashboardTextViewDate.text = "${year}.${month+1}.${dayOfMonth}"
+            }
+    }
+    
+    //달력 날짜 선택 다이어로그 생성
+    private fun makeDatePickerDialog() {
+        CustomCalendarManager.getInstance(requireContext()).makeDatePickerDialog(datePickerDialogListener).show()
     }
 
     //=================================================================================================

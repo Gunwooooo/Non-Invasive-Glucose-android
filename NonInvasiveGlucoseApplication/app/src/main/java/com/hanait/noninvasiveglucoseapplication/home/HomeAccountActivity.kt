@@ -1,5 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +14,13 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
+import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
+import java.util.*
 
 class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding : ActivityHomeAccountBinding
+    lateinit var datePickerDialogListener: DatePickerDialog.OnDateSetListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +30,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
         //toolbar 표시
         setSupportActionBar(binding.homeAccountToolbar)
@@ -34,7 +40,11 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         //로그인된 유저 데이터 가져오기
         retrofitInfoLoginedUser()
 
-        binding.homeAccountLayoutModifySex.setOnClickListener(this)
+        //생년월일 변경 리스너
+        setDatePickerDialogListener()
+
+        binding.homeAccountTextViewModifySex.setOnClickListener(this)
+        binding.homeAccountTextViewModifyBirthday.setOnClickListener(this)
     }
 
     //toolbar 클릭 리스너
@@ -50,10 +60,31 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeAccountLayoutModifySex -> {
+            binding.homeAccountTextViewModifySex -> {
                 showModifySexDialog()
             }
+            binding.homeAccountTextViewModifyBirthday -> {
+                makeDatePickerDialog()
+            }
         }
+    }
+
+    //캘린더 피커 다이어로그 리스너 설정
+    @SuppressLint("SetTextI18n")
+    private fun setDatePickerDialogListener() {
+        datePickerDialogListener =
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                binding.homeAccountTextViewModifyBirthday.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+            }
+    }
+
+    //달력 날짜 선택 다이어로그 생성
+    private fun makeDatePickerDialog() {
+        val gregorianCalendar = GregorianCalendar()
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog(this, datePickerDialogListener, year, month, dayOfMonth).show()
     }
 
     private fun retrofitInfoLoginedUser() {
@@ -78,10 +109,6 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private fun showModifySexDialog() {
         Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
         val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog)
-
-        val maleButton = findViewById<Button>(R.id.homeAccountModifySexDialog_btn_male)
-        val femaleButton = findViewById<Button>(R.id.homeAccountModifySexDialog_btn_female)
-
         customDialog.setAccountModifySexDialogListener(object : CustomDialogManager.AccountModifySexDialogListener{
             override fun onPositiveClicked() {
                 //회원정보 수정 기능 추가 필요 ( 성별 )
@@ -91,21 +118,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             override fun onNegativeClicked() {
                 customDialog.dismiss()
             }
-            override fun onMaleBtnClicked() {
-                changeButtonColor(maleButton, femaleButton)
-            }
-            override fun onFemaleBtnClicked() {
-                changeButtonColor(femaleButton, maleButton)
-            }
         })
         customDialog.show(supportFragmentManager, "home_account_modify_sex_dialog")
-    }
-
-    //버튼 토글 기능
-    private fun changeButtonColor(onButton: Button, offButton: Button) {
-        onButton.isEnabled = false
-        onButton.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
-        offButton.isEnabled = true
-        offButton.setTextColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
     }
 }

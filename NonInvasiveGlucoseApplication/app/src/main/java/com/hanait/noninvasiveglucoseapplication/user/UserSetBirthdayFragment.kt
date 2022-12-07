@@ -7,10 +7,11 @@ import android.view.View
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import java.util.*
 
 class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
-
+    private lateinit var datePickerDialogListener : DatePickerDialog.OnDateSetListener
     private var selectedYear = ""
     private var selectedMonth = ""
     private var selectedDayOfMonth = ""
@@ -21,39 +22,18 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
         init()
     }
 
+
     private fun init() {
         val mActivity = activity as UserActivity
         mActivity.setProgressDialogValueAndVisible(70, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPasswordFragment())
 
+        //날짜 선택 리스너 설정
+        setDataPickerDialogListener()
 
         binding.userSetBirthdayBtnNext.setOnClickListener(this)
         binding.userSetBirthdayBtnCalendar.setOnClickListener(this)
     }
-
-    //날짜 선택 다이어로그 만들기
-    @SuppressLint("SetTextI18n")
-    private fun makeDatePickDialog() {
-        val today = GregorianCalendar()
-        val todayYear: Int = today.get(Calendar.YEAR)
-        val todayMonth: Int = today.get(Calendar.MONTH)
-        val todayDate: Int = today.get(Calendar.DATE)
-
-        val dateSetListener : DatePickerDialog.OnDateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.userSetBirthdayTextViewYear.text = "$year 년"
-                binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
-                binding.userSetBirthdayTextViewDay.text = "$dayOfMonth 일"
-                binding.userSetBirthdayBtnNext.isEnabled = true
-
-                selectedYear = year.toString()
-                selectedMonth = (month + 1).toString()
-                selectedDayOfMonth = dayOfMonth.toString()
-            }
-        val datePickerDialog = DatePickerDialog(requireContext(), dateSetListener,  todayYear, todayMonth, todayDate)
-        datePickerDialog.show()
-    }
-
 
 
     override fun onClick(v: View?) {
@@ -68,5 +48,25 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
                 makeDatePickDialog()
             }
         }
+    }
+
+    //날짜 선택 리스너 설정
+    @SuppressLint("SetTextI18n")
+    private fun setDataPickerDialogListener() {
+        datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            binding.userSetBirthdayTextViewYear.text = "$year 년"
+            binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
+            binding.userSetBirthdayTextViewDay.text = "$dayOfMonth 일"
+            binding.userSetBirthdayBtnNext.isEnabled = true
+
+            selectedYear = year.toString()
+            selectedMonth = (month + 1).toString()
+            selectedDayOfMonth = dayOfMonth.toString()
+        }
+    }
+
+    //날짜 선택 다이어로그 만들기
+    private fun makeDatePickDialog() {
+        CustomCalendarManager.getInstance(requireContext()).makeDatePickerDialog(datePickerDialogListener).show()
     }
 }

@@ -5,11 +5,13 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.hanait.noninvasiveglucoseapplication.R
 
@@ -41,8 +43,6 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
     interface AccountModifySexDialogListener {
         fun onPositiveClicked()
         fun onNegativeClicked()
-        fun onMaleBtnClicked()
-        fun onFemaleBtnClicked()
     }
     fun setAccountModifySexDialogListener(customDialogListener: AccountModifySexDialogListener) {
         this.accountModifySexDialogListener = customDialogListener
@@ -96,8 +96,18 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 val femaleButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_female) as Button
                 positiveButton.setOnClickListener(this)
                 negativeButton.setOnClickListener(this)
-                maleButton.setOnClickListener(this)
-                femaleButton.setOnClickListener(this)
+                maleButton.setOnClickListener {
+                    maleButton.isEnabled = false
+                    maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    femaleButton.isEnabled = true
+                    femaleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
+                }
+                femaleButton.setOnClickListener {
+                    femaleButton.isEnabled = false
+                    femaleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    maleButton.isEnabled = true
+                    maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
+                }
             }
         }
         return builder.create()
@@ -120,14 +130,10 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             //사용자 성별 수정 다이어로그 리스너 연결
             R.id.homeAccountModifySexDialog_btn_positive ->
                 accountModifySexDialogListener?.onPositiveClicked()
-
             R.id.homeAccountModifySexDialog_btn_negative ->
                 accountModifySexDialogListener?.onNegativeClicked()
-            R.id.homeAccountModifySexDialog_btn_male ->
-                accountModifySexDialogListener?.onMaleBtnClicked()
-            R.id.homeAccountModifySexDialog_btn_female ->
-                accountModifySexDialogListener?.onFemaleBtnClicked()
         }
     }
+
 
 }

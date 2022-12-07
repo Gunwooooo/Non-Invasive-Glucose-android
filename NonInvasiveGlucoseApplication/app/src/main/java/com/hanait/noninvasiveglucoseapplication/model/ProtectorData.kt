@@ -1,3 +1,3 @@
 package com.hanait.noninvasiveglucoseapplication.model
 
-data class ProtectorData(var phoneNumber: String, var nickName: String)
+data class ProtectorData(var phoneNumber: String, var nickname: String)

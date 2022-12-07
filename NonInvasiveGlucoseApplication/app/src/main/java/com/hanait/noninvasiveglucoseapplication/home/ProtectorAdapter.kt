@@ -34,7 +34,7 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>)
             protectingInfoBtn = itemView.findViewById(R.id.homeProtectingItem_layout_Info)
 
             //text넣기
-            protectingPhoneNumber.text = protectorData.nickName + " 님"
+            protectingPhoneNumber.text = protectorData.nickname + " 님"
 
             //삭제 클릭 리스너
             protectingDeleteBtn.setOnClickListener {

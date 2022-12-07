@@ -59,6 +59,16 @@
                     android:textColor="@color/toss_black_700"
                     android:fontFamily="@font/ps_bold"
                     android:textSize="32dp"/>
+                <TextView
+                    android:id="@+id/homeAccount_textView_modifyNickname"
+                    android:layout_marginStart="32dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="변경"
+                    android:textColor="@color/toss_black_200"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="18dp"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -80,9 +90,6 @@
                     android:layout_height="0dip"
                     android:layout_weight="0.333">
                     <TextView
-                        android:background="@drawable/my_ripple"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -96,11 +103,11 @@
                     android:layout_height="0.5dp"
                     android:background="@color/toss_black_150" />
                 <LinearLayout
-                    android:id="@+id/homeAccount_layout_modifySex"
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="0.333">
                     <TextView
+                        android:id="@+id/homeAccount_textView_modifySex"
                         android:background="@drawable/my_ripple"
                         android:clickable="true"
                         android:focusable="true"
@@ -121,6 +128,7 @@
                     android:layout_height="0dip"
                     android:layout_weight="0.333">
                     <TextView
+                        android:id="@+id/homeAccount_textView_modifyBirthday"
                         android:background="@drawable/my_ripple"
                         android:clickable="true"
                         android:focusable="true"

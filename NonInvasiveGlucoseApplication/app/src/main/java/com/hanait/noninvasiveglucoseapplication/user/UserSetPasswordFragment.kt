@@ -24,7 +24,7 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
     private fun init() {
         val mActivity = activity as UserActivity
         mActivity.setProgressDialogValueAndVisible(56, View.VISIBLE)
-        mActivity.setPrevFragment(UserSetNickNameFragment())
+        mActivity.setPrevFragment(UserSetNicknameFragment())
 
         binding.userSetPasswordBtnNext.setOnClickListener(this)
 

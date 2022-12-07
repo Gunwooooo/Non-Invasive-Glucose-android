@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetNickNameBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetNicknameBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 
-class UserSetNickNameFragment : BaseFragment<FragmentUserSetNickNameBinding>(FragmentUserSetNickNameBinding::inflate), View.OnClickListener {
+class UserSetNicknameFragment : BaseFragment<FragmentUserSetNicknameBinding>(FragmentUserSetNicknameBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -21,16 +21,16 @@ class UserSetNickNameFragment : BaseFragment<FragmentUserSetNickNameBinding>(Fra
         mActivity.setProgressDialogValueAndVisible(42, View.VISIBLE)
         mActivity.setPrevFragment(UserSetAuthorizationFragment())
 
-        binding.userSetNickNameBtnNext.setOnClickListener(this)
+        binding.userSetNicknameBtnNext.setOnClickListener(this)
 
         setEditTextTextChanged()
     }
 
     //텍스트 비어있을 경우 버튼 색상 변경 이벤트
     private fun setEditTextTextChanged() {
-        binding.userSetNickNameEditTextNickName.addTextChangedListener(object : TextWatcher {
+        binding.userSetNicknameEditTextNickname.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetNickNameBtnNext.isEnabled = s?.length != 0
+                binding.userSetNicknameBtnNext.isEnabled = s?.length != 0
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
@@ -39,8 +39,8 @@ class UserSetNickNameFragment : BaseFragment<FragmentUserSetNickNameBinding>(Fra
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.userSetNickNameBtnNext -> {
-                _userData.nickName = binding.userSetNickNameEditTextNickName.text.toString()
+            binding.userSetNicknameBtnNext -> {
+                _userData.nickname = binding.userSetNicknameEditTextNickname.text.toString()
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetPasswordFragment")

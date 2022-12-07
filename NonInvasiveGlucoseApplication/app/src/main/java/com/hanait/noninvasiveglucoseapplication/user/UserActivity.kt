@@ -44,7 +44,7 @@ class UserActivity : AppCompatActivity() {
         fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
         when(fragmentName) {
             "UserSetAuthorizationFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
-            "UserSetNickNameFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetNickNameFragment()).commitAllowingStateLoss()
+            "UserSetNicknameFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetNicknameFragment()).commitAllowingStateLoss()
             "UserSetPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
             "UserCheckPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserCheckPasswordFragment()).commitAllowingStateLoss()
             "UserSetBirthdayFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()

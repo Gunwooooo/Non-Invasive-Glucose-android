@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.UserSetNickNameFragment"
+    tools:context=".user.UserSetNicknameFragment"
     android:orientation="vertical"
     android:weightSum="1"
     android:layout_marginStart="16dp"
@@ -27,7 +27,7 @@
 
 
     <EditText
-        android:id="@+id/userSetNickName_editText_nickName"
+        android:id="@+id/userSetNickname_editText_nickname"
         android:hint="닉네임"
         android:paddingStart="16dp"
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         <requestFocus />
     </EditText>
     <Button
-        android:id="@+id/userSetNickName_btn_next"
+        android:id="@+id/userSetNickname_btn_next"
         android:layout_marginTop="15dp"
         android:text="확인"
         android:textSize="22dp"
