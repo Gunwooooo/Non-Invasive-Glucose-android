@@ -65,7 +65,6 @@ class RetrofitManager {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("로그", "RetrofitManager - onResponse : response.header.authorization : ${response.headers()["Authorization"]}")
-                LoginedUserClient.loginedUsertoken = response.headers()["Authorization"]
                 completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -91,12 +90,10 @@ class RetrofitManager {
 
     //로그인 유저 데이터 가져오기
     fun infoLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        Log.d("로그", "RetrofitManager - infoLoginedUser : 토큰값 : ${LoginedUserClient.loginedUsertoken}")
-        val call = apiPHRService?.infoLoginedUser(LoginedUserClient.loginedUsertoken) ?: return
+        Log.d("로그", "RetrofitManager - infoLoginedUser : 토큰값 : ${LoginedUserClient.loginedUserToken}")
+        val call = apiPHRService?.infoLoginedUser(LoginedUserClient.loginedUserToken) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.d("로그", "RetrofitManager - onResponse : ${response}")
-                Log.d("로그", "RetrofitManager - onResponse : ${response.body()}")
                 completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

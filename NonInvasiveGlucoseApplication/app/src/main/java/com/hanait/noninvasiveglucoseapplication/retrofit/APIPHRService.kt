@@ -27,6 +27,7 @@ interface APIPHRService {
         @Body userData: UserData
     ): Call<ResponseBody>
 
+    //로그인 된 회원 정보 조회
     @POST("/api/v1/userinfo")
     fun infoLoginedUser(
         @Header("Authorization") authorization : String?

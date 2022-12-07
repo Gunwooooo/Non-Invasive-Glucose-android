@@ -39,7 +39,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetBirthdayBtnNext -> {
-                _userData.birthDay = "$selectedYear-$selectedMonth-$selectedDayOfMonth"
+                _userData.birthDay = "${selectedYear}년 ${selectedMonth}월 ${selectedDayOfMonth}일"
 
                 val mActivity = activity as UserActivity
                 mActivity.changeFragment("UserSetSexFragment")

@@ -15,6 +15,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
 class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>(FragmentUserCheckPasswordBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,6 +74,9 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                         }
                         //로그인 성공
                         200 -> {
+                            //토큰 값 저장
+                            LoginedUserClient.loginedUserToken = response.headers()["Authorization"]
+
                             Toast.makeText(requireContext(), "로그인 성공!", Toast.LENGTH_SHORT).show()
                             val mActivity = activity as UserActivity
                             mActivity.changeFragment("UserSetConnectDeviceFragment")

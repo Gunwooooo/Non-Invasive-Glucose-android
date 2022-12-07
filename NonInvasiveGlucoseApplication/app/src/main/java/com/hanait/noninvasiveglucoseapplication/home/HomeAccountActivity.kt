@@ -16,6 +16,9 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
+import okhttp3.ResponseBody
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
@@ -43,8 +46,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         //생년월일 변경 리스너
         setDatePickerDialogListener()
 
-        binding.homeAccountTextViewModifySex.setOnClickListener(this)
-        binding.homeAccountTextViewModifyBirthday.setOnClickListener(this)
+        binding.homeAccountLayoutModifySex.setOnClickListener(this)
+        binding.homeAccountLayoutModifyBirthday.setOnClickListener(this)
     }
 
     //toolbar 클릭 리스너
@@ -60,10 +63,10 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeAccountTextViewModifySex -> {
+            binding.homeAccountLayoutModifySex -> {
                 showModifySexDialog()
             }
-            binding.homeAccountTextViewModifyBirthday -> {
+            binding.homeAccountLayoutModifyBirthday -> {
                 makeDatePickerDialog()
             }
         }
@@ -74,7 +77,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDatePickerDialogListener() {
         datePickerDialogListener =
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.homeAccountTextViewModifyBirthday.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+                binding.homeAccountTextViewBirthday.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
             }
     }
 
@@ -94,7 +97,28 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 CompletionResponse.OK -> {
                     when(response?.code()) {
                         200 -> {
-                            Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : response body : ${response.body()}")
+                            //로그인 된 유저 데이터 제이슨으로 파싱하기
+                            val str = response.body()?.string()
+                            val jsonObject = str?.let { JSONObject(it) }
+//                            Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : " +
+//                            "${jsonObject?.getJSONObject("principal")?.getJSONObject("user")?.get("phoneNumber")}")
+                            val jsonObjectUser = jsonObject?.getJSONObject("principal")?.getJSONObject("user")
+                            binding.homeAccountTextViewNickname.text = jsonObjectUser?.getString("nickname")
+                            val phoneNumberStr = jsonObjectUser?.getString("phoneNumber")
+
+                            if(jsonObjectUser?.getString("sex").equals("T")) {
+                                binding.homeAccountTextViewSex.text = "남성"
+                            } else
+                                binding.homeAccountTextViewSex.text = "여성"
+                            //전화번호 양식 만들기
+                            val stringBuffer = StringBuffer()
+                            stringBuffer.append(phoneNumberStr?.substring(0, 3))
+                            stringBuffer.append("-")
+                            stringBuffer.append(phoneNumberStr?.substring(3, 7))
+                            stringBuffer.append("-")
+                            stringBuffer.append(phoneNumberStr?.substring(7, 11))
+                            binding.homeAccountTextViewPhoneNumber.text = stringBuffer.toString()
+                            binding.homeAccountTextViewBirthday.text = jsonObjectUser?.getString("birthDay")
                         }
                     }
                 }
