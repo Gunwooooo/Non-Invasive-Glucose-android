@@ -18,34 +18,23 @@ import com.hanait.noninvasiveglucoseapplication.R
 
 class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
 
-    //보호자 삭제 다이어로그
-    private var protectorDeleteDialogListener: ProtectorDeleteDialogListener? = null
-    interface ProtectorDeleteDialogListener {
-        fun onPositiveClicked()
-        fun onNegativeClicked()
-    }
-    fun setProtectorDeleteDialogListener(customDialogListener: ProtectorDeleteDialogListener) {
-        this.protectorDeleteDialogListener = customDialogListener
-    }
-
-
     //보호자 정보 확인 다이어로그
-    private var protectorInfoDialogListener: ProtectorInfoDialogListener? = null
-    interface ProtectorInfoDialogListener {
+    private var oneButtonDialogListener: OneButtonDialogListener? = null
+    interface OneButtonDialogListener {
         fun onPositiveClicked()
     }
-    fun setProtectorInfoDialogListener(customDialogListener: ProtectorInfoDialogListener) {
-        this.protectorInfoDialogListener = customDialogListener
+    fun setOneButtonDialogListener(customDialogListener: OneButtonDialogListener) {
+        this.oneButtonDialogListener = customDialogListener
     }
 
-    //내 페이지 성별 수정 다이어로그
-    private var accountModifySexDialogListener: AccountModifySexDialogListener? = null
-    interface AccountModifySexDialogListener {
+    //보호자 삭제 다이어로그
+    private var twoButtonDialogListener: TwoButtonDialogListener? = null
+    interface TwoButtonDialogListener {
         fun onPositiveClicked()
         fun onNegativeClicked()
     }
-    fun setAccountModifySexDialogListener(customDialogListener: AccountModifySexDialogListener) {
-        this.accountModifySexDialogListener = customDialogListener
+    fun setTwoButtonDialogListener(customDialogListener: TwoButtonDialogListener) {
+        this.twoButtonDialogListener = customDialogListener
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,20 +107,20 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
         when(v?.id) {
             //보호자 보호 대샂아 삭제 다이어로그 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive ->
-                protectorDeleteDialogListener?.onPositiveClicked()
+                twoButtonDialogListener?.onPositiveClicked()
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative ->
-                protectorDeleteDialogListener?.onNegativeClicked()
+                twoButtonDialogListener?.onNegativeClicked()
 
             //보호자 보호 대상자 정보 다이어로그 연결
             R.id.homeProtectorInfoDialog_btn_positive ->
-                protectorInfoDialogListener?.onPositiveClicked()
+                oneButtonDialogListener?.onPositiveClicked()
 
 
             //사용자 성별 수정 다이어로그 리스너 연결
             R.id.homeAccountModifySexDialog_btn_positive ->
-                accountModifySexDialogListener?.onPositiveClicked()
+                twoButtonDialogListener?.onPositiveClicked()
             R.id.homeAccountModifySexDialog_btn_negative ->
-                accountModifySexDialogListener?.onNegativeClicked()
+                twoButtonDialogListener?.onNegativeClicked()
         }
     }
 

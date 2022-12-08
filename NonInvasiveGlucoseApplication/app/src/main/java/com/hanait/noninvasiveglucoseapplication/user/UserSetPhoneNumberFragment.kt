@@ -43,8 +43,6 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         //프로그래스바 셋
         binding.userSetPhoneNumberBtnNext.setOnClickListener(this)
 
-
-
         setEditTextTextChanged()
 
         //유저 데이터 클래스 초기화
@@ -54,6 +52,8 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetPhoneNumberBtnNext -> {
+                _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
+
                 retrofitCheckJoinedUser()
             }
         }
@@ -65,8 +65,6 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
-
                     val mActivity = activity as UserActivity
                     when(response?.code()) {
                         //존재하지 않는 아이디일 경우 전화번호 인증화면으로 이동

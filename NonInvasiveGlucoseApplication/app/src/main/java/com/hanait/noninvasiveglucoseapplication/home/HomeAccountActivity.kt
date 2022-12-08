@@ -71,7 +71,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 makeDatePickerDialog()
             }
             binding.homeAccountBtnModifyPassword -> {
-//                showModifyPasswordDialog()
+                showModifyPasswordDialog()
             }
         }
     }
@@ -98,7 +98,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private fun showModifySexDialog() {
         Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
         val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog)
-        customDialog.setAccountModifySexDialogListener(object : CustomDialogManager.AccountModifySexDialogListener{
+        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 //회원정보 수정 기능 추가 필요 ( 성별 )
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
@@ -111,16 +111,21 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.show(supportFragmentManager, "home_account_modify_sex_dialog")
     }
 
-//    private fun showModifyPasswordDialog() {
-//        val customDialog = CustomDialogManager(R.layout.home_account_modify_password_dialog)
-//        customDialog.setProtectorInfoDialogListener(object : CustomDialogManager.ProtectorInfoDialogListener{
-//            override fun onPositiveClicked() {
-//                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
-//                customDialog.dismiss()
-//            }
-//        })
-//        customDialog.show(childFragmentManager, "home_protector_info_dialog")
-//    }
+    //비밀번호 변경 다이어로그 출력
+    private fun showModifyPasswordDialog() {
+        val customDialog = CustomDialogManager(R.layout.home_account_modify_password_dialog)
+        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+            override fun onPositiveClicked() {
+                //비밀번호 변경 확인 및 수정
+                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+                customDialog.dismiss()
+            }
+            override fun onNegativeClicked() {
+                customDialog.dismiss()
+            }
+        })
+        customDialog.show(supportFragmentManager, "home_account_modify_password_dialog")
+    }
 
     //로그인 된 회원 정보 가져오기
     private fun retrofitInfoLoginedUser() {
