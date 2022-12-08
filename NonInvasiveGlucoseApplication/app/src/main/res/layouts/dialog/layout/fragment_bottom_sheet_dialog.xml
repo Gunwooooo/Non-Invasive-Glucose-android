@@ -28,19 +28,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp">
+
         <EditText
-            android:layout_margin="16dp"
             android:id="@+id/homeSearch_editText"
-            android:imeOptions="actionSearch"
-            android:inputType="phone"
-            android:padding="13dp"
-            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/user_edittext_border"
             android:drawableEnd="@drawable/ic_baseline_search_24"
             android:fontFamily="@font/ps_regular"
             android:hint="보호자 전화번호를 입력해주세요('-'없이)"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/user_edittext_border"/>
+            android:imeOptions="actionSearch"
+            android:inputType="phone"
+            android:padding="13dp"
+            android:textSize="18dp" >
+            <requestFocus />
+        </EditText>
     </LinearLayout>
 
     <LinearLayout

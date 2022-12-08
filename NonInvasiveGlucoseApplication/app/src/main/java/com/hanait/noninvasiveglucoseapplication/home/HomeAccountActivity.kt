@@ -48,6 +48,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.homeAccountLayoutModifySex.setOnClickListener(this)
         binding.homeAccountLayoutModifyBirthday.setOnClickListener(this)
+        binding.homeAccountBtnModifyPassword.setOnClickListener(this)
     }
 
     //toolbar 클릭 리스너
@@ -68,6 +69,9 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             }
             binding.homeAccountLayoutModifyBirthday -> {
                 makeDatePickerDialog()
+            }
+            binding.homeAccountBtnModifyPassword -> {
+//                showModifyPasswordDialog()
             }
         }
     }
@@ -90,9 +94,38 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         DatePickerDialog(this, datePickerDialogListener, year, month, dayOfMonth).show()
     }
 
+    //보호자 삭제 다이어로그 호출
+    private fun showModifySexDialog() {
+        Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
+        val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog)
+        customDialog.setAccountModifySexDialogListener(object : CustomDialogManager.AccountModifySexDialogListener{
+            override fun onPositiveClicked() {
+                //회원정보 수정 기능 추가 필요 ( 성별 )
+                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+                customDialog.dismiss()
+            }
+            override fun onNegativeClicked() {
+                customDialog.dismiss()
+            }
+        })
+        customDialog.show(supportFragmentManager, "home_account_modify_sex_dialog")
+    }
+
+//    private fun showModifyPasswordDialog() {
+//        val customDialog = CustomDialogManager(R.layout.home_account_modify_password_dialog)
+//        customDialog.setProtectorInfoDialogListener(object : CustomDialogManager.ProtectorInfoDialogListener{
+//            override fun onPositiveClicked() {
+//                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+//                customDialog.dismiss()
+//            }
+//        })
+//        customDialog.show(childFragmentManager, "home_protector_info_dialog")
+//    }
+
+    //로그인 된 회원 정보 가져오기
     private fun retrofitInfoLoginedUser() {
         RetrofitManager.instance.infoLoginedUser(completion = {
-            completionResponse, response -> 
+                completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {
@@ -124,25 +157,9 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
+                    Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : ㄴㅇㄻㄴㅇㄻㅇㄴㄹ")
                 }
             }
         })
-    }
-
-    //보호자 삭제 다이어로그 호출
-    private fun showModifySexDialog() {
-        Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
-        val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog)
-        customDialog.setAccountModifySexDialogListener(object : CustomDialogManager.AccountModifySexDialogListener{
-            override fun onPositiveClicked() {
-                //회원정보 수정 기능 추가 필요 ( 성별 )
-                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
-                customDialog.dismiss()
-            }
-            override fun onNegativeClicked() {
-                customDialog.dismiss()
-            }
-        })
-        customDialog.show(supportFragmentManager, "home_account_modify_sex_dialog")
     }
 }

@@ -36,7 +36,6 @@
         android:importantForAutofill="no"
         android:background="@drawable/user_edittext_border"
         android:inputType="text">
-
         <requestFocus />
     </EditText>
     <Button
