@@ -16,20 +16,26 @@ interface APIPHRService {
     ): Call<ResponseBody>
 
     //회원가입
-    @POST("/api/v1/join")
+    @POST("/wellink/user/join")
     fun joinUser(
         @Body userData: UserData
     ): Call<ResponseBody>
 
     //가입된 유저 체크(처음에 등록된 전화번호인지 확인)
-    @POST("/api/v1/check")
+    @POST("/wellink/user/check")
     fun checkJoinedUser(
         @Body userData: UserData
     ): Call<ResponseBody>
 
     //로그인 된 회원 정보 조회
-    @POST("/api/v1/userinfo")
+    @POST("/wellink/user/info")
     fun infoLoginedUser(
+        @Header("Authorization") authorization : String?
+    ): Call<ResponseBody>
+
+    //회원 탈퇴
+    @POST("/wellink/user/delete")
+    fun deleteLoginedUser(
         @Header("Authorization") authorization : String?
     ): Call<ResponseBody>
 }

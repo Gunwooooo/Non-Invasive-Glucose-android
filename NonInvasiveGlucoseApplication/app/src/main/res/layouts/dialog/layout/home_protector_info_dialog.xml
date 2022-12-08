@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="나이 : 만27세"
-            android:textSize="24dp"
+            android:textSize="21dp"
             android:fontFamily="@font/ps_regular"
             android:textColor="@color/toss_black_700"/>
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="성별 : 남"
-            android:textSize="24dp"
+            android:textSize="21dp"
             android:fontFamily="@font/ps_regular"
             android:textColor="@color/toss_black_700"/>
         <TextView
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="전화번호 뒷자리 : 7199"
-            android:textSize="24dp"
+            android:textSize="21dp"
             android:fontFamily="@font/ps_regular"
             android:textColor="@color/toss_black_700"/>
 
@@ -57,7 +57,7 @@
         android:layout_height="60dp"
         android:gravity="center">
         <Button
-            android:id="@+id/homeProtectorInfoDialog_btn_infoProtecting"
+            android:id="@+id/homeProtectorInfoDialog_btn_positive"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/btn_border_gray"
@@ -74,7 +74,7 @@
         android:layout_height="60dp"
         android:gravity="center">
         <Button
-            android:id="@+id/homeProtectorInfoDialog_btn_positive"
+            android:id="@+id/homeProtectorInfoDialog_btn_negative"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/btn_border_blue"

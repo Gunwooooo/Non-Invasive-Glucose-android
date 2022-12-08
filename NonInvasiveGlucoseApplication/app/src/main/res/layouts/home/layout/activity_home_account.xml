@@ -248,7 +248,7 @@
                     android:background="@drawable/my_ripple"
                     android:clickable="true"
                     android:focusable="true"
-                    android:id="@+id/homeAccount_btn_logout"
+                    android:id="@+id/homeAccount_btn_logoutUser"
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="0.333"

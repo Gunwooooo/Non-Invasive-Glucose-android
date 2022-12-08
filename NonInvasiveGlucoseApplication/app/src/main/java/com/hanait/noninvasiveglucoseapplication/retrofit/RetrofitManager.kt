@@ -101,4 +101,19 @@ class RetrofitManager {
             }
         })
     }
+
+
+    //회원 탈퇴
+    fun deleteLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        Log.d("로그", "RetrofitManager - deleteLoginedUser : 토큰값 : ${LoginedUserClient.loginedUserToken}")
+        val call = apiPHRService?.deleteLoginedUser(LoginedUserClient.loginedUserToken) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
 }

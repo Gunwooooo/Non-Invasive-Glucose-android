@@ -49,6 +49,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         binding.homeAccountLayoutModifySex.setOnClickListener(this)
         binding.homeAccountLayoutModifyBirthday.setOnClickListener(this)
         binding.homeAccountBtnModifyPassword.setOnClickListener(this)
+        binding.homeAccountBtnDeleteUser.setOnClickListener(this)
+        binding.homeAccountBtnLogoutUser.setOnClickListener(this)
     }
 
     //toolbar 클릭 리스너
@@ -72,6 +74,12 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             }
             binding.homeAccountBtnModifyPassword -> {
                 showModifyPasswordDialog()
+            }
+            binding.homeAccountBtnDeleteUser -> {
+                showDeleteUserDialog()
+            }
+            binding.homeAccountBtnLogoutUser -> {
+                showLogoutUserDialog()
             }
         }
     }
@@ -101,7 +109,6 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 //회원정보 수정 기능 추가 필요 ( 성별 )
-                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
                 customDialog.dismiss()
             }
             override fun onNegativeClicked() {
@@ -116,8 +123,38 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         val customDialog = CustomDialogManager(R.layout.home_account_modify_password_dialog)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
-                //비밀번호 변경 확인 및 수정
-                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+                //비밀번호 변경 확인 및 수정 retrofit 필요
+                customDialog.dismiss()
+            }
+            override fun onNegativeClicked() {
+                customDialog.dismiss()
+            }
+        })
+        customDialog.show(supportFragmentManager, "home_account_modify_password_dialog")
+    }
+
+    //회원 탈퇴 다이어로그 출력
+    private fun showDeleteUserDialog() {
+        val customDialog = CustomDialogManager(R.layout.home_account_delete_user_dialog)
+        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+            override fun onPositiveClicked() {
+                //회원탈퇴 retrofit 통신 필요
+                customDialog.dismiss()
+            }
+            override fun onNegativeClicked() {
+                customDialog.dismiss()
+            }
+        })
+        customDialog.show(supportFragmentManager, "home_account_modify_password_dialog")
+    }
+
+    //회원 탈퇴 다이어로그 출력
+    private fun showLogoutUserDialog() {
+        val customDialog = CustomDialogManager(R.layout.home_account_logout_user_dialog)
+        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+            override fun onPositiveClicked() {
+                //로그아웃 retrofit 통신 필요
+                retrofitDeleteLoginedUser()
                 customDialog.dismiss()
             }
             override fun onNegativeClicked() {
@@ -138,31 +175,34 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                             //로그인 된 유저 데이터 제이슨으로 파싱하기
                             val str = response.body()?.string()
                             val jsonObject = str?.let { JSONObject(it) }
-//                            Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : " +
-//                            "${jsonObject?.getJSONObject("principal")?.getJSONObject("user")?.get("phoneNumber")}")
                             val jsonObjectUser = jsonObject?.getJSONObject("principal")?.getJSONObject("user")
                             binding.homeAccountTextViewNickname.text = jsonObjectUser?.getString("nickname")
-                            val phoneNumberStr = jsonObjectUser?.getString("phoneNumber")
 
                             if(jsonObjectUser?.getString("sex").equals("T")) {
                                 binding.homeAccountTextViewSex.text = "남성"
                             } else
                                 binding.homeAccountTextViewSex.text = "여성"
-                            //전화번호 양식 만들기
-                            val stringBuffer = StringBuffer()
-                            stringBuffer.append(phoneNumberStr?.substring(0, 3))
-                            stringBuffer.append("-")
-                            stringBuffer.append(phoneNumberStr?.substring(3, 7))
-                            stringBuffer.append("-")
-                            stringBuffer.append(phoneNumberStr?.substring(7, 11))
-                            binding.homeAccountTextViewPhoneNumber.text = stringBuffer.toString()
+
+                            binding.homeAccountTextViewPhoneNumber.text = jsonObjectUser?.getString("phoneNumber")
                             binding.homeAccountTextViewBirthday.text = jsonObjectUser?.getString("birthDay")
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
-                    Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : ㄴㅇㄻㄴㅇㄻㅇㄴㄹ")
+                }
+            }
+        })
+    }
+    public fun retrofitDeleteLoginedUser() {
+        RetrofitManager.instance.deleteLoginedUser(completion = {
+            completionResponse, response -> 
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : 통신 실패")
                 }
             }
         })

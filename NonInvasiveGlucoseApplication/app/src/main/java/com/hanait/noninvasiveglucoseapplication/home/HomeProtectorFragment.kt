@@ -67,7 +67,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         when(v) {
             //바텀 시트 다이어로그 호출
             binding.homeProtectorLayoutProtectorAdd -> {
-                val bottomSheetView = layoutInflater.inflate(R.layout.fragment_bottom_sheet_dialog, null)
+                val bottomSheetView = layoutInflater.inflate(R.layout.home_protector_search_bottom_sheet_dialog, null)
                 val bottomSheetDialog = BottomSheetDialog(requireContext())
                 bottomSheetDialog.setContentView(bottomSheetView)
                 bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -82,12 +82,15 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         }
     }
 
-    //보호자 삭제 다이어로그 호출
+    //보호자, 보호 대상자 정보 다이어로그 호출
     private fun showInfoProtectorDialog() {
         val customDialog = CustomDialogManager(R.layout.home_protector_info_dialog)
-        customDialog.setOneButtonDialogListener(object : CustomDialogManager.OneButtonDialogListener{
+        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
-                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 사용자 건강정보 조회 버튼 클릭")
+                customDialog.dismiss()
+            }
+            override fun onNegativeClicked() {
                 customDialog.dismiss()
             }
         })

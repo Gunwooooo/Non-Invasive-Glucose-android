@@ -18,16 +18,16 @@ import com.hanait.noninvasiveglucoseapplication.R
 
 class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
 
-    //보호자 정보 확인 다이어로그
-    private var oneButtonDialogListener: OneButtonDialogListener? = null
-    interface OneButtonDialogListener {
-        fun onPositiveClicked()
-    }
-    fun setOneButtonDialogListener(customDialogListener: OneButtonDialogListener) {
-        this.oneButtonDialogListener = customDialogListener
-    }
+//    //원 버튼 다이어로그
+//    private var oneButtonDialogListener: OneButtonDialogListener? = null
+//    interface OneButtonDialogListener {
+//        fun onPositiveClicked()
+//    }
+//    fun setOneButtonDialogListener(customDialogListener: OneButtonDialogListener) {
+//        this.oneButtonDialogListener = customDialogListener
+//    }
 
-    //보호자 삭제 다이어로그
+    //투 버튼 다이어로그
     private var twoButtonDialogListener: TwoButtonDialogListener? = null
     interface TwoButtonDialogListener {
         fun onPositiveClicked()
@@ -56,35 +56,35 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
         val inflater = requireActivity().layoutInflater
         val view: View = inflater.inflate(layout, null)
         builder.setView(view)
+
+        var positiveButton : Button? = null
+        var negativeButton : Button? = null
+
         when(layout) {
+            /////////////////////////////////////////    protector   ///////////////////////////////
             //보호 대상자 삭제 다이어로그
             R.layout.home_protecting_delete_dialog -> {
-                val positiveButton = view.findViewById(R.id.homeProtectingDeleteDialog_btn_positive) as Button
-                val negativeButton = view.findViewById(R.id.homeProtectingDeleteDialog_btn_negative) as Button
-                positiveButton.setOnClickListener(this)
-                negativeButton.setOnClickListener(this)
+                positiveButton = view.findViewById(R.id.homeProtectingDeleteDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeProtectingDeleteDialog_btn_negative) as Button
             }
             //보호자 삭제 다이어로그
             R.layout.home_protector_delete_dialog -> {
-                val positiveButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_positive) as Button
-                val negativeButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_negative) as Button
-                positiveButton.setOnClickListener(this)
-                negativeButton.setOnClickListener(this)
+                positiveButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_negative) as Button
             }
             //보호자, 보호 대상자 정보 보기 다이어로그
             R.layout.home_protector_info_dialog -> {
-                val positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
-                positiveButton.setOnClickListener(this)
+                positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_negative) as Button
             }
-            ///////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////    Account   /////////////////////////////////////
             //사용자 성별 수정 다이어로그
             R.layout.home_account_modify_sex_dialog -> {
-                val positiveButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_positive) as Button
-                val negativeButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_negative) as Button
+                positiveButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_negative) as Button
                 val maleButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_male) as Button
                 val femaleButton = view.findViewById(R.id.homeAccountModifySexDialog_btn_female) as Button
-                positiveButton.setOnClickListener(this)
-                negativeButton.setOnClickListener(this)
+                //성별 토글 기능 구현
                 maleButton.setOnClickListener {
                     maleButton.isEnabled = false
                     maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -98,31 +98,42 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                     maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
                 }
             }
+            //비밀번호 수정 다이어로그
+            R.layout.home_account_modify_password_dialog -> {
+                positiveButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_negative) as Button
+            }
+            //회원탈퇴 다이어로그
+            R.layout.home_account_delete_user_dialog -> {
+                positiveButton = view.findViewById(R.id.homeAccountDeleteUserDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeAccountDeleteUserDialog_btn_negative) as Button
+            }
+            R.layout.home_account_logout_user_dialog -> {
+                positiveButton = view.findViewById(R.id.homeAccountLogoutUserDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeAccountLogoutUserDialog_btn_negative) as Button
+            }
         }
+        positiveButton?.setOnClickListener(this)
+        negativeButton?.setOnClickListener(this)
         return builder.create()
     }
 
     //다이어로그 버튼 별 클릭 리스너 등록
     override fun onClick(v: View?) {
         when(v?.id) {
-            //보호자 보호 대샂아 삭제 다이어로그 연결
-            R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive ->
+            //투 버튼 파지티브 리스너 연결
+            R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
+            R.id.homeAccountModifySexDialog_btn_positive,  R.id.homeAccountModifyPasswordDialog_btn_positive,
+            R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectorInfoDialog_btn_positive,
+            R.id.homeAccountLogoutUserDialog_btn_positive ->
                 twoButtonDialogListener?.onPositiveClicked()
-            R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative ->
-                twoButtonDialogListener?.onNegativeClicked()
 
-            //보호자 보호 대상자 정보 다이어로그 연결
-            R.id.homeProtectorInfoDialog_btn_positive ->
-                oneButtonDialogListener?.onPositiveClicked()
-
-
-            //사용자 성별 수정 다이어로그 리스너 연결
-            R.id.homeAccountModifySexDialog_btn_positive ->
-                twoButtonDialogListener?.onPositiveClicked()
-            R.id.homeAccountModifySexDialog_btn_negative ->
+            //투 버튼 네가티브 리스너 연결
+            R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
+            R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyPasswordDialog_btn_negative,
+            R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectorInfoDialog_btn_negative,
+            R.id.homeAccountLogoutUserDialog_btn_negative ->
                 twoButtonDialogListener?.onNegativeClicked()
         }
     }
-
-
 }

@@ -14,19 +14,20 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="해당 보호 대상자를 해제할까요?"
+            android:text="정말로 회원 탈퇴를 하시겠어요?"
             android:textSize="21dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
-<!--        <TextView-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:gravity="center"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="* 해당 약의 오늘 복용 정보가 삭제됩니다."-->
-<!--            android:textSize="18dp"-->
-<!--            android:fontFamily="@font/ps_bold"-->
-<!--            android:textColor="@color/text_red_200"/>-->
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="* 사용자의 모든 정보가 삭제됩니다."
+            android:textSize="18dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/text_red_200"/>
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +41,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeProtectingDeleteDialog_btn_negative"
+                android:id="@+id/homeAccountDeleteUserDialog_btn_negative"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_gray_reverse"
@@ -59,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeProtectingDeleteDialog_btn_positive"
+                android:id="@+id/homeAccountDeleteUserDialog_btn_positive"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_blue"
