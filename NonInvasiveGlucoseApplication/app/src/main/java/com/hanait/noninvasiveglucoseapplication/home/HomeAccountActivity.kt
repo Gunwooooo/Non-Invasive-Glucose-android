@@ -194,7 +194,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
     }
-    public fun retrofitDeleteLoginedUser() {
+    private fun retrofitDeleteLoginedUser() {
         RetrofitManager.instance.deleteLoginedUser(completion = {
             completionResponse, response -> 
             when(completionResponse) {

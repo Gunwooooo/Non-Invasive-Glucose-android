@@ -33,7 +33,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
         mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mActivity.setProgressDialogValueAndVisible(96, View.VISIBLE)
+        mActivity.setProgressDialogValueAndVisible(28, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
         binding.userSetAuthorizationBtnNext.setOnClickListener(this)
@@ -51,15 +51,14 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         val mActivity = activity as UserActivity
         when(v) {
             binding.userSetAuthorizationBtnNext -> {
-                mActivity.changeFragment("UserSetNicknameFragment")
                 //인증번호가 일치할 경우, 불일치 경우
-//                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
-//                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
-//                    mActivity.changeFragment("UserSetNicknameFragment")
-//                } else {
-//                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
-//                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
-//                }
+                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
+                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
+                    mActivity.changeFragment("UserSetNicknameFragment")
+                } else {
+                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
+                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
+                }
             }
 
             binding.userSetAuthorizationEditTextPhoneNumber -> {
