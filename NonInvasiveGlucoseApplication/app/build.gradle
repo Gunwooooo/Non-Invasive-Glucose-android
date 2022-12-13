@@ -83,4 +83,7 @@ dependencies {
 
     //mpchart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //BouncyNestedScrollView
+    implementation 'com.github.valkriaine:Bouncy:2.3'
 }

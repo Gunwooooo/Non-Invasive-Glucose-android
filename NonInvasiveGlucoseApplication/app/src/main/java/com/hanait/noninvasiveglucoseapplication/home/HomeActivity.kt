@@ -51,6 +51,8 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        binding.homeBouncyNestedScrollView.bindSpringToParent = true
     }
 
     //프래그먼트 전환

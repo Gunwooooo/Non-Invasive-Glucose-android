@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home.HomeActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
+<!--<com.factor.bouncy.BouncyNestedScrollView-->
+<!--    android:id="@+id/home_bouncyNestedScrollView"-->
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/home_toolbar"
-        android:layout_width="417dp"
-        android:layout_height="58dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    app:fling_animation_size=".7"-->
+<!--    app:overscroll_animation_size=".7">-->
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:src="@drawable/logo_home" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <FrameLayout
-        android:id="@+id/home_frameId"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        app:layout_constraintBottom_toTopOf="@+id/home_bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_toolbar" />
+        android:layout_height="match_parent"
+        tools:context=".home.HomeActivity"
+        android:orientation="vertical"
+        android:weightSum="1">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            android:layout_width="417dp"
+            android:layout_height="58dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/home_bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="60dp"
-        app:itemBackground="@color/white"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navbar" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo_home" />
+        </androidx.appcompat.widget.Toolbar>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/home_frameId"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            app:layout_constraintBottom_toTopOf="@+id/home_bottomNav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_toolbar" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/home_bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            app:itemBackground="@color/white"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_navbar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--</com.factor.bouncy.BouncyNestedScrollView>-->
