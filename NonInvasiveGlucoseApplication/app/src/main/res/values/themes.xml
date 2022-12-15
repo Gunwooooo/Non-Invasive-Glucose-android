@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.NonInvasiveGlucoseApplication" parent="Theme.AppCompat.Light">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/toss_blue_200</item>
+        <item name="colorPrimary">@color/iphone_green</item>
         <item name="colorPrimaryVariant">@color/toss_blue_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" >?attr/colorOnPrimary</item>
 
         <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/toss_blue_200</item>
+        <item name="colorAccent">@color/iphone_green</item>
 <!--        <item name="android:datePickerStyle">@style/CustomDatePicker</item>-->
 
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>

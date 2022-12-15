@@ -1,61 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/homeProtectingItem_layout_Info"
-    android:background="@drawable/my_ripple"
-    android:clickable="true"
-    android:focusable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:padding="16dp"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:orientation="vertical">
     <LinearLayout
-        android:gravity="start"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/human"/>
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/homeProtectingItem_layout_Info"
+        android:background="@drawable/my_ripple"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
-        android:layout_width="0dip"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.6">
-        <TextView
-            android:layout_marginStart="5dp"
-            android:id="@+id/homeProtectingItem_textView_phoneNumber"
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <LinearLayout
+            android:gravity="start"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:text="이름"
-            android:textSize="21dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_700"/>
-    </LinearLayout>
+            android:layout_weight="0.2">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/human"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:gravity="end"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
-        <TextView
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:id="@+id/homeProtectingItem_btn_delete"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:text="해제"
-            android:textSize="18dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_200"/>
-    </LinearLayout>
+            android:layout_weight="0.6">
+            <TextView
+                android:layout_marginStart="5dp"
+                android:id="@+id/homeProtectingItem_textView_phoneNumber"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="이름"
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2">
+            <TextView
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeProtectingItem_btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="해제"
+                android:textSize="18dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/iphone_red"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

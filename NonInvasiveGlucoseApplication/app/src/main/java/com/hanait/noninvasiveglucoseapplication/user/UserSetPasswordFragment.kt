@@ -73,16 +73,16 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
         when(v) {
             binding.userSetPasswordBtnNext -> {
 //                //비밀번호 일치 여부 체크
-                if(checkPasswordNotSame()) {
-                    resetPasswordEditTextWithToast("비밀번호가 서로 일치하지 않습니다.")
-                    return
-                }
-
-                //비밀번호 정규식 체크
-                if(!checkPasswordRegex()) {
-                    resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
-                    return
-                }
+//                if(checkPasswordNotSame()) {
+//                    resetPasswordEditTextWithToast("비밀번호가 서로 일치하지 않습니다.")
+//                    return
+//                }
+//
+//                //비밀번호 정규식 체크
+//                if(!checkPasswordRegex()) {
+//                    resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
+//                    return
+//                }
 
                 _userData.password = binding.userSetPasswordEditTextPassword.text.toString()
 

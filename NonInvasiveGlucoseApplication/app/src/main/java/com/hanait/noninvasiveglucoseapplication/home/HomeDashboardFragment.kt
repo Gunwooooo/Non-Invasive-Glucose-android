@@ -2,9 +2,11 @@ package com.hanait.noninvasiveglucoseapplication.home
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -33,11 +35,14 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
         //데이터 차트 설정
         setThermometerLineChart()
+        setHeartLineChart()
+        setGlucoseLineChart()
 
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
         binding.homeDashboardBtnHeart.setOnClickListener(this)
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
         binding.homeDashboardBtnCalendar.setOnClickListener(this)
+        binding.homeDashboardBtnAccount.setOnClickListener(this)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -59,6 +64,10 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             }
             binding.homeDashboardBtnCalendar -> {
                 makeDatePickerDialog()
+            }
+            binding.homeDashboardBtnAccount -> {
+                val intent = Intent(requireContext(), HomeAccountActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -93,7 +102,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun setThermometerLineChart() {
         val thermometerLineData =  customChartManager.setThermometerDashboardLineData()
         val lineData = LineData(thermometerLineData)
-        val lineThermometerDay = binding.homeDashboardMainChart
+        val lineThermometerDay = binding.homeDashboardThermometerChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
         lineThermometerDay.run {
@@ -101,10 +110,10 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
-            enableScroll()
-            setVisibleXRangeMaximum(6f) //
+//            enableScroll()
+//            setVisibleXRangeMaximum(6f) //
             setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
             marker = markerView
 //            moveViewToX(3f);
@@ -112,10 +121,10 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-//                labelCount = 10
-                granularity = 3f
+                labelCount = 8
+//                granularity = 3f  //X축 간격
                 textSize = 12f
-//                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -127,6 +136,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 gridColor =
                     ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
@@ -137,6 +147,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
+                setExtraOffsets(5f, 5f, 5f, 15f)
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -148,13 +160,14 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun setHeartLineChart() {
         val heartLineData = customChartManager.setHeartLineData()
         val lineData = LineData(heartLineData)
-        val lineChartHeart = binding.homeDashboardMainChart
+        val lineChartHeart = binding.homeDashboardHeartChart
+        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
         lineChartHeart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-//            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
             setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
 //            enableScroll()
@@ -166,8 +179,9 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
+                labelCount = 8
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-//                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -179,6 +193,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 gridColor =
                     ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
@@ -189,6 +204,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                setExtraOffsets(5f, 5f, 5f, 15f)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -199,13 +216,14 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun setGlucoseLineChart() {
         val glucoseData = customChartManager.setGlucoseLineData()
         val lineData = LineData(glucoseData)
-        val lineGlucoseBlood = binding.homeDashboardMainChart
+        val lineGlucoseBlood = binding.homeDashboardGlucoseChart
+        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
         lineGlucoseBlood.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-//            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
@@ -216,8 +234,9 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
+                labelCount = 8
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-//                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -229,6 +248,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 gridColor =
                     ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
@@ -239,6 +259,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
+                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                setExtraOffsets(5f, 5f, 5f, 15f)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }

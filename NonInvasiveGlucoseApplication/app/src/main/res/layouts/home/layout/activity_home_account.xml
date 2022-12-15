@@ -1,65 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical">
-    <LinearLayout
+    tools:context=".home.HomeAccountActivity"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:padding="16dp"
+    android:background="@color/black">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/homeAccount_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".home.HomeAccountActivity"
-        android:orientation="vertical"
-        android:weightSum="1">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/homeAccount_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"/>
+        android:layout_height="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"/>
 
-        <TextView
-            android:layout_marginBottom="15dp"
-            android:id="@+id/homeAccount_textView_title"
-            android:layout_marginStart="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내 페이지"
-            android:fontFamily="@font/ps_bold"
-            android:textSize="24dp"
-            android:textColor="@color/toss_black_700"/>
+    <TextView
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="내 페이지"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ps_bold"
+        android:textSize="27dp"/>
 
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_gravity="bottom"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_manage_accounts_24"
+            app:tint="@color/white" />
         <LinearLayout
+            android:layout_marginStart="8dp"
             android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="0.05"/>
-
-        <androidx.cardview.widget.CardView
-            android:padding="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/policeman"/>
                 <TextView
                     android:id="@+id/homeAccount_textView_nickname"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center_vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="김건우님"
-                    android:textColor="@color/toss_black_700"
-                    android:fontFamily="@font/ps_bold"
-                    android:textSize="32dp"/>
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="24dp"/>
                 <TextView
                     android:id="@+id/homeAccount_textView_modifyNickname"
                     android:layout_marginStart="32dp"
@@ -67,215 +60,242 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="변경"
-                    android:textColor="@color/toss_black_200"
+                    android:textColor="@color/iphone_green"
                     android:fontFamily="@font/ps_regular"
                     android:textSize="18dp"/>
             </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            app:contentPadding="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
             <LinearLayout
+                android:gravity="bottom"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="1">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.333"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5">
-                        <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="전화번호"
-                            android:textColor="@color/toss_black_200"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="21dp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="end"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5">
-                        <TextView
-                            android:id="@+id/homeAccount_textView_phoneNumber"
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="010-4054-7199"
-                            android:textColor="@color/toss_black_200"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="21dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <View
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="0.5dp"
-                    android:background="@color/toss_black_150" />
-                <LinearLayout
-                    android:id="@+id/homeAccount_layout_modifySex"
-                    android:background="@drawable/my_ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.333"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5">
-                        <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="성별"
-                            android:textColor="@color/toss_black_600"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="21dp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="end"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5">
-                        <TextView
-                            android:id="@+id/homeAccount_textView_sex"
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="남성"
-                            android:textColor="@color/toss_black_600"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="21dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <View
+                    android:layout_height="wrap_content"
+                    android:text="가입 날짜"
+                    android:textColor="@color/toss_black_170"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="21dp"/>
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0.5dp"
-                    android:background="@color/toss_black_150" />
-                <LinearLayout
-                    android:id="@+id/homeAccount_layout_modifyBirthday"
-                    android:background="@drawable/my_ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.333"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5">
-                        <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="생년월일"
-                            android:textColor="@color/toss_black_600"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="21dp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="end"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5">
-                        <TextView
-                            android:id="@+id/homeAccount_textView_birthday"
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="1995년 2월 9일"
-                            android:textColor="@color/toss_black_600"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="21dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:text="2022-12-15"
+                    android:textColor="@color/toss_black_170"
+                    android:fontFamily="@font/ps_regular"
+                    android:textSize="21dp"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:layout_marginTop="16dp"
-            android:padding="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:contentPadding="24dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="1">
-                <TextView
-                    android:background="@drawable/my_ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:id="@+id/homeAccount_btn_modifyPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.333"
-                    android:fontFamily="@font/ps_regular"
-                    android:gravity="center_vertical"
-                    android:text="비밀번호 변경"
-                    android:textColor="@color/toss_black_600"
-                    android:textSize="21dp" />
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="0.5dp"
-                    android:background="@color/toss_black_150" />
-                <TextView
-                    android:background="@drawable/my_ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:id="@+id/homeAccount_btn_logoutUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.333"
-                    android:fontFamily="@font/ps_regular"
-                    android:gravity="center_vertical"
-                    android:text="로그아웃"
-                    android:textColor="@color/toss_black_600"
-                    android:textSize="21dp" />
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="0.5dp"
-                    android:background="@color/toss_black_150" />
-                <TextView
-                    android:background="@drawable/my_ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:id="@+id/homeAccount_btn_deleteUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="0.333"
-                    android:fontFamily="@font/ps_regular"
-                    android:gravity="center_vertical"
-                    android:text="회원 탈퇴"
-                    android:textColor="@color/circle_red_100"
-                    android:textSize="21dp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:backgroundTint="@color/iphone_gray_background"
+        app:contentPadding="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="0.333"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="전화번호"
+                        android:textColor="@color/toss_black_150"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:id="@+id/homeAccount_textView_phoneNumber"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="010-4054-7199"
+                        android:textColor="@color/toss_black_150"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.1dp"
+                android:background="@color/toss_black_500" />
+            <LinearLayout
+                android:id="@+id/homeAccount_layout_modifySex"
+                android:background="@drawable/my_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="0.333"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="성별"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:id="@+id/homeAccount_textView_sex"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="남성"
+                        android:textColor="@color/iphone_blue"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.1dp"
+                android:background="@color/toss_black_500" />
+            <LinearLayout
+                android:id="@+id/homeAccount_layout_modifyBirthday"
+                android:background="@drawable/my_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="0.333"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="생년월일"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:id="@+id/homeAccount_textView_birthday"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="1995년 2월 9일"
+                        android:textColor="@color/iphone_green"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="21dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:backgroundTint="@color/iphone_gray_background"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:contentPadding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <TextView
+                android:background="@drawable/my_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeAccount_btn_modifyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="0.333"
+                android:fontFamily="@font/ps_regular"
+                android:gravity="center_vertical"
+                android:text="비밀번호 변경"
+                android:textColor="@color/white"
+                android:textSize="21dp" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.1dp"
+                android:background="@color/toss_black_500" />
+            <TextView
+                android:background="@drawable/my_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeAccount_btn_logoutUser"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="0.333"
+                android:fontFamily="@font/ps_regular"
+                android:gravity="center_vertical"
+                android:text="로그아웃"
+                android:textColor="@color/white"
+                android:textSize="21dp" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.1dp"
+                android:background="@color/toss_black_500" />
+            <TextView
+                android:background="@drawable/my_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeAccount_btn_deleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="0.333"
+                android:fontFamily="@font/ps_regular"
+                android:gravity="center_vertical"
+                android:text="회원 탈퇴"
+                android:textColor="@color/iphone_red"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+</LinearLayout>

@@ -46,7 +46,7 @@ class CustomChartManager(val context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 1 until 50) {
+        for (i in 1 until 24) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "체온")
@@ -60,7 +60,7 @@ class CustomChartManager(val context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 1 until 50) {
+        for (i in 1 until 24) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "심박수")
@@ -73,7 +73,7 @@ class CustomChartManager(val context: Context) {
         val min = 35.0
         val random = Random()
         random.setSeed(Date().time)
-        for (i in 1 until 50) {
+        for (i in 1 until 24) {
             entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
         }
         return LineDataSet(entry, "혈당")
@@ -163,8 +163,8 @@ class CustomChartManager(val context: Context) {
     //심박수 라인 데이터 생성성
     fun setThermometerDashboardLineData() : LineDataSet {
         val lineDataSet = makeThermometerDashboardLineDataSet()
-        lineDataSet.mode = LineDataSet.Mode.LINEAR
-//        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
@@ -173,7 +173,7 @@ class CustomChartManager(val context: Context) {
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
-        lineDataSet.setDrawCircles(true)   //동그란거 없애기
+        lineDataSet.setDrawCircles(false)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
         lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_green))
         lineDataSet.valueTextSize = 0F
@@ -189,8 +189,8 @@ class CustomChartManager(val context: Context) {
 
     fun setHeartLineData() : LineDataSet {
         val lineDataSet = makeHeartDashboardLineDataSet()
-        lineDataSet.mode = LineDataSet.Mode.LINEAR
-//        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
@@ -199,7 +199,7 @@ class CustomChartManager(val context: Context) {
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
-        lineDataSet.setDrawCircles(true)   //동그란거 없애기
+        lineDataSet.setDrawCircles(false)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
         lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_red))
         lineDataSet.valueTextSize = 0F
@@ -215,8 +215,8 @@ class CustomChartManager(val context: Context) {
 
     fun setGlucoseLineData() : LineDataSet {
         val lineDataSet = makeGlucoseDashboardLineDataSet()
-        lineDataSet.mode = LineDataSet.Mode.LINEAR
-//        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
@@ -225,7 +225,7 @@ class CustomChartManager(val context: Context) {
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
-        lineDataSet.setDrawCircles(true)   //동그란거 없애기
+        lineDataSet.setDrawCircles(false)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
         lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_blue))
         lineDataSet.valueTextSize = 0F
