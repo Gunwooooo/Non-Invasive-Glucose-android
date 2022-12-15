@@ -13,17 +13,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/homeAccount_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"/>
-
-    <TextView
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="내 페이지"
-        android:textColor="@color/white"
-        android:fontFamily="@font/ps_bold"
-        android:textSize="27dp"/>
+        android:layout_height="?attr/actionBarSize"/>
 
     <LinearLayout
         android:layout_marginTop="8dp"
@@ -76,14 +66,14 @@
                     android:text="가입 날짜"
                     android:textColor="@color/toss_black_170"
                     android:fontFamily="@font/ps_regular"
-                    android:textSize="21dp"/>
+                    android:textSize="18dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2022-12-15"
                     android:textColor="@color/toss_black_170"
                     android:fontFamily="@font/ps_regular"
-                    android:textSize="21dp"/>
+                    android:textSize="18dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

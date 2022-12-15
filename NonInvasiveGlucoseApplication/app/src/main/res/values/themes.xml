@@ -40,12 +40,13 @@
         <item name="android:textSize">24dp</item>
         <item name="android:fontFamily">@font/ps_bold</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/iphone_green</item>
     </style>
 
-<!--    툴바 아이콘 칼라 설정-->
-    <style name="ToolbarColoredIcon" parent="Theme.AppCompat">
-        <item name="android:textColorSecondary">@color/white</item>
-    </style>
+<!--&lt;!&ndash;    툴바 아이콘 칼라 설정&ndash;&gt;-->
+<!--    <style name="ToolbarColoredIcon" parent="Theme.AppCompat">-->
+
+<!--    </style>-->
 
 <!--    바텀 다이어로그 테마-->
     <style name="AppBottomSheetDialogTheme"
