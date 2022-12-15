@@ -28,14 +28,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        //툴바 보이도록 설정
-        setSupportActionBar(binding.homeToolbar)
-        supportActionBar?.title = ""
+//        //툴바 보이도록 설정
+//        setSupportActionBar(binding.homeToolbar)
+//        supportActionBar?.title = ""
         //대쉬보드 프래그먼트 실행
+
+
         supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
 
         //스테이터스바 색깔 변경
-        this.window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBarColor)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
         //바텀 네비게이션 리스너
         binding.homeBottomNav.setOnItemSelectedListener { item ->
@@ -51,8 +53,6 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        binding.homeBouncyNestedScrollView.bindSpringToParent = true
     }
 
     //프래그먼트 전환
@@ -61,22 +61,22 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
-    @Override
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.appbar_home, menu)
-        return true
-    }
-
-    //툴바 클릭 리스너
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.home_toolbar_account -> {
-                val intent = Intent(this, HomeAccountActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    @Override
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.appbar_home, menu)
+//        return true
+//    }
+//
+//    //툴바 클릭 리스너
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId) {
+//            R.id.home_toolbar_account -> {
+//                val intent = Intent(this, HomeAccountActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     //뒤로가기 키 눌렸을 때 종료
     @Override

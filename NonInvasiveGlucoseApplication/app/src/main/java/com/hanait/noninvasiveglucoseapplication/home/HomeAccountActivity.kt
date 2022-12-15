@@ -139,6 +139,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 //회원탈퇴 retrofit 통신 필요
+                retrofitDeleteLoginedUser()
                 customDialog.dismiss()
             }
             override fun onNegativeClicked() {
@@ -148,13 +149,13 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.show(supportFragmentManager, "home_account_modify_password_dialog")
     }
 
-    //회원 탈퇴 다이어로그 출력
+    //로그아웃 다이어로그 출력
     private fun showLogoutUserDialog() {
         val customDialog = CustomDialogManager(R.layout.home_account_logout_user_dialog)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 //로그아웃 retrofit 통신 필요
-                retrofitDeleteLoginedUser()
+
                 customDialog.dismiss()
             }
             override fun onNegativeClicked() {

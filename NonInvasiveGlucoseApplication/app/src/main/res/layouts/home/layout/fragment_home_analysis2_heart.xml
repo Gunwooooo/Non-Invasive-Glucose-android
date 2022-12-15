@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.HomeAnalysis2HeartFragment"
-    android:padding="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="16dp"
     android:orientation="vertical"
     android:weightSum="1">
     <LinearLayout

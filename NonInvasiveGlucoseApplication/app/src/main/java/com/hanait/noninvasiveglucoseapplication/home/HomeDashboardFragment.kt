@@ -41,11 +41,11 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
         //오늘 날짜 설정
         setTodayDate()
-        
+
         //데이터피커 리스너 설정
         setDatePickerDialogListener()
     }
-    
+
     override fun onClick(v: View?) {
         when (v) {
             binding.homeDashboardBtnThermometer -> {
@@ -72,7 +72,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
         binding.homeDashboardTextViewDate.text = "${year}.${month + 1}.${dayOfMonth}"
     }
-    
+
     //데이터피커 리스너 설정
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() {
@@ -81,7 +81,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 binding.homeDashboardTextViewDate.text = "${year}.${month+1}.${dayOfMonth}"
             }
     }
-    
+
     //달력 날짜 선택 다이어로그 생성
     private fun makeDatePickerDialog() {
         CustomCalendarManager.getInstance(requireContext()).makeDatePickerDialog(datePickerDialogListener).show()
@@ -105,7 +105,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isScaleXEnabled = false //가로 확대 없애기
             enableScroll()
             setVisibleXRangeMaximum(6f) //
-
+            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
@@ -156,6 +156,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
 //            isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
+            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
 
@@ -208,7 +209,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
-
+            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축

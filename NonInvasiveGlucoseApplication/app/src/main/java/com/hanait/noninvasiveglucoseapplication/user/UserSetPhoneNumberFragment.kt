@@ -53,7 +53,6 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         when(v) {
             binding.userSetPhoneNumberBtnNext -> {
                 _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
-
                 retrofitCheckJoinedUser()
             }
         }

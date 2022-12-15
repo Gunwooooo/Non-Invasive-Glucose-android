@@ -168,14 +168,14 @@ class CustomChartManager(val context: Context) {
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_green))
         lineDataSet.lineWidth = 3F //선 굵기
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.setDrawCircles(true)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_green))
         lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
@@ -194,14 +194,14 @@ class CustomChartManager(val context: Context) {
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_heart_100))
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_red))
         lineDataSet.lineWidth = 3F //선 굵기
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.setDrawCircles(true)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_heart_100))
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_red))
         lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
@@ -220,14 +220,14 @@ class CustomChartManager(val context: Context) {
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.graph_glucose_100))
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_blue))
         lineDataSet.lineWidth = 3F //선 굵기
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.setDrawCircles(true)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_glucose_100))
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_blue))
         lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK

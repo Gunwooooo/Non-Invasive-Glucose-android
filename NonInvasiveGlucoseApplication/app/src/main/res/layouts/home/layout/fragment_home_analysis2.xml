@@ -6,20 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.HomeAnalysis2Fragment"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
         app:tabRippleColor="@android:color/transparent"
         app:tabTextAppearance="@style/tab_text"
         android:id="@+id/homeAnalysis2_tabLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/StatusBarColor"
         app:tabTextColor="@color/toss_black_700"
         app:tabIndicatorColor="@color/toss_black_700"
         app:tabIndicatorHeight="2dp"
-        app:tabGravity="fill">
+        app:tabGravity="start">
         <!-- TabItem은 탭메뉴 하나를 의미한다. -->
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -39,14 +38,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.03"/>
+        android:layout_height="16dp"/>
 
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.1"
+        android:layout_height="56dp"
         android:orientation="horizontal"
         android:weightSum="1">
         <androidx.cardview.widget.CardView
@@ -113,8 +110,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.87">
+        android:layout_height="600dp">
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/homeAnalysis2_viewPager"
             android:layout_width="match_parent"
