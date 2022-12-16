@@ -6,22 +6,21 @@
         android:icon="@drawable/ic_baseline_dashboard_24"
         android:title="대쉬보드"/>
 
-    <item
-        android:id="@+id/bottomNav_analysis"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_insert_chart_24"
-        android:title="분석"/>
+<!--    <item-->
+<!--        android:id="@+id/bottomNav_analysis"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_insert_chart_24"-->
+<!--        android:title="분석"/>-->
 
-    <item
-        android:id="@+id/bottomNav_analysis2"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_show_chart_24"
-        android:title="분석2"/>
+<!--    <item-->
+<!--        android:id="@+id/bottomNav_analysis2"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_show_chart_24"-->
+<!--        android:title="분석2"/>-->
 
     <item
         android:id="@+id/bottomNav_protector"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_people_24"
-        android:title="보호자"/>
-
+        android:title="공유하기"/>
 </menu>

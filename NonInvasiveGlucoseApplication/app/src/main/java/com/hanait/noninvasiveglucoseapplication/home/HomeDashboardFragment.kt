@@ -44,6 +44,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnCalendar.setOnClickListener(this)
         binding.homeDashboardBtnAccount.setOnClickListener(this)
 
+
+
         //오늘 날짜 설정
         setTodayDate()
 

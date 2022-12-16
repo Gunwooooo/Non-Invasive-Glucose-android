@@ -1,18 +1,15 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.android.material.navigation.NavigationBarView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
 import kotlin.system.exitProcess
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -44,10 +41,10 @@ class HomeActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.bottomNav_dashboard ->
                     changeFragmentTransaction(HomeDashboardFragment())
-                R.id.bottomNav_analysis ->
-                    changeFragmentTransaction(HomeAnalysisFragment())
-                R.id.bottomNav_analysis2 ->
-                    changeFragmentTransaction(HomeAnalysis2Fragment())
+//                R.id.bottomNav_analysis ->
+//                    changeFragmentTransaction(HomeAnalysisFragment())
+//                R.id.bottomNav_analysis2 ->
+//                    changeFragmentTransaction(HomeAnalysis2Fragment())
                 R.id.bottomNav_protector ->
                     changeFragmentTransaction(HomeProtectorFragment())
                 else -> false
@@ -57,7 +54,14 @@ class HomeActivity : AppCompatActivity() {
 
     //프래그먼트 전환
     private fun changeFragmentTransaction(fragment: Fragment) : Boolean {
-        supportFragmentManager.beginTransaction().replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
+        fragmentTransaction.replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
+
+        //화면 맨 위로 올리기(속도 조절)
+        binding.homeBouncyNestedScrollView.post(Runnable {
+            ObjectAnimator.ofInt( binding.homeBouncyNestedScrollView, "scrollY", 0).setDuration(300).start()
+        })
         return true
     }
 

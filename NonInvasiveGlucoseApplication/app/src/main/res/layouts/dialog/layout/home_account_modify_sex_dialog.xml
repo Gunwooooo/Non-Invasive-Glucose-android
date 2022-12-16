@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@drawable/radius_border20"
     android:padding="16dp"
-    android:backgroundTint="@color/iphone_gray_background">
+    android:backgroundTint="@color/iphone_gray_background_dialog">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
             android:text="성별 수정"
             android:textSize="24dp"
             android:fontFamily="@font/ps_bold"
-            android:textColor="@color/iphone_green"/>
+            android:textColor="@color/white"/>
 
         <Button
             android:layout_marginTop="16dp"

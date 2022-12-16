@@ -62,6 +62,7 @@
     <color name="iphone_blue">#62FFF7</color>
 <!--    <color name="iphone_gray_background">#1c1c1d</color>-->
     <color name="iphone_gray_background">#302B2B</color>
+    <color name="iphone_gray_background_dialog">#423C3C</color>
 <!--    <color name="iphone_gray_bottom">#151515</color>-->
     <color name="iphone_gray_bottom">#1E1B1B</color>
 

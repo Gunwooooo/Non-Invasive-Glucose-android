@@ -35,14 +35,6 @@
         <item name="android:fontFamily">@font/ps_bold</item>
     </style>
 
-<!--    툴바 텍스트 사이즈 조절-->
-    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">24dp</item>
-        <item name="android:fontFamily">@font/ps_bold</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorSecondary">@color/iphone_green</item>
-    </style>
-
 <!--&lt;!&ndash;    툴바 아이콘 칼라 설정&ndash;&gt;-->
 <!--    <style name="ToolbarColoredIcon" parent="Theme.AppCompat">-->
 

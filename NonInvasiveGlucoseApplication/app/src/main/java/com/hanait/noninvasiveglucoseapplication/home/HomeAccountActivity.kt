@@ -35,13 +35,9 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
-        //toolbar 표시
-        setSupportActionBar(binding.homeAccountToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
 
         //로그인된 유저 데이터 가져오기
-        retrofitInfoLoginedUser()
+//        retrofitInfoLoginedUser()
 
         //생년월일 변경 리스너
         setDatePickerDialogListener()
@@ -51,21 +47,14 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         binding.homeAccountBtnModifyPassword.setOnClickListener(this)
         binding.homeAccountBtnDeleteUser.setOnClickListener(this)
         binding.homeAccountBtnLogoutUser.setOnClickListener(this)
-    }
-
-    //toolbar 클릭 리스너
-    @Override
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
+        binding.homeAccountBtnBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
+            binding.homeAccountBtnBack -> {
+                finish()
+            }
             binding.homeAccountLayoutModifySex -> {
                 showModifySexDialog()
             }
@@ -166,6 +155,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //로그인 된 회원 정보 가져오기
+    @SuppressLint("SetTextI18n")
     private fun retrofitInfoLoginedUser() {
         RetrofitManager.instance.infoLoginedUser(completion = {
                 completionResponse, response ->
@@ -177,7 +167,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                             val str = response.body()?.string()
                             val jsonObject = str?.let { JSONObject(it) }
                             val jsonObjectUser = jsonObject?.getJSONObject("principal")?.getJSONObject("user")
-                            binding.homeAccountTextViewNickname.text = jsonObjectUser?.getString("nickname")
+                            binding.homeAccountTextViewNickname.text = "${jsonObjectUser?.getString("nickname")}님"
 
                             if(jsonObjectUser?.getString("sex").equals("T")) {
                                 binding.homeAccountTextViewSex.text = "남성"
@@ -195,9 +185,11 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
     }
+
+    //회원 탈퇴 레트로핏 통신
     private fun retrofitDeleteLoginedUser() {
         RetrofitManager.instance.deleteLoginedUser(completion = {
-            completionResponse, response -> 
+                completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")

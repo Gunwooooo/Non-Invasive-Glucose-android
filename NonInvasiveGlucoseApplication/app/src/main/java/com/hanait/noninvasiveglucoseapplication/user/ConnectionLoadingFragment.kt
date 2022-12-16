@@ -22,7 +22,7 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
             binding.connectionLoadingLottie.visibility = View.GONE
             binding.connectionLoadingImageView.visibility = View.VISIBLE
             binding.connectionLoadingBtnNext.isEnabled = true
-        }, 3000)
+        }, 500)
 
     }
 
