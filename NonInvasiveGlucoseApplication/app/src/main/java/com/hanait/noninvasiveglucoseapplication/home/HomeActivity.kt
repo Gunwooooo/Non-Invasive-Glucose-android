@@ -64,7 +64,10 @@ class HomeActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
 
         //화면 맨 위로 올리기(속도 조절)
-        binding.homeBouncyNestedScrollView.fullScroll(ScrollView.FOCUS_UP)
+        //화면 맨 위로 올리기(속도 조절)
+        binding.homeBouncyNestedScrollView.post(Runnable {
+            ObjectAnimator.ofInt( binding.homeBouncyNestedScrollView, "scrollY", 0).setDuration(300).start()
+        })
         return true
     }
 

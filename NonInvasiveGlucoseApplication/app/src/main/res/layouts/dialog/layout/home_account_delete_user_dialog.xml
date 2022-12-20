@@ -27,7 +27,7 @@
             android:text="* 사용자의 모든 정보가 삭제됩니다."
             android:textSize="18dp"
             android:fontFamily="@font/ps_regular"
-            android:textColor="@color/iphone_red"/>
+            android:textColor="@color/iphone_red_200"/>
     </LinearLayout>
 
     <LinearLayout

@@ -168,14 +168,14 @@ class CustomChartManager(val context: Context) {
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_green))
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_green_200))
         lineDataSet.lineWidth = 3F //선 굵기
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.setDrawCircles(false)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_green))
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_green_200))
         lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
@@ -194,14 +194,14 @@ class CustomChartManager(val context: Context) {
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
         lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_red))
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_red_200))
         lineDataSet.lineWidth = 3F //선 굵기
         lineDataSet.circleRadius = 7F
         lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
         lineDataSet.setDrawCircles(false)   //동그란거 없애기
         lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_red))
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_red_200))
         lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
@@ -249,11 +249,11 @@ class CustomChartManager(val context: Context) {
             shadowWidth = 1f
 
             //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_100)
+            decreasingColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
             decreasingPaintStyle = Paint.Style.FILL
 
             //양봉
-            increasingColor = ContextCompat.getColor(context, R.color.graph_thermometer_100)
+            increasingColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
             increasingPaintStyle = Paint.Style.FILL
 
             neutralColor = Color.DKGRAY
@@ -318,15 +318,40 @@ class CustomChartManager(val context: Context) {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //analysis2 bar chart 데이터셋 생성
     //심박수 막대 데이터 생성성
-    fun setThermometerAnalysis2BarData() : BarDataSet {
+    fun setThermometerAbnormalData() : BarDataSet {
         val barDataSet = makeThermometerAnalysis2BarDataSet()
 //        barDataSet.mode = LineDataSet.Mode.LINEAR
 //        barDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        barDataSet.setColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
+        barDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_red_200))
 //        barDataSet.lineWidth = 3F //선 굵기
 //        barDataSet.circleRadius = 7F
 //        barDataSet.circleHoleRadius = 4F
 //        barDataSet.setDrawCircles(true)   //동그란거 없애기
+        barDataSet.valueTextColor = ContextCompat.getColor(context, R.color.white)
+        barDataSet.setDrawValues(true)
+//        barDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
+        barDataSet.valueTextSize = 12F
+//        lineDataSet.fillAlpha = 50
+//        lineDataSet.highLightColor = Color.BLACK
+//        lineDataSet.highlightLineWidth = 2F
+        barDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+//        barDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+//        barDataSet.setDrawCircleHole(true)
+        return barDataSet
+    }
+
+    //심박수 막대 데이터 생성성
+    fun setThermometerNormalData() : BarDataSet {
+        val barDataSet = makeThermometerAnalysis2BarDataSet()
+//        barDataSet.mode = LineDataSet.Mode.LINEAR
+//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+        barDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_green_200))
+//        barDataSet.lineWidth = 3F //선 굵기
+//        barDataSet.circleRadius = 7F
+//        barDataSet.circleHoleRadius = 4F
+//        barDataSet.setDrawCircles(true)   //동그란거 없애기
+        barDataSet.valueTextColor = ContextCompat.getColor(context, R.color.white)
         barDataSet.setDrawValues(true)
 //        barDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
         barDataSet.valueTextSize = 12F

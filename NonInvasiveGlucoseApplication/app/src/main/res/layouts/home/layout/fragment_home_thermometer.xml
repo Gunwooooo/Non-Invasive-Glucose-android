@@ -13,21 +13,21 @@
         android:background="?android:attr/selectableItemBackground"
         android:focusable="true"
         android:clickable="true"
-        android:id="@+id/homeAccount_btn_back"
+        android:id="@+id/homeThermometer_btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/iphone_green" />
+            app:tint="@color/iphone_green_200" />
         <TextView
             android:layout_marginStart="5dp"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="대쉬보드"
-            android:textColor="@color/iphone_green"
+            android:textColor="@color/iphone_green_200"
             android:textSize="18dp"
             android:fontFamily="@font/ps_regular"/>
     </LinearLayout>
@@ -91,7 +91,7 @@
                 android:orientation="vertical">
 
                 <com.gigamole.navigationtabstrip.NavigationTabStrip
-                    android:id="@+id/homeThermometer_nts_average"
+                    android:id="@+id/homeThermometer_nts_averageChart"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
@@ -105,8 +105,8 @@
                     app:nts_typeface="@font/ps_regular"
                     app:nts_weight="3dp" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/homeDashboard_thermometerChart"
+                <com.github.mikephil.charting.charts.CandleStickChart
+                    android:id="@+id/homeThermometer_averageChart"
                     android:layout_width="match_parent"
                     android:layout_height="256dp"
                     android:layout_margin="16dp" />
@@ -149,6 +149,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/homeThermometer_textView_maxValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/ps_regular"
@@ -188,6 +189,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/homeThermometer_textView_minValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/ps_regular"
@@ -216,7 +218,7 @@
             android:gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="정상 체온 빈도수"
+            android:text="정상 체온"
             android:textColor="@color/white"
             android:fontFamily="@font/ps_bold"
             android:textSize="21dp"/>
@@ -225,128 +227,78 @@
     <LinearLayout
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_background"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="최근 "
+            android:textColor="@color/toss_black_170"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="7"
+            android:textColor="@color/iphone_blue_200"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="일 총 빈도수"
+            android:textColor="@color/toss_black_170"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="64"
+            android:textColor="@color/iphone_yellow"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/iphone_gray_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <com.github.mikephil.charting.charts.LineChart
-                    android:layout_margin="16dp"
-                    android:id="@+id/homeDashboard_heartChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"/>
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/black" />
-                <LinearLayout
-                    android:padding="16dp"
-                    android:backgroundTint="@color/iphone_gray_background"
-                    android:background="@drawable/my_ripple"
-                    android:id="@+id/homeDashboard_btn_heart"
-                    android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:background="@drawable/image_radius_border_heart"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.15">
-                        <ImageView
-                            android:padding="13dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/heart"
-                            app:tint="@color/white" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.04"/>
-                    <LinearLayout
-                        android:padding="1dp"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.43"
-                        android:orientation="vertical"
-                        android:weightSum="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dip"
-                            android:layout_weight="0.5">
-                            <TextView
-                                android:gravity="bottom"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="심박수"
-                                android:fontFamily="@font/ps_bold"
-                                android:textSize="19dp"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dip"
-                            android:layout_weight="0.5">
-                            <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="오후 2시 37분"
-                                android:fontFamily="@font/ps_regular"
-                                android:textSize="16dp"
-                                android:textColor="@color/toss_black_170"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.15">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="-0.14"
-                            android:gravity="left|center_vertical"
-                            android:textSize="16dp"
-                            android:fontFamily="@font/ps_regular"
-                            android:textColor="@color/text_red_500"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="right"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.22">
-                        <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="81"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/ps_bold"
-                            android:textSize="24dp"/>
-                        <TextView
-                            android:layout_marginTop="4dp"
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text=" bpm"
-                            android:textColor="@color/toss_black_170"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="18dp"/>
-                    </LinearLayout>
+            android:orientation="vertical">
 
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+            <com.gigamole.navigationtabstrip.NavigationTabStrip
+                android:id="@+id/homeThermometer_nts_abnormalChart"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                app:nts_animation_duration="300"
+                app:nts_color="@color/iphone_blue_200"
+                app:nts_corners_radius="1.5dp"
+                app:nts_gravity="bottom"
+                app:nts_size="18dp"
+                app:nts_titles="@array/period"
+                app:nts_type="point"
+                app:nts_typeface="@font/ps_regular"
+                app:nts_weight="3dp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:layout_margin="16dp"
+                android:id="@+id/homeThermometer_normalChart"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp">
@@ -354,7 +306,7 @@
             android:gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="비정상 체온 빈도수"
+            android:text="비정상 체온"
             android:textColor="@color/white"
             android:fontFamily="@font/ps_bold"
             android:textSize="21dp"/>
@@ -363,128 +315,77 @@
     <LinearLayout
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_background"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="최근 "
+            android:textColor="@color/toss_black_170"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="7"
+            android:textColor="@color/iphone_blue_200"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="일 총 빈도수"
+            android:textColor="@color/toss_black_170"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ps_regular"
+            android:text="23"
+            android:textColor="@color/iphone_yellow"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/iphone_gray_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
-            <LinearLayout
+            android:orientation="vertical">
+            <com.gigamole.navigationtabstrip.NavigationTabStrip
+                android:id="@+id/homeThermometer_nts_normalChart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <com.github.mikephil.charting.charts.LineChart
-                    android:layout_margin="16dp"
-                    android:id="@+id/homeDashboard_glucoseChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"/>
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/black" />
-                <LinearLayout
-                    android:padding="16dp"
-                    android:backgroundTint="@color/iphone_gray_background"
-                    android:background="@drawable/my_ripple"
-                    android:id="@+id/homeDashboard_btn_glucose"
-                    android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:weightSum="1">
-                    <LinearLayout
-                        android:background="@drawable/image_radius_border_glucose"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.15">
-                        <ImageView
-                            android:padding="13dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/glucose"
-                            app:tint="@color/white" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.04"/>
-                    <LinearLayout
-                        android:padding="1dp"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.43"
-                        android:orientation="vertical"
-                        android:weightSum="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dip"
-                            android:layout_weight="0.5">
-                            <TextView
-                                android:gravity="bottom"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="혈당"
-                                android:fontFamily="@font/ps_bold"
-                                android:textSize="19dp"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dip"
-                            android:layout_weight="0.5">
-                            <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="오후 2시 37분"
-                                android:fontFamily="@font/ps_regular"
-                                android:textSize="16dp"
-                                android:textColor="@color/toss_black_170"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.15">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="+0.13"
-                            android:gravity="left|center_vertical"
-                            android:textSize="16dp"
-                            android:fontFamily="@font/ps_regular"
-                            android:textColor="@color/text_blue_200"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="right"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.22">
-                        <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="78"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/ps_bold"
-                            android:textSize="24dp"/>
-                        <TextView
-                            android:layout_marginTop="4dp"
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text=" mg/dL"
-                            android:textColor="@color/toss_black_170"
-                            android:fontFamily="@font/ps_regular"
-                            android:textSize="16dp"/>
-                    </LinearLayout>
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                app:nts_animation_duration="300"
+                app:nts_color="@color/iphone_blue_200"
+                app:nts_corners_radius="1.5dp"
+                app:nts_gravity="bottom"
+                app:nts_size="18dp"
+                app:nts_titles="@array/period"
+                app:nts_type="point"
+                app:nts_typeface="@font/ps_regular"
+                app:nts_weight="3dp" />
 
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+            <com.github.mikephil.charting.charts.BarChart
+                android:layout_margin="16dp"
+                android:id="@+id/homeThermometer_abnormalChart"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"/>

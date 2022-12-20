@@ -6,5 +6,5 @@ android:shape="ring"
 android:thicknessRatio="2.1"
 android:useLevel="false" >
     <solid
-        android:color="@color/iphone_green" />
+        android:color="@color/iphone_green_200" />
 </shape>

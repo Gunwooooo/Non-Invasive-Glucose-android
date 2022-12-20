@@ -38,4 +38,9 @@ interface APIPHRService {
     fun deleteLoginedUser(
         @Header("Authorization") authorization : String?
     ): Call<ResponseBody>
+
+    @PUT("/wellink/user/edit")
+    fun editLoginedUser(
+        @Header("Autorization") authorization: String?
+    ): Call<ResponseBody>
 }
