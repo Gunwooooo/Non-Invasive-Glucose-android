@@ -43,7 +43,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
                 _userData.birthDay = "${selectedYear}년 ${selectedMonth}월 ${selectedDayOfMonth}일"
 
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetSexFragment")
+                mActivity.changeFragmentTransaction(UserSetSexFragment())
             }
             binding.userSetBirthdayBtnCalendar -> {
                 makeDatePickDialog()

@@ -28,7 +28,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         when(v){
             binding.userSetConnectDeviceBtnNext -> {
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("ConnectionLoadingFragment")
+                mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
             }
         }
     }

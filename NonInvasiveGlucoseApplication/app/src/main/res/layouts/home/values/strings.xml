@@ -3,4 +3,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="이용약관"><u>이용약관에 동의합니다.</u></string>
     <string name="개인정보처리방침"><u>개인정보 처리방침에 동의합니다.</u></string>
+
+    <string-array name = "period">
+        <item>7일</item>
+        <item>30일</item>
+        <item>90일</item>
+    </string-array>
 </resources>

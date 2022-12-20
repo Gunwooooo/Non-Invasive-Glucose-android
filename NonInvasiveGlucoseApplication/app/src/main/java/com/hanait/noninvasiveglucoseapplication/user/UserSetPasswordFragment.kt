@@ -87,7 +87,7 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
                 _userData.password = binding.userSetPasswordEditTextPassword.text.toString()
 
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetBirthdayFragment")
+                mActivity.changeFragmentTransaction(UserSetBirthdayFragment())
             }
         }
     }

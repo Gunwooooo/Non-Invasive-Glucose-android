@@ -2,6 +2,8 @@ package com.hanait.noninvasiveglucoseapplication.home
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -25,12 +27,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun init() {
-//        //툴바 보이도록 설정
-//        setSupportActionBar(binding.homeToolbar)
-//        supportActionBar?.title = ""
-        //대쉬보드 프래그먼트 실행
-
-
         supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
 
         //스테이터스바 색깔 변경
@@ -39,21 +35,19 @@ class HomeActivity : AppCompatActivity() {
         //바텀 네비게이션 리스너
         binding.homeBottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.bottomNav_dashboard ->
-                    changeFragmentTransaction(HomeDashboardFragment())
-//                R.id.bottomNav_analysis ->
-//                    changeFragmentTransaction(HomeAnalysisFragment())
-//                R.id.bottomNav_analysis2 ->
-//                    changeFragmentTransaction(HomeAnalysis2Fragment())
+                R.id.bottomNav_dashboard -> {
+                    changeFragmentTransactionNoAnimation(HomeDashboardFragment())
+                }
+
                 R.id.bottomNav_protector ->
-                    changeFragmentTransaction(HomeProtectorFragment())
+                    changeFragmentTransactionNoAnimation(HomeProtectorFragment())
                 else -> false
             }
         }
     }
 
-    //프래그먼트 전환
-    private fun changeFragmentTransaction(fragment: Fragment) : Boolean {
+    //애니메이션 있게 프래그먼트 전환
+    fun changeFragmentTransactionWithAnimation(fragment: Fragment) : Boolean {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
         fragmentTransaction.replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
@@ -65,18 +59,14 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
-//    @Override
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.appbar_home, menu)
-//        return true
-//    }
-//
-//    //툴바 클릭 리스너
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId) {
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+    //애니메이션 없이 프래그먼트로 이동
+    fun changeFragmentTransactionNoAnimation(fragment: Fragment) : Boolean {
+        supportFragmentManager.beginTransaction().replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
+
+        //화면 맨 위로 올리기(속도 조절)
+        binding.homeBouncyNestedScrollView.fullScroll(ScrollView.FOCUS_UP)
+        return true
+    }
 
     //뒤로가기 키 눌렸을 때 종료
     @Override

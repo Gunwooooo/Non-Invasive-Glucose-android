@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:text="5명"
                 android:fontFamily="@font/ps_regular"
-                android:textColor="@color/iphone_blue"
+                android:textColor="@color/iphone_blue_200"
                 android:textSize="32dp"/>
 
             <TextView

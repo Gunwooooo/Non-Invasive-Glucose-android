@@ -68,11 +68,11 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
                     when(response?.code()) {
                         //존재하지 않는 아이디일 경우 전화번호 인증화면으로 이동
                         200 -> {
-                            mActivity.changeFragment("UserSetAuthorizationFragment")
+                            mActivity.changeFragmentTransaction(UserSetAuthorizationFragment())
                         }
                         //존재하는 아이디일 경우 로그인 화면으로 이동
                         400 -> {
-                            mActivity.changeFragment("UserCheckPasswordFragment")
+                            mActivity.changeFragmentTransaction(UserCheckPasswordFragment())
                         }
                     }
                 }

@@ -35,7 +35,7 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
                 _userData.sex = tmpSex
 
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetAgreementFragment")
+                mActivity.changeFragmentTransaction(UserSetAgreementFragment())
             }
             binding.userSetSexBtnFemale -> {
                 changeButtonColor(binding.userSetSexBtnFemale, binding.userSetSexBtnMale)

@@ -39,22 +39,10 @@ class UserActivity : AppCompatActivity() {
     }
 
     //프래그먼트 이동 메서드
-    fun changeFragment(fragmentName: String) {
+    fun changeFragmentTransaction(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
-        when(fragmentName) {
-            "UserSetAuthorizationFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAuthorizationFragment()).commitAllowingStateLoss()
-            "UserSetNicknameFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetNicknameFragment()).commitAllowingStateLoss()
-            "UserSetPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetPasswordFragment()).commitAllowingStateLoss()
-            "UserCheckPasswordFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserCheckPasswordFragment()).commitAllowingStateLoss()
-            "UserSetBirthdayFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetBirthdayFragment()).commitAllowingStateLoss()
-            "UserSetSexFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetSexFragment()).commitAllowingStateLoss()
-            "UserSetAgreementFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetAgreementFragment()).commitAllowingStateLoss()
-            "Agreement1Fragment" -> fragmentTransaction.replace(R.id.user_frameId, Agreement1Fragment()).commitAllowingStateLoss()
-            "Agreement2Fragment" -> fragmentTransaction.replace(R.id.user_frameId, Agreement2Fragment()).commitAllowingStateLoss()
-            "UserSetConnectDeviceFragment" -> fragmentTransaction.replace(R.id.user_frameId, UserSetConnectDeviceFragment()).commitAllowingStateLoss()
-            "ConnectionLoadingFragment" -> fragmentTransaction.replace(R.id.user_frameId, ConnectionLoadingFragment()).commitAllowingStateLoss()
-        }
+        fragmentTransaction.replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
     }
 
     //toolbar 클릭 리스너

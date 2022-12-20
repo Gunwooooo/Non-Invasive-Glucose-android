@@ -12,6 +12,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboardBinding
+import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
@@ -54,9 +55,10 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     }
 
     override fun onClick(v: View?) {
+        val mActivity = activity as HomeActivity
         when (v) {
             binding.homeDashboardBtnThermometer -> {
-                setThermometerLineChart()
+                mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             }
             binding.homeDashboardBtnHeart -> {
                 setHeartLineChart()

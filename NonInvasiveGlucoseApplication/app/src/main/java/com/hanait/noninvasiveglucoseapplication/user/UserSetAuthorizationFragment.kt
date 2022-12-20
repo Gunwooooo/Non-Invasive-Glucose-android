@@ -51,7 +51,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         val mActivity = activity as UserActivity
         when(v) {
             binding.userSetAuthorizationBtnNext -> {
-                mActivity.changeFragment("UserSetNicknameFragment")
+                mActivity.changeFragmentTransaction(UserSetNicknameFragment())
                 //인증번호가 일치할 경우, 불일치 경우
 //                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
 //                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()

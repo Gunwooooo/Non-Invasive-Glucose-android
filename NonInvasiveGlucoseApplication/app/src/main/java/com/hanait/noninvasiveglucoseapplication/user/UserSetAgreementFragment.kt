@@ -39,11 +39,11 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
         when(v) {
             binding.userSetAgreementTextViewAgreement1 -> {
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("Agreement1Fragment")
+                mActivity.changeFragmentTransaction(Agreement1Fragment())
             }
             binding.userSetAgreementTextViewAgreement2 -> {
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("Agreement2Fragment")
+                mActivity.changeFragmentTransaction(Agreement2Fragment())
             }
             binding.userSetAgreementBtnAgreeAll -> {
                 binding.userSetAgreementCheckBoxAgreement1.isChecked = true
@@ -58,7 +58,7 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
 //                retrofitFindAllUser()
 
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetConnectDeviceFragment")
+                mActivity.changeFragmentTransaction(UserSetConnectDeviceFragment())
             }
         }
     }

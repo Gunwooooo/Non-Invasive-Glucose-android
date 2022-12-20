@@ -34,8 +34,7 @@
     <color name="text_value_warn">#ffb53e</color>
     <color name="text_value_danger">#ff2020</color>
 
-    <!--    달력 내부 구분선 칼라-->
-    <color name="border_yellow_200">#e4c441</color>
+
     <color name="border_avocado_200">#c0ca33</color>
     <color name="border_pistachio_200">#7cb342</color>
     <color name="border_sage_200">#33b679</color>
@@ -55,11 +54,14 @@
 
     <!--    아이폰 생활 색깔-->
 <!--    <color name="iphone_green">#bafd4f</color>-->
+    <!--    달력 내부 구분선 칼라-->
+    <color name="iphone_yellow">#FADF70</color>
     <color name="iphone_green">#DFFF28</color>
 <!--    <color name="iphone_red">#e53653</color>-->
     <color name="iphone_red">#F42749</color>
 <!--    <color name="iphone_blue">#75fbf4</color>-->
-    <color name="iphone_blue">#62FFF7</color>
+    <color name="iphone_blue_200">#62FFF7</color>
+    <color name="iphone_blue_500">#9DC1F6</color>
 <!--    <color name="iphone_gray_background">#1c1c1d</color>-->
     <color name="iphone_gray_background">#302B2B</color>
     <color name="iphone_gray_background_dialog">#423C3C</color>

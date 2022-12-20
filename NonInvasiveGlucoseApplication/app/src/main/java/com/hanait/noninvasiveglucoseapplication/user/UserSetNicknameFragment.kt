@@ -43,7 +43,7 @@ class UserSetNicknameFragment : BaseFragment<FragmentUserSetNicknameBinding>(Fra
                 _userData.nickname = binding.userSetNicknameEditTextNickname.text.toString()
 
                 val mActivity = activity as UserActivity
-                mActivity.changeFragment("UserSetPasswordFragment")
+                mActivity.changeFragmentTransaction(UserSetPasswordFragment())
             }
         }
     }
