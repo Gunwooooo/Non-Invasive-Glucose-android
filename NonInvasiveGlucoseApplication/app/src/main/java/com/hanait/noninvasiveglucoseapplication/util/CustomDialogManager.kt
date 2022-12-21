@@ -108,9 +108,15 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 positiveButton = view.findViewById(R.id.homeAccountDeleteUserDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeAccountDeleteUserDialog_btn_negative) as Button
             }
+            //로그아웃 다이어로그
             R.layout.home_account_logout_user_dialog -> {
                 positiveButton = view.findViewById(R.id.homeAccountLogoutUserDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeAccountLogoutUserDialog_btn_negative) as Button
+            }
+            //닉네임 변경 다이어로그
+            R.layout.home_account_modify_nickname_dialog -> {
+                positiveButton = view.findViewById(R.id.homeAccountModifyNicknameDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeAccountModifyNicknameDialog_btn_negative) as Button
             }
         }
         positiveButton?.setOnClickListener(this)
@@ -125,14 +131,14 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
             R.id.homeAccountModifySexDialog_btn_positive,  R.id.homeAccountModifyPasswordDialog_btn_positive,
             R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectorInfoDialog_btn_positive,
-            R.id.homeAccountLogoutUserDialog_btn_positive ->
+            R.id.homeAccountLogoutUserDialog_btn_positive,  R.id.homeAccountModifyNicknameDialog_btn_positive->
                 twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
             R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyPasswordDialog_btn_negative,
             R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectorInfoDialog_btn_negative,
-            R.id.homeAccountLogoutUserDialog_btn_negative ->
+            R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative ->
                 twoButtonDialogListener?.onNegativeClicked()
         }
     }

@@ -102,7 +102,6 @@ class RetrofitManager {
         })
     }
 
-
     //회원 탈퇴
     fun deleteLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         Log.d("로그", "RetrofitManager - deleteLoginedUser : 토큰값 : ${LoginedUserClient.loginedUserToken}")
@@ -111,6 +110,34 @@ class RetrofitManager {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
             }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //회원 정보 수정
+    fun editLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.editLoginedUser(LoginedUserClient.loginedUserToken) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //로그아웃
+    fun logoutUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.logoutUser(LoginedUserClient.loginedUserToken) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 completion(CompletionResponse.FAIL, null)
             }

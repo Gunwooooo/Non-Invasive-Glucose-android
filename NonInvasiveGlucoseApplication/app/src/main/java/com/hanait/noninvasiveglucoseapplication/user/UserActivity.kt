@@ -42,7 +42,7 @@ class UserActivity : AppCompatActivity() {
     fun changeFragmentTransaction(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(R.anim.right_to_center_anim, R.anim.center_to_left_anim, R.anim.right_to_center_anim, R.anim.center_to_left_anim)
-        fragmentTransaction.replace(R.id.home_frameId, fragment).commitAllowingStateLoss()
+        fragmentTransaction.replace(R.id.user_frameId, fragment).commitAllowingStateLoss()
     }
 
     //toolbar 클릭 리스너

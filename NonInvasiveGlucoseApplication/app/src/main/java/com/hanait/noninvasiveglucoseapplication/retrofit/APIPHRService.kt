@@ -41,6 +41,12 @@ interface APIPHRService {
 
     @PUT("/wellink/user/edit")
     fun editLoginedUser(
-        @Header("Autorization") authorization: String?
+        @Header("Authorization") authorization: String?
+//        @Body userData: UserData
     ): Call<ResponseBody>
+
+    @POST("/logout")
+    fun logoutUser(
+        @Header("Authorization") authorization: String?
+    ) : Call<ResponseBody>
 }
