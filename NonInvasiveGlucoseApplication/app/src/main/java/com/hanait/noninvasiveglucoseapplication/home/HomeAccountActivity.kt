@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
+import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
@@ -109,6 +110,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 customDialog.dismiss()
             }
         })
+        customDialog.show(supportFragmentManager, "home_account_modify_nickname_dialog")
     }
 
     //보호자 삭제 다이어로그 호출
@@ -230,7 +232,14 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     //회원 정보 수정 레트로핏 통신
     private fun retrofitEditLoginedUser() {
-        RetrofitManager.instance.editLoginedUser(completion = {completionResponse, response ->
+        var sex = "F"
+        if(binding.homeAccountTextViewSex.text.equals("남성"))
+            sex = "T"
+        val nickname = binding.homeAccountTextViewNickname.text.toString()
+        val phoneNumber = binding.homeAccountTextViewPhoneNumber.text.toString()
+        val birthday = binding.homeAccountTextViewBirthday.text.toString()
+        val userData = UserData(nickname, phoneNumber, "", birthday, sex)
+        RetrofitManager.instance.editLoginedUser(userData, completion = {completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : ${response}")

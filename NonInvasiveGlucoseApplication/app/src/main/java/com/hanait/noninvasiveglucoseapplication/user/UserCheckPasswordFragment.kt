@@ -75,7 +75,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                         //로그인 성공
                         200 -> {
                             //토큰 값 저장
-                            LoginedUserClient.loginedUserToken = response.headers()["Authorization"]
+                            LoginedUserClient.authorization = response.headers()["Authorization"]
 
                             Toast.makeText(requireContext(), "로그인 성공!", Toast.LENGTH_SHORT).show()
                             val mActivity = activity as UserActivity

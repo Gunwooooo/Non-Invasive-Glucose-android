@@ -35,7 +35,8 @@
         android:textSize="22dp"
         android:importantForAutofill="no"
         android:background="@drawable/user_edittext_border"
-        android:inputType="text">
+        android:inputType="text"
+        android:privateImeOptions="defaultInputmode=korean">
         <requestFocus />
     </EditText>
     <Button

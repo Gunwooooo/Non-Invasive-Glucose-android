@@ -90,8 +90,8 @@ class RetrofitManager {
 
     //로그인 유저 데이터 가져오기
     fun infoLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        Log.d("로그", "RetrofitManager - infoLoginedUser : 토큰값 : ${LoginedUserClient.loginedUserToken}")
-        val call = apiPHRService?.infoLoginedUser(LoginedUserClient.loginedUserToken) ?: return
+        Log.d("로그", "RetrofitManager - infoLoginedUser : 토큰값 : ${LoginedUserClient.authorization}")
+        val call = apiPHRService?.infoLoginedUser(LoginedUserClient.authorization) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -104,8 +104,8 @@ class RetrofitManager {
 
     //회원 탈퇴
     fun deleteLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        Log.d("로그", "RetrofitManager - deleteLoginedUser : 토큰값 : ${LoginedUserClient.loginedUserToken}")
-        val call = apiPHRService?.deleteLoginedUser(LoginedUserClient.loginedUserToken) ?: return
+        Log.d("로그", "RetrofitManager - deleteLoginedUser : 토큰값 : ${LoginedUserClient.authorization}")
+        val call = apiPHRService?.deleteLoginedUser(LoginedUserClient.authorization) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -117,8 +117,8 @@ class RetrofitManager {
     }
 
     //회원 정보 수정
-    fun editLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.editLoginedUser(LoginedUserClient.loginedUserToken) ?: return
+    fun editLoginedUser(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.editLoginedUser(LoginedUserClient.authorization, userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -132,7 +132,7 @@ class RetrofitManager {
 
     //로그아웃
     fun logoutUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.logoutUser(LoginedUserClient.loginedUserToken) ?: return
+        val call = apiPHRService?.logoutUser(LoginedUserClient.authorization) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
