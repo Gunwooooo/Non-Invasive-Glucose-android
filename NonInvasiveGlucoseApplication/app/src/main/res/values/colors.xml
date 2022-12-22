@@ -56,19 +56,26 @@
 <!--    <color name="iphone_green_200">#bafd4f</color>-->
     <!--    달력 내부 구분선 칼라-->
     <color name="iphone_yellow">#FADF70</color>
+
     <color name="iphone_green_200">#DFFF28</color>
     <color name="iphone_green_500">#D7DD1A</color>
+    <color name="iphone_green_700">#C9E623</color>
 <!--    <color name="iphone_red_200">#e53653</color>-->
     <color name="iphone_red_200">#F42749</color>
     <color name="iphone_red_500">#D85113</color>
 <!--    <color name="iphone_blue">#75fbf4</color>-->
+    <color name="iphone_blue_100">#eaf3fe</color>
     <color name="iphone_blue_200">#62FFF7</color>
     <color name="iphone_blue_500">#9DC1F6</color>
-<!--    <color name="iphone_gray_background">#1c1c1d</color>-->
-    <color name="iphone_gray_background">#302B2B</color>
-    <color name="iphone_gray_background_dialog">#423C3C</color>
-<!--    <color name="iphone_gray_bottom">#151515</color>-->
-    <color name="iphone_gray_bottom">#1E1B1B</color>
+    <color name="iphone_blue_700">#83AFF1</color>
+<!--    <color name="iphone_gray_200">#1c1c1d</color>-->
+    <color name="iphone_gray_100">#E6E6E6</color>
+    <color name="iphone_gray_150">#514E4E</color>
+    <color name="iphone_gray_200">#302B2B</color>
+
+    <color name="iphone_gray_500">#423C3C</color>
+<!--    <color name="iphone_gray_600">#151515</color>-->
+    <color name="iphone_gray_600">#1E1B1B</color>
 
 <!--    transparent-->
     <color name="transparent">#00000000</color>

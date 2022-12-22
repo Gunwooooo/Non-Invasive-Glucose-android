@@ -109,7 +109,7 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="@color/iphone_gray_background"
+                android:backgroundTint="@color/iphone_gray_200"
                 app:contentPadding="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_width="match_parent"
@@ -249,7 +249,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="@color/iphone_gray_background"
+                android:backgroundTint="@color/iphone_gray_200"
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
                 android:layout_marginTop="32dp"

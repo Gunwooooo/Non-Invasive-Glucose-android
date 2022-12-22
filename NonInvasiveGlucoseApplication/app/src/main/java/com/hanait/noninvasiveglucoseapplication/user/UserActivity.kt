@@ -2,6 +2,7 @@ package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,7 +10,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityUserBinding
 import kotlin.system.exitProcess
 
-class UserActivity : AppCompatActivity() {
+class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityUserBinding
     private var waitTime = 0L
     private lateinit var prevFragment: Fragment
@@ -30,14 +31,20 @@ class UserActivity : AppCompatActivity() {
         //prevFragment 초기화
         prevFragment = UserSetPhoneNumberFragment()
 
-        //toolbar 생성
-        setSupportActionBar(binding.userToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        supportActionBar?.title = ""
-
         supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetPhoneNumberFragment()).commitAllowingStateLoss()
+
+        binding.userBtnBack.setOnClickListener(this)
     }
 
+    override fun onClick(v: View?) {
+        when(v) {
+            //뒤로가기 클릭
+            binding.userBtnBack -> {
+                changePrevFragment()
+            }
+        }
+    }
+    
     //프래그먼트 이동 메서드
     fun changeFragmentTransaction(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -45,17 +52,12 @@ class UserActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.user_frameId, fragment).commitAllowingStateLoss()
     }
 
-    //toolbar 클릭 리스너
-    @Override
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> {
-                changePrevFragment()
-            }
-        }
-        return super.onOptionsItemSelected(item)
+    //뒤로가기 버튼 비져빌리티 설정
+    fun setBtnBackVisible(visibility: Int) {
+        binding.userBtnBack.visibility = visibility
     }
 
+    //이전 프래그먼트 저장
     fun setPrevFragment(fragment: Fragment) {
         prevFragment = fragment
     }
@@ -84,4 +86,6 @@ class UserActivity : AppCompatActivity() {
             exitProcess(0)
         }
     }
+
+
 }

@@ -37,7 +37,7 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
     private fun init(){
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
-        mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mActivity.setBtnBackVisible(View.INVISIBLE)
         mActivity.setProgressDialogValueAndVisible(14, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
         //프로그래스바 셋

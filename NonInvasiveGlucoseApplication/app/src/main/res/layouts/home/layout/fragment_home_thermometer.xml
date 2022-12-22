@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_background"
+            android:backgroundTint="@color/iphone_gray_200"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
                     android:background="@drawable/my_ripple"
-                    android:backgroundTint="@color/iphone_gray_background"
+                    android:backgroundTint="@color/iphone_gray_200"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -266,7 +266,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/iphone_gray_background"
+        android:backgroundTint="@color/iphone_gray_200"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
@@ -354,7 +354,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/iphone_gray_background"
+        android:backgroundTint="@color/iphone_gray_200"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"

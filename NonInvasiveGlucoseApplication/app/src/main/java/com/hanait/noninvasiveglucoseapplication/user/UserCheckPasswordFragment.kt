@@ -27,7 +27,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
     private fun init() {
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
-        mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mActivity.setBtnBackVisible(View.VISIBLE)
         mActivity.setProgressDialogValueAndVisible(60, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
@@ -57,6 +57,10 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                 _userData.password = binding.userCheckPasswordEditTextPassword.text.toString()
                 
                 retrofitLoginUser()
+            }
+            binding.userCheckPasswordEditTextPhoneNumber -> {
+                val mActivity = activity as UserActivity
+                mActivity.changePrevFragment()
             }
         }
     }

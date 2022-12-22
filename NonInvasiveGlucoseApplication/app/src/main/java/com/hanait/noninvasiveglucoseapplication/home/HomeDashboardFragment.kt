@@ -13,10 +13,7 @@ import com.github.mikephil.charting.data.*
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboardBinding
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
-import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
+import com.hanait.noninvasiveglucoseapplication.util.*
 import java.util.*
 
 
@@ -34,10 +31,14 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
 
+        //사용자 닉네임 표시
+        binding.homeDashboardTextViewNickname.text = LoginedUserClient.nickname
+
         //데이터 차트 설정
         setThermometerLineChart()
         setHeartLineChart()
         setGlucoseLineChart()
+
 
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
         binding.homeDashboardBtnHeart.setOnClickListener(this)
@@ -118,7 +119,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
 //            setVisibleXRangeMaximum(6f) //
-            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
+            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_200))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
@@ -173,7 +174,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
-            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
+            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_200))
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
 
@@ -231,7 +232,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
-            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_background))
+            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_200))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축

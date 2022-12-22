@@ -17,6 +17,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -37,11 +38,13 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
-        //로그인된 유저 데이터 가져오기
-        retrofitInfoLoginedUser()
-
         //생년월일 변경 리스너
         setDatePickerDialogListener()
+
+        //토큰이 유효한지 확인만 계속 필요...
+        //코드 구현 필요
+        /////
+        setUserInfoData()
 
         binding.homeAccountTextViewModifyNickname.setOnClickListener(this)
         binding.homeAccountLayoutModifySex.setOnClickListener(this)
@@ -76,6 +79,14 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 showLogoutUserDialog()
             }
         }
+    }
+
+    //토큰이 유효하면 기존에 로그인된 사용자 정보 표시
+    private fun setUserInfoData() {
+        binding.homeAccountTextViewNickname.text = LoginedUserClient.nickname
+        binding.homeAccountTextViewPhoneNumber.text = LoginedUserClient.phoneNumber
+        binding.homeAccountTextViewSex.text = LoginedUserClient.sex
+        binding.homeAccountTextViewBirthday.text = LoginedUserClient.birthDay
     }
 
     //캘린더 피커 다이어로그 리스너 설정
@@ -117,10 +128,12 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private fun showModifySexDialog() {
         Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
         val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog)
-        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
-            override fun onPositiveClicked() {
+        customDialog.setTwoButtonWithDataDialogListener(object : CustomDialogManager.TwoButtonWithDataDialogListener {
+            override fun onPositiveClicked(data: String) {
                 //회원정보 수정 기능 추가 필요 ( 성별 )
-                retrofitEditLoginedUser()
+                binding.homeAccountTextViewSex.text = data
+                Log.d("로그", "HomeAccountActivity - onPositiveClicked : $data werawerawerawerawerawer")
+//                retrofitEditLoginedUser()
                 customDialog.dismiss()
             }
 
@@ -182,39 +195,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //로그인 된 회원 정보 가져오기
-    @SuppressLint("SetTextI18n")
-    private fun retrofitInfoLoginedUser() {
-        RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
-            when (completionResponse) {
-                CompletionResponse.OK -> {
-                    when (response?.code()) {
-                        200 -> {
-                            //로그인 된 유저 데이터 제이슨으로 파싱하기
-                            val str = response.body()?.string()
-                            Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : ${str}")
-                            val jsonObjectUser = str?.let { JSONObject(it) }
-                            binding.homeAccountTextViewNickname.text =
-                                "${jsonObjectUser?.getString("nickname")}님"
 
-                            if (jsonObjectUser?.getString("sex").equals("T")) {
-                                binding.homeAccountTextViewSex.text = "남성"
-                            } else
-                                binding.homeAccountTextViewSex.text = "여성"
-
-                            binding.homeAccountTextViewPhoneNumber.text =
-                                jsonObjectUser?.getString("phoneNumber")
-                            binding.homeAccountTextViewBirthday.text =
-                                jsonObjectUser?.getString("birthDay")
-                        }
-                    }
-                }
-                CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
-                }
-            }
-        })
-    }
 
     //회원 탈퇴 레트로핏 통신
     private fun retrofitDeleteLoginedUser() {

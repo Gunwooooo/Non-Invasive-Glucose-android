@@ -7,23 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".user.UserActivity"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/iphone_gray_200">
 
     <ProgressBar
+        android:progressTint="@color/iphone_blue_200"
         android:id="@+id/user_progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="100"/>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/user_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"/>
+    <LinearLayout
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:focusable="true"
+        android:clickable="true"
+        android:id="@+id/user_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:tint="@color/iphone_green_200" />
+    </LinearLayout>
 
     <FrameLayout
+        android:layout_margin="16dp"
         android:id="@+id/user_frameId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

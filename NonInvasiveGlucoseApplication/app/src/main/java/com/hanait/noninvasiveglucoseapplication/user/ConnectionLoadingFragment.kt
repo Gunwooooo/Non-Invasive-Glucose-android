@@ -4,10 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentConnectionLoadingBinding
 import com.hanait.noninvasiveglucoseapplication.home.HomeActivity
+import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
+import org.json.JSONObject
 
 
 class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>(FragmentConnectionLoadingBinding::inflate), View.OnClickListener {
@@ -29,9 +35,12 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
     private fun init() {
         //액션바 안보이게 하기(뒤로가기)
         val mActivity = activity as UserActivity
-        mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mActivity.setBtnBackVisible(View.INVISIBLE)
         mActivity.setProgressDialogValueAndVisible(100, View.GONE)
         mActivity.setPrevFragment(UserSetConnectDeviceFragment())
+
+        //로그인된 유저 데이터 가져오기
+        retrofitInfoLoginedUser()
 
         binding.connectionLoadingBtnNext.setOnClickListener(this)
     }
@@ -44,5 +53,39 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                 mActivity.finish()
             }
         }
+    }
+
+    //로그인 된 회원 정보 가져오기
+    @SuppressLint("SetTextI18n")
+    private fun retrofitInfoLoginedUser() {
+        RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
+            when (completionResponse) {
+                CompletionResponse.OK -> {
+                    when (response?.code()) {
+                        200 -> {
+                            //로그인 된 유저 데이터 제이슨으로 파싱하기
+                            val str = response.body()?.string()
+                            Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : ${str}")
+                            val jsonObjectUser = str?.let { JSONObject(it) }
+                            LoginedUserClient.nickname =
+                                "${jsonObjectUser?.getString("nickname")}"
+
+                            if (jsonObjectUser?.getString("sex").equals("T")) {
+                                LoginedUserClient.sex = "남성"
+                            } else
+                                LoginedUserClient.sex = "여성"
+
+                            LoginedUserClient.phoneNumber =
+                                jsonObjectUser?.getString("phoneNumber")
+                            LoginedUserClient.birthDay =
+                                jsonObjectUser?.getString("birthDay")
+                        }
+                    }
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
+                }
+            }
+        })
     }
 }

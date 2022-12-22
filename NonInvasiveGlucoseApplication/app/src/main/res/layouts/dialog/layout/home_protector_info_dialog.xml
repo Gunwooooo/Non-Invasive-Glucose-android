@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@drawable/radius_border20"
     android:padding="16dp"
-    android:backgroundTint="@color/iphone_gray_background_dialog">
+    android:backgroundTint="@color/iphone_gray_500">
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"

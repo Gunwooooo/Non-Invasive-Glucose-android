@@ -18,6 +18,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 
 class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
 
+    private var stringData = ""
 //    //원 버튼 다이어로그
 //    private var oneButtonDialogListener: OneButtonDialogListener? = null
 //    interface OneButtonDialogListener {
@@ -35,6 +36,16 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
     }
     fun setTwoButtonDialogListener(customDialogListener: TwoButtonDialogListener) {
         this.twoButtonDialogListener = customDialogListener
+    }
+
+    //String을 전달하는 투 버튼 다이어로그
+    private var twoButtonWithDataDialogListener: TwoButtonWithDataDialogListener? = null
+    interface TwoButtonWithDataDialogListener {
+        fun onPositiveClicked(data: String)
+        fun onNegativeClicked()
+    }
+    fun setTwoButtonWithDataDialogListener(customDialogListener: TwoButtonWithDataDialogListener) {
+        this.twoButtonWithDataDialogListener = customDialogListener
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,12 +101,14 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                     maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     femaleButton.isEnabled = true
                     femaleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
+                    stringData = "남성"
                 }
                 femaleButton.setOnClickListener {
                     femaleButton.isEnabled = false
                     femaleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     maleButton.isEnabled = true
                     maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
+                    stringData = "여성"
                 }
             }
             //비밀번호 수정 다이어로그
@@ -129,17 +142,22 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
         when(v?.id) {
             //투 버튼 파지티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
-            R.id.homeAccountModifySexDialog_btn_positive,  R.id.homeAccountModifyPasswordDialog_btn_positive,
-            R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectorInfoDialog_btn_positive,
-            R.id.homeAccountLogoutUserDialog_btn_positive,  R.id.homeAccountModifyNicknameDialog_btn_positive->
+            R.id.homeAccountModifyPasswordDialog_btn_positive, R.id.homeAccountDeleteUserDialog_btn_positive,
+            R.id.homeProtectorInfoDialog_btn_positive, R.id.homeAccountLogoutUserDialog_btn_positive,
+            R.id.homeAccountModifyNicknameDialog_btn_positive->
                 twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
-            R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyPasswordDialog_btn_negative,
-            R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectorInfoDialog_btn_negative,
-            R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative ->
+            R.id.homeAccountModifyPasswordDialog_btn_negative, R.id.homeAccountDeleteUserDialog_btn_negative,
+            R.id.homeProtectorInfoDialog_btn_negative, R.id.homeAccountLogoutUserDialog_btn_negative,
+            R.id.homeAccountModifyNicknameDialog_btn_negative ->
                 twoButtonDialogListener?.onNegativeClicked()
+
+            
+            //데이터 전달이 있는 투 버튼 리스너 연결
+            R.id.homeAccountModifySexDialog_btn_positive -> twoButtonWithDataDialogListener?.onPositiveClicked(stringData)
+            R.id.homeAccountModifySexDialog_btn_negative -> twoButtonWithDataDialogListener?.onNegativeClicked()
         }
     }
 }

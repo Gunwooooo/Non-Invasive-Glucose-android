@@ -6,14 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".user.Agreement1Fragment"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp">
+    android:background="@color/iphone_gray_200">
     <TextView
         android:id="@+id/agreement1_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ps_regular"
         android:text="이용약관"
-        android:textColor="@color/toss_black_700"
+        android:textColor="@color/white"
         android:textSize="16dp" />
 </ScrollView>

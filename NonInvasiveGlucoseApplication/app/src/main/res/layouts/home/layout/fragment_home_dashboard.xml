@@ -46,10 +46,11 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/homeDashboard_textView_nickname"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="김건우님"
+                android:text="OOO"
                 android:textColor="@color/white"
                 android:fontFamily="@font/ps_bold"
                 android:textSize="27dp"/>
@@ -258,7 +259,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_background"
+            android:backgroundTint="@color/iphone_gray_200"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
@@ -282,7 +283,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
                     android:background="@drawable/my_ripple"
-                    android:backgroundTint="@color/iphone_gray_background"
+                    android:backgroundTint="@color/iphone_gray_200"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -431,7 +432,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_background"
+            android:backgroundTint="@color/iphone_gray_200"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
@@ -451,7 +452,7 @@
                     android:background="@color/black" />
                 <LinearLayout
                     android:padding="16dp"
-                    android:backgroundTint="@color/iphone_gray_background"
+                    android:backgroundTint="@color/iphone_gray_200"
                     android:background="@drawable/my_ripple"
                     android:id="@+id/homeDashboard_btn_heart"
                     android:layout_width="match_parent"
@@ -590,7 +591,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_background"
+            android:backgroundTint="@color/iphone_gray_200"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
@@ -610,7 +611,7 @@
                     android:background="@color/black" />
                 <LinearLayout
                     android:padding="16dp"
-                    android:backgroundTint="@color/iphone_gray_background"
+                    android:backgroundTint="@color/iphone_gray_200"
                     android:background="@drawable/my_ripple"
                     android:id="@+id/homeDashboard_btn_glucose"
                     android:layout_width="match_parent"

@@ -8,10 +8,7 @@
     tools:context=".user.UserSetAgreementFragment"
     android:orientation="vertical"
     android:weightSum="1"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp">
-
-
+    android:background="@color/iphone_gray_200">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +21,7 @@
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/ps_bold"
         android:text="마지막 단계에요!\n약관에 동의해 주세요."
-        android:textColor="@color/toss_black_700"
+        android:textColor="@color/white"
         android:textSize="22dp" />
 
     <LinearLayout
@@ -32,6 +29,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <CheckBox
+            android:background="@color/iphone_gray_100"
             android:id="@+id/userSetAgreement_checkBox_agreement1"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -45,7 +43,7 @@
             android:text="@string/이용약관"
             android:fontFamily="@font/ps_regular"
             android:textSize="18dp"
-            android:textColor="@color/toss_black_700"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,6 +51,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <CheckBox
+            android:background="@color/iphone_gray_100"
             android:id="@+id/userSetAgreement_checkBox_agreement2"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -66,7 +65,7 @@
             android:text="@string/개인정보처리방침"
             android:fontFamily="@font/ps_regular"
             android:textSize="18dp"
-            android:textColor="@color/toss_black_700"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <Button
