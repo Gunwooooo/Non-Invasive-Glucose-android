@@ -2,6 +2,7 @@ package com.hanait.noninvasiveglucoseapplication.home
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountB
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
+import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
@@ -87,6 +89,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         binding.homeAccountTextViewPhoneNumber.text = LoginedUserClient.phoneNumber
         binding.homeAccountTextViewSex.text = LoginedUserClient.sex
         binding.homeAccountTextViewBirthday.text = LoginedUserClient.birthDay
+        binding.homeAccountTextViewCreatedDate.text = LoginedUserClient.createdDate
     }
 
     //캘린더 피커 다이어로그 리스너 설정
@@ -203,6 +206,11 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             when (completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
+                    //초기화면으로 돌아가기
+                    val intent = Intent(this, UserActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : 통신 실패")

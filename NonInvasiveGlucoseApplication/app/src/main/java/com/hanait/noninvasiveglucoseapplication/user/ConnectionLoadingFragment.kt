@@ -79,6 +79,8 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                                 jsonObjectUser?.getString("phoneNumber")
                             LoginedUserClient.birthDay =
                                 jsonObjectUser?.getString("birthDay")
+                            LoginedUserClient.createdDate =
+                                jsonObjectUser?.getString("createdDate")?.substring(0, 10)
                         }
                     }
                 }

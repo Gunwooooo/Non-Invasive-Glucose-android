@@ -9,4 +9,5 @@ object LoginedUserClient {
     var phoneNumber: String? = ""
     var sex: String? = ""
     var birthDay : String? = ""
+    var createdDate: String? = ""
 }

@@ -46,7 +46,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
                 mActivity.changeFragmentTransaction(UserSetSexFragment())
             }
             binding.userSetBirthdayBtnCalendar -> {
-                makeDatePickDialog()
+                makeDatePickerDialog()
             }
         }
     }
@@ -66,8 +66,12 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
         }
     }
 
-    //날짜 선택 다이어로그 만들기
-    private fun makeDatePickDialog() {
-        CustomCalendarManager.getInstance(requireContext()).makeDatePickerDialog(datePickerDialogListener).show()
+    //달력 날짜 선택 다이어로그 생성
+    private fun makeDatePickerDialog() {
+        val gregorianCalendar = GregorianCalendar()
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog(requireContext(), datePickerDialogListener, year, month, dayOfMonth).show()
     }
 }

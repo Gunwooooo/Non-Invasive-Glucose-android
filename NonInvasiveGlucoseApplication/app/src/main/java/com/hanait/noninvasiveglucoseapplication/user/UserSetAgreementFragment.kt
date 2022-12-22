@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.Toast
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
 
 class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(FragmentUserSetAgreementBinding::inflate), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -18,7 +20,6 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
 
         init()
     }
-
 
     private fun init() {
         val mActivity = activity as UserActivity
@@ -52,13 +53,6 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
             }
             binding.userSetAgreementBtnNext -> {
                 retrofitJoinUser()
-                //전역 유저 데이터 초기화
-                _userData = UserData("", "", "", "", "T")
-
-//                retrofitFindAllUser()
-
-                val mActivity = activity as UserActivity
-                mActivity.changeFragmentTransaction(UserSetConnectDeviceFragment())
             }
         }
     }
@@ -72,15 +66,46 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
         }
     }
     
+    //회원가입 레트로핏 통신
     private fun retrofitJoinUser() {
-        RetrofitManager.instance.joinUser(_userData, completion = {
-            completionResponse, s -> 
+        RetrofitManager.instance.joinUser(_userData, completion = { completionResponse, s ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 성공 $s")
+                    //회원가입 성공시 자동 로그인
+                    retrofitLoginUser()
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "UserSetAgreementFragment - retrofitJoinUser : 통신 에러")
+                }
+            }
+        })
+    }
+
+    //로그인 레트로핏 통싱
+    private fun retrofitLoginUser() {
+        RetrofitManager.instance.loginUser(_userData, completion = { completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    when(response?.code()) {
+                        //로그인 성공
+                        200 -> {
+                            //토큰 값 저장
+                            LoginedUserClient.authorization = response.headers()["Authorization"]
+
+                            //전역 유저 데이터 초기화
+                            _userData = UserData("", "", "", "", "T")
+
+                            val mActivity = activity as UserActivity
+                            mActivity.changeFragmentTransaction(UserSetConnectDeviceFragment())
+                        }
+                        else -> {
+                            Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : 로그인 통신 실패")
                 }
             }
         })

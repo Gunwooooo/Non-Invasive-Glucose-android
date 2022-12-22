@@ -71,6 +71,13 @@
                             android:fontFamily="@font/ps_regular"
                             android:textSize="24dp"/>
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="님"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/ps_regular"
+                            android:textSize="24dp"/>
+                        <TextView
                             android:clickable="true"
                             android:focusable="true"
                             android:background="?attr/selectableItemBackgroundBorderless"
@@ -98,6 +105,7 @@
                             android:fontFamily="@font/ps_regular"
                             android:textSize="18dp"/>
                         <TextView
+                            android:id="@+id/homeAccount_textView_createdDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="YYYY-MM-dd"

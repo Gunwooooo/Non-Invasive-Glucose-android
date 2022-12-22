@@ -98,7 +98,11 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     //달력 날짜 선택 다이어로그 생성
     private fun makeDatePickerDialog() {
-        CustomCalendarManager.getInstance(requireContext()).makeDatePickerDialog(datePickerDialogListener).show()
+        val gregorianCalendar = GregorianCalendar()
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog(requireContext(), datePickerDialogListener, year, month, dayOfMonth).show()
     }
 
     //=================================================================================================
