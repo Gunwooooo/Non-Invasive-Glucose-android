@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@drawable/radius_border20"
     android:padding="16dp"
-    android:backgroundTint="@color/iphone_gray_500">
+    android:backgroundTint="@color/iphone_gray_150">
     <LinearLayout
         android:layout_margin="10dp"
         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:stateListAnimator="@null"
                 android:text="예"
-                android:textColor="@color/white"
+                android:textColor="@color/iphone_green_200"
                 android:textSize="18dp" />
         </LinearLayout>
 

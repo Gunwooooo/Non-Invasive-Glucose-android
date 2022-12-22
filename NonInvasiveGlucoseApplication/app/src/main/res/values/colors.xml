@@ -56,8 +56,9 @@
 <!--    <color name="iphone_green_200">#bafd4f</color>-->
     <!--    달력 내부 구분선 칼라-->
     <color name="iphone_yellow">#FADF70</color>
-
+    <color name="iphone_green_100">#EEF3D7</color>
     <color name="iphone_green_200">#DFFF28</color>
+
     <color name="iphone_green_500">#D7DD1A</color>
     <color name="iphone_green_700">#C9E623</color>
 <!--    <color name="iphone_red_200">#e53653</color>-->
@@ -70,7 +71,8 @@
     <color name="iphone_blue_700">#83AFF1</color>
 <!--    <color name="iphone_gray_200">#1c1c1d</color>-->
     <color name="iphone_gray_100">#E6E6E6</color>
-    <color name="iphone_gray_150">#514E4E</color>
+
+    <color name="iphone_gray_150">#878282</color>
     <color name="iphone_gray_200">#302B2B</color>
 
     <color name="iphone_gray_500">#423C3C</color>

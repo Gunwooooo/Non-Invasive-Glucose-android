@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
@@ -62,6 +64,9 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
             //checkBox 체크 후 버튼 확성화
             binding.userSetAgreementCheckBoxAgreement1, binding.userSetAgreementCheckBoxAgreement2 -> {
                 binding.userSetAgreementBtnNext.isEnabled = binding.userSetAgreementCheckBoxAgreement1.isChecked && binding.userSetAgreementCheckBoxAgreement2.isChecked
+                if(binding.userSetAgreementCheckBoxAgreement1.isChecked && binding.userSetAgreementCheckBoxAgreement2.isChecked)
+                    binding.userSetAgreementBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+                else binding.userSetAgreementBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
         }
     }

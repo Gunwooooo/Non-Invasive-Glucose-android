@@ -49,6 +49,7 @@ class UserSetSexFragment : BaseFragment<FragmentUserSetSexBinding>(FragmentUserS
     //버튼 토글 기능
     private fun changeButtonColor(onButton: Button, offButton: Button) {
         binding.userSetSexBtnNext.isEnabled = true
+        binding.userSetSexBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
         onButton.isEnabled = false
         onButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         offButton.isEnabled = true

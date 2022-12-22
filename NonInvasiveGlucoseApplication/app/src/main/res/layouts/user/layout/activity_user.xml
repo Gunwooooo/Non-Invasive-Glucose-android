@@ -8,7 +8,7 @@
     tools:context=".user.UserActivity"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@color/iphone_gray_200">
+    android:background="@color/black">
 
     <ProgressBar
         android:progressTint="@color/iphone_blue_200"
@@ -19,6 +19,7 @@
         android:max="100"/>
 
     <LinearLayout
+        android:layout_marginStart="16dp"
         android:gravity="center"
         android:background="?android:attr/selectableItemBackground"
         android:focusable="true"

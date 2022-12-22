@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentConnectionLoadingBinding
 import com.hanait.noninvasiveglucoseapplication.home.HomeActivity
 import com.hanait.noninvasiveglucoseapplication.model.UserData
@@ -28,6 +30,7 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
             binding.connectionLoadingLottie.visibility = View.GONE
             binding.connectionLoadingImageView.visibility = View.VISIBLE
             binding.connectionLoadingBtnNext.isEnabled = true
+            binding.connectionLoadingBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
         }, 500)
 
     }

@@ -5,6 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
@@ -35,6 +37,8 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
         binding.userSetPasswordEditTextPassword.addTextChangedListener(object: TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.userSetPasswordBtnNext.isEnabled = s?.length != 0 && binding.userSetPasswordEditTextPasswordCheck.text.isNotEmpty()
+                if(s?.length != 0 && binding.userSetPasswordEditTextPasswordCheck.text.isNotEmpty()) binding.userSetPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+                else binding.userSetPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
@@ -42,6 +46,8 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
         binding.userSetPasswordEditTextPasswordCheck.addTextChangedListener(object: TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.userSetPasswordBtnNext.isEnabled = s?.length != 0 && binding.userSetPasswordEditTextPassword.text.isNotEmpty()
+                if(s?.length != 0 && binding.userSetPasswordEditTextPassword.text.isNotEmpty()) binding.userSetPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+                else binding.userSetPasswordEditTextPassword.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}

@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
@@ -59,6 +61,8 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
             binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
             binding.userSetBirthdayTextViewDay.text = "$dayOfMonth 일"
             binding.userSetBirthdayBtnNext.isEnabled = true
+            binding.userSetBirthdayBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+
 
             selectedYear = year.toString()
             selectedMonth = (month + 1).toString()

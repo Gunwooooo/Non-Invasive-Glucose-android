@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@drawable/radius_border20"
     android:padding="16dp"
-    android:backgroundTint="@color/iphone_gray_500">
+    android:backgroundTint="@color/iphone_gray_150">
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -21,6 +21,7 @@
             android:textColor="@color/white"/>
 
         <EditText
+            android:id="@+id/homeAccountModifyNicknameDialog_editText_nickname"
             android:layout_marginTop="16dp"
             android:hint="닉네임"
             android:paddingStart="16dp"
@@ -81,7 +82,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:stateListAnimator="@null"
                 android:text="변경하기"
-                android:textColor="@color/white"
+                android:textColor="@color/iphone_green_200"
                 android:textSize="18dp" />
         </LinearLayout>
 

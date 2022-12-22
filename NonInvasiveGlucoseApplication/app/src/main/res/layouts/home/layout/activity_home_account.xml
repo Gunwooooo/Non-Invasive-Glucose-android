@@ -67,7 +67,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="OOO"
-                            android:textColor="@color/white"
+                            android:textColor="@color/iphone_blue_500"
                             android:fontFamily="@font/ps_regular"
                             android:textSize="24dp"/>
                         <TextView

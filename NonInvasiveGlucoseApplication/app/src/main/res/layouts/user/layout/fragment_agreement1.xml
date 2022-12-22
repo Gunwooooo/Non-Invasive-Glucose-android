@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".user.Agreement1Fragment"
-    android:background="@color/iphone_gray_200">
+    android:background="@color/black">
     <TextView
         android:id="@+id/agreement1_textView"
         android:layout_width="match_parent"

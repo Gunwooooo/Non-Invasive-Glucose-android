@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.hanait.noninvasiveglucoseapplication.R
@@ -59,27 +60,20 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.homeAccountBtnBack -> {
+            binding.homeAccountBtnBack ->
                 finish()
-            }
-            binding.homeAccountTextViewModifyNickname -> {
+            binding.homeAccountTextViewModifyNickname ->
                 showModifyNicknameDialog()
-            }
-            binding.homeAccountLayoutModifySex -> {
+            binding.homeAccountLayoutModifySex ->
                 showModifySexDialog()
-            }
-            binding.homeAccountLayoutModifyBirthday -> {
+            binding.homeAccountLayoutModifyBirthday ->
                 makeDatePickerDialog()
-            }
-            binding.homeAccountBtnModifyPassword -> {
+            binding.homeAccountBtnModifyPassword ->
                 showModifyPasswordDialog()
-            }
-            binding.homeAccountBtnDeleteUser -> {
+            binding.homeAccountBtnDeleteUser ->
                 showDeleteUserDialog()
-            }
-            binding.homeAccountBtnLogoutUser -> {
+            binding.homeAccountBtnLogoutUser ->
                 showLogoutUserDialog()
-            }
         }
     }
 
@@ -97,8 +91,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDatePickerDialogListener() {
         datePickerDialogListener =
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                retrofitEditLoginedUser()
                 binding.homeAccountTextViewBirthday.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+                retrofitEditLoginedUser()
             }
     }
 
@@ -114,12 +108,14 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     //닉네임 변경 다이어로그 호출
     private fun showModifyNicknameDialog() {
         val customDialog = CustomDialogManager(R.layout.home_account_modify_nickname_dialog)
-        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
-            override fun onPositiveClicked() {
+        customDialog.setTwoButtonWithDataDialogListener(object : CustomDialogManager.TwoButtonWithDataDialogListener {
+            override fun onPositiveClicked(data: String) {
                 //회원정보 수정 기능
+                binding.homeAccountTextViewNickname.text = data
                 retrofitEditLoginedUser()
                 customDialog.dismiss()
             }
+
             override fun onNegativeClicked() {
                 customDialog.dismiss()
             }
@@ -135,8 +131,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             override fun onPositiveClicked(data: String) {
                 //회원정보 수정 기능 추가 필요 ( 성별 )
                 binding.homeAccountTextViewSex.text = data
-                Log.d("로그", "HomeAccountActivity - onPositiveClicked : $data werawerawerawerawerawer")
-//                retrofitEditLoginedUser()
+                retrofitEditLoginedUser()
                 customDialog.dismiss()
             }
 
@@ -231,9 +226,14 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         RetrofitManager.instance.editLoginedUser(userData, completion = {completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
+                    //데이터 오브젝트에 새로 저장
+                    LoginedUserClient.nickname = nickname
+                    LoginedUserClient.birthDay = birthday
+                    LoginedUserClient.sex = binding.homeAccountTextViewSex.text.toString()
                     Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : ${response}")
                 }
                 CompletionResponse.FAIL -> {
+                    Toast.makeText(this, "정보 수정에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                     Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : 통신 실패")
                 }
             }

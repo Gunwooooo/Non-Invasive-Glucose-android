@@ -23,7 +23,7 @@
             android:text="보호자 검색"
             android:fontFamily="@font/ps_bold"
             android:textSize="24dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/iphone_green_200"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

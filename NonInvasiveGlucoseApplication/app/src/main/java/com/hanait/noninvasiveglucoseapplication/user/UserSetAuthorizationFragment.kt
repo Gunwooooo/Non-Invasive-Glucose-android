@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
@@ -78,6 +79,8 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         binding.userSetAuthorizationEditTextInputAuthNum.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.userSetAuthorizationBtnNext.isEnabled = s?.length != 0
+                if(s?.length != 0) binding.userSetAuthorizationBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+                else binding.userSetAuthorizationBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}

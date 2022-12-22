@@ -77,10 +77,10 @@
             android:id="@+id/homeProtectorInfoDialog_btn_negative"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_border_blue"
+            android:background="@drawable/btn_border_gray_reverse"
             android:fontFamily="@font/ps_regular"
             android:stateListAnimator="@null"
-            android:text="확인"
+            android:text="취소"
             android:textColor="@color/white"
             android:textSize="18dp" />
     </LinearLayout>

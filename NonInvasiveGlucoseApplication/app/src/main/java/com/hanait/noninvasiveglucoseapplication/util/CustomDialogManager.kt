@@ -5,12 +5,15 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.hanait.noninvasiveglucoseapplication.R
@@ -70,6 +73,7 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
 
         var positiveButton : Button? = null
         var negativeButton : Button? = null
+        stringData = ""
 
         when(layout) {
             /////////////////////////////////////////    protector   ///////////////////////////////
@@ -130,6 +134,15 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.layout.home_account_modify_nickname_dialog -> {
                 positiveButton = view.findViewById(R.id.homeAccountModifyNicknameDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeAccountModifyNicknameDialog_btn_negative) as Button
+                val nicknameEditText = view.findViewById(R.id.homeAccountModifyNicknameDialog_editText_nickname) as EditText
+                //텍스트 감지 후 데이터 저장
+                nicknameEditText.addTextChangedListener(object : TextWatcher {
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        stringData = nicknameEditText.text.toString()
+                    }
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun afterTextChanged(s: Editable?) {}
+                })
             }
         }
         positiveButton?.setOnClickListener(this)
@@ -143,21 +156,21 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             //투 버튼 파지티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
             R.id.homeAccountModifyPasswordDialog_btn_positive, R.id.homeAccountDeleteUserDialog_btn_positive,
-            R.id.homeProtectorInfoDialog_btn_positive, R.id.homeAccountLogoutUserDialog_btn_positive,
-            R.id.homeAccountModifyNicknameDialog_btn_positive->
-                twoButtonDialogListener?.onPositiveClicked()
+            R.id.homeProtectorInfoDialog_btn_positive, R.id.homeAccountLogoutUserDialog_btn_positive
+            -> twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
             R.id.homeAccountModifyPasswordDialog_btn_negative, R.id.homeAccountDeleteUserDialog_btn_negative,
-            R.id.homeProtectorInfoDialog_btn_negative, R.id.homeAccountLogoutUserDialog_btn_negative,
-            R.id.homeAccountModifyNicknameDialog_btn_negative ->
-                twoButtonDialogListener?.onNegativeClicked()
+            R.id.homeProtectorInfoDialog_btn_negative, R.id.homeAccountLogoutUserDialog_btn_negative
+            -> twoButtonDialogListener?.onNegativeClicked()
 
             
             //데이터 전달이 있는 투 버튼 리스너 연결
-            R.id.homeAccountModifySexDialog_btn_positive -> twoButtonWithDataDialogListener?.onPositiveClicked(stringData)
-            R.id.homeAccountModifySexDialog_btn_negative -> twoButtonWithDataDialogListener?.onNegativeClicked()
+            R.id.homeAccountModifySexDialog_btn_positive, R.id.homeAccountModifyNicknameDialog_btn_positive
+            -> twoButtonWithDataDialogListener?.onPositiveClicked(stringData)
+            R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative
+            -> twoButtonWithDataDialogListener?.onNegativeClicked()
         }
     }
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserCheckPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
@@ -44,6 +45,8 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         binding.userCheckPasswordEditTextPassword.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.userCheckPasswordBtnNext.isEnabled = s?.length != 0
+                if(s?.length != 0) binding.userCheckPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+                else binding.userCheckPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}

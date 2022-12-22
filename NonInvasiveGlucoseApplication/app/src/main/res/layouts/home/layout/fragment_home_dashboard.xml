@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="OOO"
-                android:textColor="@color/white"
+                android:textColor="@color/iphone_blue_500"
                 android:fontFamily="@font/ps_bold"
                 android:textSize="27dp"/>
             <TextView
