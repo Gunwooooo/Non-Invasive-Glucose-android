@@ -11,7 +11,7 @@
     android:background="@color/black">
 
     <ProgressBar
-        android:progressTint="@color/iphone_blue_200"
+        android:progressTint="@color/iphone_blue_500"
         android:id="@+id/user_progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"

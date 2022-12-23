@@ -36,6 +36,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         binding.userCheckPasswordEditTextPhoneNumber.hint = _userData.phoneNumber
 
         binding.userCheckPasswordBtnNext.setOnClickListener(this)
+        binding.userCheckPasswordEditTextPhoneNumber.setOnClickListener(this)
 
         setEditTextTextChanged()
     }

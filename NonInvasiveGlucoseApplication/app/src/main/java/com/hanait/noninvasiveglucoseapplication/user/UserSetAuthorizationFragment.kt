@@ -87,7 +87,6 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         })
     }
 
-
     //인증 번호 보내는 함수
     @RequiresApi(Build.VERSION_CODES.O)
     private fun retrofitSendSMSAuthCode() {
@@ -103,7 +102,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : OK!")
                     binding.userSetAuthorizationTextViewCountTime.visibility = View.VISIBLE
-                    binding.userSetAuthorizationBtnGetAuthNum.setBackgroundResource(R.drawable.btn_border_gray_reverse)
+//                    binding.userSetAuthorizationBtnGetAuthNum.setBackgroundResource(R.drawable.btn_border_gray_reverse)
                     binding.userSetAuthorizationBtnGetAuthNum.text = "재발송"
 
                     //타이머 3분 작동

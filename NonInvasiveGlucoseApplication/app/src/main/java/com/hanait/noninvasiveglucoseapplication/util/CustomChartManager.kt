@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.*
@@ -90,7 +91,9 @@ class CustomChartManager(val context: Context) {
         for (i in 1 until 50) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
-            entry.add(CandleEntry(i.toFloat(), shadowHigh,  shadowLow, shadowLow, shadowHigh))
+            val midValue = ((shadowHigh + shadowLow) / 2F * 10).roundToInt()/10f
+            Log.d("로그", "CustomChartManager - makeThermometer7dayCandleDataSet : ${shadowHigh}  ${shadowLow}  ${midValue}")
+            entry.add(CandleEntry(i.toFloat(), shadowLow,  shadowHigh, midValue, midValue))
         }
         return CandleDataSet(entry, "체온")
     }
@@ -245,8 +248,8 @@ class CustomChartManager(val context: Context) {
         val candleDataSet = makeThermometer7dayCandleDataSet()
         candleDataSet.run {
             //심지 부분
-            shadowColor = Color.LTGRAY
-            shadowWidth = 1f
+            shadowColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
+            shadowWidth = 3f
 
             //음봉
             decreasingColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
@@ -256,9 +259,8 @@ class CustomChartManager(val context: Context) {
             increasingColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
             increasingPaintStyle = Paint.Style.FILL
 
-            neutralColor = Color.DKGRAY
+            neutralColor = ContextCompat.getColor(context, R.color.iphone_blue_500)
             setDrawValues(false)
-
             //터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
         }
