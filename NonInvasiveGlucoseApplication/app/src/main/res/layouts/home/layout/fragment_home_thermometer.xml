@@ -105,7 +105,7 @@
                     app:nts_typeface="@font/ps_regular"
                     app:nts_weight="3dp" />
 
-                <com.github.mikephil.charting.charts.CandleStickChart
+                <com.github.mikephil.charting.charts.CombinedChart
                     android:id="@+id/homeThermometer_averageChart"
                     android:layout_width="match_parent"
                     android:layout_height="256dp"

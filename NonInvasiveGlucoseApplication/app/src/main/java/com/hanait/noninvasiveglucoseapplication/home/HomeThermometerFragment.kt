@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.CandleData
-import com.github.mikephil.charting.data.CandleEntry
-import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
@@ -61,8 +58,13 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
         val thermometerCandleData =  customChartManager.setThermometer7DayCandleData()
         val candleData = CandleData(thermometerCandleData)
         val candleThermometerDay = binding.homeThermometerAverageChart
-//        val combinedData = LineData()
-//        lineThermometerDay.setData(lineData)
+
+        val thermometerLineData = customChartManager.setThermometer7DayLineData()
+        val lineData = LineData(thermometerLineData)
+
+        val combinedData = CombinedData()
+        combinedData.setData(candleData)
+        combinedData.setData(lineData)
 
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
@@ -71,7 +73,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
         candleThermometerDay.setOnChartValueSelectedListener(this)
         candleThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
-            data = candleData
+            data = combinedData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true    //드래그 가능

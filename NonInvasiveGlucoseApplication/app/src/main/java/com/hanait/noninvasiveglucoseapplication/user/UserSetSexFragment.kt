@@ -1,6 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat

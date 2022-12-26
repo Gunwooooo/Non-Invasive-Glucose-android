@@ -45,6 +45,9 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
         binding.homeDashboardBtnCalendar.setOnClickListener(this)
         binding.homeDashboardBtnAccount.setOnClickListener(this)
+        binding.homeDashboardTextViewThermometerDetail.setOnClickListener(this)
+        binding.homeDashboardTextViewHeartDetail.setOnClickListener(this)
+        binding.homeDashboardTextViewGlucoseDetail.setOnClickListener(this)
 
 
 
@@ -58,18 +61,14 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     override fun onClick(v: View?) {
         val mActivity = activity as HomeActivity
         when (v) {
-            binding.homeDashboardBtnThermometer -> {
+            binding.homeDashboardBtnThermometer, binding.homeDashboardTextViewThermometerDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
-            }
-            binding.homeDashboardBtnHeart -> {
-                setHeartLineChart()
-            }
-            binding.homeDashboardBtnGlucose -> {
-                setGlucoseLineChart()
-            }
-            binding.homeDashboardBtnCalendar -> {
+            binding.homeDashboardBtnHeart, binding.homeDashboardTextViewHeartDetail ->
+                mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
+            binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
+                mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
+            binding.homeDashboardBtnCalendar ->
                 makeDatePickerDialog()
-            }
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
                 startActivity(intent)

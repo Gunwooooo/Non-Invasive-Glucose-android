@@ -251,6 +251,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
             <TextView
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeDashboard_textView_thermometerDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ps_regular"
@@ -424,6 +427,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
             <TextView
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeDashboard_textView_heartDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ps_regular"
@@ -583,6 +589,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
             <TextView
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/homeDashboard_textView_glucoseDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ps_regular"

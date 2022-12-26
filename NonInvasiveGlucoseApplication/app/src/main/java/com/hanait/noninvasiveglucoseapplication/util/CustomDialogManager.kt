@@ -119,6 +119,11 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.layout.home_account_modify_password_dialog -> {
                 positiveButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_negative) as Button
+                val 
+                val stringBuffer = StringBuffer()
+
+
+
             }
             //회원탈퇴 다이어로그
             R.layout.home_account_delete_user_dialog -> {

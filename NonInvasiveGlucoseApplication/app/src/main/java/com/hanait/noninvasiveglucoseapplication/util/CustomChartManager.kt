@@ -14,6 +14,8 @@ import java.util.*
 import kotlin.math.roundToInt
 
 class CustomChartManager(val context: Context) {
+
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         var INSTANCE: CustomChartManager? = null
@@ -92,13 +94,27 @@ class CustomChartManager(val context: Context) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val midValue = ((shadowHigh + shadowLow) / 2F * 10).roundToInt()/10f
-            Log.d("로그", "CustomChartManager - makeThermometer7dayCandleDataSet : ${shadowHigh}  ${shadowLow}  ${midValue}")
+            Log.d("로그", "CustomChartManage  r - makeThermometer7dayCandleDataSet : ${shadowHigh}  ${shadowLow}  ${midValue}")
             entry.add(CandleEntry(i.toFloat(), shadowLow,  shadowHigh, midValue, midValue))
         }
         return CandleDataSet(entry, "체온")
     }
 
-    //캔들 데이터 생성
+    //실수 난수 생성
+    private fun makeThermometer7dayLineDataSet() : LineDataSet {
+        val entry: MutableList<Entry> = ArrayList()
+        val max = 40.0
+        val min = 35.0
+        val random = Random()
+        random.setSeed(Date().time)
+        for (i in 1 until 50) {
+            entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
+        }
+        return LineDataSet(entry, "평균체온")
+    }
+
+
+    //심박수 캔들 데이터 생성
     private fun makeHeart7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
@@ -113,7 +129,7 @@ class CustomChartManager(val context: Context) {
         return CandleDataSet(entry, "심박수")
     }
 
-    //캔들 데이터 생성
+    //혈당 캔들 데이터 생성
     private fun makeGlucose7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
@@ -248,23 +264,52 @@ class CustomChartManager(val context: Context) {
         val candleDataSet = makeThermometer7dayCandleDataSet()
         candleDataSet.run {
             //심지 부분
-            shadowColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
-            shadowWidth = 3f
+            shadowColor = ContextCompat.getColor(context, R.color.iphone_gray_100)
+            shadowWidth = 1f
 
             //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
-            decreasingPaintStyle = Paint.Style.FILL
+            decreasingColor = ContextCompat.getColor(context, R.color.transparent)
+            decreasingPaintStyle = Paint.Style.STROKE
 
             //양봉
-            increasingColor = ContextCompat.getColor(context, R.color.iphone_blue_200)
-            increasingPaintStyle = Paint.Style.FILL
+            increasingColor = ContextCompat.getColor(context, R.color.transparent)
+            increasingPaintStyle = Paint.Style.STROKE
 
-            neutralColor = ContextCompat.getColor(context, R.color.iphone_blue_500)
+            neutralColor = ContextCompat.getColor(context, R.color.  transparent)
+
+
             setDrawValues(false)
             //터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
         }
         return candleDataSet
+    }
+
+    //심박수 라인 데이터 생성
+    fun setThermometer7DayLineData() : LineDataSet {
+        val lineDataSet = makeThermometer7dayLineDataSet()
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
+//        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+//        lineDataSet.setDrawFilled(true)
+//        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
+        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+        lineDataSet.setColor(ContextCompat.getColor(context, R.color.iphone_blue_200))
+        lineDataSet.lineWidth = 3F //선 굵기
+        lineDataSet.circleRadius = 7F
+        lineDataSet.circleHoleRadius = 4F
+//        lineDataSet.enableDashedLine(10f, 5f, 0f)
+        lineDataSet.setDrawCircles(true)   //동그란거 없애기
+        lineDataSet.setDrawValues(true)
+        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.iphone_blue_200))
+        lineDataSet.valueTextSize = 0F
+//        lineDataSet.fillAlpha = 50
+//        lineDataSet.highLightColor = Color.BLACK
+//        lineDataSet.highlightLineWidth = 2F
+        lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
+        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+        lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+        lineDataSet.setDrawCircleHole(true)
+        return lineDataSet
     }
 
     //심박수 7일 그래프 생성

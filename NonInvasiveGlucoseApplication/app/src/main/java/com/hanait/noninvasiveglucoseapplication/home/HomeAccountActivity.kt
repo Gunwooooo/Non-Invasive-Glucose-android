@@ -230,6 +230,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                     LoginedUserClient.nickname = nickname
                     LoginedUserClient.birthDay = birthday
                     LoginedUserClient.sex = binding.homeAccountTextViewSex.text.toString()
+                    Toast.makeText(this, "정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
                     Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : ${response}")
                 }
                 CompletionResponse.FAIL -> {
