@@ -121,9 +121,12 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.layout.home_account_modify_password_dialog -> {
                 positiveButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_negative) as Button
-//                val
+                val curPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_curPassword) as EditText
+                val newPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_newPassword) as EditText
+                val checkPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_checkPassword) as EditText
                 val stringBuffer = StringBuffer()
 
+                Log.d("로그", "CustomDialogManager - onCreateDialog : cur : ${curPasswordEditText} new : ${newPasswordEditText} check : ${checkPasswordEditText}")
 
 
             }
@@ -172,7 +175,7 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.id.homeProtectorInfoDialog_btn_negative, R.id.homeAccountLogoutUserDialog_btn_negative
             -> twoButtonDialogListener?.onNegativeClicked()
 
-            
+
             //데이터 전달이 있는 투 버튼 리스너 연결
             R.id.homeAccountModifySexDialog_btn_positive, R.id.homeAccountModifyNicknameDialog_btn_positive
             -> twoButtonWithDataDialogListener?.onPositiveClicked(stringData)
