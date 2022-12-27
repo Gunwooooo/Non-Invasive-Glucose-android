@@ -55,12 +55,11 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
 
     //체온 차트 설정
     private fun setThermometer7DayAverageChart() {
-        val thermometerCandleData =  customChartManager.setThermometer7DayCandleData()
-        val candleData = CandleData(thermometerCandleData)
+        val thermometerCandleLineData =  customChartManager.setThermometer7DayCandleLineData()
+        val candleData = CandleData(thermometerCandleLineData.candleDataSet)
         val candleThermometerDay = binding.homeThermometerAverageChart
 
-        val thermometerLineData = customChartManager.setThermometer7DayLineData()
-        val lineData = LineData(thermometerLineData)
+        val lineData = LineData(thermometerCandleLineData.lineDataSet)
 
         val combinedData = CombinedData()
         combinedData.setData(candleData)
@@ -122,8 +121,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
         val thermometerBarData =  customChartManager.setThermometerAbnormalData()
         val barData = BarData(thermometerBarData)
         val barThermometerDay = binding.homeThermometerAbnormalChart
-//        val combinedData = LineData()
-//        lineThermometerDay.setData(lineData)
+
 
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
@@ -234,8 +232,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
     //그래프 터치시 값 변경 리스너
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         if (e is CandleEntry) {
-            val minVal = min(e.open, e.close)
-            val maxVal = max(e.open, e.close)
+            val minVal = min(e.low, e.high)
+            val maxVal = max(e.low, e.high)
 
             binding.homeThermometerTextViewMinValue.text = "$minVal"
             binding.homeThermometerTextViewMaxValue.text = "$maxVal"

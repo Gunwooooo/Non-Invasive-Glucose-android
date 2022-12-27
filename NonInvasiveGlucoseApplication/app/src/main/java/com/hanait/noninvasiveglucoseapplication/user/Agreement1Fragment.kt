@@ -1,6 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentAgreement1Binding

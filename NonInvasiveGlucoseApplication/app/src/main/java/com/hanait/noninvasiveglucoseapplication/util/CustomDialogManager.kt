@@ -16,6 +16,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.github.mikephil.charting.data.CandleDataSet
+import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.R
 
 
@@ -119,7 +121,7 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.layout.home_account_modify_password_dialog -> {
                 positiveButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeAccountModifyPasswordDialog_btn_negative) as Button
-                val 
+//                val
                 val stringBuffer = StringBuffer()
 
 
@@ -179,3 +181,4 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
         }
     }
 }
+
