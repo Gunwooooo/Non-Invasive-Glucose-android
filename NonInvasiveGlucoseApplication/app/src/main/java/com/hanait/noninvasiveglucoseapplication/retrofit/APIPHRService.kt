@@ -49,4 +49,11 @@ interface APIPHRService {
     fun logoutUser(
         @Header("Authorization") authorization: String?
     ) : Call<ResponseBody>
+
+    //현재 비밀번호 확인
+    @POST("/wellink/user/checkpw")
+    fun checkCurrentPassword(
+        @Header("Authorization") authorization: String?,
+        @Body password: String?
+    ) : Call<ResponseBody>
 }

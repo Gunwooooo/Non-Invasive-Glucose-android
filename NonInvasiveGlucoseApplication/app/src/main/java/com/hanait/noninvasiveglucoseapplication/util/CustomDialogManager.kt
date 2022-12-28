@@ -23,7 +23,9 @@ import com.hanait.noninvasiveglucoseapplication.R
 
 class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
 
-    private var stringData = ""
+    private var stringData1 = ""
+    private var stringData2 = ""
+    private var stringData3 = ""
 //    //원 버튼 다이어로그
 //    private var oneButtonDialogListener: OneButtonDialogListener? = null
 //    interface OneButtonDialogListener {
@@ -44,13 +46,23 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
     }
 
     //String을 전달하는 투 버튼 다이어로그
-    private var twoButtonWithDataDialogListener: TwoButtonWithDataDialogListener? = null
-    interface TwoButtonWithDataDialogListener {
+    private var twoButtonWithOneDataDialogListener: TwoButtonWithOneDataDialogListener? = null
+    interface TwoButtonWithOneDataDialogListener {
         fun onPositiveClicked(data: String)
         fun onNegativeClicked()
     }
-    fun setTwoButtonWithDataDialogListener(customDialogListener: TwoButtonWithDataDialogListener) {
-        this.twoButtonWithDataDialogListener = customDialogListener
+    fun setTwoButtonWithOneDataDialogListener(customDialogListener: TwoButtonWithOneDataDialogListener) {
+        this.twoButtonWithOneDataDialogListener = customDialogListener
+    }
+
+    //String을 전달하는 투 버튼 다이어로그
+    private var twoButtonWithThreeDataDialogListener: TwoButtonWithThreeDataDialogListener? = null
+    interface TwoButtonWithThreeDataDialogListener {
+        fun onPositiveClicked(data1: String, data2: String, data3: String)
+        fun onNegativeClicked()
+    }
+    fun setTwoButtonWithThreeDataDialogListener(customDialogListener: TwoButtonWithThreeDataDialogListener) {
+        this.twoButtonWithThreeDataDialogListener = customDialogListener
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +87,9 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
 
         var positiveButton : Button? = null
         var negativeButton : Button? = null
-        stringData = ""
+        stringData1 = ""
+        stringData2 = ""
+        stringData3 = ""
 
         when(layout) {
             /////////////////////////////////////////    protector   ///////////////////////////////
@@ -107,14 +121,14 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                     maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     femaleButton.isEnabled = true
                     femaleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
-                    stringData = "남성"
+                    stringData1 = "남성"
                 }
                 femaleButton.setOnClickListener {
                     femaleButton.isEnabled = false
                     femaleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     maleButton.isEnabled = true
                     maleButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.toss_black_500))
-                    stringData = "여성"
+                    stringData1 = "여성"
                 }
             }
             //비밀번호 수정 다이어로그
@@ -124,11 +138,27 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 val curPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_curPassword) as EditText
                 val newPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_newPassword) as EditText
                 val checkPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_checkPassword) as EditText
-                val stringBuffer = StringBuffer()
-
-                Log.d("로그", "CustomDialogManager - onCreateDialog : cur : ${curPasswordEditText} new : ${newPasswordEditText} check : ${checkPasswordEditText}")
-
-
+                curPasswordEditText.addTextChangedListener(object : TextWatcher {
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        stringData1 = curPasswordEditText.text.toString()
+                    }
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun afterTextChanged(s: Editable?) {}
+                })
+                newPasswordEditText.addTextChangedListener(object : TextWatcher {
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        stringData2 = newPasswordEditText.text.toString()
+                    }
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun afterTextChanged(s: Editable?) {}
+                })
+                checkPasswordEditText.addTextChangedListener(object : TextWatcher {
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        stringData3 = checkPasswordEditText.text.toString()
+                    }
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun afterTextChanged(s: Editable?) {}
+                })
             }
             //회원탈퇴 다이어로그
             R.layout.home_account_delete_user_dialog -> {
@@ -148,7 +178,7 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
                 //텍스트 감지 후 데이터 저장
                 nicknameEditText.addTextChangedListener(object : TextWatcher {
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        stringData = nicknameEditText.text.toString()
+                        stringData1 = nicknameEditText.text.toString()
                     }
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                     override fun afterTextChanged(s: Editable?) {}
@@ -165,22 +195,29 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
         when(v?.id) {
             //투 버튼 파지티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
-            R.id.homeAccountModifyPasswordDialog_btn_positive, R.id.homeAccountDeleteUserDialog_btn_positive,
-            R.id.homeProtectorInfoDialog_btn_positive, R.id.homeAccountLogoutUserDialog_btn_positive
+            R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectorInfoDialog_btn_positive,
+            R.id.homeAccountLogoutUserDialog_btn_positive
             -> twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
-            R.id.homeAccountModifyPasswordDialog_btn_negative, R.id.homeAccountDeleteUserDialog_btn_negative,
-            R.id.homeProtectorInfoDialog_btn_negative, R.id.homeAccountLogoutUserDialog_btn_negative
+            R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectorInfoDialog_btn_negative,
+            R.id.homeAccountLogoutUserDialog_btn_negative
             -> twoButtonDialogListener?.onNegativeClicked()
 
 
             //데이터 전달이 있는 투 버튼 리스너 연결
             R.id.homeAccountModifySexDialog_btn_positive, R.id.homeAccountModifyNicknameDialog_btn_positive
-            -> twoButtonWithDataDialogListener?.onPositiveClicked(stringData)
+            -> twoButtonWithOneDataDialogListener?.onPositiveClicked(stringData1)
             R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative
-            -> twoButtonWithDataDialogListener?.onNegativeClicked()
+            -> twoButtonWithOneDataDialogListener?.onNegativeClicked()
+
+            //데이터 전달이 세 개 있는 투 버튼 리스너 연결
+            R.id.homeAccountModifyPasswordDialog_btn_positive
+            -> twoButtonWithThreeDataDialogListener?.onPositiveClicked(stringData1, stringData2, stringData3)
+            R.id.homeAccountModifyPasswordDialog_btn_negative
+            -> twoButtonWithThreeDataDialogListener?.onNegativeClicked()
+
         }
     }
 }

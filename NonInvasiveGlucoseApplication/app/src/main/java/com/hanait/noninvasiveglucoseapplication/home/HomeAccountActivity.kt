@@ -25,6 +25,7 @@ import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
+import java.util.regex.Pattern
 
 class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityHomeAccountBinding
@@ -108,7 +109,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     //닉네임 변경 다이어로그 호출
     private fun showModifyNicknameDialog() {
         val customDialog = CustomDialogManager(R.layout.home_account_modify_nickname_dialog)
-        customDialog.setTwoButtonWithDataDialogListener(object : CustomDialogManager.TwoButtonWithDataDialogListener {
+        customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 //회원정보 수정 기능
                 binding.homeAccountTextViewNickname.text = data
@@ -127,7 +128,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private fun showModifySexDialog() {
         Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
         val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog)
-        customDialog.setTwoButtonWithDataDialogListener(object : CustomDialogManager.TwoButtonWithDataDialogListener {
+        customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 //회원정보 수정 기능 추가 필요 ( 성별 )
                 binding.homeAccountTextViewSex.text = data
@@ -145,18 +146,41 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     //비밀번호 변경 다이어로그 출력
     private fun showModifyPasswordDialog() {
         val customDialog = CustomDialogManager(R.layout.home_account_modify_password_dialog)
-        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
-            override fun onPositiveClicked() {
-                //비밀번호 변경 확인 및 수정 retrofit 필요
+        customDialog.setTwoButtonWithThreeDataDialogListener(object : CustomDialogManager.TwoButtonWithThreeDataDialogListener {
+            override fun onPositiveClicked(data1: String, data2: String, data3: String) {
                 customDialog.dismiss()
-            }
+                
+                //현재 비밀번호 확인
+                if(retrofitCheckCurrentPassword(data1)) {
 
+                }
+                //비밀번호 일치 여부 확인
+                if( data2 != data3 ) {
+                    Toast.makeText(applicationContext, "비밀번호가 서로 일치하지 않습니다.", Toast.LENGTH_SHORT ).show()
+                    return
+                }
+                //정규화 확인
+                if(checkPasswordRegex(data3)) {
+                    Toast.makeText(applicationContext, "영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                //비밀번호 수정 retrofit통신 보내기
+            }
             override fun onNegativeClicked() {
                 customDialog.dismiss()
             }
         })
         customDialog.show(supportFragmentManager, "home_account_modify_password_dialog")
     }
+
+    //비밀번호 정규식 체크  영문자, 특수문자, 숫자 3개 조합하여 8자리 이상 ~20까지
+    private fun checkPasswordRegex(stringData: String) : Boolean {
+        val pwPattern =  "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@!%*#?&]).{8,20}.$"
+        val pattern = Pattern.compile(pwPattern)
+        val matcher = pattern.matcher(stringData)
+        return matcher.find()
+    }
+
 
     //회원 탈퇴 다이어로그 출력
     private fun showDeleteUserDialog() {
@@ -253,5 +277,20 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         })
+    }
+    
+    //비밀번호 변경 시 현재 비밀번호 확인 레트로핏 통신
+    private fun retrofitCheckCurrentPassword(data: String) : Boolean {
+        RetrofitManager.instance.checkCurrentPassword(data, completion = {completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitCheckCurrentPassword : ${response}")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitCheckCurrentPassword : 통신 실패")
+                }
+            }
+        })
+        return true
     }
 }
