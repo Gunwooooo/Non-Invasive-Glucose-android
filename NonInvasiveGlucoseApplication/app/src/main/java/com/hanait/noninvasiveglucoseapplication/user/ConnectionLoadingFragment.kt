@@ -69,6 +69,7 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                             //로그인 된 유저 데이터 제이슨으로 파싱하기
                             val str = response.body()?.string()
                             Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : ${str}")
+                            Log.d("로그", "ConnectionLoadingFragment - retrofitInfoLoginedUser : b ${System.currentTimeMillis()}")
                             val jsonObjectUser = str?.let { JSONObject(it) }
                             LoginedUserClient.nickname =
                                 "${jsonObjectUser?.getString("nickname")}"

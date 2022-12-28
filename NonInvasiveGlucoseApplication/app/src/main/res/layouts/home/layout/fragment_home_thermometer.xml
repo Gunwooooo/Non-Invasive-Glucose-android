@@ -105,6 +105,16 @@
                     app:nts_typeface="@font/ps_regular"
                     app:nts_weight="3dp" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/ps_regular"
+                    android:gravity="center"
+                    android:text="2022.01.23 ~ 2022.08.23"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
                 <com.github.mikephil.charting.charts.CombinedChart
                     android:id="@+id/homeThermometer_averageChart"
                     android:layout_width="match_parent"
@@ -291,6 +301,17 @@
                 app:nts_typeface="@font/ps_regular"
                 app:nts_weight="3dp" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/ps_regular"
+                android:gravity="center"
+                android:text="2022.01.23 ~ 2022.08.23"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_margin="16dp"
                 android:id="@+id/homeThermometer_normalChart"
@@ -377,6 +398,17 @@
                 app:nts_type="point"
                 app:nts_typeface="@font/ps_regular"
                 app:nts_weight="3dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/ps_regular"
+                android:gravity="center"
+                android:text="2022.01.23 ~ 2022.08.23"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_margin="16dp"

@@ -93,12 +93,13 @@ class CustomChartManager(val context: Context) {
         for (i in 1 until 50) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
-            Log.d("로그", "CustomChartManager - makeThermometer7dayCandleLineDataSet : high : ${shadowHigh}   low : ${shadowLow}")
             val midValue = ((shadowHigh + shadowLow) / 2F * 10).roundToInt()/10f
-            Log.d("로그", "CustomChartManage  r - makeThermometer7dayCandleLineDataSet : ${shadowHigh}  ${shadowLow}  ${midValue}")
+            Log.d("로그", "CustomChartManage  r - makeThermometer7dayCandleLineDataSet : $i : ${shadowHigh}  ${shadowLow}  ${midValue}")
             entryCandle.add(CandleEntry(i.toFloat(), shadowLow,  shadowHigh, midValue, midValue))
             entryLine.add(Entry(i.toFloat(), midValue))
         }
+        Log.d("로그", "CustomChartManager - makeThermometer7dayCandleLineDataSet : candle : $entryCandle")
+        Log.d("로그", "CustomChartManager - makeThermometer7dayCandleLineDataSet : line : $entryLine")
         return CandleLineDataSet(CandleDataSet(entryCandle, "체온"), LineDataSet(entryLine, "평균체온"))
     }
 
@@ -260,57 +261,6 @@ class CustomChartManager(val context: Context) {
         return lineDataSet
     }
 
-//==================================================================================================
-    //체온 7일 상세 그래프 생성
-    fun setThermometer7DayCandleLineData() : CandleLineDataSet {
-        val candleDataSet = makeThermometer7dayCandleLineDataSet().candleDataSet
-        candleDataSet.run {
-            //심지 부분
-            shadowColor = ContextCompat.getColor(context, R.color.iphone_gray_100)
-            shadowWidth = 1f
-
-            //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.transparent)
-            decreasingPaintStyle = Paint.Style.STROKE
-
-            //양봉
-            increasingColor = ContextCompat.getColor(context, R.color.transparent)
-            increasingPaintStyle = Paint.Style.STROKE
-
-            neutralColor = ContextCompat.getColor(context, R.color.  transparent)
-
-
-            setDrawValues(false)
-            //터치시 노란 선 제거
-            highLightColor = Color.TRANSPARENT
-        }
-        val lineDataSet = makeThermometer7dayCandleLineDataSet().lineDataSet
-        lineDataSet.run {
-            mode = LineDataSet.Mode.LINEAR
-//            .cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-//            .setDrawFilled(true)
-//            .fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            setColor(ContextCompat.getColor(context, R.color.iphone_blue_200))
-            lineWidth = 3F //선 굵기
-            circleRadius = 7F
-            circleHoleRadius = 4F
-//          enableDashedLine(10f, 5f, 0f)
-            setDrawCircles(true)   //동그란거 없애기
-            setDrawValues(true)
-            setCircleColor(ContextCompat.getColor(context, R.color.iphone_blue_200))
-            valueTextSize = 0F
-//            fillAlpha = 50
-//            highLightColor = Color.BLACK
-//            highlightLineWidth = 2F
-            isHighlightEnabled = true   //클릭시 마크 보이게
-            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-            setDrawCircleHole(true)
-        }
-        return CandleLineDataSet(candleDataSet, lineDataSet)
-    }
-
     //심박수 7일 그래프 생성
     fun setHeart7DayCandleData() : CandleDataSet {
         val candleDataSet = makeHeart7dayCandleDataSet()
@@ -359,6 +309,57 @@ class CustomChartManager(val context: Context) {
             highLightColor = Color.TRANSPARENT
         }
         return candleDataSet
+    }
+
+//==================================================================================================
+    //체온 7일 상세 그래프 생성
+    fun setThermometer7DayCandleLineData() : CandleLineDataSet {
+        val candleLindDataSet = makeThermometer7dayCandleLineDataSet()
+        val candleDataSet = candleLindDataSet.candleDataSet
+        candleDataSet.run {
+            //심지 부분
+            shadowColor = ContextCompat.getColor(context, R.color.iphone_gray_100)
+            shadowWidth = 3f
+
+            //음봉
+            decreasingColor = ContextCompat.getColor(context, R.color.transparent)
+            decreasingPaintStyle = Paint.Style.STROKE
+
+            //양봉
+            increasingColor = ContextCompat.getColor(context, R.color.transparent)
+            increasingPaintStyle = Paint.Style.STROKE
+
+            neutralColor = ContextCompat.getColor(context, R.color.  transparent)
+
+
+            setDrawValues(false)
+            //터치시 노란 선 제거
+            highLightColor = Color.TRANSPARENT
+        }
+        val lineDataSet = candleLindDataSet.lineDataSet
+        lineDataSet.run {
+            mode = LineDataSet.Mode.LINEAR
+//            .cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+//            .setDrawFilled(true)
+//            .fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
+            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+            setColor(ContextCompat.getColor(context, R.color.iphone_blue_200))
+            lineWidth = 3F //선 굵기
+            circleRadius = 7F
+            circleHoleRadius = 4F
+//          enableDashedLine(10f, 5f, 0f)
+            setDrawCircles(true)   //동그란거 없애기
+            setDrawValues(false)
+            setCircleColor(ContextCompat.getColor(context, R.color.iphone_blue_200))
+            valueTextSize = 0F
+//            fillAlpha = 50
+            isHighlightEnabled = false   //클릭시 마크 보이게
+            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+            setDrawCircleHole(true)
+//        barDataSet.setDrawCircleHole(true)
+        }
+        return candleLindDataSet
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -433,6 +434,7 @@ class CustomChartManager(val context: Context) {
 //        barDataSet.setDrawCircleHole(true)
         return barDataSet
     }
+
 
     //체온 라인데이터 생성
     fun setGlucoseAnalysis2BarData() : BarDataSet {

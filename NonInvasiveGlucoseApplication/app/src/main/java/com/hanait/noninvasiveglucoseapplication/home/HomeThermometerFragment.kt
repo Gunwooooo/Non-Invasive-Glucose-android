@@ -60,7 +60,6 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
         val candleThermometerDay = binding.homeThermometerAverageChart
 
         val lineData = LineData(thermometerCandleLineData.lineDataSet)
-
         val combinedData = CombinedData()
         combinedData.setData(candleData)
         combinedData.setData(lineData)
@@ -108,6 +107,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
+                setExtraOffsets(5f, 5f, 5f, 15f)
                 textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -164,6 +164,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
+                setExtraOffsets(5f, 5f, 5f, 15f)
                 textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -221,6 +222,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
+                setExtraOffsets(5f, 5f, 5f, 15f)
                 textColor = ContextCompat.getColor(requireContext(), R.color.white)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
