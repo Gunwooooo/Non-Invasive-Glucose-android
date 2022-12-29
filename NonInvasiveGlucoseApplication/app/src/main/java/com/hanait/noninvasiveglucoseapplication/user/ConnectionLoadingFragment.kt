@@ -23,6 +23,8 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        retrofitInfoLoginedUser()
+
         init()
 
         Handler().postDelayed({
@@ -42,9 +44,6 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
         mActivity.setProgressDialogValueAndVisible(100, View.GONE)
         mActivity.setPrevFragment(UserSetConnectDeviceFragment())
 
-        //로그인된 유저 데이터 가져오기
-        retrofitInfoLoginedUser()
-
         binding.connectionLoadingBtnNext.setOnClickListener(this)
     }
 
@@ -57,7 +56,6 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
             }
         }
     }
-
     //로그인 된 회원 정보 가져오기
     @SuppressLint("SetTextI18n")
     private fun retrofitInfoLoginedUser() {
@@ -94,4 +92,5 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
             }
         })
     }
+
 }

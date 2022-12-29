@@ -156,14 +156,13 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                     return
                 }
                 //정규화 확인
-                if(checkPasswordRegex(data3)) {
+                if(checkPasswordRegex(data2)) {
                     Toast.makeText(applicationContext, "영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.", Toast.LENGTH_SHORT).show()
                     return
                 }
 
                 //현재 비밀번호 확인
                 retrofitCheckCurrentPassword(data1, data2)
-                //비밀번호 수정 retrofit통신 보내기
             }
             override fun onNegativeClicked() {
                 customDialog.dismiss()

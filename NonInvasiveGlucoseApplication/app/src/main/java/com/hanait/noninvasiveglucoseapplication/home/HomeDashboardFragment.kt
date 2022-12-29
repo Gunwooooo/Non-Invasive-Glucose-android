@@ -4,16 +4,21 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.marginBottom
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboardBinding
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.util.*
+import org.json.JSONObject
 import java.util.*
 
 
@@ -23,7 +28,11 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+    }
 
+    override fun onResume() {
+        super.onResume()
         init()
     }
 
@@ -48,8 +57,6 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardTextViewThermometerDetail.setOnClickListener(this)
         binding.homeDashboardTextViewHeartDetail.setOnClickListener(this)
         binding.homeDashboardTextViewGlucoseDetail.setOnClickListener(this)
-
-
 
         //오늘 날짜 설정
         setTodayDate()
@@ -275,6 +282,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             invalidate()
         }
     }
+
+
 }
 
 //// 소숫점 한 자리까지 보이기 위한 Formatter

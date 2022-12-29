@@ -29,7 +29,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <CheckBox
-            android:background="@color/iphone_gray_100"
+            android:buttonTint="@color/iphone_green_500"
             android:id="@+id/userSetAgreement_checkBox_agreement1"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:text="@string/이용약관"
             android:fontFamily="@font/ps_regular"
             android:textSize="18dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/iphone_green_500"/>
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +51,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <CheckBox
-            android:background="@color/iphone_gray_100"
+            android:buttonTint="@color/iphone_green_500"
             android:id="@+id/userSetAgreement_checkBox_agreement2"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
             android:text="@string/개인정보처리방침"
             android:fontFamily="@font/ps_regular"
             android:textSize="18dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/iphone_green_500"/>
     </LinearLayout>
 
     <Button
