@@ -94,12 +94,9 @@ class CustomChartManager(val context: Context) {
             val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
             val midValue = ((shadowHigh + shadowLow) / 2F * 10).roundToInt()/10f
-            Log.d("로그", "CustomChartManage  r - makeThermometer7dayCandleLineDataSet : $i : ${shadowHigh}  ${shadowLow}  ${midValue}")
             entryCandle.add(CandleEntry(i.toFloat(), shadowLow,  shadowHigh, midValue, midValue))
             entryLine.add(Entry(i.toFloat(), midValue))
         }
-        Log.d("로그", "CustomChartManager - makeThermometer7dayCandleLineDataSet : candle : $entryCandle")
-        Log.d("로그", "CustomChartManager - makeThermometer7dayCandleLineDataSet : line : $entryLine")
         return CandleLineDataSet(CandleDataSet(entryCandle, "체온"), LineDataSet(entryLine, "평균체온"))
     }
 

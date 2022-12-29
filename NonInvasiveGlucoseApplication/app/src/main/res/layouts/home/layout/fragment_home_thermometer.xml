@@ -126,6 +126,16 @@
                     android:layout_height="2dp"
                     android:background="@color/black" />
 
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ps_regular"
+                    android:text="2022.10.07"
+                    android:textColor="@color/toss_black_170"
+                    android:textSize="21dp" />
+
                 <LinearLayout
                     android:id="@+id/homeDashboard_btn_thermometer"
                     android:layout_width="match_parent"

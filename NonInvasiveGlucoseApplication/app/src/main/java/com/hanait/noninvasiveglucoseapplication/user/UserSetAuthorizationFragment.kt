@@ -2,6 +2,7 @@ package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -18,6 +19,8 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
 class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
+
+    var countDowntimer: CountDownTimer? = null
 
     companion object {
         //결과 인증 코드
@@ -53,10 +56,11 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         when(v) {
             binding.userSetAuthorizationBtnNext -> {
                 mActivity.changeFragmentTransaction(UserSetNicknameFragment())
-                //인증번호가 일치할 경우, 불일치 경우
+//                인증번호가 일치할 경우, 불일치 경우
 //                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
+//                    countDowntimer?.cancel()
 //                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
-//                    mActivity.changeFragment("UserSetNicknameFragment")
+//                    mActivity.changeFragmentTransaction(UserSetNicknameFragment())
 //                } else {
 //                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
 //                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
@@ -102,16 +106,23 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : OK!")
                     binding.userSetAuthorizationTextViewCountTime.visibility = View.VISIBLE
-//                    binding.userSetAuthorizationBtnGetAuthNum.setBackgroundResource(R.drawable.btn_border_gray_reverse)
                     binding.userSetAuthorizationBtnGetAuthNum.text = "재발송"
 
                     //타이머 3분 작동
-                    naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userSetAuthorizationTextViewCountTime, requireContext()).start()
+                    if(countDowntimer != null) {
+                        countDowntimer!!.cancel()
+                    }
+                    countDowntimer = naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userSetAuthorizationTextViewCountTime, requireContext()).start()
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "UserSetAuthorizationFragment - onClick : FAIL!")
+                    Log.d("로그", "UserSetAuthorizationFragment - onClick : 통신 실패")
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDowntimer?.cancel()
     }
 }

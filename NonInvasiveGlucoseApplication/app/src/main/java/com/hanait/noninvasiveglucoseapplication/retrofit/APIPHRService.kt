@@ -51,9 +51,11 @@ interface APIPHRService {
     ) : Call<ResponseBody>
 
     //현재 비밀번호 확인
+    @FormUrlEncoded
     @POST("/wellink/user/checkpw")
     fun checkCurrentPassword(
         @Header("Authorization") authorization: String?,
-        @Body password: String?
+        @Field("password") password: String?,
+        @Field("newPassword") newPassword: String?
     ) : Call<ResponseBody>
 }

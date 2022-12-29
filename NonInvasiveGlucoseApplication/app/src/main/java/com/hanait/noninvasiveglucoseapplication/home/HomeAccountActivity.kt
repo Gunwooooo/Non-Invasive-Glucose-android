@@ -149,14 +149,9 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         customDialog.setTwoButtonWithThreeDataDialogListener(object : CustomDialogManager.TwoButtonWithThreeDataDialogListener {
             override fun onPositiveClicked(data1: String, data2: String, data3: String) {
                 customDialog.dismiss()
-                
-                //현재 비밀번호 확인
-                if(!retrofitCheckCurrentPassword(data1)) {
-                    Toast.makeText(applicationContext, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT ).show()
-                    return
-                }
+
                 //비밀번호 일치 여부 확인
-                if( data2 != data3 ) {
+                if(data2 != data3) {
                     Toast.makeText(applicationContext, "비밀번호가 서로 일치하지 않습니다.", Toast.LENGTH_SHORT ).show()
                     return
                 }
@@ -165,6 +160,9 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(applicationContext, "영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.", Toast.LENGTH_SHORT).show()
                     return
                 }
+
+                //현재 비밀번호 확인
+                retrofitCheckCurrentPassword(data1, data2)
                 //비밀번호 수정 retrofit통신 보내기
             }
             override fun onNegativeClicked() {
@@ -255,7 +253,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                     LoginedUserClient.nickname = nickname
                     LoginedUserClient.birthDay = birthday
                     LoginedUserClient.sex = binding.homeAccountTextViewSex.text.toString()
-                    Toast.makeText(this, "정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
                     Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : ${response}")
                 }
                 CompletionResponse.FAIL -> {
@@ -281,17 +279,26 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     }
     
     //비밀번호 변경 시 현재 비밀번호 확인 레트로핏 통신
-    private fun retrofitCheckCurrentPassword(data: String) : Boolean {
-        RetrofitManager.instance.checkCurrentPassword(data, completion = {completionResponse, response ->
+    private fun retrofitCheckCurrentPassword(password: String, newPassword: String) {
+        RetrofitManager.instance.checkCurrentPassword(password, newPassword, completion = {completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitCheckCurrentPassword : ${response}")
+                    when(response?.code()) {
+                        //비밀번호 일치할 경우
+                        200 -> {
+                            //정보 수정
+                        }
+                        //비밀번호 일치하지 않을 경우
+                        else -> {
+                            Toast.makeText(applicationContext, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT ).show()
+                        }
+                    }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeAccountActivity - retrofitCheckCurrentPassword : 통신 실패")
                 }
             }
         })
-        return true
     }
 }
