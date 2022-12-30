@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
@@ -37,6 +34,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
 
         binding.userCheckPasswordBtnNext.setOnClickListener(this)
         binding.userCheckPasswordEditTextPhoneNumber.setOnClickListener(this)
+        binding.userCheckPasswordTextViewForgetPassword.setOnClickListener(this)
 
         setEditTextTextChanged()
     }
@@ -56,6 +54,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
 
 
     override fun onClick(v: View?) {
+        val mActivity = activity as UserActivity
         when(v) {
             binding.userCheckPasswordBtnNext -> {
                 _userData.password = binding.userCheckPasswordEditTextPassword.text.toString()
@@ -63,8 +62,10 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                 retrofitLoginUser()
             }
             binding.userCheckPasswordEditTextPhoneNumber -> {
-                val mActivity = activity as UserActivity
                 mActivity.changePrevFragment()
+            }
+            binding.userCheckPasswordTextViewForgetPassword -> {
+                mActivity.changeFragmentTransaction(UserSetAuthorizationForModifyForgottenPasswordFragment())
             }
         }
     }

@@ -50,12 +50,20 @@ interface APIPHRService {
         @Header("Authorization") authorization: String?
     ) : Call<ResponseBody>
 
-    //현재 비밀번호 확인
+    //현재 비밀번호 확인 및 변경
     @FormUrlEncoded
     @POST("/wellink/user/checkpw")
-    fun checkCurrentPassword(
+    fun checkAndModifyCurrentPassword(
         @Header("Authorization") authorization: String?,
         @Field("password") password: String?,
         @Field("newPassword") newPassword: String?
+    ) : Call<ResponseBody>
+
+    //현재 비밀번호 잊어버렸을 경우 변경
+    @FormUrlEncoded
+    @POST("/wellink/user/findpw")
+    fun modifyForgottenPassword(
+        @Field("phoneNumber") phoneNumber: String?,
+        @Field("password") password: String?
     ) : Call<ResponseBody>
 }

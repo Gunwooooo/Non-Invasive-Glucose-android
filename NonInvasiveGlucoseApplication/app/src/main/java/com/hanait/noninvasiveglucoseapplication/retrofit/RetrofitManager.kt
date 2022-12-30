@@ -145,13 +145,14 @@ class RetrofitManager {
     }
 
     //비밀번호 변경 시 현재 비밀번호 체크
-    fun checkCurrentPassword(password: String, newPassword: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.checkCurrentPassword(LoginedUserClient.authorization, password, newPassword) ?: return
+    fun checkAndModifyCurrentPassword(password: String, newPassword: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.checkAndModifyCurrentPassword(LoginedUserClient.authorization, password, newPassword) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("로그", "RetrofitManager - onFailure : awefawefawef")
                 completion(CompletionResponse.FAIL, null)
             }
         })

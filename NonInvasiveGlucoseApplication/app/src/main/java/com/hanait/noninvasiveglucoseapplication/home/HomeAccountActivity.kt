@@ -156,13 +156,13 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                     return
                 }
                 //정규화 확인
-                if(checkPasswordRegex(data2)) {
+                if(!checkPasswordRegex(data2)) {
                     Toast.makeText(applicationContext, "영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.", Toast.LENGTH_SHORT).show()
                     return
                 }
 
                 //현재 비밀번호 확인
-                retrofitCheckCurrentPassword(data1, data2)
+                retrofitCheckAndModifyCurrentPassword(data1, data2)
             }
             override fun onNegativeClicked() {
                 customDialog.dismiss()
@@ -278,8 +278,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     }
     
     //비밀번호 변경 시 현재 비밀번호 확인 레트로핏 통신
-    private fun retrofitCheckCurrentPassword(password: String, newPassword: String) {
-        RetrofitManager.instance.checkCurrentPassword(password, newPassword, completion = {completionResponse, response ->
+    private fun retrofitCheckAndModifyCurrentPassword(password: String, newPassword: String) {
+        RetrofitManager.instance.checkAndModifyCurrentPassword(password, newPassword, completion = {completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitCheckCurrentPassword : ${response}")

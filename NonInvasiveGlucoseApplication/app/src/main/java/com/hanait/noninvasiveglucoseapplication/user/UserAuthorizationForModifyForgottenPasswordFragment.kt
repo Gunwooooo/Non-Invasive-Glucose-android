@@ -7,18 +7,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationForChangePasswordBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserAuthorizationForModifyForgottenPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
-class UserSetAuthorizationForChangePasswordFragment : BaseFragment<FragmentUserSetAuthorizationForChangePasswordBinding>
-    (FragmentUserSetAuthorizationForChangePasswordBinding::inflate), View.OnClickListener {
+class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<FragmentUserAuthorizationForModifyForgottenPasswordBinding>
+    (FragmentUserAuthorizationForModifyForgottenPasswordBinding::inflate), View.OnClickListener {
     var countDowntimer: CountDownTimer? = null
 
     companion object {
@@ -37,15 +38,17 @@ class UserSetAuthorizationForChangePasswordFragment : BaseFragment<FragmentUserS
         val mActivity = activity as UserActivity
         mActivity.setBtnBackVisible(View.VISIBLE)
         mActivity.setProgressDialogValueAndVisible(28, View.VISIBLE)
-        mActivity.setPrevFragment(UserSetPhoneNumberFragment())
+        mActivity.setPrevFragment(UserCheckPasswordFragment())
 
-        binding.userSetAuthorizationForChangePasswordBtnNext.setOnClickListener(this)
+        binding.userAuthorizationForModifyForgottenPasswordBtnNext.setOnClickListener(this)
 
         //입력받은 휴대전화 번호 넣어놓기
-        binding.userSetAuthorizationForChangePasswordEditTextPhoneNumber.hint = Constants._userData.phoneNumber
-        binding.userSetAuthorizationForChangePasswordEditTextPhoneNumber.setOnClickListener(this)
-        binding.userSetAuthorizationForChangePasswordBtnGetAuthNum.setOnClickListener(this)
+        binding.userAuthorizationForModifyForgottenPasswordEditTextPhoneNumber.hint = _userData.phoneNumber
 
+        binding.userAuthorizationForModifyForgottenPasswordEditTextPhoneNumber.setOnClickListener(this)
+        binding.userAuthorizationForModifyForgottenPasswordBtnGetAuthNum.setOnClickListener(this)
+
+        //에딧 텍스트 체인지 리스너
         setEditTextTextChanged()
     }
 
@@ -53,23 +56,22 @@ class UserSetAuthorizationForChangePasswordFragment : BaseFragment<FragmentUserS
     override fun onClick(v: View?) {
         val mActivity = activity as UserActivity
         when(v) {
-            binding.userSetAuthorizationForChangePasswordBtnNext -> {
-                mActivity.changeFragmentTransaction(UserSetNicknameFragment())
+            binding.userAuthorizationForModifyForgottenPasswordBtnNext -> {
 //                인증번호가 일치할 경우, 불일치 경우
-//                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
-//                    countDowntimer?.cancel()
-//                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
-//                    mActivity.changeFragmentTransaction(UserSetNicknameFragment())
-//                } else {
-//                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
-//                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
-//                }
+                if(smsAuthCode == binding.userAuthorizationForModifyForgottenPasswordEditTextInputAuthNum.text.toString()) {
+                    countDowntimer?.cancel()
+                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
+                    mActivity.changeFragmentTransaction(UserModifyForgottenPasswordFragment())
+                } else {
+                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
+                    binding.userAuthorizationForModifyForgottenPasswordEditTextInputAuthNum.setText("")
+                }
             }
 
-            binding.userSetAuthorizationForChangePasswordEditTextPhoneNumber -> {
+            binding.userAuthorizationForModifyForgottenPasswordEditTextPhoneNumber -> {
                 mActivity.changePrevFragment()
             }
-            binding.userSetAuthorizationForChangePasswordBtnGetAuthNum -> {
+            binding.userAuthorizationForModifyForgottenPasswordBtnGetAuthNum -> {
                 //인증 번호 생성 후 retrofit으로 사용자에게 문자 전송
                 retrofitSendSMSAuthCode()
 
@@ -79,12 +81,12 @@ class UserSetAuthorizationForChangePasswordFragment : BaseFragment<FragmentUserS
 
     //텍스트 비어있을 경우 버튼 색상 변경 이벤트
     private fun setEditTextTextChanged() {
-        binding.userSetAuthorizationForChangePasswordEditTextInputAuthNum.addTextChangedListener(object :
+        binding.userAuthorizationForModifyForgottenPasswordEditTextInputAuthNum.addTextChangedListener(object :
             TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetAuthorizationForChangePasswordBtnNext.isEnabled = s?.length != 0
-                if(s?.length != 0) binding.userSetAuthorizationForChangePasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
-                else binding.userSetAuthorizationForChangePasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                binding.userAuthorizationForModifyForgottenPasswordBtnNext.isEnabled = s?.length != 0
+                if(s?.length != 0) binding.userAuthorizationForModifyForgottenPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+                else binding.userAuthorizationForModifyForgottenPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
@@ -99,20 +101,20 @@ class UserSetAuthorizationForChangePasswordFragment : BaseFragment<FragmentUserS
 
         val signature = naverCloudServiceManager.makeSignature(timestamp)
         smsAuthCode = naverCloudServiceManager.makeSMSAuthCode()
-        val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(Constants._userData.phoneNumber, smsAuthCode)
+        val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(_userData.phoneNumber, smsAuthCode)
         RetrofitManager.instance.sendSMS(timestamp, signature, bodyRequest, completion = {
                 completionResponse, s ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : OK!")
-                    binding.userSetAuthorizationForChangePasswordTextViewCountTime.visibility = View.VISIBLE
-                    binding.userSetAuthorizationForChangePasswordBtnGetAuthNum.text = "재발송"
+                    binding.userAuthorizationForModifyForgottenPasswordTextViewCountTime.visibility = View.VISIBLE
+                    binding.userAuthorizationForModifyForgottenPasswordBtnGetAuthNum.text = "재발송"
 
                     //타이머 3분 작동
                     if(countDowntimer != null) {
                         countDowntimer!!.cancel()
                     }
-                    countDowntimer = naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userSetAuthorizationForChangePasswordTextViewCountTime, requireContext()).start()
+                    countDowntimer = naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userAuthorizationForModifyForgottenPasswordTextViewCountTime, requireContext()).start()
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : 통신 실패")
