@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:orientation="vertical">
     <LinearLayout
-        android:id="@+id/homeProtectingItem_layout_Info"
+        android:id="@+id/homeProtectorItem_layout_Info"
         android:background="@drawable/my_ripple"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp"
         android:orientation="horizontal"
         android:weightSum="1">
         <LinearLayout
@@ -20,11 +22,15 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="0.2">
-            <ImageView
+            <com.github.pavlospt.roundedletterview.RoundedLetterView
                 android:layout_gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/human"/>
+                android:id="@+id/homeProtectorItem_rlv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:rlv_backgroundColorValue="@color/iphone_blue_500"
+                app:rlv_titleColor="@android:color/white"
+                app:rlv_titleSize="30dp"
+                app:rlv_titleText="김" />
         </LinearLayout>
 
         <LinearLayout
@@ -34,7 +40,7 @@
             android:layout_weight="0.6">
             <TextView
                 android:layout_marginStart="5dp"
-                android:id="@+id/homeProtectingItem_textView_phoneNumber"
+                android:id="@+id/homeProtectorItem_textView_phoneNumber"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -53,13 +59,13 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
-                android:id="@+id/homeProtectingItem_btn_delete"
+                android:id="@+id/homeProtectorItem_btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="해제"
                 android:textSize="18dp"
                 android:fontFamily="@font/ps_regular"
-                android:textColor="@color/iphone_red_200"/>
+                android:textColor="@color/iphone_gray_150"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

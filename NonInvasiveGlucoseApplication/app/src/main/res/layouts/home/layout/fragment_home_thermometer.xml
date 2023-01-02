@@ -137,13 +137,10 @@
                     android:textSize="21dp" />
 
                 <LinearLayout
-                    android:id="@+id/homeDashboard_btn_thermometer"
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
                     android:background="@drawable/my_ripple"
                     android:backgroundTint="@color/iphone_gray_200"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:weightSum="1">

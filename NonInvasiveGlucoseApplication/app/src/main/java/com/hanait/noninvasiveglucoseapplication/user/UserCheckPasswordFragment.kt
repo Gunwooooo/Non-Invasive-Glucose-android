@@ -31,6 +31,9 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         mActivity.setProgressDialogValueAndVisible(60, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
+        //자동 로그인 체크
+        binding.userCheckPasswordCheckBoxAutoLogin.isChecked = prefs.getBoolean("AUTO_LOGIN", false)
+
         //전화번호 입력해놓기
         binding.userCheckPasswordEditTextPhoneNumber.hint = _userData.phoneNumber
 
@@ -60,7 +63,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         when(v) {
             binding.userCheckPasswordBtnNext -> {
                 _userData.password = binding.userCheckPasswordEditTextPassword.text.toString()
-                
+
                 retrofitLoginUser()
             }
             binding.userCheckPasswordEditTextPhoneNumber -> {
@@ -75,6 +78,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
     //자동 로그인 시 데이터 로컬 저장
     private fun setAutoLogin() {
         val autoLoginCheckBox = binding.userCheckPasswordCheckBoxAutoLogin
+        prefs.setBoolean("AUTO_LOGIN", autoLoginCheckBox.isChecked)
         when(autoLoginCheckBox.isChecked) {
             true -> {
                 prefs.setString("USER_PHONENUMBER", _userData.phoneNumber)

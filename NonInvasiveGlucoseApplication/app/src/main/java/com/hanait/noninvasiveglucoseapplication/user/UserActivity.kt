@@ -1,12 +1,15 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.hanait.noninvasiveglucoseapplication.R
+import com.hanait.noninvasiveglucoseapplication.SplashFragment
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityUserBinding
 import kotlin.system.exitProcess
 
@@ -25,13 +28,15 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
+        window.statusBarColor = ContextCompat.getColor(this, R.color.iphone_gray_200)
+
         //프로그래스 바 설정
         binding.userProgressBar.indeterminateDrawable
 
         //prevFragment 초기화
         prevFragment = UserSetPhoneNumberFragment()
 
-        supportFragmentManager.beginTransaction().replace(R.id.user_frameId, UserSetPhoneNumberFragment()).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.user_frameId, SplashFragment()).commitAllowingStateLoss()
 
         binding.userBtnBack.setOnClickListener(this)
     }
@@ -87,5 +92,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("로그", "UserActivity - onDestroy : userAcitivty 디스트로이")
+    }
 }

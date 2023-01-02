@@ -120,8 +120,23 @@
                         android:fontFamily="@font/ps_regular"
                         android:textColor="@color/toss_black_200"/>
                 </LinearLayout>
-
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:nestedScrollingEnabled="false"
+                    android:id="@+id/homeProtector_recyclerView_protector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/homeProtector_layout_protectorAdd"
                 android:visibility="visible"
@@ -208,7 +223,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:nestedScrollingEnabled="false"
-                    android:id="@+id/homeProtector_recyclerView"
+                    android:id="@+id/homeProtector_recyclerView_protecting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"/>

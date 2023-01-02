@@ -28,6 +28,7 @@
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/image_radius_border.xml" value="0.225" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/image_radius_border_glucose.xml" value="0.225" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/image_radius_border_heart.xml" value="0.225" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/image_radius_border_logo.xml" value="0.221" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/image_radius_border_thermometer.xml" value="0.239" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/mpchart_dropshadow.xml" value="0.2475" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/drawable/my_ripple.xml" value="0.237" />
@@ -81,12 +82,13 @@
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_user_agreement.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/fragment_user_set_nickname.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/home_protecting_delete_dialog.xml" value="0.25226449275362317" />
-        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/home_protecting_item.xml" value="0.309375" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/home_protecting_item.xml" value="0.4" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/home_protector_delete_dialog.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/home_protector_info_dialog.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/home_protector_item.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/init/layout/activity_main.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/init/layout/activity_splash.xml" value="0.322463768115942" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/init/layout/fragment_splash.xml" value="0.2513586956521739" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/user/fragment_user_check_password.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/user/layout/activity_main.xml" value="0.322463768115942" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/user/layout/activity_user.xml" value="0.152" />

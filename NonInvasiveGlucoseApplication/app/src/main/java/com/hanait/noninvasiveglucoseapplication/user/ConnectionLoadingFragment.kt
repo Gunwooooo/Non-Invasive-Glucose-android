@@ -23,8 +23,6 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        retrofitInfoLoginedUser()
-
         init()
 
         Handler().postDelayed({
@@ -50,9 +48,7 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
     override fun onClick(v: View?) {
         when(v) {
             binding.connectionLoadingBtnNext -> {
-                startActivity(Intent(context, HomeActivity::class.java))
-                val mActivity = activity as UserActivity
-                mActivity.finish()
+                retrofitInfoLoginedUser()
             }
         }
     }
@@ -83,6 +79,11 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                                 jsonObjectUser?.getString("birthDay")
                             LoginedUserClient.createdDate =
                                 jsonObjectUser?.getString("createdDate")?.substring(0, 10)
+
+                            //홈액티비티 실행
+                            startActivity(Intent(context, HomeActivity::class.java))
+                            val mActivity = activity as UserActivity
+                            mActivity.finish()
                         }
                     }
                 }

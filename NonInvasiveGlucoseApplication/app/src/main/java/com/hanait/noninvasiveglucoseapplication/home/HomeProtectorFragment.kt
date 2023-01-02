@@ -15,6 +15,7 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 
 class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
     var protectingList: ArrayList<ProtectorData> = ArrayList()
+    var protectorList: ArrayList<ProtectorData> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +35,13 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         protectingList.add(ProtectorData("010-****-4324", "김진수"))
         protectingList.add(ProtectorData("010-****-6432", "권창훈"))
 
+        protectorList.add(ProtectorData("010-****-7199", "김건우"))
+        protectorList.add(ProtectorData("010-****-1234", "손흥민"))
+        protectorList.add(ProtectorData("010-****-5423", "황의조"))
+        protectorList.add(ProtectorData("010-****-3456", "황희찬"))
+
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
+        binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
 
         recyclerViewCreate()
 
@@ -45,8 +52,26 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     }
 
     private fun recyclerViewCreate() {
-        val protectorRecyclerView = binding.homeProtectorRecyclerView
-        val protectorAdapter = ProtectorAdapter(requireContext(), protectingList)
+        val protectingRecyclerView = binding.homeProtectorRecyclerViewProtecting
+        val protectingAdapter = ProtectorAdapter(requireContext(), protectingList)
+        //클릭 이벤트 리스너 처리
+        protectingAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
+            override fun onInfoItem(v: View, pos: Int) {
+                showInfoProtectorDialog()
+            }
+
+            override fun onDeleteItem(v: View, pos: Int) {
+                showDeleteProtectingDialog(protectingAdapter, pos, false)
+            }
+        })
+
+        val layoutManagerProtecting = LinearLayoutManager(context)
+        protectingRecyclerView.layoutManager = layoutManagerProtecting
+        protectingRecyclerView.adapter = protectingAdapter
+
+        //보호자 리스트 생성
+        val protectorRecyclerView = binding.homeProtectorRecyclerViewProtector
+        val protectorAdapter = ProtectorAdapter(requireContext(), protectorList)
         //클릭 이벤트 리스너 처리
         protectorAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
@@ -54,12 +79,11 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             }
 
             override fun onDeleteItem(v: View, pos: Int) {
-                showDeleteProtectingDialog(protectorAdapter, pos)
+                showDeleteProtectingDialog(protectorAdapter, pos, true)
             }
         })
-
-        val layoutManager = LinearLayoutManager(context)
-        protectorRecyclerView.layoutManager = layoutManager
+        val layoutManagerProtector = LinearLayoutManager(context)
+        protectorRecyclerView.layoutManager = layoutManagerProtector
         protectorRecyclerView.adapter = protectorAdapter
     }
 
@@ -115,16 +139,24 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     }
 
     //보호 대상자 삭제 다이어로그 호출
-    fun showDeleteProtectingDialog(protectorAdapter: ProtectorAdapter, pos: Int) {
+    fun showDeleteProtectingDialog(protectorAdapter: ProtectorAdapter, pos: Int, isProtector: Boolean) {
         val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             @SuppressLint("SetTextI18n")
             //보호 대상자 리스트에서 삭제
             override fun onPositiveClicked() {
-                protectingList.removeAt(pos - 1)
-                protectorAdapter.notifyItemRemoved(pos - 1)
-                protectorAdapter.notifyItemRangeChanged(pos -1, protectingList.size)
-                binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
+                if(isProtector) {
+                    protectorList.removeAt(pos - 1)
+                    protectorAdapter.notifyItemRemoved(pos - 1)
+                    protectorAdapter.notifyItemRangeChanged(pos -1, protectorList.size)
+                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
+                }
+                else {
+                    protectingList.removeAt(pos - 1)
+                    protectorAdapter.notifyItemRemoved(pos - 1)
+                    protectorAdapter.notifyItemRangeChanged(pos -1, protectingList.size)
+                    binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
+                }
                 customDialog.dismiss()
             }
 

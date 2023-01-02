@@ -70,13 +70,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     //레트로핏 로깅 인터셉터
-    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 
     //Gson
     implementation 'com.google.code.gson:gson:2.9.0'
 
     //cardView
-    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     //snake graph
     implementation 'com.txusballesteros:snake:1.0'
@@ -86,6 +86,9 @@ dependencies {
 
     //BouncyNestedScrollView
     implementation 'com.github.valkriaine:Bouncy:2.3'
-//
-    implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4"
+    //nts
+    implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
+
+    //rount letter view
+    implementation 'com.github.pavlospt:roundedletterview:1.3'
 }

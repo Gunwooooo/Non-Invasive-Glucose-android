@@ -18,6 +18,7 @@ import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
+import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
@@ -223,6 +224,11 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             when (completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
+                    //자동 로그인 해제
+                    prefs.setBoolean("AUTO_LOGIN", false)
+                    prefs.setString("USER_PHONENUMBER", "")
+                    prefs.setString("USER_PASSWORD", "")
+
                     //초기화면으로 돌아가기
                     val intent = Intent(this, UserActivity::class.java)
                     startActivity(intent)
