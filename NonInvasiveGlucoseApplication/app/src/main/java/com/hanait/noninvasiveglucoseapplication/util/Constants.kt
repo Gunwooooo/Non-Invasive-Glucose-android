@@ -3,12 +3,17 @@ package com.hanait.noninvasiveglucoseapplication.util
 import android.annotation.SuppressLint
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import com.hanait.noninvasiveglucoseapplication.db.PreferenceManager
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 
 
 
 object Constants {
+    //회원가입 시 데이터 부분 저장
     lateinit var _userData: UserData
+
+    //자동 로그인 변수 저장
+    lateinit var prefs: PreferenceManager
     
     // 네이버 API 정보
     var NAVER_SERVICE_ID = "ncp:sms:kr:276214123809:hanait-noti"

@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
@@ -13,9 +14,10 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
-class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>(FragmentUserCheckPasswordBinding::inflate), View.OnClickListener {
+class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>(FragmentUserCheckPasswordBinding::inflate), View.OnClickListener  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,11 +67,27 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                 mActivity.changePrevFragment()
             }
             binding.userCheckPasswordTextViewForgetPassword -> {
-                mActivity.changeFragmentTransaction(UserSetAuthorizationForModifyForgottenPasswordFragment())
+                mActivity.changeFragmentTransaction(UserAuthorizationForModifyForgottenPasswordFragment())
             }
         }
     }
-    
+
+    //자동 로그인 시 데이터 로컬 저장
+    private fun setAutoLogin() {
+        val autoLoginCheckBox = binding.userCheckPasswordCheckBoxAutoLogin
+        when(autoLoginCheckBox.isChecked) {
+            true -> {
+                prefs.setString("USER_PHONENUMBER", _userData.phoneNumber)
+                prefs.setString("USER_PASSWORD", _userData.password)
+            }
+            false -> {
+                prefs.setString("USER_PHONENUMBER", "")
+                prefs.setString("USER_PASSWORD", "")
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     private fun retrofitLoginUser() {
         RetrofitManager.instance.loginUser(_userData, completion = {
             completionResponse, response ->
@@ -85,6 +103,9 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                         200 -> {
                             //토큰 값 저장
                             LoginedUserClient.authorization = response.headers()["Authorization"]
+
+                            //자동 로그인 설정
+                            setAutoLogin()
 
                             Toast.makeText(requireContext(), "로그인 성공!", Toast.LENGTH_SHORT).show()
                             val mActivity = activity as UserActivity

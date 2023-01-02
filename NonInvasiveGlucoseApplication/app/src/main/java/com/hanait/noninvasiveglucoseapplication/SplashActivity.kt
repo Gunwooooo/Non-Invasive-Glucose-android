@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.hanait.noninvasiveglucoseapplication.db.PreferenceManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
+import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -19,6 +21,10 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.iphone_gray_200)
+
+        //sharedPreference에서 사용자 데이터 가져오기
+        prefs = PreferenceManager(applicationContext)
+
 
         Handler().postDelayed({
             startActivity(Intent(this, UserActivity::class.java))

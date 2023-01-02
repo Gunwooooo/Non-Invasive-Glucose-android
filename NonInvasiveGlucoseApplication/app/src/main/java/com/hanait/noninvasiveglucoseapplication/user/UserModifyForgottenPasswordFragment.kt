@@ -3,12 +3,17 @@ package com.hanait.noninvasiveglucoseapplication.user
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserModifyForgottenPasswordBinding
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import java.util.regex.Pattern
 
 class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgottenPasswordBinding>(
@@ -22,7 +27,7 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
     private fun init() {
         val mActivity = activity as UserActivity
         mActivity.setProgressDialogValueAndVisible(56, View.VISIBLE)
-        mActivity.setPrevFragment(UserSetNicknameFragment())
+        mActivity.setPrevFragment(UserAuthorizationForModifyForgottenPasswordFragment())
 
         binding.userModifyForgottenPasswordBtnNext.setOnClickListener(this)
 
@@ -45,7 +50,7 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
                 binding.userModifyForgottenPasswordBtnNext.isEnabled = s?.length != 0 && binding.userModifyForgottenPasswordEditTextPassword.text.isNotEmpty()
                 if(s?.length != 0 && binding.userModifyForgottenPasswordEditTextPassword.text.isNotEmpty()) binding.userModifyForgottenPasswordBtnNext.setTextColor(
                     ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
-                else binding.userModifyForgottenPasswordEditTextPassword.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                else binding.userModifyForgottenPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
@@ -74,23 +79,47 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
     }
 
     override fun onClick(v: View?) {
-        when(v) {
+        when (v) {
             binding.userModifyForgottenPasswordBtnNext -> {
                 //비밀번호 일치 여부 체크
-                if(checkPasswordNotSame()) {
+                if (checkPasswordNotSame()) {
                     resetPasswordEditTextWithToast("비밀번호가 서로 일치하지 않습니다.")
                     return
                 }
 
                 //비밀번호 정규식 체크
-                if(!checkPasswordRegex()) {
+                if (!checkPasswordRegex()) {
                     resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
                     return
                 }
-                
-                //비밀번호 변경 retrofit 통신 후 HomeAcitivty로 이동
 
+                _userData.password = binding.userModifyForgottenPasswordEditTextPassword.text.toString()
+                //비밀번호 변경 retrofit 통신 후 HomeAcitivty로 이동
+                retrofitModifyForgottenPassword()
             }
         }
+    }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private fun retrofitModifyForgottenPassword() {
+        RetrofitManager.instance.modifyForgottenPassword(_userData.phoneNumber, _userData.password, completion = {
+            completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d(
+                        "로그",
+                        "UserModifyForgottenPasswordFragment - retrofitModifyForgottenPassword : $response"
+                    )
+                    //로그인 통신 후 HomeActivity로 이동
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d(
+                        "로그",
+                        "UserModifyForgottenPasswordFragment - retrofitModifyForgottenPassword : 통신 실패"
+                    )
+                }
+            }
+        })
     }
 }

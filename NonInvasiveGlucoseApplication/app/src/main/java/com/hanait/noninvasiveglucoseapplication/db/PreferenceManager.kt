@@ -1,4 +1,4 @@
-package com.hanait.wellinkalarmapplication.db
+package com.hanait.noninvasiveglucoseapplication.db
 
 import android.content.Context
 import android.content.SharedPreferences

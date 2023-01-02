@@ -152,10 +152,22 @@ class RetrofitManager {
                 completion(CompletionResponse.OK, response)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("로그", "RetrofitManager - onFailure : awefawefawef")
                 completion(CompletionResponse.FAIL, null)
             }
         })
+    }
 
+    //잊어버린 비밀번호 재설정
+    fun modifyForgottenPassword(phoneNumber: String, password: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.modifyForgottenPassword(phoneNumber, password) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
     }
 }
