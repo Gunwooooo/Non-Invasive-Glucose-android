@@ -9,57 +9,54 @@
     android:orientation="vertical"
     android:background="@color/black">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:weightSum="1">-->
-<!--        <LinearLayout-->
-<!--            android:layout_weight="0.7"-->
-<!--            android:layout_width="0dip"-->
-<!--            android:layout_height="wrap_content">-->
-<!--            <TextView-->
-<!--                android:id="@+id/homeDashboard_textView_nickname"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:text="OOO"-->
-<!--                android:textColor="@color/iphone_blue_500"-->
-<!--                android:fontFamily="@font/ps_bold"-->
-<!--                android:textSize="27dp"/>-->
-<!--            <TextView-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:text="님"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:fontFamily="@font/ps_bold"-->
-<!--                android:textSize="27dp"/>-->
-<!--        </LinearLayout>-->
-<!--        <LinearLayout-->
-<!--            android:gravity="end"-->
-<!--            android:layout_width="0dip"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="0.3">-->
-<!--            <ImageView-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:id="@+id/homeDashboard_btn_account"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:src="@drawable/ic_baseline_manage_accounts_24"-->
-<!--                app:tint="@color/white" />-->
-<!--        </LinearLayout>-->
-<!--    </LinearLayout>-->
-
-
-    <ImageView
-        android:layout_gravity="start|bottom"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/logo_splash"/>
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect me with health"
+                android:textColor="@color/iphone_gray_100"
+                android:fontFamily="@font/ps_bold"
+                android:textSize="21dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="웰링크와 함께 건강관리를 해보세요"
+                android:textColor="@color/iphone_gray_150"
+                android:fontFamily="@font/ps_regular"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/homeDashboard_btn_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_baseline_settings_24"
+                    app:tint="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <androidx.cardview.widget.CardView
+        android:layout_marginTop="8dp"
         app:contentPadding="12dp"
         android:clickable="true"
         android:focusable="true"
@@ -154,6 +151,7 @@
             android:textSize="21dp"/>
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
@@ -189,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ps_regular"
                         android:text="36.5"
-                        android:textColor="@color/iphone_green_500"
+                        android:textColor="@color/iphone_green_200"
                         android:textSize="30dp" />
 
                     <TextView
@@ -197,11 +195,12 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ps_regular"
                         android:text=" ℃"
-                        android:textColor="@color/iphone_green_500"
+                        android:textColor="@color/iphone_green_200"
                         android:textSize="18dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
@@ -231,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ps_regular"
                         android:text="83.7"
-                        android:textColor="@color/iphone_red_500"
+                        android:textColor="@color/iphone_red_200"
                         android:textSize="30dp" />
 
                     <TextView
@@ -239,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ps_regular"
                         android:text=" bpm"
-                        android:textColor="@color/iphone_red_500"
+                        android:textColor="@color/iphone_red_200"
                         android:textSize="18dp" />
                 </LinearLayout>
 
@@ -273,7 +272,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ps_regular"
                         android:text="78.2"
-                        android:textColor="@color/iphone_blue_500"
+                        android:textColor="@color/iphone_blue_200"
                         android:textSize="30dp" />
 
                     <TextView
@@ -281,18 +280,17 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ps_regular"
                         android:text=" mg/dl"
-                        android:textColor="@color/iphone_blue_500"
+                        android:textColor="@color/iphone_blue_200"
                         android:textSize="18dp" />
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:minHeight="?attr/actionBarSize"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -300,11 +298,11 @@
             android:id="@+id/homeDashboard_textView_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ps_bold"
+            android:fontFamily="@font/ps_regular"
             android:gravity="center_vertical"
             android:text="2022.10.27"
-            android:textColor="@color/toss_black_170"
-            android:textSize="18dp" />
+            android:textColor="@color/white"
+            android:textSize="21dp" />
 
         <ImageView
             android:id="@+id/homeDashboard_btn_calendar"
@@ -496,6 +494,20 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:lottie_rawRes="@raw/medical_lottie"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
