@@ -71,6 +71,14 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                                 mActivity.changeFragmentTransaction(UserSetConnectDeviceFragment())
                             }, SPLASH_TIME_OUT)
                         }
+                        else -> {
+                            //자동 로그인 초기화
+                            prefs.setString("USER_PHONENUMBER", "")
+                            prefs.setString("USER_PASSWORD", "")
+                            prefs.setBoolean("AUTO_LOGIN", false)
+                            val mActivity = activity as UserActivity
+                            mActivity.changeFragmentTransaction(UserSetPhoneNumberFragment())
+                        }
                     }
                 }
                 CompletionResponse.FAIL -> {

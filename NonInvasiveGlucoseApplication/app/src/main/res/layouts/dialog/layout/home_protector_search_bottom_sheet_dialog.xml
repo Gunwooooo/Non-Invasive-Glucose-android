@@ -30,7 +30,7 @@
         android:layout_height="100dp">
 
         <EditText
-            android:id="@+id/homeSearch_editText"
+            android:id="@+id/homeProtectorSearchBottomSheetDialog_editText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="16dp"

@@ -170,4 +170,34 @@ class RetrofitManager {
             }
         })
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    //보호자 조회
+    fun checkJoinedProtector(phoneNumber: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.checkJoinedProtector(LoginedUserClient.authorization, phoneNumber) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //보호자 등록
+    fun joinProtector(phoneNumber: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.joinProtector(LoginedUserClient.authorization, phoneNumber) ?: return
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
 }

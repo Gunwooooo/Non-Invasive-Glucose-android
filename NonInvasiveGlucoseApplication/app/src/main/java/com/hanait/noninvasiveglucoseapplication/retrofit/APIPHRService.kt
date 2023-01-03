@@ -66,4 +66,22 @@ interface APIPHRService {
         @Field("phoneNumber") phoneNumber: String?,
         @Field("password") password: String?
     ) : Call<ResponseBody>
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    //보호자 조회
+    @FormUrlEncoded
+    @POST("/wellink/caregiver/check")
+    fun checkJoinedProtector(
+        @Header("Authorization") authorization: String?,
+        @Field("phoneNumber") phoneNumber: String?
+    ): Call<ResponseBody>
+
+    //보호자 등록
+    @FormUrlEncoded
+    @POST("/wellink/caregiver/join")
+    fun joinProtector(
+        @Header("Authorization") authorization: String?,
+        @Field("phoneNumber") phoneNumber: String?
+    ): Call<ResponseBody>
 }

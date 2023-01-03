@@ -3,13 +3,20 @@ package com.hanait.noninvasiveglucoseapplication.home
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtectorBinding
 import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 
@@ -91,11 +98,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         when(v) {
             //바텀 시트 다이어로그 호출
             binding.homeProtectorLayoutProtectorAdd -> {
-                val bottomSheetView = layoutInflater.inflate(R.layout.home_protector_search_bottom_sheet_dialog, null)
-                val bottomSheetDialog = BottomSheetDialog(requireContext())
-                bottomSheetDialog.setContentView(bottomSheetView)
-                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                bottomSheetDialog.show()
+                showBottomSheetDialog()
             }
             binding.homeProtectorBtnDelete -> {
                 showDeleteProtectorDialog()
@@ -104,6 +107,32 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 showInfoProtectorDialog()
             }
         }
+    }
+
+    //바텀 시트 다이어로그 호출(보호자 조회)
+    private fun showBottomSheetDialog() {
+        val bottomSheetView = layoutInflater.inflate(R.layout.home_protector_search_bottom_sheet_dialog, null)
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        //검색 클릭 이벤트 설정
+        val editText = bottomSheetView.findViewById(R.id.homeProtectorSearchBottomSheetDialog_editText) as EditText
+        editText.setOnEditorActionListener(object: TextView.OnEditorActionListener {
+            //데잇 텍스트 검색 아이콘 클릭 이벤트 처리
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                bottomSheetDialog.dismiss()
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Toast.makeText(requireContext(), "클릭됨", Toast.LENGTH_SHORT).show()
+
+                    //보호자 조회 retrofit 통신 호출
+                    retrofitCheckJoinedProtector(editText.text.toString())
+                    return true
+                }
+                return false
+            }
+        })
+
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetDialog.show()
     }
 
     //보호자, 보호 대상자 정보 다이어로그 호출
@@ -165,5 +194,21 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             }
         })
         customDialog.show(childFragmentManager, "home_protecting_delete_dialog")
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //보호자 조회 retrofit 통신
+    private fun retrofitCheckJoinedProtector(phoneNumber: String) {
+        RetrofitManager.instance.checkJoinedProtector(phoneNumber, completion = {
+            completionResponse, response -> 
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : $response")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : 통신 실패")
+                }
+            }
+        })
     }
 }
