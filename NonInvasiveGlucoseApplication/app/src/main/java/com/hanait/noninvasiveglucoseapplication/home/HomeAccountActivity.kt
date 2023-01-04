@@ -43,6 +43,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.android_blue_100)
+
         //생년월일 변경 리스너
         setDatePickerDialogListener()
 

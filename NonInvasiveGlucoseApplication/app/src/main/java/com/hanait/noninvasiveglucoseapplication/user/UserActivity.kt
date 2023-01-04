@@ -28,7 +28,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.iphone_gray_200)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.android_blue_100)
 
         //프로그래스 바 설정
         binding.userProgressBar.indeterminateDrawable

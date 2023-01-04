@@ -316,7 +316,7 @@ class CustomChartManager(val context: Context) {
         candleDataSet.run {
             //심지 부분
             shadowColor = ContextCompat.getColor(context, R.color.toss_black_150)
-            shadowWidth = 3f
+            shadowWidth = 2f
 
             //음봉
             decreasingColor = ContextCompat.getColor(context, R.color.transparent)
@@ -341,9 +341,9 @@ class CustomChartManager(val context: Context) {
 //            .fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             setColor(ContextCompat.getColor(context, R.color.toss_black_500))
-            lineWidth = 3F //선 굵기
-            circleRadius = 5F
-            circleHoleRadius = 2F
+            lineWidth = 2F //선 굵기
+            circleRadius = 3F
+            circleHoleRadius = 1F
 //          enableDashedLine(10f, 5f, 0f)
             setDrawCircles(true)   //동그란거 없애기
             setDrawValues(false)
