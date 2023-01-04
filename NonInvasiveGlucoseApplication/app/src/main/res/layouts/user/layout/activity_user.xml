@@ -8,7 +8,7 @@
     tools:context=".user.UserActivity"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@color/black">
+    android:background="@color/android_blue_100">
 
     <ProgressBar
         android:progressTint="@color/iphone_blue_500"
@@ -31,7 +31,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/iphone_green_200" />
+            app:tint="@color/toss_black_700" />
     </LinearLayout>
 
     <FrameLayout

@@ -8,7 +8,7 @@
     tools:context=".user.UserSetAuthorizationFragment"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@color/black">
+    android:background="@color/android_blue_100">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -20,7 +20,7 @@
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/ps_bold"
         android:text="처음이시네요!\n먼저 회원가입을 해주세요."
-        android:textColor="@color/white"
+        android:textColor="@color/toss_black_700"
         android:textSize="22dp" />
 
 
@@ -109,8 +109,7 @@
         android:textSize="14dp"
         android:text="❗문자메세지로 인증번호가 발송됩니다."
         android:fontFamily="@font/ps_bold"
-        android:textColor="@color/iphone_green_200"
-        android:background="@color/black"/>
+        android:textColor="@color/toss_black_500"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -129,7 +129,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
 //            setVisibleXRangeMaximum(6f) //
-            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_200))
+            setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
@@ -139,7 +139,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 labelCount = 8
 //                granularity = 3f  //X축 간격
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -151,7 +151,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
@@ -163,7 +163,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -184,7 +184,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
-            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_200))
+            setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
 
@@ -208,7 +208,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
@@ -219,7 +219,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 setExtraOffsets(5f, 5f, 5f, 15f)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -242,7 +242,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
-            setBackgroundColor(ContextCompat.getColor(context, R.color.iphone_gray_200))
+            setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
@@ -251,7 +251,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 textSize = 12f
                 labelCount = 8
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -263,7 +263,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
@@ -274,7 +274,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 setExtraOffsets(5f, 5f, 5f, 15f)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT

@@ -7,10 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black">
+    android:background="@color/android_blue_100">
 
     <LinearLayout
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/my_ripple2"
         android:focusable="true"
         android:clickable="true"
         android:id="@+id/homeThermometer_btn_back"
@@ -20,70 +20,76 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/iphone_green_200" />
+            app:tint="@color/toss_black_500" />
         <TextView
-            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
             android:gravity="center"
+            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="대쉬보드"
-            android:textColor="@color/iphone_green_200"
+            android:text="Home"
+            android:textColor="@color/toss_black_700"
             android:textSize="18dp"
             android:fontFamily="@font/ps_regular"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="체온 데이터"
+                    android:textColor="@color/toss_black_700"
+                    android:fontFamily="@font/ps_bold"
+                    android:textSize="21dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/ps_bold"
+                    android:gravity="bottom"
+                    android:text="평균 체온"
+                    android:textColor="@color/toss_black_700"
+                    android:textSize="21dp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="end|bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="180dp"
+                android:src="@drawable/detail_image"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:background="@drawable/image_radius_border_thermometer"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="3dp"
-                android:src="@drawable/thermometer"
-                app:tint="@color/white" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_marginStart="5dp"
-            android:gravity="center_vertical"
+            android:background="@drawable/android_layout_background_white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="체온"
-            android:textColor="@color/white"
-            android:fontFamily="@font/ps_bold"
-            android:textSize="27dp"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/ps_bold"
-            android:gravity="bottom"
-            android:text="평균 체온"
-            android:textColor="@color/white"
-            android:textSize="21dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/iphone_gray_200"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,7 +102,8 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     app:nts_animation_duration="300"
-                    app:nts_color="@color/iphone_blue_200"
+                    app:nts_color="@color/toss_blue_200"
+                    app:nts_active_color="@color/toss_blue_200"
                     app:nts_corners_radius="1.5dp"
                     app:nts_gravity="bottom"
                     app:nts_size="18dp"
@@ -112,7 +119,7 @@
                     android:fontFamily="@font/ps_regular"
                     android:gravity="center"
                     android:text="2022.01.23 ~ 2022.08.23"
-                    android:textColor="@color/white"
+                    android:textColor="@color/toss_black_700"
                     android:textSize="18dp" />
 
                 <com.github.mikephil.charting.charts.CombinedChart
@@ -124,7 +131,7 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="2dp"
-                    android:background="@color/black" />
+                    android:background="@color/android_blue_100" />
 
                 <TextView
                     android:layout_marginStart="16dp"
@@ -133,14 +140,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="2022.10.07"
-                    android:textColor="@color/toss_black_170"
+                    android:textColor="@color/toss_black_700"
                     android:textSize="21dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
                     android:background="@drawable/my_ripple"
-                    android:backgroundTint="@color/iphone_gray_200"
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:weightSum="1">
@@ -155,8 +161,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/ps_regular"
-                            android:text="최고 온도"
-                            android:textColor="@color/white"
+                            android:text="최고 온도(℃)"
+                            android:textColor="@color/toss_black_500"
                             android:textSize="18dp" />
 
                         <LinearLayout
@@ -171,16 +177,8 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/ps_regular"
                                 android:text="37.7"
-                                android:textColor="@color/iphone_yellow"
+                                android:textColor="@color/text_red_200"
                                 android:textSize="30dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/ps_regular"
-                                android:text=" ℃"
-                                android:textColor="@color/iphone_yellow"
-                                android:textSize="21dp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -195,8 +193,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/ps_regular"
-                            android:text="최저 온도"
-                            android:textColor="@color/white"
+                            android:text="최저 온도(℃)"
+                            android:textColor="@color/toss_black_500"
                             android:textSize="18dp" />
 
                         <LinearLayout
@@ -211,22 +209,15 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/ps_regular"
                                 android:text="34.6"
-                                android:textColor="@color/iphone_blue_500"
+                                android:textColor="@color/text_blue_200"
                                 android:textSize="30dp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/ps_regular"
-                                android:text=" ℃"
-                                android:textColor="@color/iphone_blue_500"
-                                android:textSize="21dp" />
                         </LinearLayout>
 
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -236,7 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="정상 체온"
-            android:textColor="@color/white"
+            android:textColor="@color/toss_black_700"
             android:fontFamily="@font/ps_bold"
             android:textSize="21dp"/>
     </LinearLayout>
@@ -252,7 +243,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="최근 "
-            android:textColor="@color/toss_black_170"
+            android:textColor="@color/toss_black_500"
             android:textSize="18dp" />
 
         <TextView
@@ -260,7 +251,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="7"
-            android:textColor="@color/iphone_blue_200"
+            android:textColor="@color/toss_blue_200"
             android:textSize="18dp" />
 
         <TextView
@@ -268,7 +259,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="일 총 빈도수"
-            android:textColor="@color/toss_black_170"
+            android:textColor="@color/toss_black_500"
             android:textSize="18dp" />
 
         <TextView
@@ -277,17 +268,15 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="64"
-            android:textColor="@color/iphone_yellow"
+            android:textColor="@color/circle_red_100"
             android:textSize="18dp" />
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+        android:background="@drawable/android_layout_background_white"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/iphone_gray_200"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -299,7 +288,8 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 app:nts_animation_duration="300"
-                app:nts_color="@color/iphone_blue_200"
+                app:nts_color="@color/toss_blue_200"
+                app:nts_active_color="@color/toss_blue_200"
                 app:nts_corners_radius="1.5dp"
                 app:nts_gravity="bottom"
                 app:nts_size="18dp"
@@ -316,7 +306,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:gravity="center"
                 android:text="2022.01.23 ~ 2022.08.23"
-                android:textColor="@color/white"
+                android:textColor="@color/toss_black_700"
                 android:textSize="18dp" />
 
             <com.github.mikephil.charting.charts.BarChart
@@ -325,7 +315,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="256dp"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -335,7 +325,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="비정상 체온"
-            android:textColor="@color/white"
+            android:textColor="@color/toss_black_700"
             android:fontFamily="@font/ps_bold"
             android:textSize="21dp"/>
     </LinearLayout>
@@ -351,7 +341,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="최근 "
-            android:textColor="@color/toss_black_170"
+            android:textColor="@color/toss_black_500"
             android:textSize="18dp" />
 
         <TextView
@@ -359,7 +349,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="7"
-            android:textColor="@color/iphone_blue_200"
+            android:textColor="@color/toss_blue_200"
             android:textSize="18dp" />
 
         <TextView
@@ -367,7 +357,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="일 총 빈도수"
-            android:textColor="@color/toss_black_170"
+            android:textColor="@color/toss_black_500"
             android:textSize="18dp" />
 
         <TextView
@@ -376,17 +366,15 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ps_regular"
             android:text="23"
-            android:textColor="@color/iphone_yellow"
+            android:textColor="@color/circle_red_100"
             android:textSize="18dp" />
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+        android:background="@drawable/android_layout_background_white"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/iphone_gray_200"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -397,7 +385,8 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 app:nts_animation_duration="300"
-                app:nts_color="@color/iphone_blue_200"
+                app:nts_color="@color/toss_blue_200"
+                app:nts_active_color="@color/toss_blue_200"
                 app:nts_corners_radius="1.5dp"
                 app:nts_gravity="bottom"
                 app:nts_size="18dp"
@@ -414,7 +403,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:gravity="center"
                 android:text="2022.01.23 ~ 2022.08.23"
-                android:textColor="@color/white"
+                android:textColor="@color/toss_black_700"
                 android:textSize="18dp" />
 
             <com.github.mikephil.charting.charts.BarChart
@@ -423,7 +412,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="256dp"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

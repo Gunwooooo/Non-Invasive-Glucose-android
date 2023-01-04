@@ -17,7 +17,7 @@
             android:shape="rectangle">
             <corners
                 android:radius="15dp" />
-            <solid android:color="@color/iphone_green_500"/>
+            <solid android:color="@color/toss_blue_200"/>
         </shape>
     </item>
 
@@ -26,8 +26,8 @@
         <shape
             android:shape="rectangle">
             <corners
-                android:radius="15dp" />
-            <solid android:color="@color/iphone_green_500"/>
+                android:radius="10dp" />
+            <solid android:color="@color/toss_blue_200"/>
         </shape>
     </item>
 
@@ -36,8 +36,8 @@
         <shape
             android:shape="rectangle">
             <corners
-                android:radius="15dp" />
-            <solid android:color="@color/toss_black_100"/>
+                android:radius="10dp" />
+            <solid android:color="@color/toss_blue_100"/>
         </shape>
     </item>
 

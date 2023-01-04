@@ -85,7 +85,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
                 valueFormatter = CustomChartManager.CustomDateXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -97,7 +97,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 animateX(1000)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
@@ -108,7 +108,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -142,7 +142,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -154,7 +154,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 animateX(1000)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
@@ -165,7 +165,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -200,7 +200,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -212,7 +212,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 animateX(1000)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
@@ -223,7 +223,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }

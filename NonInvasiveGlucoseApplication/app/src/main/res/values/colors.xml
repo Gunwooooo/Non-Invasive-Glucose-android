@@ -79,6 +79,8 @@
 <!--    <color name="iphone_gray_600">#151515</color>-->
     <color name="iphone_gray_600">#1E1B1B</color>
 
+    <color name="android_blue_100">#F5F8FD</color>
+
 <!--    transparent-->
     <color name="transparent">#00000000</color>
 </resources>
