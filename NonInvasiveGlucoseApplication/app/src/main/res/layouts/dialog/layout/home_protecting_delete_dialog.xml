@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@drawable/radius_border20"
     android:padding="16dp"
-    android:backgroundTint="@color/iphone_gray_150">
+    android:backgroundTint="@color/white">
     <LinearLayout
         android:layout_margin="10dp"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:text="해당 보호 대상자를 해제할까요?"
             android:textSize="21dp"
             android:fontFamily="@font/ps_bold"
-            android:textColor="@color/white"/>
+            android:textColor="@color/toss_black_700"/>
 <!--        <TextView-->
 <!--            android:layout_marginTop="10dp"-->
 <!--            android:gravity="center"-->
@@ -66,7 +66,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:stateListAnimator="@null"
                 android:text="예"
-                android:textColor="@color/iphone_green_200"
+                android:textColor="@color/white"
                 android:textSize="18dp" />
         </LinearLayout>
 
