@@ -5,7 +5,7 @@
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <stroke
-                android:width="2dp"
+                android:width="1.5dp"
                 android:color="@color/toss_black_200" />
             <corners android:radius="8dp"/>
             <solid
@@ -15,7 +15,7 @@
     <item android:state_focused="false">
         <shape android:shape="rectangle">
             <stroke
-                android:width="2dp"
+                android:width="1.5dp"
                 android:color="@color/toss_black_100" />
             <corners android:radius="8dp"/>
             <solid

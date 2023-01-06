@@ -16,8 +16,7 @@
 
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/toss_blue_200</item>
-        <!--        <item name="android:datePickerStyle">@style/CustomDatePicker</item>-->
 
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogTheme</item>
     </style>
 </resources>

@@ -85,8 +85,6 @@ class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<Fragmen
             TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.userAuthorizationForModifyForgottenPasswordBtnNext.isEnabled = s?.length != 0
-                if(s?.length != 0) binding.userAuthorizationForModifyForgottenPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
-                else binding.userAuthorizationForModifyForgottenPasswordBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}

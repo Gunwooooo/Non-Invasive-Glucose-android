@@ -39,14 +39,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         //자동 로그인 체크
         when(prefs.getBoolean("AUTO_LOGIN", false)) {
             true -> {
-                Log.d("로그", "SplashFragment - onViewCreated : asdasdas drue")
                 val phoneNumber = prefs.getString("USER_PHONENUMBER", "")
                 val password = prefs.getString("USER_PASSWORD", "")
                 val userData = UserData("", phoneNumber, password, "", "")
                 retrofitLoginUser(userData)
             }
             false -> {
-                Log.d("로그", "SplashFragment - onViewCreated : asdasdasd false")
                 Handler().postDelayed({
                     mActivity.changeFragmentTransaction(UserSetPhoneNumberFragment())
                 }, SPLASH_TIME_OUT)

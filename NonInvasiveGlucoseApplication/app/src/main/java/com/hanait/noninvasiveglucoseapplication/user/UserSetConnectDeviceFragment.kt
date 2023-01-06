@@ -21,12 +21,12 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         mActivity.setProgressDialogValueAndVisible(99, View.GONE)
         mActivity.setPrevFragment(UserSetAgreementFragment())
 
-        binding.userSetConnectDeviceBtnNext.setOnClickListener(this)
+        binding.homeConnectDeviceLottie.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v){
-            binding.userSetConnectDeviceBtnNext -> {
+            binding.homeConnectDeviceLottie -> {
                 val mActivity = activity as UserActivity
                 mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
             }

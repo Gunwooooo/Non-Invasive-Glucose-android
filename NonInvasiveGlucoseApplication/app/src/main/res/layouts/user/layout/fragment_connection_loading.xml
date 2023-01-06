@@ -20,26 +20,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/ps_bold"
-        android:text="장치를 연결하고 있어요.\n잠시만 기다려주세요."
+        android:text="연결을 완료했습니다.\n시작하기를 눌러주세요!"
         android:textColor="@color/toss_black_700"
         android:textSize="22dp" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/connectionLoading_lottie"
-        app:lottie_rawRes="@raw/lottie_progress"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
-
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/connectionLoading_imageView"
-        android:padding="70dp"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/complete"/>
+        app:lottie_rawRes="@raw/lottie_start"/>
 
     <Button
         android:id="@+id/connectionLoading_btn_next"
@@ -51,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:stateListAnimator="@null"
-        android:enabled="false"
+        android:enabled="true"
         android:background="@drawable/btn_border_blue"/>
 
     <LinearLayout

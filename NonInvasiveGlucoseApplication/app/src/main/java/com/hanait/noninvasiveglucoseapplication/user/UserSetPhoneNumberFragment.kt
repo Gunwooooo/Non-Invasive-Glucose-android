@@ -30,8 +30,6 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         binding.userSetPhoneNumberEditTextPhoneNumber.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.userSetPhoneNumberBtnNext.isEnabled = s?.length != 0
-                if(s?.length != 0) binding.userSetPhoneNumberBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
-                else binding.userSetPhoneNumberBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}

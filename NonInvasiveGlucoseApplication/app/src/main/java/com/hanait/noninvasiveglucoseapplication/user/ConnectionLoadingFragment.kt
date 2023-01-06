@@ -25,13 +25,11 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
 
         init()
 
-        Handler().postDelayed({
-            binding.connectionLoadingTextViewTitle.text = "연결을 완료했습니다.\n건강 관리를 시작해보세요."
-            binding.connectionLoadingLottie.visibility = View.GONE
-            binding.connectionLoadingImageView.visibility = View.VISIBLE
-            binding.connectionLoadingBtnNext.isEnabled = true
-            binding.connectionLoadingBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
-        }, 500)
+//        Handler().postDelayed({
+//            binding.connectionLoadingTextViewTitle.text = "연결을 완료했습니다.\n건강 관리를 시작해보세요."
+//            binding.connectionLoadingBtnNext.isEnabled = true
+//            binding.connectionLoadingBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
+//        }, 500)
 
     }
 
@@ -42,13 +40,19 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
         mActivity.setProgressDialogValueAndVisible(100, View.GONE)
         mActivity.setPrevFragment(UserSetConnectDeviceFragment())
 
+        binding.connectionLoadingLottie.visibility = View.VISIBLE
+
         binding.connectionLoadingBtnNext.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
             binding.connectionLoadingBtnNext -> {
+                binding.connectionLoadingLottie.playAnimation()
+                binding.connectionLoadingBtnNext.visibility = View.INVISIBLE
+            Handler().postDelayed({
                 retrofitInfoLoginedUser()
+            }, 1000)
             }
         }
     }
@@ -62,8 +66,6 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                         200 -> {
                             //로그인 된 유저 데이터 제이슨으로 파싱하기
                             val str = response.body()?.string()
-                            Log.d("로그", "HomeAccountActivity - retrofitInfoLoginedUser : ${str}")
-                            Log.d("로그", "ConnectionLoadingFragment - retrofitInfoLoginedUser : b ${System.currentTimeMillis()}")
                             val jsonObjectUser = str?.let { JSONObject(it) }
                             LoginedUserClient.nickname =
                                 "${jsonObjectUser?.getString("nickname")}"

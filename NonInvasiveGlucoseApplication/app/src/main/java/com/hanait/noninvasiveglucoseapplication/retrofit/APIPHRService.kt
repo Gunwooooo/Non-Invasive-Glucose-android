@@ -70,11 +70,10 @@ interface APIPHRService {
     ////////////////////////////////////////////////////////////////////////////////////
 
     //보호자 조회
-    @FormUrlEncoded
-    @POST("/wellink/caregiver/check")
+    @GET("/wellink/caregiver/check/{phoneNumber}")
     fun checkJoinedProtector(
         @Header("Authorization") authorization: String?,
-        @Field("phoneNumber") phoneNumber: String?
+        @Path("phoneNumber") phoneNumber: String?
     ): Call<ResponseBody>
 
     //보호자 등록

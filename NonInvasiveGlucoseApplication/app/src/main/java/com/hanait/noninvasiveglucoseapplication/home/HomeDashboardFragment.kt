@@ -42,6 +42,13 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
         //사용자 닉네임 표시
         binding.homeDashboardTextViewNickname.text = LoginedUserClient.nickname
+        binding.homeDashboardTextViewSex.text = LoginedUserClient.sex
+        //현재 나이 설정
+        val userYear = LoginedUserClient.birthDay?.substring(0, 4)?.toInt()
+        val curYear = GregorianCalendar().get(Calendar.YEAR)
+        val age = curYear - userYear!!
+        binding.homeDashboardTextViewAge.text = "${age}세"
+
 
         //데이터 차트 설정
         setThermometerLineChart()

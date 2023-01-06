@@ -1,12 +1,16 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,16 +21,21 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtecto
 import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
+import com.hanait.noninvasiveglucoseapplication.user.UserSetPhoneNumberFragment
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.CustomBottomSheetDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
+import org.json.JSONObject
 
 class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
+    private lateinit var bottomSheetDialog : CustomBottomSheetDialogManager
+
     var protectingList: ArrayList<ProtectorData> = ArrayList()
     var protectorList: ArrayList<ProtectorData> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
     }
 
@@ -111,28 +120,19 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //바텀 시트 다이어로그 호출(보호자 조회)
     private fun showBottomSheetDialog() {
-        val bottomSheetView = layoutInflater.inflate(R.layout.home_protector_search_bottom_sheet_dialog, null)
-        val bottomSheetDialog = BottomSheetDialog(requireContext())
-        //검색 클릭 이벤트 설정
-        val editText = bottomSheetView.findViewById(R.id.homeProtectorSearchBottomSheetDialog_editText) as EditText
-        editText.setOnEditorActionListener(object: TextView.OnEditorActionListener {
-            //데잇 텍스트 검색 아이콘 클릭 이벤트 처리
-            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-                bottomSheetDialog.dismiss()
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Toast.makeText(requireContext(), "클릭됨", Toast.LENGTH_SHORT).show()
+        bottomSheetDialog = CustomBottomSheetDialogManager(requireContext())
 
-                    //보호자 조회 retrofit 통신 호출
-                    retrofitCheckJoinedProtector(editText.text.toString())
-                    return true
-                }
-                return false
+        //검색 클릭 이벤트 설정
+        bottomSheetDialog.setBottomSheetDialogListener(object : CustomBottomSheetDialogManager.BottomSheetDialogListener {
+            override fun onSearchClicked(phoneNumber: String) {
+                Toast.makeText(requireContext(), phoneNumber, Toast.LENGTH_SHORT).show()
+
+                //보호자 검색 retrofit 통신
+                retrofitCheckJoinedProtector(phoneNumber)
             }
         })
 
-        bottomSheetDialog.setContentView(bottomSheetView)
-        bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        bottomSheetDialog.show()
+        bottomSheetDialog.show(requireFragmentManager(), bottomSheetDialog.tag)
     }
 
     //보호자, 보호 대상자 정보 다이어로그 호출
@@ -203,7 +203,26 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             completionResponse, response -> 
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : $response")
+                    //로그인 된 유저 데이터 제이슨으로 파싱하기
+                    val str = response?.body()?.string()
+                    Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : $str")
+                    if(str.equals("true"))
+                        bottomSheetDialog.dismiss()
+//                    val jsonObjectUser = str?.let { JSONObject(it) }
+//                    LoginedUserClient.nickname =
+//                        "${jsonObjectUser?.getString("nickname")}"
+//
+//                    if (jsonObjectUser?.getString("sex").equals("T")) {
+//                        LoginedUserClient.sex = "남성"
+//                    } else
+//                        LoginedUserClient.sex = "여성"
+//
+//                    LoginedUserClient.phoneNumber =
+//                        jsonObjectUser?.getString("phoneNumber")
+//                    LoginedUserClient.birthDay =
+//                        jsonObjectUser?.getString("birthDay")
+//                    LoginedUserClient.createdDate =
+//                        jsonObjectUser?.getString("createdDate")?.substring(0, 10)
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : 통신 실패")

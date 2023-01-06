@@ -16,7 +16,7 @@
         <item name="colorAccent">@color/iphone_green_200</item>
 <!--        <item name="android:datePickerStyle">@style/CustomDatePicker</item>-->
 
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogTheme</item>
     </style>
 
     <style name="Theme.NonInvasiveGlucoseApplication.NoActionBar">
@@ -41,13 +41,24 @@
 <!--    </style>-->
 
 <!--    바텀 다이어로그 테마-->
-    <style name="AppBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+<!--    <style name="AppBottomSheetDialogTheme"-->
+<!--        parent="Theme.Design.Light.BottomSheetDialog">-->
+<!--        <item name="bottomSheetStyle">@style/AppModalStyle</item>-->
+<!--    </style>-->
+
+
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/android_layout_background_white</item>
+        <item name="android:background">@drawable/top_radius_border</item>
     </style>
+
+
 </resources>

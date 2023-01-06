@@ -6,51 +6,55 @@
     android:padding="16dp"
     android:backgroundTint="@color/white">
     <LinearLayout
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
-            android:gravity="start"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="성별 수정"
-            android:textSize="24dp"
+            android:text="해당 사용자를 보호자로 등록할까요?"
+            android:textSize="21dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
 
-        <Button
+        <TextView
             android:layout_marginTop="16dp"
-            android:id="@+id/homeAccountModifySexDialog_btn_female"
-            android:text="여성"
-            android:textSize="22dp"
-            android:textColor="@color/toss_black_500"
-            android:fontFamily="@font/ps_bold"
+            android:gravity="left"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
-            android:stateListAnimator="@null"
-            android:enabled="true"
-            android:background="@drawable/btn_border_gray_reverse"/>
+            android:layout_height="wrap_content"
+            android:text="이름 : 홍길동"
+            android:textSize="21dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_500"/>
 
-        <Button
-            android:id="@+id/homeAccountModifySexDialog_btn_male"
+        <TextView
+            android:layout_marginTop="16dp"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나이 : 27세"
+            android:textSize="21dp"
+            android:fontFamily="@font/ps_regular"
+            android:textColor="@color/toss_black_500"/>
+
+
+
+
+        <TextView
             android:layout_marginTop="10dp"
-            android:text="남성"
-            android:textSize="22dp"
-            android:textColor="@color/toss_black_500"
-            android:fontFamily="@font/ps_bold"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
-            android:stateListAnimator="@null"
-            android:enabled="true"
-            android:background="@drawable/btn_border_gray_reverse"/>
-
+            android:layout_height="wrap_content"
+            android:text="보호자로 등록 시, 해당 사용자가 내 건강정보를 조회할 수 있습니다."
+            android:textSize="14dp"
+            android:fontFamily="@font/ps_bold"
+            android:textColor="@color/text_red_200"/>
     </LinearLayout>
 
-
-
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -60,13 +64,13 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeAccountModifySexDialog_btn_negative"
+                android:id="@+id/homeProtectorDeleteDialog_btn_negative"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_gray_reverse"
                 android:fontFamily="@font/ps_regular"
                 android:stateListAnimator="@null"
-                android:text="취소"
+                android:text="아니요"
                 android:textColor="@color/toss_black_200"
                 android:textSize="18dp" />
         </LinearLayout>
@@ -79,13 +83,13 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeAccountModifySexDialog_btn_positive"
+                android:id="@+id/homeProtectorDeleteDialog_btn_positive"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_blue"
                 android:fontFamily="@font/ps_regular"
                 android:stateListAnimator="@null"
-                android:text="수정하기"
+                android:text="예"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
         </LinearLayout>

@@ -61,7 +61,6 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
             binding.userSetBirthdayTextViewMonth.text = "${month + 1} 월"
             binding.userSetBirthdayTextViewDay.text = "$dayOfMonth 일"
             binding.userSetBirthdayBtnNext.isEnabled = true
-            binding.userSetBirthdayBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.iphone_green_200))
 
 
             selectedYear = year.toString()

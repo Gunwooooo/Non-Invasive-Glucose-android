@@ -4,5 +4,4 @@ data class UserData(var nickname: String, var phoneNumber: String, var password:
 
 
 //남자 true, 여자 false
-
 //이름 입력 받기
