@@ -1,38 +1,30 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtectorBinding
-import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
+import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.hanait.noninvasiveglucoseapplication.user.UserSetPhoneNumberFragment
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomBottomSheetDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import org.json.JSONObject
+import retrofit2.Retrofit
 
 class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
     private lateinit var bottomSheetDialog : CustomBottomSheetDialogManager
 
-    var protectingList: ArrayList<ProtectorData> = ArrayList()
-    var protectorList: ArrayList<ProtectorData> = ArrayList()
+    var protectingList: ArrayList<UserData> = ArrayList()
+    var protectorList: ArrayList<UserData> = ArrayList()
+    lateinit var protectingAdapter: ProtectorAdapter
+    lateinit var protectorAdapter: ProtectorAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,26 +34,24 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     @SuppressLint("SetTextI18n")
     private fun init() {
 
-        protectingList.add(ProtectorData("010-****-7199", "김건우"))
-        protectingList.add(ProtectorData("010-****-1234", "손흥민"))
-        protectingList.add(ProtectorData("010-****-5423", "황의조"))
-        protectingList.add(ProtectorData("010-****-3456", "황희찬"))
-        protectingList.add(ProtectorData("010-****-2456", "백승호"))
-        protectingList.add(ProtectorData("010-****-7654", "이강인"))
-        protectingList.add(ProtectorData("010-****-4324", "김진수"))
-        protectingList.add(ProtectorData("010-****-6432", "권창훈"))
+        protectingList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("손흥민","010-****-1234","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("백승호","010-****-2456","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("이강인","010-****-7654","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("김진수","010-****-4324","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("권창훈","010-****-6432","", "2019월 10월 21일", "T"))
 
-        protectorList.add(ProtectorData("010-****-7199", "김건우"))
-        protectorList.add(ProtectorData("010-****-1234", "손흥민"))
-        protectorList.add(ProtectorData("010-****-5423", "황의조"))
-        protectorList.add(ProtectorData("010-****-3456", "황희찬"))
+        protectorList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
+        protectorList.add(UserData("손흥민","010-****-1234","", "2019월 10월 21일", "T"))
+        protectorList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
+        protectorList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
 
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
         binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
 
         recyclerViewCreate()
-
-//        binding.homeProtectorBtnAdd.setOnClickListener(this)
         binding.homeProtectorBtnDelete.setOnClickListener(this)
         binding.homeProtectorLayoutProtectorInfo.setOnClickListener(this)
         binding.homeProtectorLayoutProtectorAdd.setOnClickListener(this)
@@ -69,7 +59,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     private fun recyclerViewCreate() {
         val protectingRecyclerView = binding.homeProtectorRecyclerViewProtecting
-        val protectingAdapter = ProtectorAdapter(requireContext(), protectingList)
+        protectingAdapter =  ProtectorAdapter(requireContext(), protectingList)
         //클릭 이벤트 리스너 처리
         protectingAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
@@ -87,7 +77,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
         //보호자 리스트 생성
         val protectorRecyclerView = binding.homeProtectorRecyclerViewProtector
-        val protectorAdapter = ProtectorAdapter(requireContext(), protectorList)
+        protectorAdapter = ProtectorAdapter(requireContext(), protectorList)
         //클릭 이벤트 리스너 처리
         protectorAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
@@ -125,7 +115,12 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         //검색 클릭 이벤트 설정
         bottomSheetDialog.setBottomSheetDialogListener(object : CustomBottomSheetDialogManager.BottomSheetDialogListener {
             override fun onSearchClicked(phoneNumber: String) {
-                Toast.makeText(requireContext(), phoneNumber, Toast.LENGTH_SHORT).show()
+
+                //자기 번호인지 체크
+                if(LoginedUserClient.phoneNumber.equals(phoneNumber)) {
+                    Toast.makeText(requireContext(), "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
+                    return
+                }
 
                 //보호자 검색 retrofit 통신
                 retrofitCheckJoinedProtector(phoneNumber)
@@ -137,7 +132,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //보호자, 보호 대상자 정보 다이어로그 호출
     private fun showInfoProtectorDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_protector_info_dialog)
+        val customDialog = CustomDialogManager(R.layout.home_protector_info_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 사용자 건강정보 조회 버튼 클릭")
@@ -152,7 +147,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //보호자 삭제 다이어로그 호출
     private fun showDeleteProtectorDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_protector_delete_dialog)
+        val customDialog = CustomDialogManager(R.layout.home_protector_delete_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
@@ -169,7 +164,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //보호 대상자 삭제 다이어로그 호출
     fun showDeleteProtectingDialog(protectorAdapter: ProtectorAdapter, pos: Int, isProtector: Boolean) {
-        val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog)
+        val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             @SuppressLint("SetTextI18n")
             //보호 대상자 리스트에서 삭제
@@ -195,6 +190,29 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         })
         customDialog.show(childFragmentManager, "home_protecting_delete_dialog")
     }
+
+    //보호자 정보 조회 다이어로그 호출
+    private fun showProtectorSearchInfoDialog(userData: UserData) {
+        val customDialog = CustomDialogManager(R.layout.home_protector_search_info_dialog, userData)
+        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+            override fun onPositiveClicked() {
+                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+                
+                //보호자 등록 레트로핏 통신
+                retrofitJoinProtector(userData)
+
+                customDialog.dismiss()
+            }
+
+            override fun onNegativeClicked() {
+                Log.d("로그", "HomeProtectorFragment - onNegativeClicked : 아니오 버튼 클릭")
+                customDialog.dismiss()
+            }
+        })
+        customDialog.show(childFragmentManager, "home_protector_delete_dialog")
+    }
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////
     
     //보호자 조회 retrofit 통신
@@ -203,29 +221,48 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             completionResponse, response -> 
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    //로그인 된 유저 데이터 제이슨으로 파싱하기
-                    val str = response?.body()?.string()
-                    Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : $str")
-                    if(str.equals("true"))
-                        bottomSheetDialog.dismiss()
-//                    val jsonObjectUser = str?.let { JSONObject(it) }
-//                    LoginedUserClient.nickname =
-//                        "${jsonObjectUser?.getString("nickname")}"
-//
-//                    if (jsonObjectUser?.getString("sex").equals("T")) {
-//                        LoginedUserClient.sex = "남성"
-//                    } else
-//                        LoginedUserClient.sex = "여성"
-//
-//                    LoginedUserClient.phoneNumber =
-//                        jsonObjectUser?.getString("phoneNumber")
-//                    LoginedUserClient.birthDay =
-//                        jsonObjectUser?.getString("birthDay")
-//                    LoginedUserClient.createdDate =
-//                        jsonObjectUser?.getString("createdDate")?.substring(0, 10)
+                    when(response?.code()) {
+                        200 -> {
+                            bottomSheetDialog.dismiss()
+                            val str = response.body()?.string()
+                            Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : $str")
+                            val jsonObjectUser = str?.let { JSONObject(it) }
+                            val phoneNumber_ = jsonObjectUser?.getString("phoneNumber")
+                            val nickname = jsonObjectUser?.getString("nickname")
+                            val birthDay = jsonObjectUser?.getString("birthDay")
+                            val sex = jsonObjectUser?.getString("sex")
+                            val userData = UserData(nickname!!, phoneNumber_!!, "", birthDay!!, sex!!)
+                            
+                            //유저 정보 출력 다이어로그 호출
+                            showProtectorSearchInfoDialog(userData)
+                        }
+                        else -> {
+                            Toast.makeText(requireContext(), "등록되지 않은 사용자 입니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : 통신 실패")
+                }
+            }
+        })
+    }
+
+    //호보자 등록 레트로핏 통신
+    private fun retrofitJoinProtector(userData: UserData) {
+        RetrofitManager.instance.joinProtector(userData, completion = {
+            completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")
+
+                    //유저 데이터 리스트에 추가
+//                protectorList.add(userData)
+//                protectorAdapter.notifyItemInserted(protectorList.size)
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
                 }
             }
         })

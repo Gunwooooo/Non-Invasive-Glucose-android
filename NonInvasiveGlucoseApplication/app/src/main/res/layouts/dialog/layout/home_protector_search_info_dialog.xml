@@ -18,37 +18,64 @@
             android:textSize="21dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+            <TextView
+                android:id="@+id/homeProtectorSearchInfo_textView_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OOO"
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나이 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+
+            <TextView
+                android:id="@+id/homeProtectorSearchInfo_textView_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OO세"
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
+
+
+
 
         <TextView
             android:layout_marginTop="16dp"
-            android:gravity="left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="이름 : 홍길동"
-            android:textSize="21dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_500"/>
-
-        <TextView
-            android:layout_marginTop="16dp"
-            android:gravity="left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="나이 : 27세"
-            android:textSize="21dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_500"/>
-
-
-
-
-        <TextView
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="보호자로 등록 시, 해당 사용자가 내 건강정보를 조회할 수 있습니다."
-            android:textSize="14dp"
+            android:textSize="15dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/text_red_200"/>
     </LinearLayout>
@@ -64,7 +91,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeProtectorDeleteDialog_btn_negative"
+                android:id="@+id/homeProtectorSearchInfo_btn_negative"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_gray_reverse"
@@ -83,7 +110,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.48">
             <Button
-                android:id="@+id/homeProtectorDeleteDialog_btn_positive"
+                android:id="@+id/homeProtectorSearchInfo_btn_positive"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_border_blue"

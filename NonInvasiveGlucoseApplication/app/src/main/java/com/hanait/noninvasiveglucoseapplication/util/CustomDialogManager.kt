@@ -1,5 +1,6 @@
 package com.hanait.noninvasiveglucoseapplication.util
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
@@ -14,18 +15,22 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.R
+import com.hanait.noninvasiveglucoseapplication.model.UserData
+import java.util.*
 
 
-class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnClickListener {
+class CustomDialogManager(private val layout: Int, userData: UserData?) : DialogFragment(), View.OnClickListener {
 
     private var stringData1 = ""
     private var stringData2 = ""
     private var stringData3 = ""
+    private var mUserData = userData
 //    //원 버튼 다이어로그
 //    private var oneButtonDialogListener: OneButtonDialogListener? = null
 //    interface OneButtonDialogListener {
@@ -79,6 +84,7 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater = requireActivity().layoutInflater
@@ -107,6 +113,21 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             R.layout.home_protector_info_dialog -> {
                 positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_negative) as Button
+            }
+            //보호자 조회 다이어로그
+            R.layout.home_protector_search_info_dialog -> {
+                positiveButton = view.findViewById(R.id.homeProtectorSearchInfo_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeProtectorSearchInfo_btn_negative) as Button
+                val nickNameTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_nickName) as TextView
+                val ageTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_age) as TextView
+
+                //현재 나이 설정
+                val userYear = mUserData?.birthDay?.substring(0, 4)?.toInt()
+                val curYear = GregorianCalendar().get(Calendar.YEAR)
+                val age = curYear - userYear!!
+
+                nickNameTextView.text = mUserData?.nickname
+                ageTextView.text = "${age}세"
             }
             //////////////////////////////////////////    Account   /////////////////////////////////////
             //사용자 성별 수정 다이어로그
@@ -196,20 +217,20 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             //투 버튼 파지티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
             R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectorInfoDialog_btn_positive,
-            R.id.homeAccountLogoutUserDialog_btn_positive
+            R.id.homeAccountLogoutUserDialog_btn_positive, R.id.homeProtectorSearchInfo_btn_positive,
             -> twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
             R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectorInfoDialog_btn_negative,
-            R.id.homeAccountLogoutUserDialog_btn_negative
+            R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeProtectorSearchInfo_btn_negative,
             -> twoButtonDialogListener?.onNegativeClicked()
 
 
             //데이터 전달이 있는 투 버튼 리스너 연결
-            R.id.homeAccountModifySexDialog_btn_positive, R.id.homeAccountModifyNicknameDialog_btn_positive
+            R.id.homeAccountModifySexDialog_btn_positive, R.id.homeAccountModifyNicknameDialog_btn_positive,
             -> twoButtonWithOneDataDialogListener?.onPositiveClicked(stringData1)
-            R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative
+            R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative,
             -> twoButtonWithOneDataDialogListener?.onNegativeClicked()
 
             //데이터 전달이 세 개 있는 투 버튼 리스너 연결
@@ -217,8 +238,8 @@ class CustomDialogManager(private val layout: Int) : DialogFragment(), View.OnCl
             -> twoButtonWithThreeDataDialogListener?.onPositiveClicked(stringData1, stringData2, stringData3)
             R.id.homeAccountModifyPasswordDialog_btn_negative
             -> twoButtonWithThreeDataDialogListener?.onNegativeClicked()
-
         }
     }
+    //010
 }
 
