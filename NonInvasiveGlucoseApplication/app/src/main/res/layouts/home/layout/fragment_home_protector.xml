@@ -60,14 +60,14 @@
                 android:scaleType="fitEnd"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/protector_image"/>
+                android:src="@drawable/background_image_protector"/>
         </LinearLayout>
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:background="@drawable/android_layout_background_white"
+        android:background="@drawable/background_layout_white_radius_20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
@@ -97,63 +97,6 @@
                 android:textColor="@color/toss_black_200"
                 android:textSize="16dp"/>
 
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/homeProtector_layout_protectorInfo"
-                android:background="@drawable/my_ripple"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-                <LinearLayout
-                    android:gravity="start"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2">
-
-                    <ImageView
-                        android:layout_width="46dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/policeman" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.63">
-                    <TextView
-                        android:id="@+id/homeProtectingItem_textView_phoneNumber"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="김건우님"
-                        android:textSize="21dp"
-                        android:fontFamily="@font/ps_regular"
-                        android:textColor="@color/toss_black_700"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.17">
-                    <TextView
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/homeProtector_btn_delete"
-                        android:gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="해제"
-                        android:textSize="18dp"
-                        android:fontFamily="@font/ps_regular"
-                        android:textColor="@color/toss_black_200"/>
-                </LinearLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginTop="16dp"
@@ -173,7 +116,7 @@
             <LinearLayout
                 android:id="@+id/homeProtector_layout_protectorAdd"
                 android:visibility="visible"
-                android:background="@drawable/my_ripple"
+                android:background="@drawable/ripple_white_radius_20"
                 android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
@@ -193,7 +136,7 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/add"/>
+                    android:src="@drawable/icon_color_add"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -216,7 +159,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/android_layout_background_white"
+        android:background="@drawable/background_layout_white_radius_20"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

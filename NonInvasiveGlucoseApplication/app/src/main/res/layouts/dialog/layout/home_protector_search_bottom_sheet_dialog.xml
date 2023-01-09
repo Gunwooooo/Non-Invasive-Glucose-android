@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="16dp"
-            android:background="@drawable/user_edittext_border"
+            android:background="@drawable/selector_color_edittext"
             android:drawableEnd="@drawable/ic_baseline_search_24"
             android:fontFamily="@font/ps_regular"
             android:hint="보호자 전화번호를 입력해주세요('-'없이)"

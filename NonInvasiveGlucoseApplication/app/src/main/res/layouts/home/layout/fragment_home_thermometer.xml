@@ -10,7 +10,7 @@
     android:background="@color/android_blue_100">
 
     <LinearLayout
-        android:background="@drawable/my_ripple2"
+        android:background="@drawable/ripple_android_blue_100_radius_20"
         android:focusable="true"
         android:clickable="true"
         android:id="@+id/homeThermometer_btn_back"
@@ -75,7 +75,7 @@
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="185dp"
-                android:src="@drawable/detail_image"/>
+                android:src="@drawable/background_image_detail"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:background="@drawable/android_layout_background_white"
+            android:background="@drawable/background_layout_white_radius_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -145,7 +145,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
-                    android:background="@drawable/my_ripple"
+                    android:background="@drawable/ripple_white_radius_20"
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:weightSum="1">
@@ -273,7 +273,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/android_layout_background_white"
+        android:background="@drawable/background_layout_white_radius_20"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -372,7 +372,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/android_layout_background_white"
+        android:background="@drawable/background_layout_white_radius_20"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

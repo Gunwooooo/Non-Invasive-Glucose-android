@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:gravity="center"
-        android:background="@drawable/image_radius_border_logo"
+        android:background="@drawable/background_white_ring_shape"
         android:layout_width="220dp"
         android:layout_height="220dp">
 
@@ -20,6 +20,6 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
 
-            android:src="@drawable/logo_splash" />
+            android:src="@drawable/icon_color_splash_logo" />
     </LinearLayout>
 </LinearLayout>

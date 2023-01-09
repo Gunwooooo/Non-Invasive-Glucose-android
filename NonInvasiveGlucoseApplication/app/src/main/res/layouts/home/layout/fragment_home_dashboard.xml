@@ -55,14 +55,14 @@
                 android:background="@color/android_blue_100"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:src="@drawable/dashboard_image" />
+                android:src="@drawable/background_image_dashboard" />
         </LinearLayout>
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_marginTop="4dp"
-        android:background="@drawable/android_layout_background_white"
+        android:background="@drawable/background_layout_white_radius_20"
         android:layout_width="match_parent"
         android:layout_height="96dp">
             <LinearLayout
@@ -74,7 +74,7 @@
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/my_ripple">
+                android:background="@drawable/ripple_white_radius_20">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_gravity="bottom"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/profile" />
+                    android:src="@drawable/icon_color_profile" />
                 <LinearLayout
                     android:gravity="center_vertical"
                     android:layout_marginStart="8dp"
@@ -117,7 +117,7 @@
                             android:clickable="false"
                             android:gravity="center"
                             android:layout_marginStart="16dp"
-                            android:background="@drawable/android_layout_background_gray"
+                            android:background="@drawable/background_layout__toss_black_100_radius_20"
                             android:layout_width="60dp"
                             android:layout_height="match_parent">
                             <TextView
@@ -291,7 +291,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/calendar" />
+            android:src="@drawable/icon_color_calendar" />
     </LinearLayout>
 
 
@@ -319,7 +319,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
             <TextView
-                android:background="@drawable/my_ripple2"
+                android:background="@drawable/ripple_android_blue_100_radius_20"
                 android:clickable="true"
                 android:focusable="true"
                 android:id="@+id/homeDashboard_textView_thermometerDetail"
@@ -327,7 +327,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ps_regular"
                 android:gravity="center"
-                android:text="상세보기"
+                android:text="더보기"
                 android:textColor="@color/toss_blue_700"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -339,7 +339,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:background="@drawable/android_layout_background_white"
+            android:background="@drawable/background_layout_white_radius_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -362,7 +362,7 @@
                     android:id="@+id/homeDashboard_btn_thermometer"
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
-                    android:background="@drawable/my_ripple"
+                    android:background="@drawable/ripple_white_radius_20"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -373,13 +373,13 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.15"
-                        android:background="@drawable/image_radius_border_thermometer">
+                        android:background="@drawable/background_toss_black_200_ring_shape">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="8dp"
-                            android:src="@drawable/thermometer"
+                            android:src="@drawable/icon_no_color_thermometer"
                             app:tint="@color/white" />
                     </LinearLayout>
 
@@ -509,7 +509,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
             <TextView
-                android:background="@drawable/my_ripple2"
+                android:background="@drawable/ripple_android_blue_100_radius_20"
                 android:clickable="true"
                 android:focusable="true"
                 android:id="@+id/homeDashboard_textView_heartDetail"
@@ -517,7 +517,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ps_regular"
                 android:gravity="center"
-                android:text="상세보기"
+                android:text="더보기"
                 android:textColor="@color/toss_blue_700"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -529,7 +529,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:background="@drawable/android_layout_background_white"
+            android:background="@drawable/background_layout_white_radius_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
@@ -550,7 +550,7 @@
                 <LinearLayout
                     android:layout_margin="3dp"
                     android:padding="16dp"
-                    android:background="@drawable/my_ripple"
+                    android:background="@drawable/ripple_white_radius_20"
                     android:id="@+id/homeDashboard_btn_heart"
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
@@ -559,7 +559,7 @@
                     android:focusable="true"
                     android:weightSum="1">
                     <LinearLayout
-                        android:background="@drawable/image_radius_border_heart"
+                        android:background="@drawable/background_text_red_200_ring_shape"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.15">
@@ -567,7 +567,7 @@
                             android:padding="13dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/heart"
+                            android:src="@drawable/icon_no_color_heart"
                             app:tint="@color/white" />
                     </LinearLayout>
                     <LinearLayout
@@ -673,7 +673,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
             <TextView
-                android:background="@drawable/my_ripple2"
+                android:background="@drawable/ripple_android_blue_100_radius_20"
                 android:clickable="true"
                 android:focusable="true"
                 android:id="@+id/homeDashboard_textView_glucoseDetail"
@@ -681,7 +681,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ps_regular"
                 android:gravity="center"
-                android:text="상세보기"
+                android:text="더보기"
                 android:textColor="@color/toss_blue_700"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -693,7 +693,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:background="@drawable/android_layout_background_white"
+            android:background="@drawable/background_layout_white_radius_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -712,7 +712,7 @@
                 <LinearLayout
                     android:layout_margin="3dp"
                     android:padding="16dp"
-                    android:background="@drawable/my_ripple"
+                    android:background="@drawable/ripple_white_radius_20"
                     android:id="@+id/homeDashboard_btn_glucose"
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
@@ -721,7 +721,7 @@
                     android:focusable="true"
                     android:weightSum="1">
                     <LinearLayout
-                        android:background="@drawable/image_radius_border_glucose"
+                        android:background="@drawable/background_text_blue_200_ring_shape"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.15">
@@ -729,7 +729,7 @@
                             android:padding="13dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/glucose"
+                            android:src="@drawable/icon_no_color_glucose"
                             app:tint="@color/white" />
                     </LinearLayout>
                     <LinearLayout

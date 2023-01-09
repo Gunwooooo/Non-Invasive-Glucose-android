@@ -2,7 +2,7 @@
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/radius_border20"
+    android:background="@drawable/shape_white_radius_20"
     android:padding="16dp"
     android:backgroundTint="@color/white">
     <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="54dp"
             android:textSize="22dp"
             android:importantForAutofill="no"
-            android:background="@drawable/user_edittext_border"
+            android:background="@drawable/selector_color_edittext"
             android:inputType="text"
             android:privateImeOptions="defaultInputmode=korean"/>
 

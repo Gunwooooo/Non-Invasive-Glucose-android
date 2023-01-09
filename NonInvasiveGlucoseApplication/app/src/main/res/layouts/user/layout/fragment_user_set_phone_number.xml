@@ -33,7 +33,7 @@
         android:layout_height="63dp"
         android:textSize="22dp"
         android:importantForAutofill="no"
-        android:background="@drawable/user_edittext_border"
+        android:background="@drawable/selector_color_edittext"
         android:inputType="number">
     </EditText>
 

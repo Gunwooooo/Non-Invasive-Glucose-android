@@ -29,8 +29,8 @@ class HomeActivity : AppCompatActivity() {
     private fun init() {
         supportFragmentManager.beginTransaction().replace(R.id.home_frameId, HomeDashboardFragment()).commitAllowingStateLoss()
 
-        //스테이터스바 색깔 변경
-        window.statusBarColor = ContextCompat.getColor(this, R.color.android_blue_100)
+//        //스테이터스바 색깔 변경
+//        window.statusBarColor = ContextCompat.getColor(this, R.color.android_blue_100)
 
         //바텀 네비게이션 리스너
         binding.homeBottomNav.setOnItemSelectedListener { item ->

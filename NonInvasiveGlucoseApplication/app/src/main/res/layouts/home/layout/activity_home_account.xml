@@ -10,7 +10,7 @@
     android:padding="16dp"
     android:background="@color/android_blue_100">
     <LinearLayout
-        android:background="@drawable/my_ripple2"
+        android:background="@drawable/ripple_android_blue_100_radius_20"
         android:focusable="true"
         android:clickable="true"
         android:id="@+id/homeAccount_btn_back"
@@ -53,7 +53,7 @@
                     android:layout_gravity="bottom"
                     android:layout_width="96dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/profile" />
+                    android:src="@drawable/icon_color_profile" />
                 <LinearLayout
                     android:layout_marginStart="8dp"
                     android:layout_width="match_parent"
@@ -118,7 +118,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@drawable/android_layout_background_white"
+                android:background="@drawable/background_layout_white_radius_20"
                 android:padding="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_width="match_parent"
@@ -170,7 +170,7 @@
                         android:background="@color/toss_black_100" />
                     <LinearLayout
                         android:id="@+id/homeAccount_layout_modifySex"
-                        android:background="@drawable/my_ripple"
+                        android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
                         android:layout_width="match_parent"
@@ -214,7 +214,7 @@
                         android:background="@color/toss_black_100" />
                     <LinearLayout
                         android:id="@+id/homeAccount_layout_modifyBirthday"
-                        android:background="@drawable/my_ripple"
+                        android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
                         android:layout_width="match_parent"
@@ -256,7 +256,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@drawable/android_layout_background_white"
+                android:background="@drawable/background_layout_white_radius_20"
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
                 android:layout_marginTop="32dp"
@@ -268,7 +268,7 @@
                     android:orientation="vertical"
                     android:weightSum="1">
                     <TextView
-                        android:background="@drawable/my_ripple"
+                        android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
                         android:id="@+id/homeAccount_btn_modifyPassword"
@@ -285,7 +285,7 @@
                         android:layout_height="0.1dp"
                         android:background="@color/toss_black_100" />
                     <TextView
-                        android:background="@drawable/my_ripple"
+                        android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
                         android:id="@+id/homeAccount_btn_logoutUser"
@@ -302,7 +302,7 @@
                         android:layout_height="0.1dp"
                         android:background="@color/toss_black_100" />
                     <TextView
-                        android:background="@drawable/my_ripple"
+                        android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
                         android:id="@+id/homeAccount_btn_deleteUser"

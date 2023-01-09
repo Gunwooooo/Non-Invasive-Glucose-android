@@ -75,8 +75,14 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     override fun onClick(v: View?) {
         val mActivity = activity as HomeActivity
         when (v) {
-            binding.homeDashboardBtnThermometer, binding.homeDashboardTextViewThermometerDetail ->
+            binding.homeDashboardTextViewThermometerDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
+            binding.homeDashboardBtnThermometer -> {
+                val intent = Intent(requireContext(), HomeFullChartActivity::class.java)
+                startActivity(intent)
+            }
+
+
             binding.homeDashboardBtnHeart, binding.homeDashboardTextViewHeartDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
