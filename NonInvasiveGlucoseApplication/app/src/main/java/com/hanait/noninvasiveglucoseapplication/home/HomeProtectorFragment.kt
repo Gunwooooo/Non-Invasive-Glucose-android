@@ -52,8 +52,6 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
 
         recyclerViewCreate()
-        binding.homeProtectorBtnDelete.setOnClickListener(this)
-        binding.homeProtectorLayoutProtectorInfo.setOnClickListener(this)
         binding.homeProtectorLayoutProtectorAdd.setOnClickListener(this)
     }
 
@@ -98,12 +96,6 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             //바텀 시트 다이어로그 호출
             binding.homeProtectorLayoutProtectorAdd -> {
                 showBottomSheetDialog()
-            }
-            binding.homeProtectorBtnDelete -> {
-                showDeleteProtectorDialog()
-            }
-            binding.homeProtectorLayoutProtectorInfo -> {
-                showInfoProtectorDialog()
             }
         }
     }

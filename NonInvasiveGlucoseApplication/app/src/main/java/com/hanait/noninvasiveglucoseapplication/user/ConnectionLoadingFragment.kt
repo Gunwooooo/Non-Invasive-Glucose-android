@@ -50,9 +50,9 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
             binding.connectionLoadingBtnNext -> {
                 binding.connectionLoadingLottie.playAnimation()
                 binding.connectionLoadingBtnNext.visibility = View.INVISIBLE
-            Handler().postDelayed({
-                retrofitInfoLoginedUser()
-            }, 1000)
+                Handler().postDelayed({
+                    retrofitInfoLoginedUser()
+                }, 2700)
             }
         }
     }

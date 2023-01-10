@@ -59,7 +59,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
         binding.homeDashboardBtnHeart.setOnClickListener(this)
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
-        binding.homeDashboardBtnCalendar.setOnClickListener(this)
+        binding.homeDashboardLayoutCalendar.setOnClickListener(this)
         binding.homeDashboardBtnAccount.setOnClickListener(this)
         binding.homeDashboardTextViewThermometerDetail.setOnClickListener(this)
         binding.homeDashboardTextViewHeartDetail.setOnClickListener(this)
@@ -87,7 +87,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
-            binding.homeDashboardBtnCalendar ->
+            binding.homeDashboardLayoutCalendar ->
                 makeDatePickerDialog()
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
@@ -172,6 +172,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 isEnabled = false  //오른쪽 y축 없애기
             }
             legend.run {
+
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
@@ -209,7 +210,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 textSize = 12f
                 labelCount = 8
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.white)
+                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }

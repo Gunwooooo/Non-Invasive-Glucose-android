@@ -52,18 +52,18 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = false
+            isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-//            setVisibleXRangeMaximum(6f) //
-            setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+            setVisibleXRangeMaximum(6f) //
+            setBackgroundColor(ContextCompat.getColor(context, R.color.android_blue_100))
             marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 8
+//                labelCount = 8
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(context, R.color.toss_black_700)
@@ -89,7 +89,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
-                setExtraOffsets(5f, 5f, 5f, 15f)
+                setExtraOffsets(15f, 15f, 15f, 15f)
                 textColor = ContextCompat.getColor(context, R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
