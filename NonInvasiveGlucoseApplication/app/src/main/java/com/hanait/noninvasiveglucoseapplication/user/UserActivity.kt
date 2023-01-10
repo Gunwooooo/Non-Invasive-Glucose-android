@@ -14,14 +14,13 @@ import com.hanait.noninvasiveglucoseapplication.databinding.ActivityUserBinding
 import kotlin.system.exitProcess
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityUserBinding
+    private val binding by lazy { ActivityUserBinding.inflate(layoutInflater) }
     private var waitTime = 0L
     private lateinit var prevFragment: Fragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()

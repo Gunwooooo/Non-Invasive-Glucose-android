@@ -22,8 +22,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(FragmentHomeThermometerBinding::inflate), View.OnClickListener,
-    OnChartValueSelectedListener {
+class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(FragmentHomeThermometerBinding::inflate), View.OnClickListener, OnChartValueSelectedListener {
     lateinit var customChartManager: CustomChartManager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

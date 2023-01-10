@@ -29,12 +29,11 @@ import java.util.*
 import java.util.regex.Pattern
 
 class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityHomeAccountBinding
+    private val binding by lazy { ActivityHomeAccountBinding.inflate(layoutInflater) }
     lateinit var datePickerDialogListener: DatePickerDialog.OnDateSetListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()

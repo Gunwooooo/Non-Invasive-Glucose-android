@@ -14,13 +14,12 @@ import kotlin.system.exitProcess
 
 
 class HomeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityHomeBinding
+    private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
     private var waitTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         init()

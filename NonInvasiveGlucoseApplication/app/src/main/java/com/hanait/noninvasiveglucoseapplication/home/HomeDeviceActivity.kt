@@ -7,11 +7,10 @@ import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeDeviceBi
 
 
 class HomeDeviceActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding : ActivityHomeDeviceBinding
+    private val binding by lazy { ActivityHomeDeviceBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeDeviceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()

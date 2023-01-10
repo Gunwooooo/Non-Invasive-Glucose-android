@@ -13,12 +13,11 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 
 class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding : ActivityHomeFullChartBinding
+    private val binding by lazy { ActivityHomeFullChartBinding.inflate(layoutInflater) }
     lateinit var customChartManager: CustomChartManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeFullChartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
