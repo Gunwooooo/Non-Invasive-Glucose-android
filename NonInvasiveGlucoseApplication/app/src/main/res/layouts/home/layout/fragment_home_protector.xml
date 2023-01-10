@@ -78,6 +78,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:id="@+id/homeProtector_textView_protectorCount"
                 android:layout_width="wrap_content"
@@ -171,6 +172,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:id="@+id/homeProtector_textView_protectingCount"
                 android:layout_width="wrap_content"

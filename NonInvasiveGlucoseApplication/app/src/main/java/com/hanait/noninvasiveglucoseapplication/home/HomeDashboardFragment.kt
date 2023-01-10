@@ -64,6 +64,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardTextViewThermometerDetail.setOnClickListener(this)
         binding.homeDashboardTextViewHeartDetail.setOnClickListener(this)
         binding.homeDashboardTextViewGlucoseDetail.setOnClickListener(this)
+        binding.homeDashboardBtnDevice.setOnClickListener(this)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -81,8 +82,6 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 val intent = Intent(requireContext(), HomeFullChartActivity::class.java)
                 startActivity(intent)
             }
-
-
             binding.homeDashboardBtnHeart, binding.homeDashboardTextViewHeartDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
@@ -91,6 +90,10 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 makeDatePickerDialog()
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
+                startActivity(intent)
+            }
+            binding.homeDashboardBtnDevice -> {
+                val intent = Intent(requireContext(), HomeDeviceActivity::class.java)
                 startActivity(intent)
             }
         }

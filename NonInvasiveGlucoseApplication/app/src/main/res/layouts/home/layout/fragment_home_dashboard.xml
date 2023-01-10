@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:background="@drawable/ripple_android_blue_100_radius_20"
                     android:clickable="true"
                     android:focusable="true"
                     android:id="@+id/homeDashboard_btn_device"
@@ -169,6 +170,37 @@
             android:fontFamily="@font/ps_bold"
             android:textSize="21dp"/>
 
+        <LinearLayout
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/background_iphone_green_100_ring_shape">
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/background_iphone_green_200_ring_shape"/>
+            </FrameLayout>
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Connected"
+                android:textSize="16dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 
@@ -285,7 +317,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="날짜별 차트"
+            android:text="Daily 차트"
             android:textColor="@color/toss_black_700"
             android:fontFamily="@font/ps_bold"
             android:textSize="21dp"/>
@@ -341,7 +373,7 @@
                 android:fontFamily="@font/ps_bold"
                 android:gravity="bottom"
                 android:text="체온"
-                android:textColor="@color/toss_black_700"
+                android:textColor="@color/toss_black_500"
                 android:textSize="21dp" />
         </LinearLayout>
         <LinearLayout
@@ -439,7 +471,7 @@
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/ps_bold"
                                 android:gravity="bottom"
-                                android:text="체온"
+                                android:text="측정시간"
                                 android:textColor="@color/toss_black_700"
                                 android:textSize="19dp" />
                         </LinearLayout>
@@ -465,14 +497,14 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.15">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/ps_regular"
-                            android:gravity="left|center_vertical"
-                            android:text="+0.12"
-                            android:textColor="@color/text_blue_200"
-                            android:textSize="16dp" />
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:fontFamily="@font/ps_regular"-->
+<!--                            android:gravity="left|center_vertical"-->
+<!--                            android:text="+0.12"-->
+<!--                            android:textColor="@color/text_blue_200"-->
+<!--                            android:textSize="16dp" />-->
                     </LinearLayout>
 
                     <LinearLayout
@@ -535,7 +567,7 @@
                 android:fontFamily="@font/ps_bold"
                 android:gravity="bottom"
                 android:text="심박수"
-                android:textColor="@color/toss_black_700"
+                android:textColor="@color/toss_black_500"
                 android:textSize="21dp" />
         </LinearLayout>
         <LinearLayout
@@ -626,7 +658,7 @@
                                 android:gravity="bottom"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="심박수"
+                                android:text="측정시간"
                                 android:fontFamily="@font/ps_bold"
                                 android:textSize="19dp"
                                 android:textColor="@color/toss_black_700"/>
@@ -649,14 +681,14 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.15">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="-0.14"
-                            android:gravity="left|center_vertical"
-                            android:textSize="16dp"
-                            android:fontFamily="@font/ps_regular"
-                            android:textColor="@color/text_red_500"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:text="-0.14"-->
+<!--                            android:gravity="left|center_vertical"-->
+<!--                            android:textSize="16dp"-->
+<!--                            android:fontFamily="@font/ps_regular"-->
+<!--                            android:textColor="@color/text_red_500"/>-->
                     </LinearLayout>
                     <LinearLayout
                         android:gravity="right"
@@ -703,7 +735,7 @@
                 android:fontFamily="@font/ps_bold"
                 android:gravity="bottom"
                 android:text="혈당"
-                android:textColor="@color/toss_black_700"
+                android:textColor="@color/toss_black_500"
                 android:textSize="21dp" />
         </LinearLayout>
         <LinearLayout
@@ -792,7 +824,7 @@
                                 android:gravity="bottom"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="혈당"
+                                android:text="측정시간"
                                 android:fontFamily="@font/ps_bold"
                                 android:textSize="19dp"
                                 android:textColor="@color/toss_black_700"/>
@@ -815,14 +847,14 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="0.15">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="+0.13"
-                            android:gravity="left|center_vertical"
-                            android:textSize="16dp"
-                            android:fontFamily="@font/ps_regular"
-                            android:textColor="@color/text_blue_200"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:text="+0.13"-->
+<!--                            android:gravity="left|center_vertical"-->
+<!--                            android:textSize="16dp"-->
+<!--                            android:fontFamily="@font/ps_regular"-->
+<!--                            android:textColor="@color/text_blue_200"/>-->
                     </LinearLayout>
                     <LinearLayout
                         android:gravity="right"

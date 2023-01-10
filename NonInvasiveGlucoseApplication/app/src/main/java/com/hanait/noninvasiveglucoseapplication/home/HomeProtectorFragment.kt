@@ -252,6 +252,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                     //유저 데이터 리스트에 추가
                     protectorList.add(userData)
                     protectorAdapter.notifyItemInserted(protectorList.size)
+                    binding.homeProtectorTextViewProtectorCount.text = protectorList.size.toString()
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
