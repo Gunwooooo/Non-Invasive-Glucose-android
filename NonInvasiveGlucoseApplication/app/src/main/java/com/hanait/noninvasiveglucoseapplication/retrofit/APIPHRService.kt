@@ -82,4 +82,11 @@ interface APIPHRService {
         @Header("Authorization") authorization: String?,
         @Body userData: UserData?
     ): Call<ResponseBody>
+
+    //유저 정보 전체 리스트 조회
+    @POST("/wellink/caregiver/checkList")
+    fun infoAllUserList(
+        @Header("Authorization") authorization: String?
+    ) : Call<ResponseBody>
+
 }

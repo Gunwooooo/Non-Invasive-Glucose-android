@@ -59,7 +59,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
         binding.homeDashboardBtnHeart.setOnClickListener(this)
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
-        binding.homeDashboardLayoutCalendar.setOnClickListener(this)
+        binding.homeDashboardBtnCalendar.setOnClickListener(this)
         binding.homeDashboardBtnAccount.setOnClickListener(this)
         binding.homeDashboardTextViewThermometerDetail.setOnClickListener(this)
         binding.homeDashboardTextViewHeartDetail.setOnClickListener(this)
@@ -86,7 +86,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
-            binding.homeDashboardLayoutCalendar ->
+            binding.homeDashboardBtnCalendar ->
                 makeDatePickerDialog()
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
@@ -106,7 +106,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         val year = gregorianCalendar.get(Calendar.YEAR)
         val month = gregorianCalendar.get(Calendar.MONTH)
         val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        binding.homeDashboardTextViewDate.text = "${year}.${month + 1}.${dayOfMonth}"
+        binding.homeDashboardTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -114,7 +114,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun setDatePickerDialogListener() {
         datePickerDialogListener =
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.homeDashboardTextViewDate.text = "${year}.${month+1}.${dayOfMonth}"
+                binding.homeDashboardTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
             }
     }
 

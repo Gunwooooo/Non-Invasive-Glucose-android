@@ -220,11 +220,10 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="정상 체온"
@@ -319,11 +318,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="비정상 체온"

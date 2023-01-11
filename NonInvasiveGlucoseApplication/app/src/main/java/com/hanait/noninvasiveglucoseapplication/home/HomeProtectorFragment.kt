@@ -29,6 +29,9 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+
+        //모든 사용자 정보 조회
+        retrofitInfoAllUserList()
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,17 +39,17 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
         protectingList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
         protectingList.add(UserData("손흥민","010-****-1234","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("백승호","010-****-2456","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("이강인","010-****-7654","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("김진수","010-****-4324","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("권창훈","010-****-6432","", "2019월 10월 21일", "T"))
+//        protectingList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
+//        protectingList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
+//        protectingList.add(UserData("백승호","010-****-2456","", "2019월 10월 21일", "T"))
+//        protectingList.add(UserData("이강인","010-****-7654","", "2019월 10월 21일", "T"))
+//        protectingList.add(UserData("김진수","010-****-4324","", "2019월 10월 21일", "T"))
+//        protectingList.add(UserData("권창훈","010-****-6432","", "2019월 10월 21일", "T"))
 
         protectorList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
         protectorList.add(UserData("손흥민","010-****-1234","", "2019월 10월 21일", "T"))
-        protectorList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
-        protectorList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
+//        protectorList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
+//        protectorList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
 
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
         binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
@@ -253,6 +256,23 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                     protectorList.add(userData)
                     protectorAdapter.notifyItemInserted(protectorList.size)
                     binding.homeProtectorTextViewProtectorCount.text = protectorList.size.toString()
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
+                }
+            }
+        })
+    }
+    
+    //모든 유저 정보 조회
+    private fun retrofitInfoAllUserList() {
+        RetrofitManager.instance.infoAllUserList(completion = {
+                completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")
+                    val str = response?.body()?.string()
+                    Log.d("로그", "HomeProtectorFragment - retrofitInfoAllUserList : $str")
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")

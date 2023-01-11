@@ -93,6 +93,5 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("로그", "UserActivity - onDestroy : userAcitivty 디스트로이")
     }
 }

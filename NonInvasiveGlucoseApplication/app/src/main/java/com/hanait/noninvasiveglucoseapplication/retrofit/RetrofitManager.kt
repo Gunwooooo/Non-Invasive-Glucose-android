@@ -200,4 +200,17 @@ class RetrofitManager {
             }
         })
     }
+
+    //모든 유저 정보 조회
+    fun infoAllUserList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.infoAllUserList(LoginedUserClient.authorization) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
 }

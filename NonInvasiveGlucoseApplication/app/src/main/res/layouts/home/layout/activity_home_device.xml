@@ -58,7 +58,31 @@
             android:fontFamily="@font/ps_regular"
             android:textSize="14dp"
             android:textColor="@color/toss_black_200"/>
+
+        <LinearLayout
+            android:layout_marginTop="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/background_iphone_green_100_ring_shape">
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/background_iphone_green_200_ring_shape"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Connected"
+                android:textSize="16dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>
