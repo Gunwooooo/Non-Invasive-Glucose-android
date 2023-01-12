@@ -90,7 +90,6 @@ class RetrofitManager {
 
     //로그인 유저 데이터 가져오기
     fun infoLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        Log.d("로그", "RetrofitManager - infoLoginedUser : 토큰값 : ${LoginedUserClient.authorization}")
         val call = apiPHRService?.infoLoginedUser(LoginedUserClient.authorization) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -104,7 +103,6 @@ class RetrofitManager {
 
     //회원 탈퇴
     fun deleteLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        Log.d("로그", "RetrofitManager - deleteLoginedUser : 토큰값 : ${LoginedUserClient.authorization}")
         val call = apiPHRService?.deleteLoginedUser(LoginedUserClient.authorization) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

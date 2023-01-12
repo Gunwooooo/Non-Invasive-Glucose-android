@@ -105,6 +105,9 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
                         200 -> {
                             //토큰 값 저장
                             LoginedUserClient.authorization = response.headers()["Authorization"]
+                            LoginedUserClient.refreshToken = response.headers()["refresh_token"]
+                            Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : AT : ${LoginedUserClient.authorization}")
+                            Log.d("로그", "UserCheckPasswordFragment - retrofitLoginUser : RT : ${LoginedUserClient.refreshToken}")
 
                             //자동 로그인 설정
                             setAutoLogin()
