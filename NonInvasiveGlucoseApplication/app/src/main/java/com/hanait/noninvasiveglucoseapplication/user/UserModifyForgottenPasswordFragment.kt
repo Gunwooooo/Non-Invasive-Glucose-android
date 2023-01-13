@@ -134,6 +134,7 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
                         200 -> {
                             //토큰 값 저장
                             LoginedUserClient.authorization = response.headers()["Authorization"]
+                            LoginedUserClient.refreshToken = response.headers()["refresh_token"]
 
                             Toast.makeText(requireContext(), "비밀번호 변경 성공!", Toast.LENGTH_SHORT).show()
                             val mActivity = activity as UserActivity

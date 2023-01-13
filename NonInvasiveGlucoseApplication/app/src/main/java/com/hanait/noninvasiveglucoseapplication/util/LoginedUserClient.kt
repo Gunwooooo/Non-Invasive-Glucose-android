@@ -6,6 +6,7 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants
 object LoginedUserClient {
     var authorization: String? = ""
     var refreshToken: String? = ""
+    var exp: Long? = 0
     var nickname: String? = ""
     var phoneNumber: String? = ""
     var sex: String? = ""

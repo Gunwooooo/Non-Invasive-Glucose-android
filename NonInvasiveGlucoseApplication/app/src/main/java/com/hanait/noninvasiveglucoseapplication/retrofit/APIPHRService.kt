@@ -78,7 +78,7 @@ interface APIPHRService {
 
     //보호자 등록
     @POST("/wellink/caregiver/join")
-    fun joinProtector(
+    fun addProtector(
         @Header("Authorization") authorization: String?,
         @Body userData: UserData?
     ): Call<ResponseBody>

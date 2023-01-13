@@ -15,6 +15,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -66,7 +67,13 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                         200 -> {
                             //로그인 된 유저 데이터 제이슨으로 파싱하기
                             val str = response.body()?.string()
-                            val jsonObjectUser = str?.let { JSONObject(it) }
+                            val jsonArray = JSONArray(str)
+
+                            //유저 토큰 만료 시간 저장
+                            LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
+
+                            //유저 개인 정보 담기
+                            val jsonObjectUser = jsonArray.getJSONObject(1)
                             LoginedUserClient.nickname =
                                 "${jsonObjectUser?.getString("nickname")}"
 
@@ -81,6 +88,8 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                                 jsonObjectUser?.getString("birthDay")
                             LoginedUserClient.createdDate =
                                 jsonObjectUser?.getString("createdDate")?.substring(0, 10)
+
+                            Log.d("로그", "ConnectionLoadingFragment - retrofitInfoLoginedUser : ${LoginedUserClient.exp}")
 
                             //홈액티비티 실행
                             startActivity(Intent(context, HomeActivity::class.java))

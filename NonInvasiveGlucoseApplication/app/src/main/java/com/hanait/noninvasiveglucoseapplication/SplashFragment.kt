@@ -5,6 +5,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentSplashBinding
 import com.hanait.noninvasiveglucoseapplication.db.PreferenceManager
 import com.hanait.noninvasiveglucoseapplication.model.UserData
@@ -33,6 +34,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         mActivity.setBtnBackVisible(View.INVISIBLE)
         mActivity.setProgressDialogValueAndVisible(0, View.GONE)
 
+        //글라이드로 스플래쉬 이미지 가져오기
+        setImageViewWithGlide()
+
         //sharedPreference에서 사용자 데이터 가져오기
         prefs = PreferenceManager(requireContext())
 
@@ -50,6 +54,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                 }, SPLASH_TIME_OUT)
             }
         }
+    }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(requireContext())
+        glide.load(R.drawable.icon_color_splash_logo).into(binding.homeSplashImageViewSplashLogo)
     }
 
 //    ///////////////////////////////////////////////////////////////////////////////////////////

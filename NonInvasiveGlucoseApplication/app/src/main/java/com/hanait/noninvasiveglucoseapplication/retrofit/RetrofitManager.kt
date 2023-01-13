@@ -186,8 +186,8 @@ class RetrofitManager {
     }
 
     //보호자 등록
-    fun joinProtector(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.joinProtector(LoginedUserClient.authorization, userData) ?: return
+    fun addProtector(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.addProtector(LoginedUserClient.authorization, userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

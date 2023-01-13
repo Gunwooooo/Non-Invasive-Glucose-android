@@ -9,6 +9,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.marginBottom
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -36,7 +37,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         init()
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "CheckResult")
     private fun init() {
         customChartManager = CustomChartManager.getInstance(requireContext())
 
@@ -49,6 +50,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         val age = curYear - userYear!!
         binding.homeDashboardTextViewAge.text = "${age}세"
 
+        //글라이드로 모든 이미지 가져오기
+        setImageViewWithGlide()
 
         //데이터 차트 설정
         setThermometerLineChart()
@@ -59,12 +62,12 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         binding.homeDashboardBtnThermometer.setOnClickListener(this)
         binding.homeDashboardBtnHeart.setOnClickListener(this)
         binding.homeDashboardBtnGlucose.setOnClickListener(this)
-        binding.homeDashboardBtnCalendar.setOnClickListener(this)
+        binding.homeDashboardImageViewCalendar.setOnClickListener(this)
         binding.homeDashboardBtnAccount.setOnClickListener(this)
         binding.homeDashboardTextViewThermometerDetail.setOnClickListener(this)
         binding.homeDashboardTextViewHeartDetail.setOnClickListener(this)
         binding.homeDashboardTextViewGlucoseDetail.setOnClickListener(this)
-        binding.homeDashboardBtnDevice.setOnClickListener(this)
+        binding.homeDashboardImageViewSetting.setOnClickListener(this)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -86,17 +89,26 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
-            binding.homeDashboardBtnCalendar ->
+            binding.homeDashboardImageViewCalendar ->
                 makeDatePickerDialog()
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
                 startActivity(intent)
             }
-            binding.homeDashboardBtnDevice -> {
+            binding.homeDashboardImageViewSetting -> {
                 val intent = Intent(requireContext(), HomeDeviceActivity::class.java)
                 startActivity(intent)
             }
         }
+    }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(requireContext())
+        glide.load(R.drawable.background_image_dashboard).into(binding.homeDashboardImageViewDashBoardBackground)
+        glide.load(R.drawable.icon_color_profile).into(binding.homeDashboardImageViewProfile)
+        glide.load(R.drawable.icon_color_calendar).into(binding.homeDashboardImageViewCalendar)
+        glide.load(R.drawable.ic_baseline_settings_24).into(binding.homeDashboardImageViewSetting)
     }
 
     //초기 오늘 날짜 표시 되도록 설정

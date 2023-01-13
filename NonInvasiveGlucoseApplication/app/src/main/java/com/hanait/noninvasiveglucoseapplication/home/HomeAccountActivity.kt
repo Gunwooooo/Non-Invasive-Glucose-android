@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
@@ -41,8 +42,9 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
-//
-//        window.statusBarColor = ContextCompat.getColor(this, R.color.android_blue_100)
+
+        //글라이드로 모든 이미지 불러오기
+        setImageViewWithGlide()
 
         //생년월일 변경 리스너
         setDatePickerDialogListener()
@@ -78,6 +80,13 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             binding.homeAccountBtnLogoutUser ->
                 showLogoutUserDialog()
         }
+    }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(this)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeAccountImageViewBack)
+        glide.load(R.drawable.icon_color_profile).into(binding.homeAccountImageViewProfile)
     }
 
     //토큰이 유효하면 기존에 로그인된 사용자 정보 표시

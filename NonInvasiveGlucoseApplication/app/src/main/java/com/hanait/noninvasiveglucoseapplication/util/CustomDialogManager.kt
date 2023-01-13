@@ -31,14 +31,15 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
     private var stringData2 = ""
     private var stringData3 = ""
     private var mUserData = userData
-//    //원 버튼 다이어로그
-//    private var oneButtonDialogListener: OneButtonDialogListener? = null
-//    interface OneButtonDialogListener {
-//        fun onPositiveClicked()
-//    }
-//    fun setOneButtonDialogListener(customDialogListener: OneButtonDialogListener) {
-//        this.oneButtonDialogListener = customDialogListener
-//    }
+
+    //원 버튼 다이어로그
+    private var oneButtonDialogListener: OneButtonDialogListener? = null
+    interface OneButtonDialogListener {
+        fun onPositiveClicked()
+    }
+    fun setOneButtonDialogListener(customDialogListener: OneButtonDialogListener) {
+        this.oneButtonDialogListener = customDialogListener
+    }
 
     //투 버튼 다이어로그
     private var twoButtonDialogListener: TwoButtonDialogListener? = null
@@ -109,10 +110,14 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 positiveButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeProtectorDeleteDialog_btn_negative) as Button
             }
-            //보호자, 보호 대상자 정보 보기 다이어로그
+            //보호 대상자 정보 보기 다이어로그
+            R.layout.home_protecting_info_dialog -> {
+                positiveButton = view.findViewById(R.id.homeProtectingInfoDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeProtectingInfoDialog_btn_negative) as Button
+            }
+            //보호 대상자 정보 보기 다이어로그
             R.layout.home_protector_info_dialog -> {
                 positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
-                negativeButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_negative) as Button
             }
             //보호자 조회 다이어로그
             R.layout.home_protector_search_info_dialog -> {
@@ -214,15 +219,19 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
     //다이어로그 버튼 별 클릭 리스너 등록
     override fun onClick(v: View?) {
         when(v?.id) {
+            //원 버튼 파지티브 리스너 연결
+            R.id.homeProtectorInfoDialog_btn_positive
+            -> oneButtonDialogListener?.onPositiveClicked()
+            
             //투 버튼 파지티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
-            R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectorInfoDialog_btn_positive,
+            R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectingInfoDialog_btn_positive,
             R.id.homeAccountLogoutUserDialog_btn_positive, R.id.homeProtectorSearchInfo_btn_positive,
             -> twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
-            R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectorInfoDialog_btn_negative,
+            R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectingInfoDialog_btn_negative,
             R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeProtectorSearchInfo_btn_negative,
             -> twoButtonDialogListener?.onNegativeClicked()
 

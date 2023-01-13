@@ -3,6 +3,8 @@ package com.hanait.noninvasiveglucoseapplication.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.bumptech.glide.Glide
+import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeDeviceBinding
 
 
@@ -17,14 +19,25 @@ class HomeDeviceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
-        binding.homeAccountBtnBack.setOnClickListener(this)
+        
+        //글라이드로 이미지 불러오기
+        setImageViewWithGlide()
+        
+        binding.homeDeviceBtnBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeAccountBtnBack -> {
+            binding.homeDeviceBtnBack -> {
                 finish()
             }
         }
+    }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(this)
+        glide.load(R.drawable.icon_color_device).into(binding.homeDeviceImageViewDevice)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeDeviceImageViewBack)
     }
 }

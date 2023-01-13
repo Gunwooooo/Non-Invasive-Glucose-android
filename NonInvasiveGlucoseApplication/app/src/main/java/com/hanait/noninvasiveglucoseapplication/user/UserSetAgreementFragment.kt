@@ -94,6 +94,7 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
                         200 -> {
                             //토큰 값 저장
                             LoginedUserClient.authorization = response.headers()["Authorization"]
+                            LoginedUserClient.refreshToken = response.headers()["refresh_token"]
 
                             //전역 유저 데이터 초기화
                             _userData = UserData("", "", "", "", "T")

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -35,6 +36,9 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
         binding.homeThermometerNtsAbnormalChart.setTabIndex(0, true)
         binding.homeThermometerNtsNormalChart.setTabIndex(0, true)
 
+        //초기 글라이드로 이미지 불러오기
+        setImageViewWithGlide()
+        
         customChartManager = CustomChartManager.getInstance(requireContext())
         setThermometer7DayAverageChart()
         setThermometer7DayAbnormalChart()
@@ -50,6 +54,13 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 mActivity.changeFragmentTransactionNoAnimation(HomeDashboardFragment())
             }
         }
+    }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(requireContext())
+        glide.load(R.drawable.background_image_detail).into(binding.homeThermometerImageViewDetailBackground)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeThermometerImageViewBack)
     }
 
     //체온 차트 설정

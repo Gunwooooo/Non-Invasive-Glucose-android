@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtectorBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
@@ -37,19 +38,17 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     @SuppressLint("SetTextI18n")
     private fun init() {
 
+        //글라이드로 모든 이미지 불러오기
+        setImageViewWithGlide()
+
+        //보호대상자 임의 데이터 추가
         protectingList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
         protectingList.add(UserData("손흥민","010-****-1234","", "2019월 10월 21일", "T"))
-//        protectingList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
-//        protectingList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
-//        protectingList.add(UserData("백승호","010-****-2456","", "2019월 10월 21일", "T"))
-//        protectingList.add(UserData("이강인","010-****-7654","", "2019월 10월 21일", "T"))
-//        protectingList.add(UserData("김진수","010-****-4324","", "2019월 10월 21일", "T"))
-//        protectingList.add(UserData("권창훈","010-****-6432","", "2019월 10월 21일", "T"))
+        protectingList.add(UserData("김진수","010-****-4324","", "2019월 10월 21일", "T"))
 
-        protectorList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
-        protectorList.add(UserData("손흥민","010-****-1234","", "2019월 10월 21일", "T"))
-//        protectorList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
-//        protectorList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
+        //보호자 임의 데이터 추가
+        protectorList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
+        protectorList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
 
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}명"
         binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
@@ -58,13 +57,20 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         binding.homeProtectorLayoutProtectorAdd.setOnClickListener(this)
     }
 
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(requireContext())
+        glide.load(R.drawable.background_image_protector).into(binding.homeProtectorImageViewProtectorBackground)
+        glide.load(R.drawable.icon_color_add).into(binding.homeProtectorImageViewAdd)
+    }
+
     private fun recyclerViewCreate() {
         val protectingRecyclerView = binding.homeProtectorRecyclerViewProtecting
         protectingAdapter =  ProtectorAdapter(requireContext(), protectingList)
         //클릭 이벤트 리스너 처리
         protectingAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
-                showInfoProtectorDialog()
+                showInfoProtectingDialog()
             }
 
             override fun onDeleteItem(v: View, pos: Int) {
@@ -106,28 +112,24 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     //바텀 시트 다이어로그 호출(보호자 조회)
     private fun showBottomSheetDialog() {
         bottomSheetDialog = CustomBottomSheetDialogManager(requireContext())
-
         //검색 클릭 이벤트 설정
         bottomSheetDialog.setBottomSheetDialogListener(object : CustomBottomSheetDialogManager.BottomSheetDialogListener {
             override fun onSearchClicked(phoneNumber: String) {
-
                 //자기 번호인지 체크
                 if(LoginedUserClient.phoneNumber.equals(phoneNumber)) {
                     Toast.makeText(requireContext(), "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
                     return
                 }
-
                 //보호자 검색 retrofit 통신
                 retrofitCheckJoinedProtector(phoneNumber)
             }
         })
-
         bottomSheetDialog.show(requireFragmentManager(), bottomSheetDialog.tag)
     }
 
-    //보호자, 보호 대상자 정보 다이어로그 호출
-    private fun showInfoProtectorDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_protector_info_dialog, null)
+    //보호 대상자 정보 다이어로그 호출
+    private fun showInfoProtectingDialog() {
+        val customDialog = CustomDialogManager(R.layout.home_protecting_info_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 사용자 건강정보 조회 버튼 클릭")
@@ -137,24 +139,18 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_protector_info_dialog")
+        customDialog.show(childFragmentManager, "home_protecting_info_dialog")
     }
 
-    //보호자 삭제 다이어로그 호출
-    private fun showDeleteProtectorDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_protector_delete_dialog, null)
-        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+    //보호자 정보 다이어로그 호출
+    private fun showInfoProtectorDialog() {
+        val customDialog = CustomDialogManager(R.layout.home_protector_info_dialog, null)
+        customDialog.setOneButtonDialogListener(object : CustomDialogManager.OneButtonDialogListener{
             override fun onPositiveClicked() {
-                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
-                customDialog.dismiss()
-            }
-
-            override fun onNegativeClicked() {
-                Log.d("로그", "HomeProtectorFragment - onNegativeClicked : 아니오 버튼 클릭")
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_protector_delete_dialog")
+        customDialog.show(childFragmentManager, "home_protector_info_dialog")
     }
 
     //보호 대상자 삭제 다이어로그 호출
@@ -192,9 +188,9 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
-                
+
                 //보호자 등록 레트로핏 통신
-                retrofitJoinProtector(userData)
+                retrofitAddProtector(userData)
 
                 customDialog.dismiss()
             }
@@ -209,11 +205,11 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     //보호자 조회 retrofit 통신
     private fun retrofitCheckJoinedProtector(phoneNumber: String) {
         RetrofitManager.instance.checkJoinedProtector(phoneNumber, completion = {
-            completionResponse, response -> 
+                completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {
@@ -227,7 +223,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                             val birthDay = jsonObjectUser?.getString("birthDay")
                             val sex = jsonObjectUser?.getString("sex")
                             val userData = UserData(nickname!!, phoneNumber_!!, "", birthDay!!, sex!!)
-                            
+
                             //유저 정보 출력 다이어로그 호출
                             showProtectorSearchInfoDialog(userData)
                         }
@@ -245,9 +241,10 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     }
 
     //호보자 등록 레트로핏 통신
-    private fun retrofitJoinProtector(userData: UserData) {
-        RetrofitManager.instance.joinProtector(userData, completion = {
-            completionResponse, response ->
+    @SuppressLint("SetTextI18n")
+    private fun retrofitAddProtector(userData: UserData) {
+        RetrofitManager.instance.addProtector(userData, completion = {
+                completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")
@@ -255,7 +252,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                     //유저 데이터 리스트에 추가
                     protectorList.add(userData)
                     protectorAdapter.notifyItemInserted(protectorList.size)
-                    binding.homeProtectorTextViewProtectorCount.text = protectorList.size.toString()
+                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
@@ -263,7 +260,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             }
         })
     }
-    
+
     //모든 유저 정보 조회
     private fun retrofitInfoAllUserList() {
         RetrofitManager.instance.infoAllUserList(completion = {

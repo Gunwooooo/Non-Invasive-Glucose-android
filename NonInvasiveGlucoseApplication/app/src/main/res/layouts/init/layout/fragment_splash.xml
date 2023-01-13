@@ -17,9 +17,8 @@
         android:layout_height="220dp">
 
         <ImageView
+            android:id="@+id/homeSplash_imageView_splashLogo"
             android:layout_width="150dp"
-            android:layout_height="150dp"
-
-            android:src="@drawable/icon_color_splash_logo" />
+            android:layout_height="150dp"/>
     </LinearLayout>
 </LinearLayout>
