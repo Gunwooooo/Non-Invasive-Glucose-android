@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -18,14 +19,17 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeDashboar
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
+import com.hanait.noninvasiveglucoseapplication.user.UserSetPhoneNumberFragment
 import com.hanait.noninvasiveglucoseapplication.util.*
+import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Thread.sleep
 import java.util.*
 
 
 class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(FragmentHomeDashboardBinding::inflate), View.OnClickListener {
+    lateinit var customProgressDialog: CustomDialogManager
     lateinit var customChartManager: CustomChartManager
-    lateinit var datePickerDialogListener: DatePickerDialog.OnDateSetListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,21 +38,22 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     override fun onResume() {
         super.onResume()
-        init()
+        //사용자 정보 가져오기
+        retrofitInfoLoginedUser()
     }
 
-    @SuppressLint("SetTextI18n", "CheckResult")
     private fun init() {
+        //프로그래스 다이어로그 호출
+        showProgressDialog()
+        
         customChartManager = CustomChartManager.getInstance(requireContext())
 
-        //사용자 닉네임 표시
-        binding.homeDashboardTextViewNickname.text = LoginedUserClient.nickname
-        binding.homeDashboardTextViewSex.text = LoginedUserClient.sex
-        //현재 나이 설정
-        val userYear = LoginedUserClient.birthDay?.substring(0, 4)?.toInt()
-        val curYear = GregorianCalendar().get(Calendar.YEAR)
-        val age = curYear - userYear!!
-        binding.homeDashboardTextViewAge.text = "${age}세"
+
+        Handler().postDelayed({
+            retrofitInfoLoginedUser()
+        }, 5000)
+        //사용자 정보 가져오기
+
 
         //글라이드로 모든 이미지 가져오기
         setImageViewWithGlide()
@@ -90,7 +95,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardImageViewCalendar ->
-                makeDatePickerDialog()
+                CustomCalendarManager(requireContext()).makeDatePickerDialog(setDatePickerDialogListener())
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
                 startActivity(intent)
@@ -100,6 +105,12 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 startActivity(intent)
             }
         }
+    }
+
+    //로딩 다이어로그 출력
+    private fun showProgressDialog() {
+        customProgressDialog = CustomDialogManager(R.layout.common_progress_dialog, null)
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
     }
 
     //초기 글라이드로 이미지 불러오기
@@ -123,22 +134,12 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     //데이터피커 리스너 설정
     @SuppressLint("SetTextI18n")
-    private fun setDatePickerDialogListener() {
-        datePickerDialogListener =
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.homeDashboardTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
-            }
+    private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
+        val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            binding.homeDashboardTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+        }
+        return datePickerDialogListener
     }
-
-    //달력 날짜 선택 다이어로그 생성
-    private fun makeDatePickerDialog() {
-        val gregorianCalendar = GregorianCalendar()
-        val year = gregorianCalendar.get(Calendar.YEAR)
-        val month = gregorianCalendar.get(Calendar.MONTH)
-        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        DatePickerDialog(requireContext(), datePickerDialogListener, year, month, dayOfMonth).show()
-    }
-
     //=================================================================================================
 
     //체온 차트 설정
@@ -312,11 +313,46 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         }
     }
 
+    //생년월일로 나이 계산
+    private fun changeBirthDayToAge(birthDay: String?) : String {
+        val userYear = birthDay?.substring(0, 4)?.toInt()
+        val curYear = GregorianCalendar().get(Calendar.YEAR)
+        return "${curYear - userYear!!}세"
+    }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //로그인 된 회원 정보 가져오기
+    @SuppressLint("SetTextI18n")
+    private fun retrofitInfoLoginedUser() {
+        RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
+            Handler().postDelayed({
+                customProgressDialog.dismiss()
+            }, 2000)
+
+            when (completionResponse) {
+                CompletionResponse.OK -> {
+                    when (response?.code()) {
+                        200 -> {
+                            //로그인 된 유저 데이터 제이슨으로 파싱하기
+                            val jsonArray = JSONArray(response.body()?.string())
+                            //유저 토큰 만료 시간 저장
+                            LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
+                            //유저 개인 정보 담기
+                            val jsonObjectUser = jsonArray.getJSONObject(1)
+                            binding.homeDashboardTextViewNickname.text =
+                                "${jsonObjectUser?.getString("nickname")}"
+                            if (jsonObjectUser?.getString("sex").equals("T")) {
+                                binding.homeDashboardTextViewSex.text = "남성"
+                            } else
+                                binding.homeDashboardTextViewSex.text = "여성"
+                            binding.homeDashboardTextViewAge.text = changeBirthDayToAge(jsonObjectUser?.getString("birthDay"))
+                        }
+                    }
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
+                }
+            }
+        })
+    }
 }
-
-//// 소숫점 한 자리까지 보이기 위한 Formatter
-//class MyValueFormatter : ValueFormatter(),
-//    IValueFormatter {
-////    private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.0")
-//}

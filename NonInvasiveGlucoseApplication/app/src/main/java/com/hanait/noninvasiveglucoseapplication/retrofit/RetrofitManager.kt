@@ -90,7 +90,7 @@ class RetrofitManager {
 
     //로그인 유저 데이터 가져오기
     fun infoLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.infoLoginedUser(LoginedUserClient.authorization) ?: return
+        val call = apiPHRService?.infoLoginedUser() ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -103,7 +103,7 @@ class RetrofitManager {
 
     //회원 탈퇴
     fun deleteLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.deleteLoginedUser(LoginedUserClient.authorization) ?: return
+        val call = apiPHRService?.deleteLoginedUser() ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -116,7 +116,7 @@ class RetrofitManager {
 
     //회원 정보 수정
     fun editLoginedUser(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.editLoginedUser(LoginedUserClient.authorization, userData) ?: return
+        val call = apiPHRService?.editLoginedUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -130,7 +130,7 @@ class RetrofitManager {
 
     //로그아웃
     fun logoutUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.logoutUser(LoginedUserClient.authorization) ?: return
+        val call = apiPHRService?.logoutUser() ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -144,7 +144,7 @@ class RetrofitManager {
 
     //비밀번호 변경 시 현재 비밀번호 체크
     fun checkAndModifyCurrentPassword(password: String, newPassword: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.checkAndModifyCurrentPassword(LoginedUserClient.authorization, password, newPassword) ?: return
+        val call = apiPHRService?.checkAndModifyCurrentPassword(password, newPassword) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -173,7 +173,7 @@ class RetrofitManager {
 
     //보호자 조회
     fun checkJoinedProtector(phoneNumber: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.checkJoinedProtector(LoginedUserClient.authorization, phoneNumber) ?: return
+        val call = apiPHRService?.checkJoinedProtector(phoneNumber) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -187,7 +187,7 @@ class RetrofitManager {
 
     //보호자 등록
     fun addProtector(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.addProtector(LoginedUserClient.authorization, userData) ?: return
+        val call = apiPHRService?.addProtector(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -201,7 +201,7 @@ class RetrofitManager {
 
     //모든 유저 정보 조회
     fun infoAllUserList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.infoAllUserList(LoginedUserClient.authorization) ?: return
+        val call = apiPHRService?.infoAllUserList() ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

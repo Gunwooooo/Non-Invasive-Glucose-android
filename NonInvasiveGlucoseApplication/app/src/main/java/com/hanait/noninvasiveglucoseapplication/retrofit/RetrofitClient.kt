@@ -47,29 +47,33 @@ object RetrofitClient {
         var retrofitClient: Retrofit? = null
         val client = OkHttpClient.Builder()
 
-        //로깅 인터셉터 설정
         val loggingInterceptor = HttpLoggingInterceptor { message ->
-//            //토큰 시간 만료 체크
-//            if(LoginedUserClient.exp != null && LoginedUserClient.exp != 0L) {
-//                Log.d("로그", "RetrofitClient - getPHRServiceClient : ${LoginedUserClient.exp}  ㅡ  ${System.currentTimeMillis()}")
-//                if(LoginedUserClient.exp!! >= System.currentTimeMillis()) {
-//                    Log.d("로그", "RetrofitClient - log : 토큰 시간이 만료됐습니다!")
-//                    //refresh token 전송 통신 필요
-//                }
-//            }
+            Log.d(
+                "로그",
+                "RetrofitClient - log : $message"
+            )
         }
+
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         client.addInterceptor(loggingInterceptor)
 
-//        val interceptor = Interceptor { chain ->
-//            val accessToken = LoginedUserClient.authorization
-//            val newRequest: Request
-//
-//            newRequest = chain.request().newBuilder().addHeader()
-//            chain.proceed(newRequest)
-//        }
+        //토큰 체크 인터셉터 추가
+        val tokenCheckInterceptor = Interceptor { chain ->
+            val accessToken = LoginedUserClient.authorization
+            val newRequest: Request
+            //토큰이 있는 경우
+            if(accessToken != null && accessToken != "") {
+                //헤더에 추가
+                newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
+            } else {
+                //토큰이 없는 경우
+                newRequest = chain.request()
+            }
+            Log.d("로그", "RetrofitClient - getPHRServiceClient : 새로운 리퀘스트 : ${newRequest}")
+            chain.proceed(newRequest)
+        }
 
-//        client.interceptors().add(interceptor)
+        client.interceptors().add(tokenCheckInterceptor)
         client.connectTimeout(10, TimeUnit.SECONDS)
         client.readTimeout(10, TimeUnit.SECONDS)
         client.writeTimeout(10, TimeUnit.SECONDS)

@@ -30,31 +30,26 @@ interface APIPHRService {
     //로그인 된 회원 정보 조회
     @POST("/wellink/user/info")
     fun infoLoginedUser(
-        @Header("Authorization") authorization : String?
     ): Call<ResponseBody>
 
     //회원 탈퇴
     @POST("/wellink/user/delete")
     fun deleteLoginedUser(
-        @Header("Authorization") authorization : String?
     ): Call<ResponseBody>
 
     @PUT("/wellink/user/edit")
     fun editLoginedUser(
-        @Header("Authorization") authorization: String?,
         @Body userData: UserData
     ): Call<ResponseBody>
 
     @POST("/logout")
     fun logoutUser(
-        @Header("Authorization") authorization: String?
     ) : Call<ResponseBody>
 
     //현재 비밀번호 확인 및 변경
     @FormUrlEncoded
     @POST("/wellink/user/checkpw")
     fun checkAndModifyCurrentPassword(
-        @Header("Authorization") authorization: String?,
         @Field("password") password: String?,
         @Field("newPassword") newPassword: String?
     ) : Call<ResponseBody>
@@ -72,21 +67,18 @@ interface APIPHRService {
     //보호자 조회
     @GET("/wellink/caregiver/check/{phoneNumber}")
     fun checkJoinedProtector(
-        @Header("Authorization") authorization: String?,
         @Path("phoneNumber") phoneNumber: String?
     ): Call<ResponseBody>
 
     //보호자 등록
     @POST("/wellink/caregiver/join")
     fun addProtector(
-        @Header("Authorization") authorization: String?,
         @Body userData: UserData?
     ): Call<ResponseBody>
 
     //유저 정보 전체 리스트 조회
     @POST("/wellink/caregiver/checkList")
     fun infoAllUserList(
-        @Header("Authorization") authorization: String?
     ) : Call<ResponseBody>
 
 }

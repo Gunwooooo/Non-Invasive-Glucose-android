@@ -88,7 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="변경"
-                            android:textColor="@color/circle_red_100"
+                            android:textColor="@color/toss_blue_200"
                             android:fontFamily="@font/ps_regular"
                             android:textSize="18dp"/>
                     </LinearLayout>

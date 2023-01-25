@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.wang.avi.AVLoadingIndicatorView
 import java.util.*
 
 
@@ -133,6 +134,12 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
 
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = "${age}세"
+            }
+            //프로그레스 다이어로그
+            R.layout.common_progress_dialog -> {
+                Log.d("로그", "CustomDialogManager - onCreateDialog : 로딩 호출됨~~~")
+                val indicatorView = view.findViewById(R.id.commonProgressDialog_indicator) as AVLoadingIndicatorView
+                indicatorView.show()
             }
             //////////////////////////////////////////    Account   /////////////////////////////////////
             //사용자 성별 수정 다이어로그

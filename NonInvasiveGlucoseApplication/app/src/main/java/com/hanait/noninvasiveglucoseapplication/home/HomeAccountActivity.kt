@@ -31,7 +31,6 @@ import java.util.regex.Pattern
 
 class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeAccountBinding.inflate(layoutInflater) }
-    lateinit var datePickerDialogListener: DatePickerDialog.OnDateSetListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +42,15 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
+        //유저 정보 가져오기
+        retrofitInfoLoginedUser()
+        
         //글라이드로 모든 이미지 불러오기
         setImageViewWithGlide()
 
-        //생년월일 변경 리스너
+        //생년월일 변경 리스너 설정
         setDatePickerDialogListener()
-
-        //토큰이 유효한지 확인만 계속 필요...
-        //코드 구현 필요
-        /////
-        setUserInfoData()
-
+        
         binding.homeAccountTextViewModifyNickname.setOnClickListener(this)
         binding.homeAccountLayoutModifySex.setOnClickListener(this)
         binding.homeAccountLayoutModifyBirthday.setOnClickListener(this)
@@ -72,7 +69,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             binding.homeAccountLayoutModifySex ->
                 showModifySexDialog()
             binding.homeAccountLayoutModifyBirthday ->
-                makeDatePickerDialog()
+                CustomCalendarManager(this).makeDatePickerDialog(setDatePickerDialogListener())
             binding.homeAccountBtnModifyPassword ->
                 showModifyPasswordDialog()
             binding.homeAccountBtnDeleteUser ->
@@ -89,33 +86,17 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         glide.load(R.drawable.icon_color_profile).into(binding.homeAccountImageViewProfile)
     }
 
-    //토큰이 유효하면 기존에 로그인된 사용자 정보 표시
-    private fun setUserInfoData() {
-        binding.homeAccountTextViewNickname.text = LoginedUserClient.nickname
-        binding.homeAccountTextViewPhoneNumber.text = LoginedUserClient.phoneNumber
-        binding.homeAccountTextViewSex.text = LoginedUserClient.sex
-        binding.homeAccountTextViewBirthday.text = LoginedUserClient.birthDay
-        binding.homeAccountTextViewCreatedDate.text = LoginedUserClient.createdDate
-    }
-
     //캘린더 피커 다이어로그 리스너 설정
     @SuppressLint("SetTextI18n")
-    private fun setDatePickerDialogListener() {
-        datePickerDialogListener =
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.homeAccountTextViewBirthday.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
-                retrofitEditLoginedUser()
-            }
+    private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
+        val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            binding.homeAccountTextViewBirthday.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+            retrofitEditLoginedUser()
+        }
+        return datePickerDialogListener
     }
 
-    //달력 날짜 선택 다이어로그 생성
-    private fun makeDatePickerDialog() {
-        val gregorianCalendar = GregorianCalendar()
-        val year = gregorianCalendar.get(Calendar.YEAR)
-        val month = gregorianCalendar.get(Calendar.MONTH)
-        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        DatePickerDialog(this, datePickerDialogListener, year, month, dayOfMonth).show()
-    }
+    ///////////////////////////////////////다이어로그 구현///////////////////////////////////////////////
 
     //닉네임 변경 다이어로그 호출
     private fun showModifyNicknameDialog() {
@@ -226,7 +207,39 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
+    //로그인 된 회원 정보 가져오기
+    @SuppressLint("SetTextI18n")
+    private fun retrofitInfoLoginedUser() {
+        RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
+            when (completionResponse) {
+                CompletionResponse.OK -> {
+                    when (response?.code()) {
+                        200 -> {
+                            //로그인 된 유저 데이터 제이슨으로 파싱하기
+                            val jsonArray = JSONArray(response.body()?.string())
+                            //유저 토큰 만료 시간 저장
+                            LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
+                            //유저 개인 정보 담기
+                            val jsonObjectUser = jsonArray.getJSONObject(1)
+                            binding.homeAccountTextViewNickname.text =
+                                "${jsonObjectUser?.getString("nickname")}"
+                            binding.homeAccountTextViewPhoneNumber.text =
+                                "${jsonObjectUser?.getString("phoneNumber")}"
+                            if (jsonObjectUser?.getString("sex").equals("T")) {
+                                binding.homeAccountTextViewSex.text = "남성"
+                            } else
+                                binding.homeAccountTextViewSex.text = "여성"
+                            binding.homeAccountTextViewBirthday.text = jsonObjectUser?.getString("birthDay")
+                            binding.homeAccountTextViewCreatedDate.text = jsonObjectUser?.getString("createdDate")?.substring(0, 10)
+                        }
+                    }
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
+                }
+            }
+        })
+    }
 
     //회원 탈퇴 레트로핏 통신
     private fun retrofitDeleteLoginedUser() {
@@ -245,7 +258,6 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this, UserActivity::class.java)
                     startActivity(intent)
                     finish()
-
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : 통신 실패")
@@ -266,12 +278,14 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         RetrofitManager.instance.editLoginedUser(userData, completion = {completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    //데이터 오브젝트에 새로 저장
-                    LoginedUserClient.nickname = nickname
-                    LoginedUserClient.birthDay = birthday
-                    LoginedUserClient.sex = binding.homeAccountTextViewSex.text.toString()
-                    Toast.makeText(this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-                    Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : ${response}")
+                    when(response?.code()) {
+                        200 -> {
+                            Toast.makeText(this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            Toast.makeText(this, "정보 수정에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
                 CompletionResponse.FAIL -> {
                     Toast.makeText(this, "정보 수정에 실패하였습니다.", Toast.LENGTH_SHORT).show()
@@ -305,6 +319,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                         //비밀번호 일치할 경우
                         200 -> {
                             //정보 수정
+                            Toast.makeText(applicationContext, "비밀번호가 수정되었습니다.", Toast.LENGTH_SHORT ).show()
                         }
                         //비밀번호 일치하지 않을 경우
                         else -> {

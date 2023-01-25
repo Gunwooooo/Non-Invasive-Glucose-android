@@ -7,9 +7,9 @@ object LoginedUserClient {
     var authorization: String? = ""
     var refreshToken: String? = ""
     var exp: Long? = 0
-    var nickname: String? = ""
-    var phoneNumber: String? = ""
-    var sex: String? = ""
-    var birthDay : String? = ""
-    var createdDate: String? = ""
+//    var nickname: String? = ""
+//    var phoneNumber: String? = ""
+//    var sex: String? = ""
+//    var birthDay : String? = ""
+//    var createdDate: String? = ""
 }

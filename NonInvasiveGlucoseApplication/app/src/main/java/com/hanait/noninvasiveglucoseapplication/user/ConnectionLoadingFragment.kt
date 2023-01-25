@@ -52,57 +52,12 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
                 binding.connectionLoadingLottie.playAnimation()
                 binding.connectionLoadingBtnNext.visibility = View.INVISIBLE
                 Handler().postDelayed({
-                    retrofitInfoLoginedUser()
+                    //홈액티비티 실행
+                    startActivity(Intent(context, HomeActivity::class.java))
+                    val mActivity = activity as UserActivity
+                    mActivity.finish()
                 }, 2700)
             }
         }
     }
-    //로그인 된 회원 정보 가져오기
-    @SuppressLint("SetTextI18n")
-    private fun retrofitInfoLoginedUser() {
-        RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
-            when (completionResponse) {
-                CompletionResponse.OK -> {
-                    when (response?.code()) {
-                        200 -> {
-                            //로그인 된 유저 데이터 제이슨으로 파싱하기
-                            val str = response.body()?.string()
-                            val jsonArray = JSONArray(str)
-
-                            //유저 토큰 만료 시간 저장
-                            LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
-
-                            //유저 개인 정보 담기
-                            val jsonObjectUser = jsonArray.getJSONObject(1)
-                            LoginedUserClient.nickname =
-                                "${jsonObjectUser?.getString("nickname")}"
-
-                            if (jsonObjectUser?.getString("sex").equals("T")) {
-                                LoginedUserClient.sex = "남성"
-                            } else
-                                LoginedUserClient.sex = "여성"
-
-                            LoginedUserClient.phoneNumber =
-                                jsonObjectUser?.getString("phoneNumber")
-                            LoginedUserClient.birthDay =
-                                jsonObjectUser?.getString("birthDay")
-                            LoginedUserClient.createdDate =
-                                jsonObjectUser?.getString("createdDate")?.substring(0, 10)
-
-                            Log.d("로그", "ConnectionLoadingFragment - retrofitInfoLoginedUser : ${LoginedUserClient.exp}")
-
-                            //홈액티비티 실행
-                            startActivity(Intent(context, HomeActivity::class.java))
-                            val mActivity = activity as UserActivity
-                            mActivity.finish()
-                        }
-                    }
-                }
-                CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeAccountActivity - retrofitInfoLogineduser : 통신 실패")
-                }
-            }
-        })
-    }
-
 }
