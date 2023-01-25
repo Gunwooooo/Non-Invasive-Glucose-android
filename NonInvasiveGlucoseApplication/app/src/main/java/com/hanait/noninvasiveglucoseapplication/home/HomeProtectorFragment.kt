@@ -116,10 +116,10 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         bottomSheetDialog.setBottomSheetDialogListener(object : CustomBottomSheetDialogManager.BottomSheetDialogListener {
             override fun onSearchClicked(phoneNumber: String) {
                 //자기 번호인지 체크
-//                if(LoginedUserClient.phoneNumber.equals(phoneNumber)) {
-//                    Toast.makeText(requireContext(), "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
+                if(LoginedUserClient.phoneNumber.equals(phoneNumber)) {
+                    Toast.makeText(requireContext(), "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
+                    return
+                }
                 //보호자 검색 retrofit 통신
                 retrofitCheckJoinedProtector(phoneNumber)
             }

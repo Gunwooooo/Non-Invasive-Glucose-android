@@ -221,6 +221,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                             LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
                             //유저 개인 정보 담기
                             val jsonObjectUser = jsonArray.getJSONObject(1)
+                            LoginedUserClient.phoneNumber = jsonObjectUser?.getString("phoneNumber")
                             binding.homeAccountTextViewNickname.text =
                                 "${jsonObjectUser?.getString("nickname")}"
                             binding.homeAccountTextViewPhoneNumber.text =

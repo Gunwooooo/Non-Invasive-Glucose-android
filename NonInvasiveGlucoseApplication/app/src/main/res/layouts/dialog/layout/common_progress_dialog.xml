@@ -15,5 +15,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:indicatorName="BallScaleMultipleIndicator"
-        app:indicatorColor="@color/toss_blue_200"/>
+        app:indicatorColor="@color/black"/>
 </LinearLayout>

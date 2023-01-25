@@ -35,25 +35,18 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
         super.onViewCreated(view, savedInstanceState)
         init()
     }
-
+//
     override fun onResume() {
         super.onResume()
         //사용자 정보 가져오기
+        showProgressDialog()
         retrofitInfoLoginedUser()
     }
 
     private fun init() {
         //프로그래스 다이어로그 호출
-        showProgressDialog()
-        
+
         customChartManager = CustomChartManager.getInstance(requireContext())
-
-
-        Handler().postDelayed({
-            retrofitInfoLoginedUser()
-        }, 5000)
-        //사용자 정보 가져오기
-
 
         //글라이드로 모든 이미지 가져오기
         setImageViewWithGlide()
@@ -325,10 +318,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     @SuppressLint("SetTextI18n")
     private fun retrofitInfoLoginedUser() {
         RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
-            Handler().postDelayed({
-                customProgressDialog.dismiss()
-            }, 2000)
-
+            customProgressDialog.dismiss()
             when (completionResponse) {
                 CompletionResponse.OK -> {
                     when (response?.code()) {
@@ -339,13 +329,15 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                             LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
                             //유저 개인 정보 담기
                             val jsonObjectUser = jsonArray.getJSONObject(1)
+                            LoginedUserClient.phoneNumber = jsonObjectUser?.getString("phoneNumber")
                             binding.homeDashboardTextViewNickname.text =
                                 "${jsonObjectUser?.getString("nickname")}"
                             if (jsonObjectUser?.getString("sex").equals("T")) {
                                 binding.homeDashboardTextViewSex.text = "남성"
                             } else
                                 binding.homeDashboardTextViewSex.text = "여성"
-                            binding.homeDashboardTextViewAge.text = changeBirthDayToAge(jsonObjectUser?.getString("birthDay"))
+                            binding.homeDashboardTextViewAge.text =
+                                changeBirthDayToAge(jsonObjectUser?.getString("birthDay"))
                         }
                     }
                 }

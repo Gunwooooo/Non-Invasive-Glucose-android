@@ -61,10 +61,12 @@
                     android:id="@+id/homeDashboard_imageView_setting"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/ic_baseline_settings_24"
                     app:tint="@color/black" />
             </LinearLayout>
             <ImageView
+                android:adjustViewBounds="true"
                 android:id="@+id/homeDashboard_imageView_dashBoard_background"
                 android:background="@color/android_blue_100"
                 android:layout_width="match_parent"
@@ -95,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
+                    android:adjustViewBounds="true"
                     android:id="@+id/homeDashboard_imageView_profile"
                     android:layout_gravity="bottom"
                     android:layout_width="64dp"
@@ -116,7 +119,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/ps_bold"
                             android:gravity="center_vertical"
-                            android:text="OOO"
+                            android:text="         "
                             android:textColor="@color/toss_black_500"
                             android:textSize="18dp" />
                         <TextView
@@ -140,7 +143,7 @@
                                 android:gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="38세"
+                                android:text="    세"
                                 android:textColor="@color/iphone_gray_500"
                                 android:fontFamily="@font/ps_regular"
                                 android:textSize="18dp"/>
@@ -155,7 +158,7 @@
                             android:id="@+id/homeDashboard_textView_sex"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="남성"
+                            android:text=""
                             android:textColor="@color/toss_black_200"
                             android:fontFamily="@font/ps_regular"
                             android:textSize="16dp"/>
@@ -376,6 +379,7 @@
             android:textSize="18dp" />
 
         <ImageView
+            android:adjustViewBounds="true"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless"
