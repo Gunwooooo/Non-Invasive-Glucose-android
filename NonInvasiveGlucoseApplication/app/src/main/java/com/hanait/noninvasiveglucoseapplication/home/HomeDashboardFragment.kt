@@ -88,7 +88,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             binding.homeDashboardBtnGlucose, binding.homeDashboardTextViewGlucoseDetail ->
                 mActivity.changeFragmentTransactionWithAnimation(HomeThermometerFragment())
             binding.homeDashboardImageViewCalendar ->
-                CustomCalendarManager(requireContext()).makeDatePickerDialog(setDatePickerDialogListener())
+                CustomCalendarManager(requireContext()).makeDatePickerDialog(setDatePickerDialogListener()).show()
             binding.homeDashboardBtnAccount -> {
                 val intent = Intent(requireContext(), HomeAccountActivity::class.java)
                 startActivity(intent)

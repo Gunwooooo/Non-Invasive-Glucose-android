@@ -129,6 +129,8 @@
                     android:orientation="vertical"
                     android:weightSum="1">
                     <LinearLayout
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="0dip"
                         android:layout_weight="0.333"
@@ -138,14 +140,15 @@
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5">
+
                             <TextView
-                                android:gravity="center_vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:fontFamily="@font/ps_regular"
+                                android:gravity="center_vertical"
                                 android:text="전화번호"
                                 android:textColor="@color/toss_black_150"
-                                android:fontFamily="@font/ps_regular"
-                                android:textSize="21dp"/>
+                                android:textSize="21dp" />
                         </LinearLayout>
                         <LinearLayout
                             android:gravity="end"
@@ -169,6 +172,8 @@
                         android:layout_height="0.1dp"
                         android:background="@color/toss_black_100" />
                     <LinearLayout
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:id="@+id/homeAccount_layout_modifySex"
                         android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
@@ -201,7 +206,7 @@
                                 android:gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="O성"
+                                android:text="    "
                                 android:textColor="@color/toss_black_500"
                                 android:fontFamily="@font/ps_regular"
                                 android:textSize="21dp"/>
@@ -213,6 +218,8 @@
                         android:layout_height="0.1dp"
                         android:background="@color/toss_black_100" />
                     <LinearLayout
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:id="@+id/homeAccount_layout_modifyBirthday"
                         android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
@@ -268,6 +275,8 @@
                     android:orientation="vertical"
                     android:weightSum="1">
                     <TextView
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
@@ -285,6 +294,8 @@
                         android:layout_height="0.1dp"
                         android:background="@color/toss_black_100" />
                     <TextView
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"
@@ -302,6 +313,8 @@
                         android:layout_height="0.1dp"
                         android:background="@color/toss_black_100" />
                     <TextView
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:background="@drawable/ripple_white_radius_20"
                         android:clickable="true"
                         android:focusable="true"

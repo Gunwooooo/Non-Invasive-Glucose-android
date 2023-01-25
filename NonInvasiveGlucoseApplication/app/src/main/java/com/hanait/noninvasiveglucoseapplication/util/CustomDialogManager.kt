@@ -137,7 +137,6 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
             }
             //프로그레스 다이어로그
             R.layout.common_progress_dialog -> {
-                Log.d("로그", "CustomDialogManager - onCreateDialog : 로딩 호출됨~~~")
                 val indicatorView = view.findViewById(R.id.commonProgressDialog_indicator) as AVLoadingIndicatorView
                 indicatorView.show()
             }

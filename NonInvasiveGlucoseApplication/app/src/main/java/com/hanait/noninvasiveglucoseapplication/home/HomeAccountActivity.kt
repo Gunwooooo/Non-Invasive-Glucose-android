@@ -69,7 +69,7 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
             binding.homeAccountLayoutModifySex ->
                 showModifySexDialog()
             binding.homeAccountLayoutModifyBirthday ->
-                CustomCalendarManager(this).makeDatePickerDialog(setDatePickerDialogListener())
+                CustomCalendarManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             binding.homeAccountBtnModifyPassword ->
                 showModifyPasswordDialog()
             binding.homeAccountBtnDeleteUser ->
@@ -103,12 +103,17 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         val customDialog = CustomDialogManager(R.layout.home_account_modify_nickname_dialog, null)
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
+                customDialog.dismiss()
+                
+                //공백일 경우
+                if(data == "") {
+                    Toast.makeText(applicationContext, "변경하실 닉네임을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                    return
+                }
                 //회원정보 수정 기능
                 binding.homeAccountTextViewNickname.text = data
                 retrofitEditLoginedUser()
-                customDialog.dismiss()
             }
-
             override fun onNegativeClicked() {
                 customDialog.dismiss()
             }
@@ -122,10 +127,17 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
         val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog, null)
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
+                customDialog.dismiss()
+
+                //공백일 경우
+                if(data == "") {
+                    Toast.makeText(applicationContext, "변경하실 성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                
                 //회원정보 수정 기능 추가 필요 ( 성별 )
                 binding.homeAccountTextViewSex.text = data
                 retrofitEditLoginedUser()
-                customDialog.dismiss()
             }
 
             override fun onNegativeClicked() {

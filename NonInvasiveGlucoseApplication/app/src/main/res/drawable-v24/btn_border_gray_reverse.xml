@@ -17,7 +17,7 @@
             android:shape="rectangle">
             <corners
                 android:radius="10dp" />
-            <solid android:color="@color/toss_black_100"/>
+            <solid android:color="@color/white"/>
         </shape>
     </item>
 
@@ -27,7 +27,7 @@
             android:shape="rectangle">
             <corners
                 android:radius="10dp" />
-            <solid android:color="@color/toss_black_100"/>
+            <solid android:color="@color/white"/>
         </shape>
     </item>
 

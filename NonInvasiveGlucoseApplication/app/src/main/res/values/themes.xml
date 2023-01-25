@@ -57,7 +57,7 @@
 
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/background_white_radius_top_20</item>
+        <item name="android:background">@drawable/background_android_blue_100_radius_top_20</item>
     </style>
 
 
