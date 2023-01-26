@@ -9,8 +9,6 @@
     android:orientation="vertical"
     android:background="@color/android_blue_100">
 
-
-
     <LinearLayout
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -83,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="96dp">
         <LinearLayout
-            android:layout_margin="3dp"
+            android:layout_margin="4dp"
             android:paddingStart="16dp"
             android:clickable="true"
             android:focusable="true"
@@ -104,7 +102,7 @@
                     android:layout_height="64dp" />
                 <LinearLayout
                     android:gravity="center_vertical"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -455,7 +453,7 @@
                     android:background="@color/android_blue_100" />
 
                 <LinearLayout
-                    android:layout_margin="3dp"
+                    android:layout_margin="4dp"
                     android:id="@+id/homeDashboard_btn_thermometer"
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
@@ -649,7 +647,7 @@
                     android:layout_height="2dp"
                     android:background="@color/android_blue_100" />
                 <LinearLayout
-                    android:layout_margin="3dp"
+                    android:layout_margin="4dp"
                     android:padding="16dp"
                     android:background="@drawable/ripple_white_radius_20"
                     android:id="@+id/homeDashboard_btn_heart"
@@ -817,7 +815,7 @@
                     android:layout_height="2dp"
                     android:background="@color/android_blue_100" />
                 <LinearLayout
-                    android:layout_margin="3dp"
+                    android:layout_margin="4dp"
                     android:padding="16dp"
                     android:background="@drawable/ripple_white_radius_20"
                     android:id="@+id/homeDashboard_btn_glucose"

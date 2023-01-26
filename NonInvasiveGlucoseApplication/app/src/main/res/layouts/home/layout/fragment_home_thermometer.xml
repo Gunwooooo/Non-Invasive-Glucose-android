@@ -80,9 +80,7 @@
                 android:layout_height="185dp"
                 android:src="@drawable/background_image_detail"/>
         </LinearLayout>
-
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_marginTop="8dp"

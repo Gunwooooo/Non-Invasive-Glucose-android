@@ -1,17 +1,19 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
@@ -19,18 +21,26 @@ import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
+import com.hanait.noninvasiveglucoseapplication.util.BaseActivity
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
-import okhttp3.ResponseBody
 import org.json.JSONArray
-import org.json.JSONObject
+import java.io.File
+import java.net.URI
 import java.util.*
 import java.util.regex.Pattern
 
-class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
+
+class HomeAccountActivity : View.OnClickListener, BaseActivity() {
+
+    private val PERM_STORAGE = 99   //외부 저장소 권한 처리
+    private val REQ_STORAGE = 102 //갤러리 접근 권한 처리
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+
     private val binding by lazy { ActivityHomeAccountBinding.inflate(layoutInflater) }
+    private val glide by lazy { Glide.with(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +51,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
+        //권한 요청 초기화
+        setActivityResultLauncher()
 
         //유저 정보 가져오기
         retrofitInfoLoginedUser()
@@ -50,7 +62,8 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
         //생년월일 변경 리스너 설정
         setDatePickerDialogListener()
-        
+
+        binding.homeAccountLayoutModifyProfile.setOnClickListener(this)
         binding.homeAccountTextViewModifyNickname.setOnClickListener(this)
         binding.homeAccountLayoutModifySex.setOnClickListener(this)
         binding.homeAccountLayoutModifyBirthday.setOnClickListener(this)
@@ -62,8 +75,10 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.homeAccountBtnBack ->
-                finish()
+            binding.homeAccountLayoutModifyProfile -> {
+                requirePermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERM_STORAGE)
+            }
+            binding.homeAccountBtnBack -> finish()
             binding.homeAccountTextViewModifyNickname ->
                 showModifyNicknameDialog()
             binding.homeAccountLayoutModifySex ->
@@ -81,7 +96,6 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
-        val glide = Glide.with(this)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeAccountImageViewBack)
         glide.load(R.drawable.icon_color_profile).into(binding.homeAccountImageViewProfile)
     }
@@ -345,5 +359,44 @@ class HomeAccountActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         })
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //이미지 변경 권한 요청
+    private fun setActivityResultLauncher() {
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            //갤러리 호출 반환
+            if (result.resultCode == RESULT_OK) {
+                //사진 이미지뷰에 넣기
+                result.data?.data.let {
+                    glide.load(it).circleCrop().into(binding.homeAccountImageViewProfile)
+                }
+            }
+        }
+    }
+    override fun permissionGranted(requestCode: Int) {
+        when(requestCode) {
+            //저장소 권한 허용
+            PERM_STORAGE -> {
+                //갤러리 호출 함수
+                openGallery()
+            }
+        }
+    }
+
+    //퍼미션 거부 시
+    override fun permissionDenied(requestCode: Int) {
+        when(requestCode) {
+            PERM_STORAGE -> {
+                Toast.makeText(baseContext, "갤러리 접근 권한을 승인해야 이용할 수 있는 서비스 입니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    //갤러리 호출 함수
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        activityResultLauncher.launch(intent)
     }
 }
