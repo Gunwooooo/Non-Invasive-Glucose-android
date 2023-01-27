@@ -4,8 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -26,10 +24,9 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import org.json.JSONArray
-import java.io.File
-import java.net.URI
-import java.util.*
 import java.util.regex.Pattern
 
 
@@ -37,7 +34,8 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     private val PERM_STORAGE = 99   //외부 저장소 권한 처리
     private val REQ_STORAGE = 102 //갤러리 접근 권한 처리
-    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var activityResultLauncherGallery: ActivityResultLauncher<Intent>
+    private lateinit var activityResultLauncherCropImage: ActivityResultLauncher<Intent>
 
     private val binding by lazy { ActivityHomeAccountBinding.inflate(layoutInflater) }
     private val glide by lazy { Glide.with(this) }
@@ -56,7 +54,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
         //유저 정보 가져오기
         retrofitInfoLoginedUser()
-        
+
         //글라이드로 모든 이미지 불러오기
         setImageViewWithGlide()
 
@@ -118,7 +116,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 customDialog.dismiss()
-                
+
                 //공백일 경우
                 if(data == "") {
                     Toast.makeText(applicationContext, "변경하실 닉네임을 입력해 주세요", Toast.LENGTH_SHORT).show()
@@ -148,7 +146,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                     Toast.makeText(applicationContext, "변경하실 성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
                     return
                 }
-                
+
                 //회원정보 수정 기능 추가 필요 ( 성별 )
                 binding.homeAccountTextViewSex.text = data
                 retrofitEditLoginedUser()
@@ -335,7 +333,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             }
         })
     }
-    
+
     //비밀번호 변경 시 현재 비밀번호 확인 레트로핏 통신
     private fun retrofitCheckAndModifyCurrentPassword(password: String, newPassword: String) {
         RetrofitManager.instance.checkAndModifyCurrentPassword(password, newPassword, completion = {completionResponse, response ->
@@ -363,17 +361,6 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     //이미지 변경 권한 요청
-    private fun setActivityResultLauncher() {
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            //갤러리 호출 반환
-            if (result.resultCode == RESULT_OK) {
-                //사진 이미지뷰에 넣기
-                result.data?.data.let {
-                    glide.load(it).circleCrop().into(binding.homeAccountImageViewProfile)
-                }
-            }
-        }
-    }
     override fun permissionGranted(requestCode: Int) {
         when(requestCode) {
             //저장소 권한 허용
@@ -397,6 +384,34 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        activityResultLauncher.launch(intent)
+        activityResultLauncherGallery.launch(intent)
+    }
+
+    //반환 처리
+    private fun setActivityResultLauncher() {
+        //갤러리 콜백
+        activityResultLauncherGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            //갤러리 호출 반환
+            Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : @@@@@@@@@@@ : $result")
+            if (result.resultCode == RESULT_OK) {
+                val imageUri = result.data?.data
+
+                val intent = Intent(baseContext, HomeCropImageActivity::class.java)
+                intent.putExtra("imageUri", imageUri)
+                activityResultLauncherCropImage.launch(intent)
+            }
+        }
+        //이미지 자르기 콜백
+        activityResultLauncherCropImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            //갤러리 호출 반환
+            Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : #########  $result")
+            if (result.resultCode == RESULT_OK) {
+                val imageUri = result.data?.data
+//                //사진 이미지뷰에 넣기
+//                result.data?.data.let {
+//                    glide.load(it).circleCrop().into(binding.homeAccountImageViewProfile)
+//                }
+            }
+        }
     }
 }

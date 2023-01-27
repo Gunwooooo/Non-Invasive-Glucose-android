@@ -80,9 +80,11 @@
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/dialog/layout/home_protector_info_dialog.xml" value="0.2328125" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/dialog/layout/home_protector_search_bottom_sheet_dialog.xml" value="0.25" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/dialog/layout/home_protector_search_info_dialog.xml" value="0.264" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_crop_image.xml" value="0.26811594202898553" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home.xml" value="0.176" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home_account.xml" value="0.264" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home_analysis.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home_crop_image.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home_device.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home_full_chart.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/USER/Desktop/git/Non-Invasive-Glucose-android/NonInvasiveGlucoseApplication/app/src/main/res/layouts/home/layout/activity_home_thermometer.xml" value="0.30978260869565216" />
