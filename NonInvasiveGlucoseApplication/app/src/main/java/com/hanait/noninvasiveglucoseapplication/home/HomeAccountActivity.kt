@@ -4,6 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -406,11 +408,11 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             //갤러리 호출 반환
             Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : #########  $result")
             if (result.resultCode == RESULT_OK) {
-                val imageUri = result.data?.data
-//                //사진 이미지뷰에 넣기
-//                result.data?.data.let {
-//                    glide.load(it).circleCrop().into(binding.homeAccountImageViewProfile)
-//                }
+                //자른 이미지 가져오기
+                val imageUri = result.data!!.getParcelableExtra<Bitmap>("croppedImage")!!
+
+                //사진 이미지뷰에 넣기
+                glide.load(imageUri).circleCrop().into(binding.homeAccountImageViewProfile)
             }
         }
     }

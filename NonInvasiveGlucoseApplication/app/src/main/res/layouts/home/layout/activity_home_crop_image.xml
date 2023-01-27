@@ -23,7 +23,7 @@
     </LinearLayout>
 
     <com.theartofdev.edmodo.cropper.CropImageView
-        android:id="@+id/cropImageView"
+        android:id="@+id/homeCropImage_cropImageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -40,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/homeCropImage_textView_cancel"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_margin="32dp"
@@ -50,12 +51,18 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/ps_regular"/>
         </LinearLayout>
+        <ImageView
+            android:layout_marginBottom="50dp"
+            android:id="@+id/image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
         <LinearLayout
             android:gravity="end"
             android:layout_weight="0.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/homeCropImage_textView_select"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_margin="32dp"

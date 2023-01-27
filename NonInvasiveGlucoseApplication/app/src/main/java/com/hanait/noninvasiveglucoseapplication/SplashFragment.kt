@@ -77,7 +77,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                             Log.d("로그", "SplashFragment - retrofitLoginUser : AT : ${LoginedUserClient.authorization}")
                             Log.d("로그", "SplashFragment - retrofitLoginUser : RT : ${LoginedUserClient.refreshToken}")
                             Handler().postDelayed({
-                                Toast.makeText(requireContext(), "자동 로그인 성공!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), "자동 로그인 성공", Toast.LENGTH_SHORT).show()
                                 val mActivity = activity as UserActivity
                                 mActivity.changeFragmentTransaction(UserSetConnectDeviceFragment())
                             }, SPLASH_TIME_OUT)
