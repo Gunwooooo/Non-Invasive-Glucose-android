@@ -22,13 +22,16 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseActivity
+import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONArray
+import java.io.File
 import java.util.regex.Pattern
 
 
@@ -361,6 +364,11 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         })
     }
 
+    private fun retrofitModifyProfileImage(profileImage : MultipartBody.Part) {
+//        val
+//        RetrofitManager.instance.modifyProfileImage()
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     //이미지 변경 권한 요청
     override fun permissionGranted(requestCode: Int) {
@@ -394,7 +402,6 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         //갤러리 콜백
         activityResultLauncherGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             //갤러리 호출 반환
-            Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : @@@@@@@@@@@ : $result")
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
 
@@ -406,13 +413,21 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         //이미지 자르기 콜백
         activityResultLauncherCropImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             //갤러리 호출 반환
-            Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : #########  $result")
             if (result.resultCode == RESULT_OK) {
-                //자른 이미지 가져오기
-                val imageUri = result.data!!.getParcelableExtra<Bitmap>("croppedImage")!!
+                Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : ###### $result")
 
-                //사진 이미지뷰에 넣기
-                glide.load(imageUri).circleCrop().into(binding.homeAccountImageViewProfile)
+                val file = File(cacheDir, PROFILE_IMAGE_NAME)
+                
+                val uri = Uri.fromFile(file)
+
+                Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : $uri")
+                
+                //자른 이미지 가져오기
+//
+//                retrofitModifyProfileImage()
+//
+//                //사진 이미지뷰에 넣기
+                glide.load(uri).circleCrop().into(binding.homeAccountImageViewProfile)
             }
         }
     }

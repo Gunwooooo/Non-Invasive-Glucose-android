@@ -2,6 +2,7 @@ package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import com.google.gson.JsonElement
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -62,6 +63,12 @@ interface APIPHRService {
         @Field("password") password: String?
     ) : Call<ResponseBody>
 
+    //프로필 사진 등록
+    @Multipart
+    @POST()
+    fun modifyProfileImage(
+        @Part("profileImage") profileImage: MultipartBody.Part
+    ) : Call<ResponseBody>
     ////////////////////////////////////////////////////////////////////////////////////
 
     //보호자 조회

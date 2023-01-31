@@ -7,6 +7,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.API.NAVER_SMS_URL
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
 import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_ACCESS_KEY
 import com.hanait.noninvasiveglucoseapplication.util.Constants.NAVER_SERVICE_ID
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -159,6 +160,20 @@ class RetrofitManager {
     fun modifyForgottenPassword(phoneNumber: String, password: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         val call = apiPHRService?.modifyForgottenPassword(phoneNumber, password) ?: return
         call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //프로필 이미지 변경
+    fun modifyProfileImage(profileImage : MultipartBody.Part, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.modifyProfileImage(profileImage) ?: return
+        call.enqueue(object  : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
             }
