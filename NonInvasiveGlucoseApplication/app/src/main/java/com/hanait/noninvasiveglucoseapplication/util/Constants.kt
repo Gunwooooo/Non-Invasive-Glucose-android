@@ -27,6 +27,6 @@ object Constants {
 
 
     //프로필 사진 경로
-    val PROFILE_IMAGE_NAME = "profile.png"
+    val PROFILE_IMAGE_NAME = "_profile.png"
 }
 

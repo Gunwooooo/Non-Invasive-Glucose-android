@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
+import java.io.File
 import kotlin.system.exitProcess
 
 
@@ -73,10 +74,16 @@ class HomeActivity : AppCompatActivity() {
     //뒤로가기 키 눌렸을 때 종료
     @Override
     override fun onBackPressed() {
-        if(System.currentTimeMillis() - waitTime >=1500 ) {
+        if(System.currentTimeMillis() - waitTime >= 1500 ) {
             waitTime = System.currentTimeMillis()
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
         } else {
+            //캐쉬 메모리 삭제
+            for(cacheFile : File in cacheDir.listFiles()!!) {
+                if(!cacheFile.isFile) continue
+                cacheFile.delete()
+            }
+
             moveTaskToBack(true); // 태스크를 백그라운드로 이동
             finishAffinity()
             exitProcess(0)

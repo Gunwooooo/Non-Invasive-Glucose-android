@@ -65,9 +65,9 @@ interface APIPHRService {
 
     //프로필 사진 등록
     @Multipart
-    @POST()
+    @POST(".")
     fun modifyProfileImage(
-        @Part("profileImage") profileImage: MultipartBody.Part
+        @Part profileImage: MultipartBody.Part
     ) : Call<ResponseBody>
     ////////////////////////////////////////////////////////////////////////////////////
 

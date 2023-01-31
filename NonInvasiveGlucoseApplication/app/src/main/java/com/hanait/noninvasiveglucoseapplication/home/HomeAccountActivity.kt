@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
@@ -28,8 +29,11 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.Request
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONArray
 import java.io.File
 import java.util.regex.Pattern
@@ -38,7 +42,7 @@ import java.util.regex.Pattern
 class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     private val PERM_STORAGE = 99   //외부 저장소 권한 처리
-    private val REQ_STORAGE = 102 //갤러리 접근 권한 처리
+
     private lateinit var activityResultLauncherGallery: ActivityResultLauncher<Intent>
     private lateinit var activityResultLauncherCropImage: ActivityResultLauncher<Intent>
 
@@ -364,9 +368,24 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         })
     }
 
-    private fun retrofitModifyProfileImage(profileImage : MultipartBody.Part) {
-//        val
-//        RetrofitManager.instance.modifyProfileImage()
+    //이미지 파일 서버로 보내기
+    private fun retrofitModifyProfileImage(imageFile : File) {
+        val requestBody = imageFile.asRequestBody("image/png".toMediaTypeOrNull())
+        val multipartBody = MultipartBody.Part.createFormData("profileImage", imageFile.name, requestBody)
+        RetrofitManager.instance.modifyProfileImage(multipartBody, completion = {
+            completionResponse, response -> 
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    //사진 이미지뷰에 넣기
+                    Toast.makeText(baseContext, "프로필 이미지가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+//                    glide.load(imageFile).circleCrop().into(binding.homeAccountImageViewProfile)
+                    Log.d("로그", "HomeAccountActivity - retrofitModifyProfileImage : $response")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeAccountActivity - retrofitModifyProfileImage : 통신 실패")
+                }
+            }
+        })
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -405,6 +424,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             if (result.resultCode == RESULT_OK) {
                 val imageUri = result.data?.data
 
+                //이미지 자르는 activity 호출
                 val intent = Intent(baseContext, HomeCropImageActivity::class.java)
                 intent.putExtra("imageUri", imageUri)
                 activityResultLauncherCropImage.launch(intent)
@@ -414,20 +434,16 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         activityResultLauncherCropImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             //갤러리 호출 반환
             if (result.resultCode == RESULT_OK) {
-                Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : ###### $result")
 
-                val file = File(cacheDir, PROFILE_IMAGE_NAME)
-                
-                val uri = Uri.fromFile(file)
+                //이미지 파일 가져오기
+                val imageName = result.data?.getStringExtra("imageName")
+                val mFile = File(cacheDir, imageName!!)
 
-                Log.d("로그", "HomeAccountActivity - setActivityResultLauncher : $uri")
-                
-                //자른 이미지 가져오기
-//
-//                retrofitModifyProfileImage()
-//
-//                //사진 이미지뷰에 넣기
-                glide.load(uri).circleCrop().into(binding.homeAccountImageViewProfile)
+                //사진 이미지뷰에 넣기
+                glide.load(mFile).circleCrop().into(binding.homeAccountImageViewProfile)
+
+                //서버에 파일 전송
+                retrofitModifyProfileImage(mFile)
             }
         }
     }

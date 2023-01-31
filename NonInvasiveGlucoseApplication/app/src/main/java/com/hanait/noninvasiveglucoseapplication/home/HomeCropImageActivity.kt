@@ -2,6 +2,7 @@ package com.hanait.noninvasiveglucoseapplication.home
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeCropImageBinding
 import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
@@ -63,10 +65,12 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
 
             val croppedImage = resizeBitmapImage(result.bitmap)
 
-            //이미지 파일로 쓰기
-            saveImageToFile(croppedImage)
+            //이미지 캐쉬 폴더에 쓰기
+            val timeMillis = System.currentTimeMillis().toString()
+            saveImageToFile(croppedImage, timeMillis)
 
-
+            //캐쉬 파일 전달하기
+            intent.putExtra("imageName", timeMillis + PROFILE_IMAGE_NAME)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -96,14 +100,9 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //이미지 파일로 쓰기
-    private fun saveImageToFile(croppedImage : Bitmap) {
-        Log.d("로그", "HomeCropImageActivity - saveImageToFile : $cacheDir")
-        val mFile = File(cacheDir, PROFILE_IMAGE_NAME)
+    private fun saveImageToFile(croppedImage : Bitmap, timeMillis : String) {
+        val mFile = File(cacheDir, timeMillis + PROFILE_IMAGE_NAME)
         try {
-            //존재한다면 제거
-            if(mFile.exists()) {
-                mFile.delete()
-            }
             mFile.createNewFile()
             val fileOutputStream = FileOutputStream(mFile)
             croppedImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
