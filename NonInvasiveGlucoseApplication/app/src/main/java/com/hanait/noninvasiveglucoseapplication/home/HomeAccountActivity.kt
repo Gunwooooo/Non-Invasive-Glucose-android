@@ -40,6 +40,7 @@ import java.util.regex.Pattern
 
 
 class HomeAccountActivity : View.OnClickListener, BaseActivity() {
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
 
     private val PERM_STORAGE = 99   //외부 저장소 권한 처리
 
@@ -243,7 +244,10 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     //로그인 된 회원 정보 가져오기
     @SuppressLint("SetTextI18n")
     private fun retrofitInfoLoginedUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
+            customProgressDialog.dismiss()
             when (completionResponse) {
                 CompletionResponse.OK -> {
                     when (response?.code()) {
@@ -277,7 +281,10 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //회원 탈퇴 레트로핏 통신
     private fun retrofitDeleteLoginedUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.deleteLoginedUser(completion = { completionResponse, response ->
+            customProgressDialog.dismiss()
             when (completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
@@ -302,6 +309,8 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //회원 정보 수정 레트로핏 통신
     private fun retrofitEditLoginedUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         var sex = "F"
         if(binding.homeAccountTextViewSex.text.equals("남성"))
             sex = "T"
@@ -310,6 +319,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         val birthday = binding.homeAccountTextViewBirthday.text.toString()
         val userData = UserData(nickname, phoneNumber, "", birthday, sex)
         RetrofitManager.instance.editLoginedUser(userData, completion = {completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {
@@ -331,7 +341,10 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //로그아웃 레트로핏 통신
     private fun retrofitLogoutUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.logoutUser(completion = {completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitLogoutUser : ${response}")
@@ -345,7 +358,10 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //비밀번호 변경 시 현재 비밀번호 확인 레트로핏 통신
     private fun retrofitCheckAndModifyCurrentPassword(password: String, newPassword: String) {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.checkAndModifyCurrentPassword(password, newPassword, completion = {completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitCheckCurrentPassword : ${response}")
@@ -370,10 +386,13 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //이미지 파일 서버로 보내기
     private fun retrofitModifyProfileImage(imageFile : File) {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         val requestBody = imageFile.asRequestBody("image/png".toMediaTypeOrNull())
         val multipartBody = MultipartBody.Part.createFormData("profileImage", imageFile.name, requestBody)
         RetrofitManager.instance.modifyProfileImage(multipartBody, completion = {
-            completionResponse, response -> 
+            completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     //사진 이미지뷰에 넣기

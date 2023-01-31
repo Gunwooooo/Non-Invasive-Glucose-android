@@ -20,12 +20,14 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 
 class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
-    private lateinit var bottomSheetDialog : CustomBottomSheetDialogManager
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val bottomSheetDialog by lazy { CustomBottomSheetDialogManager(requireContext()) }
 
-    var protectingList: ArrayList<UserData> = ArrayList()
-    var protectorList: ArrayList<UserData> = ArrayList()
-    lateinit var protectingAdapter: ProtectorAdapter
-    lateinit var protectorAdapter: ProtectorAdapter
+    private var protectingList: ArrayList<UserData> = ArrayList()
+    private var protectorList: ArrayList<UserData> = ArrayList()
+
+    private val protectingAdapter by lazy { ProtectorAdapter(requireContext(), protectingList) }
+    private val protectorAdapter by lazy { ProtectorAdapter(requireContext(), protectorList) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,7 +68,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     private fun recyclerViewCreate() {
         val protectingRecyclerView = binding.homeProtectorRecyclerViewProtecting
-        protectingAdapter =  ProtectorAdapter(requireContext(), protectingList)
+
         //클릭 이벤트 리스너 처리
         protectingAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
@@ -84,7 +86,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
         //보호자 리스트 생성
         val protectorRecyclerView = binding.homeProtectorRecyclerViewProtector
-        protectorAdapter = ProtectorAdapter(requireContext(), protectorList)
+
         //클릭 이벤트 리스너 처리
         protectorAdapter.setOnItemClickListener(object : ProtectorAdapter.OnItemClickListener {
             override fun onInfoItem(v: View, pos: Int) {
@@ -111,7 +113,6 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //바텀 시트 다이어로그 호출(보호자 조회)
     private fun showBottomSheetDialog() {
-        bottomSheetDialog = CustomBottomSheetDialogManager(requireContext())
         //검색 클릭 이벤트 설정
         bottomSheetDialog.setBottomSheetDialogListener(object : CustomBottomSheetDialogManager.BottomSheetDialogListener {
             override fun onSearchClicked(phoneNumber: String) {
@@ -208,8 +209,11 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //보호자 조회 retrofit 통신
     private fun retrofitCheckJoinedProtector(phoneNumber: String) {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.checkJoinedProtector(phoneNumber, completion = {
                 completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {
@@ -243,8 +247,11 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     //호보자 등록 레트로핏 통신
     @SuppressLint("SetTextI18n")
     private fun retrofitAddProtector(userData: UserData) {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.addProtector(userData, completion = {
                 completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")
@@ -263,8 +270,11 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     //모든 유저 정보 조회
     private fun retrofitInfoAllUserList() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.infoAllUserList(completion = {
                 completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")

@@ -24,7 +24,7 @@ import kotlin.math.min
 
 
 class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(FragmentHomeThermometerBinding::inflate), View.OnClickListener, OnChartValueSelectedListener {
-    lateinit var customChartManager: CustomChartManager
+    private val customChartManager by lazy { CustomChartManager.getInstance(requireContext())}
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,8 +38,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
 
         //초기 글라이드로 이미지 불러오기
         setImageViewWithGlide()
-        
-        customChartManager = CustomChartManager.getInstance(requireContext())
+
         setThermometer7DayAverageChart()
         setThermometer7DayAbnormalChart()
         setThermometer7DayNormalChart()

@@ -16,9 +16,12 @@ import com.hanait.noninvasiveglucoseapplication.user.UserSetConnectDeviceFragmen
 import com.hanait.noninvasiveglucoseapplication.user.UserSetPhoneNumberFragment
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
+import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
+
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
 
     private val SPLASH_TIME_OUT:Long = 2000 //2초
 
@@ -64,8 +67,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
 //    ///////////////////////////////////////////////////////////////////////////////////////////
     private fun retrofitLoginUser(userData : UserData) {
+    customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.loginUser(userData, completion = {
                 completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {

@@ -13,9 +13,12 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 
 
 class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {
+
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,11 +65,14 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
 
     //가입된 유저 체크
     private fun retrofitCheckJoinedUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.checkJoinedUser(_userData, completion = {
             completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     val mActivity = activity as UserActivity
+                    customProgressDialog.dismiss()
                     when(response?.code()) {
                         //존재하지 않는 아이디일 경우 전화번호 인증화면으로 이동
                         200 -> {

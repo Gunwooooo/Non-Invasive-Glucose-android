@@ -17,12 +17,15 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import org.json.JSONObject
 import java.util.regex.Pattern
 
 class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgottenPasswordBinding>(
     FragmentUserModifyForgottenPasswordBinding::inflate), View.OnClickListener {
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -102,8 +105,11 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private fun retrofitModifyForgottenPassword() {
+    //로딩 프로그레스 바 출력
+    customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.modifyForgottenPassword(_userData.phoneNumber, _userData.password, completion = {
             completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d(
@@ -125,8 +131,11 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
     }
 
     private fun retrofitLoginUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.loginUser(_userData, completion = {
                 completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {

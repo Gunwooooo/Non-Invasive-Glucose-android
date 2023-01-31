@@ -15,9 +15,13 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
+import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
 class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>(FragmentUserCheckPasswordBinding::inflate), View.OnClickListener  {
+
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,8 +95,11 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     private fun retrofitLoginUser() {
+        //로딩 프로그레스 바 출력
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.loginUser(_userData, completion = {
             completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {

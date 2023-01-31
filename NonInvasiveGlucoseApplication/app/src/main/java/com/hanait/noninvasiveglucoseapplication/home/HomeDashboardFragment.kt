@@ -28,8 +28,8 @@ import java.util.*
 
 
 class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(FragmentHomeDashboardBinding::inflate), View.OnClickListener {
-    lateinit var customProgressDialog: CustomDialogManager
-    lateinit var customChartManager: CustomChartManager
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customChartManager by lazy { CustomChartManager.getInstance(requireContext()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,15 +38,13 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 //
     override fun onResume() {
         super.onResume()
+
         //사용자 정보 가져오기
-        showProgressDialog()
         retrofitInfoLoginedUser()
     }
 
     private fun init() {
         //프로그래스 다이어로그 호출
-
-        customChartManager = CustomChartManager.getInstance(requireContext())
 
         //글라이드로 모든 이미지 가져오기
         setImageViewWithGlide()
@@ -98,12 +96,6 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                 startActivity(intent)
             }
         }
-    }
-
-    //로딩 다이어로그 출력
-    private fun showProgressDialog() {
-        customProgressDialog = CustomDialogManager(R.layout.common_progress_dialog, null)
-        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
     }
 
     //초기 글라이드로 이미지 불러오기
@@ -317,6 +309,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     //로그인 된 회원 정보 가져오기
     @SuppressLint("SetTextI18n")
     private fun retrofitInfoLoginedUser() {
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.infoLoginedUser(completion = { completionResponse, response ->
             customProgressDialog.dismiss()
             when (completionResponse) {

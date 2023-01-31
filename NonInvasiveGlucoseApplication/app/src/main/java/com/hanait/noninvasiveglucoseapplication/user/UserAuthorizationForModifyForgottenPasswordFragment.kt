@@ -16,10 +16,13 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
 class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<FragmentUserAuthorizationForModifyForgottenPasswordBinding>
     (FragmentUserAuthorizationForModifyForgottenPasswordBinding::inflate), View.OnClickListener {
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+
     var countDowntimer: CountDownTimer? = null
 
     companion object {
@@ -94,6 +97,8 @@ class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<Fragmen
     //인증 번호 보내는 함수
     @RequiresApi(Build.VERSION_CODES.O)
     private fun retrofitSendSMSAuthCode() {
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
+
         val timestamp = System.currentTimeMillis().toString()
         val naverCloudServiceManager = NaverCloudServiceManager.getInstance()
 
@@ -102,6 +107,7 @@ class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<Fragmen
         val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(_userData.phoneNumber, smsAuthCode)
         RetrofitManager.instance.sendSMS(timestamp, signature, bodyRequest, completion = {
                 completionResponse, s ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : OK!")

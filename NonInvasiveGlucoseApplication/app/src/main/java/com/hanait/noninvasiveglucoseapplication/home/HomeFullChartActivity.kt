@@ -14,7 +14,7 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 
 class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeFullChartBinding.inflate(layoutInflater) }
-    lateinit var customChartManager: CustomChartManager
+    private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +24,6 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
-        customChartManager = CustomChartManager.getInstance(applicationContext)
-
         setThermometerLineChart()
 
         binding.homeFullChartBtnBack.setOnClickListener(this)
