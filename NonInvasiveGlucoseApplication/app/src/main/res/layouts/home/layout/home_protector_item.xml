@@ -40,11 +40,19 @@
             android:layout_weight="0.6">
             <TextView
                 android:layout_marginStart="5dp"
-                android:id="@+id/homeProtectorItem_textView_phoneNumber"
+                android:id="@+id/homeProtectorItem_textView_nickname"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="이름"
+                android:text="OO"
+                android:textSize="18dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_600"/>
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="님"
                 android:textSize="18dp"
                 android:fontFamily="@font/ps_regular"
                 android:textColor="@color/toss_black_700"/>

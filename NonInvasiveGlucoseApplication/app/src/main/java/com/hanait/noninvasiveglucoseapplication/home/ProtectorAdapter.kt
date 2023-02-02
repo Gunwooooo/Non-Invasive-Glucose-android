@@ -27,13 +27,13 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<UserData>) : Re
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var protectorRlv: RoundedLetterView
-        private lateinit var protectorPhoneNumber: TextView
+        private lateinit var protectorNickname: TextView
         private lateinit var protectorDeleteBtn : TextView
         private lateinit var protectorInfoBtn: LinearLayout
         @SuppressLint("SetTextI18n")
         fun setTextView(userData: UserData, position: Int) {
             protectorRlv = itemView.findViewById(R.id.homeProtectorItem_rlv)
-            protectorPhoneNumber = itemView.findViewById(R.id.homeProtectorItem_textView_phoneNumber)
+            protectorNickname = itemView.findViewById(R.id.homeProtectorItem_textView_nickname)
             protectorDeleteBtn = itemView.findViewById(R.id.homeProtectorItem_btn_delete)
             protectorInfoBtn = itemView.findViewById(R.id.homeProtectorItem_layout_Info)
 
@@ -43,7 +43,7 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<UserData>) : Re
 
             //text넣기
             protectorRlv.titleText = userData.nickname[0].toString()
-            protectorPhoneNumber.text = userData.nickname + " 님"
+            protectorNickname.text = userData.nickname
 
             //삭제 클릭 리스너
             protectorDeleteBtn.setOnClickListener {
