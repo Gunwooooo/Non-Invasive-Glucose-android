@@ -83,9 +83,8 @@ interface APIPHRService {
         @Body userData: UserData?
     ): Call<ResponseBody>
 
-    //유저 정보 전체 리스트 조회
-    @POST("/wellink/caregiver/checkList")
-    fun infoAllUserList(
+    //보호자 리스트 조회
+    @POST("/wellink/caregiver/caregiverList")
+    fun getProtectorList(
     ) : Call<ResponseBody>
-
 }

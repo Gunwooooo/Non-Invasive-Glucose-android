@@ -32,15 +32,17 @@
         android:id="@+id/home_bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:minHeight="60dp"
         app:itemIconTint="@drawable/selector_color_bottom_navigation"
         app:itemTextColor="@drawable/selector_color_bottom_navigation"
-        android:minHeight="60dp"
+        app:itemBackground="@drawable/ripple_white_radius_20"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_bouncyNestedScrollView"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

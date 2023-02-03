@@ -21,7 +21,7 @@ import retrofit2.Retrofit
 
 class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
-    private val bottomSheetDialog by lazy { CustomBottomSheetDialogManager(requireContext()) }
+    private val bottomSheetDialog by lazy { CustomBottomSheetDialogManager() }
 
     private var protectingList: ArrayList<UserData> = ArrayList()
     private var protectorList: ArrayList<UserData> = ArrayList()
@@ -31,10 +31,8 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
 
-        //모든 사용자 정보 조회
-        retrofitInfoAllUserList()
+        init()
     }
 
     @SuppressLint("SetTextI18n")
@@ -42,6 +40,9 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
         //글라이드로 모든 이미지 불러오기
         setImageViewWithGlide()
+
+        //보호자 리스트 가져오기
+        retrofitGetProtectorList()
 
         //보호대상자 임의 데이터 추가
         protectingList.add(UserData("김건우","010-****-7199","", "2019월 10월 21일", "T"))
@@ -249,17 +250,19 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     private fun retrofitAddProtector(userData: UserData) {
         //로딩 프로그레스 바 출력
         customProgressDialog.show(childFragmentManager, "common_progress_dialog")
-        RetrofitManager.instance.addProtector(userData, completion = {
-                completionResponse, response ->
+        RetrofitManager.instance.addProtector(userData, completion = { completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")
+                    when(response?.code()) {
+                        200 -> {
+                            //유저 데이터 리스트에 추가
+                            protectorList.add(userData)
+                            protectorAdapter.notifyItemInserted(protectorList.size)
+                            binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
+                        }
+                    }
 
-                    //유저 데이터 리스트에 추가
-                    protectorList.add(userData)
-                    protectorAdapter.notifyItemInserted(protectorList.size)
-                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}명"
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
@@ -269,17 +272,17 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     }
 
     //모든 유저 정보 조회
-    private fun retrofitInfoAllUserList() {
+    private fun retrofitGetProtectorList() {
         //로딩 프로그레스 바 출력
         customProgressDialog.show(childFragmentManager, "common_progress_dialog")
-        RetrofitManager.instance.infoAllUserList(completion = {
+        RetrofitManager.instance.getProtectorList(completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : $response")
                     val str = response?.body()?.string()
-                    Log.d("로그", "HomeProtectorFragment - retrofitInfoAllUserList : $str")
+                    Log.d("로그", "HomeProtectorFragment - retrofitInfoAllUserList : 보호자 리스트 : $str")
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")

@@ -215,8 +215,8 @@ class RetrofitManager {
     }
 
     //모든 유저 정보 조회
-    fun infoAllUserList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.infoAllUserList() ?: return
+    fun getProtectorList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getProtectorList() ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
