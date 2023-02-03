@@ -37,13 +37,13 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         supportFragmentManager.beginTransaction().replace(R.id.user_frameId, SplashFragment()).commitAllowingStateLoss()
 
-        binding.userBtnBack.setOnClickListener(this)
+        binding.userImageViewBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
             //뒤로가기 클릭
-            binding.userBtnBack -> {
+            binding.userImageViewBack -> {
                 changePrevFragment()
             }
         }
@@ -58,7 +58,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
     //뒤로가기 버튼 비져빌리티 설정
     fun setBtnBackVisible(visibility: Int) {
-        binding.userBtnBack.visibility = visibility
+        binding.userImageViewBack.visibility = visibility
     }
 
     //이전 프래그먼트 저장

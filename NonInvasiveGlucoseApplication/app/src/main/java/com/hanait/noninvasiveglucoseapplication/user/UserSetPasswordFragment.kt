@@ -10,8 +10,8 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.jakewharton.rxbinding4.widget.textChanges
 import java.util.regex.Pattern
-
 
 class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(FragmentUserSetPasswordBinding::inflate), View.OnClickListener {
 
@@ -19,8 +19,6 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
         super.onViewCreated(view, savedInstanceState)
 
         init()
-
-
     }
 
     private fun init() {
@@ -30,24 +28,12 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
 
         binding.userSetPasswordBtnNext.setOnClickListener(this)
 
-        setEditTextTextChanged()
-    }
-
-    private fun setEditTextTextChanged() {
-        binding.userSetPasswordEditTextPassword.addTextChangedListener(object: TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetPasswordBtnNext.isEnabled = s?.length != 0 && binding.userSetPasswordEditTextPasswordCheck.text.isNotEmpty()
+        //에딧 텍스트 subscribe
+        binding.userSetPasswordEditTextPassword.textChanges().subscribe { password ->
+            binding.userSetPasswordEditTextPasswordCheck.textChanges().subscribe {
+                binding.userSetPasswordBtnNext.isEnabled = password.isNotEmpty() && it.isNotEmpty()
             }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
-        binding.userSetPasswordEditTextPasswordCheck.addTextChangedListener(object: TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetPasswordBtnNext.isEnabled = s?.length != 0 && binding.userSetPasswordEditTextPassword.text.isNotEmpty()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        }
     }
 
     //비밀번호 일치 여부 체크

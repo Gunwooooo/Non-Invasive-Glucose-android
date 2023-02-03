@@ -34,8 +34,11 @@
         android:textSize="22dp"
         android:importantForAutofill="no"
         android:background="@drawable/selector_color_edittext"
-        android:inputType="number">
+        android:inputType="number"
+        android:focusableInTouchMode="true">
+        <requestFocus/>
     </EditText>
+
 
     <Button
         android:id="@+id/userSetPhoneNumber_btn_next"

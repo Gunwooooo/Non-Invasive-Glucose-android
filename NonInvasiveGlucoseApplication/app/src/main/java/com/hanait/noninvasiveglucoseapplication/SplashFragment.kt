@@ -1,9 +1,11 @@
 package com.hanait.noninvasiveglucoseapplication
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentSplashBinding
@@ -37,11 +39,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        init()
-        binding.editText.textChanges().subscribe {
-            Log.d("로그", "SplashFragment - onViewCreated : text : $it")
-        }
-
+        init()
+//        binding.editText.textChanges().subscribe {
+//            Log.d("로그", "SplashFragment - onViewCreated : text : $it")
+//        }
     }
 
     private fun init() {

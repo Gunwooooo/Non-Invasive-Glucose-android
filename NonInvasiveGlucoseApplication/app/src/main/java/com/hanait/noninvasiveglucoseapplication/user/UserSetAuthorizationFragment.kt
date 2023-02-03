@@ -18,10 +18,11 @@ import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
+import com.jakewharton.rxbinding4.widget.textChanges
 
 class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
-    var countDowntimer: CountDownTimer? = null
+    private var countDownTimer: CountDownTimer? = null
 
     companion object {
         //결과 인증 코드
@@ -41,14 +42,17 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         mActivity.setProgressDialogValueAndVisible(28, View.VISIBLE)
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
-        binding.userSetAuthorizationBtnNext.setOnClickListener(this)
-
         //입력받은 휴대전화 번호 넣어놓기
         binding.userSetAuthorizationEditTextPhoneNumber.hint = _userData.phoneNumber
+
         binding.userSetAuthorizationEditTextPhoneNumber.setOnClickListener(this)
         binding.userSetAuthorizationBtnGetAuthNum.setOnClickListener(this)
+        binding.userSetAuthorizationBtnNext.setOnClickListener(this)
 
-        setEditTextTextChanged()
+        //에딧 텍스트 subscribe
+        binding.userSetAuthorizationEditTextInputAuthNum.textChanges().subscribe {
+            binding.userSetAuthorizationBtnNext.isEnabled = it.isNotEmpty()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -78,18 +82,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
             }
         }
     }
-
-    //텍스트 비어있을 경우 버튼 색상 변경 이벤트
-    private fun setEditTextTextChanged() {
-        binding.userSetAuthorizationEditTextInputAuthNum.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetAuthorizationBtnNext.isEnabled = s?.length != 0
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
-
+    
     //인증 번호 보내는 함수
     @RequiresApi(Build.VERSION_CODES.O)
     private fun retrofitSendSMSAuthCode() {
@@ -97,7 +90,6 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         val timestamp = System.currentTimeMillis().toString()
         val naverCloudServiceManager = NaverCloudServiceManager.getInstance()
-
         val signature = naverCloudServiceManager.makeSignature(timestamp)
         smsAuthCode = naverCloudServiceManager.makeSMSAuthCode()
         val bodyRequest = NaverCloudServiceManager.getInstance().makeBodyRequest(_userData.phoneNumber, smsAuthCode)
@@ -111,10 +103,10 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
                     binding.userSetAuthorizationBtnGetAuthNum.text = "재발송"
 
                     //타이머 3분 작동
-                    if(countDowntimer != null) {
-                        countDowntimer!!.cancel()
+                    if(countDownTimer != null) {
+                        countDownTimer!!.cancel()
                     }
-                    countDowntimer = naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userSetAuthorizationTextViewCountTime, requireContext()).start()
+                    countDownTimer = naverCloudServiceManager.countDownTimer(180 * 1000, 1000, binding.userSetAuthorizationTextViewCountTime, requireContext()).start()
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "UserSetAuthorizationFragment - onClick : 통신 실패")
@@ -125,6 +117,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
 
     override fun onDestroyView() {
         super.onDestroyView()
-        countDowntimer?.cancel()
+        //카운트 타이머 초기화
+        countDownTimer?.cancel()
     }
 }

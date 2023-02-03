@@ -18,21 +18,19 @@
         android:layout_height="wrap_content"
         android:max="100"/>
 
-    <LinearLayout
-        android:layout_marginStart="16dp"
-        android:gravity="center"
-        android:background="?android:attr/selectableItemBackground"
-        android:focusable="true"
+
+    <ImageView
         android:clickable="true"
-        android:id="@+id/user_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/toss_black_700" />
-    </LinearLayout>
+        android:focusable="true"
+        android:id="@+id/user_imageView_back"
+        android:background="@drawable/ripple_android_blue_100_radius_20"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:tint="@color/toss_black_700" />
+
 
     <FrameLayout
         android:layout_margin="16dp"

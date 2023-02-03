@@ -9,6 +9,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetNicknameBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
+import com.jakewharton.rxbinding4.widget.textChanges
 
 class UserSetNicknameFragment : BaseFragment<FragmentUserSetNicknameBinding>(FragmentUserSetNicknameBinding::inflate), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,19 +26,12 @@ class UserSetNicknameFragment : BaseFragment<FragmentUserSetNicknameBinding>(Fra
 
         binding.userSetNicknameBtnNext.setOnClickListener(this)
 
-        setEditTextTextChanged()
+        //에딧 텍스트 subscribe
+        binding.userSetNicknameEditTextNickname.textChanges().subscribe {
+            binding.userSetNicknameBtnNext.isEnabled = it.isNotEmpty()
+        }
     }
 
-    //텍스트 비어있을 경우 버튼 색상 변경 이벤트
-    private fun setEditTextTextChanged() {
-        binding.userSetNicknameEditTextNickname.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetNicknameBtnNext.isEnabled = s?.length != 0
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
 
     override fun onClick(v: View?) {
         when(v) {

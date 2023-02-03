@@ -1,10 +1,13 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPhoneNumberBinding
@@ -14,6 +17,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
+import com.jakewharton.rxbinding4.widget.textChanges
 
 
 class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {
@@ -24,19 +28,6 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         super.onViewCreated(view, savedInstanceState)
 
         init()
-
-
-    }
-
-    //텍스트 비어있을 경우 버튼 색상 변경 이벤트
-    private fun setEditTextTextChanged() {
-        binding.userSetPhoneNumberEditTextPhoneNumber.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userSetPhoneNumberBtnNext.isEnabled = s?.length != 0
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
     }
 
     private fun init(){
@@ -48,9 +39,20 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         //프로그래스바 셋
         binding.userSetPhoneNumberBtnNext.setOnClickListener(this)
 
-        setEditTextTextChanged()
+        //에딧텍스트 문자열 subscribe
+        binding.userSetPhoneNumberEditTextPhoneNumber.textChanges().subscribe {
+            binding.userSetPhoneNumberBtnNext.isEnabled = it.isNotEmpty()
+        }
 
-        //유저 데이터 클래스 초기화
+        //키보드 올리기
+        if (binding.userSetPhoneNumberEditTextPhoneNumber.requestFocus()) {
+            // 프래그먼트기 때문에 getActivity() 사용
+            val inputManager: InputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(binding.userSetPhoneNumberEditTextPhoneNumber, InputMethodManager.SHOW_IMPLICIT)
+        }
+
+
+        //서버에 보낼 유저 데이터 클래스 초기화
         _userData = UserData("", "", "", "", "T")
     }
 
