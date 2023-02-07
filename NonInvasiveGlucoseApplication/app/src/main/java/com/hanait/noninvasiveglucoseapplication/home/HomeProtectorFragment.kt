@@ -117,6 +117,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         //검색 클릭 이벤트 설정
         bottomSheetDialog.setBottomSheetDialogListener(object : CustomBottomSheetDialogManager.BottomSheetDialogListener {
             override fun onSearchClicked(phoneNumber: String) {
+                Log.d("로그", "HomeProtectorFragment - onSearchClicked : $phoneNumber")
                 //자기 번호인지 체크
                 if(LoginedUserClient.phoneNumber.equals(phoneNumber)) {
                     Toast.makeText(requireContext(), "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
@@ -229,6 +230,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                             val sex = jsonObjectUser?.getString("sex")
                             val userData = UserData(nickname!!, phoneNumber_!!, "", birthDay!!, sex!!)
 
+                            Log.d("로그", "HomeProtectorFragment - retrofitCheckJoinedProtector : 보호자  : ${userData}")
                             //유저 정보 출력 다이어로그 호출
                             showProtectorSearchInfoDialog(userData)
                         }

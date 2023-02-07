@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +29,8 @@ class CustomBottomSheetDialogManager: BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        //키보드 올리기
+
     }
 
     override fun onCreateView(
@@ -37,12 +40,20 @@ class CustomBottomSheetDialogManager: BottomSheetDialogFragment() {
     ): View {
         val view = inflater.inflate(R.layout.home_protector_search_bottom_sheet_dialog, container, false)
         val editText = view?.findViewById(R.id.homeProtectorSearchBottomSheetDialog_editText) as EditText
+
+        //키보드 올리기
+        if (editText.requestFocus()) {
+            // 프래그먼트기 때문에 getActivity() 사용
+            val inputManager: InputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        }
+
         editText.setOnEditorActionListener(object: TextView.OnEditorActionListener {
             //에딧 텍스트 검색 아이콘 클릭 이벤트 처리
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                   editText.setText("")
                     bottomSheetDialogListener?.onSearchClicked(editText.text.toString())
+                    editText.setText("")
                     return true
                 }
                 return false
@@ -50,5 +61,4 @@ class CustomBottomSheetDialogManager: BottomSheetDialogFragment() {
         })
         return view
     }
-
 }

@@ -300,9 +300,10 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 
     //생년월일로 나이 계산
     private fun changeBirthDayToAge(birthDay: String?) : String {
-        val userYear = birthDay?.substring(0, 4)?.toInt()
+        if(birthDay?.length!! <= 5 ) return ""
+        val userYear = birthDay.substring(0, 4).toInt()
         val curYear = GregorianCalendar().get(Calendar.YEAR)
-        return "${curYear - userYear!!}세"
+        return "${curYear - userYear}세"
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -44,13 +44,8 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             binding.userSetPhoneNumberBtnNext.isEnabled = it.isNotEmpty()
         }
 
-        //키보드 올리기
-        if (binding.userSetPhoneNumberEditTextPhoneNumber.requestFocus()) {
-            // 프래그먼트기 때문에 getActivity() 사용
-            val inputManager: InputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.showSoftInput(binding.userSetPhoneNumberEditTextPhoneNumber, InputMethodManager.SHOW_IMPLICIT)
-        }
-
+        //키보드 출력하기
+        showSoftInput()
 
         //서버에 보낼 유저 데이터 클래스 초기화
         _userData = UserData("", "", "", "", "T")
@@ -64,6 +59,17 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
             }
         }
     }
+
+    //키보드 올리기
+    private fun showSoftInput() {
+        if (binding.userSetPhoneNumberEditTextPhoneNumber.requestFocus()) {
+            // 프래그먼트기 때문에 getActivity() 사용
+            val inputManager: InputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(binding.userSetPhoneNumberEditTextPhoneNumber, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     //가입된 유저 체크
     private fun retrofitCheckJoinedUser() {
