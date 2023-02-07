@@ -20,34 +20,93 @@
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
 
-        <TextView
+        <LinearLayout
             android:layout_marginTop="16dp"
-            android:gravity="left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="나이 : 만27세"
-            android:textSize="21dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_500"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+            <TextView
+                android:id="@+id/homeProtectorInfoDialog_textView_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="left"
+        <LinearLayout
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="성별 : 남"
-            android:textSize="21dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_500"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="left"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나이 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+            <TextView
+                android:id="@+id/homeProtectorInfoDialog_textView_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="전화번호 뒷자리 : 7199"
-            android:textSize="21dp"
-            android:fontFamily="@font/ps_regular"
-            android:textColor="@color/toss_black_500"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="성별 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+            <TextView
+                android:id="@+id/homeProtectorInfoDialog_textView_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전화번호 뒷자리 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+            <TextView
+                android:id="@+id/homeProtectorInfoDialog_textView_phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
 
     </LinearLayout>
 

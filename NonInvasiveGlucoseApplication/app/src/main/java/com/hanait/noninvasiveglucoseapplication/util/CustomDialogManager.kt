@@ -116,24 +116,32 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 positiveButton = view.findViewById(R.id.homeProtectingInfoDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeProtectingInfoDialog_btn_negative) as Button
             }
-            //보호 대상자 정보 보기 다이어로그
+            //보호자 정보 보기 다이어로그
             R.layout.home_protector_info_dialog -> {
                 positiveButton = view.findViewById(R.id.homeProtectorInfoDialog_btn_positive) as Button
+                val nickNameTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_nickName) as TextView
+                val ageTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_age) as TextView
+                val sexTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_sex) as TextView
+                val phoneNumberTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_phoneNumber) as TextView
+
+                //닉네임, 나이, 성별 전화번호 뒷자리 출력
+                nickNameTextView.text = mUserData?.nickname
+                ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
+                sexTextView.text = changeSexToString(mUserData!!.sex)
+                phoneNumberTextView.text = mUserData?.phoneNumber?.substring(7, 11)
             }
-            //보호자 조회 다이어로그
+            //보호자 검색 및 조회 다이어로그
             R.layout.home_protector_search_info_dialog -> {
                 positiveButton = view.findViewById(R.id.homeProtectorSearchInfo_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeProtectorSearchInfo_btn_negative) as Button
                 val nickNameTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_nickName) as TextView
                 val ageTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_age) as TextView
+                val sexTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_sex) as TextView
 
-                //현재 나이 설정
-                val userYear = mUserData?.birthDay?.substring(0, 4)?.toInt()
-                val curYear = GregorianCalendar().get(Calendar.YEAR)
-                val age = curYear - userYear!!
-
+                //현재 나이, 이름 설정
                 nickNameTextView.text = mUserData?.nickname
-                ageTextView.text = "${age}세"
+                ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
+                sexTextView.text = changeSexToString(mUserData!!.sex)
             }
             //프로그레스 다이어로그
             R.layout.common_progress_dialog -> {
@@ -222,6 +230,20 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
         return builder.create()
     }
 
+    //생년월일로 나이 계산
+    private fun changeBirthDayToAge(birthDay: String) : String {
+        if(birthDay.length <= 5 ) return ""
+        val userYear = birthDay.substring(0, 4).toInt()
+        val curYear = GregorianCalendar().get(Calendar.YEAR)
+        return "${curYear - userYear}세"
+    }
+
+    //성별 T,f -> 남성 여성
+    private fun changeSexToString(sex: String) : String {
+        if(sex == "T") return "남성"
+        else return "여성"
+    }
+
     //다이어로그 버튼 별 클릭 리스너 등록
     override fun onClick(v: View?) {
         when(v?.id) {
@@ -255,6 +277,5 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
             -> twoButtonWithThreeDataDialogListener?.onNegativeClicked()
         }
     }
-    //010
 }
 

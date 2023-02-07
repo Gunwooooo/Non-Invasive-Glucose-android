@@ -35,7 +35,7 @@
                 android:id="@+id/homeProtectorSearchInfo_textView_nickName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OOO"
+                android:text=""
                 android:textSize="21dp"
                 android:fontFamily="@font/ps_regular"
                 android:textColor="@color/toss_black_500"/>
@@ -44,7 +44,7 @@
 
         <LinearLayout
             android:gravity="center_vertical"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -60,13 +60,35 @@
                 android:id="@+id/homeProtectorSearchInfo_textView_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OO세"
+                android:text=""
                 android:textSize="21dp"
                 android:fontFamily="@font/ps_regular"
                 android:textColor="@color/toss_black_500"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="성별 : "
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
 
+            <TextView
+                android:id="@+id/homeProtectorSearchInfo_textView_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="21dp"
+                android:fontFamily="@font/ps_regular"
+                android:textColor="@color/toss_black_500"/>
+        </LinearLayout>
 
 
         <TextView

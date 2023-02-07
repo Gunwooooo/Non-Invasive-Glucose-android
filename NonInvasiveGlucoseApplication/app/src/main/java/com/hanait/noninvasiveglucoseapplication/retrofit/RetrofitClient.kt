@@ -19,7 +19,7 @@ object RetrofitClient {
         val client = OkHttpClient.Builder()
 
         val loggingInterceptor = HttpLoggingInterceptor { message ->
-            Log.d("로그", "RetrofitClient - log : $message")
+            Log.d("로그", "//로깅 인터셉터 >> $message")
         }
 
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
