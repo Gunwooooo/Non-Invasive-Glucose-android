@@ -89,7 +89,7 @@
                     android:id="@+id/homeProtector_textView_protectorCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="O"
+                    android:text=" - "
                     android:fontFamily="@font/ps_regular"
                     android:textColor="@color/toss_blue_200"
                     android:textSize="24dp"/>
@@ -194,7 +194,7 @@
                     android:id="@+id/homeProtector_textView_protectingCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="O"
+                    android:text=" - "
                     android:fontFamily="@font/ps_regular"
                     android:textColor="@color/toss_blue_200"
                     android:textSize="24dp"/>

@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeCropImageBinding
 import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 import java.io.FileOutputStream
@@ -67,10 +68,13 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
 
             //이미지 캐쉬 폴더에 쓰기
             val timeMillis = System.currentTimeMillis().toString()
-            saveImageToFile(croppedImage, timeMillis)
+            val fileName = LoginedUserClient.phoneNumber + "_" + timeMillis + PROFILE_IMAGE_NAME
+
+            //파일명 : 전화번호_시간_profile.png
+            saveImageToFile(croppedImage, fileName)
 
             //캐쉬 파일 전달하기
-            intent.putExtra("imageName", timeMillis + PROFILE_IMAGE_NAME)
+            intent.putExtra("imageName", fileName)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -100,8 +104,8 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //이미지 파일로 쓰기
-    private fun saveImageToFile(croppedImage : Bitmap, timeMillis : String) {
-        val mFile = File(cacheDir, timeMillis + PROFILE_IMAGE_NAME)
+    private fun saveImageToFile(croppedImage : Bitmap, fileName : String) {
+        val mFile = File(cacheDir, fileName)
         try {
             mFile.createNewFile()
             val fileOutputStream = FileOutputStream(mFile)

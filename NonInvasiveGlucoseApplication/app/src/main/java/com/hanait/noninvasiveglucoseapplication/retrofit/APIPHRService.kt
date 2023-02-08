@@ -87,4 +87,10 @@ interface APIPHRService {
     @POST("/wellink/caregiver/caregiverList")
     fun getProtectorList(
     ) : Call<ResponseBody>
+
+    //보호자 삭제
+    @GET("/wellink/caregiver/delete/{phoneNumber}")
+    fun deleteProtector(
+        @Path("phoneNumber") phoneNumber: String?
+    ): Call<ResponseBody>
 }

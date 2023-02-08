@@ -46,10 +46,7 @@ object RetrofitClient {
         val client = OkHttpClient.Builder()
 
         val loggingInterceptor = HttpLoggingInterceptor { message ->
-            Log.d(
-                "로그",
-                "RetrofitClient - log : $message"
-            )
+            Log.d("로그", "로깅 인터셉터 >> $message")
         }
 
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -58,7 +55,7 @@ object RetrofitClient {
         //토큰 체크 인터셉터 추가
         val tokenCheckInterceptor = Interceptor { chain ->
             val accessToken = LoginedUserClient.authorization
-            var newRequest: Request
+            val newRequest: Request
             //토큰이 있는 경우
             if(accessToken != null && accessToken != "") {
                 //헤더에 추가
