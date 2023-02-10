@@ -38,14 +38,11 @@ interface APIPHRService {
     fun deleteLoginedUser(
     ): Call<ResponseBody>
 
+    //회원정보 수정
     @PUT("/wellink/user/edit")
-    fun editLoginedUser(
+    fun modifyLoginedUser(
         @Body userData: UserData
     ): Call<ResponseBody>
-
-    @POST("/logout")
-    fun logoutUser(
-    ) : Call<ResponseBody>
 
     //현재 비밀번호 확인 및 변경
     @FormUrlEncoded
@@ -88,9 +85,16 @@ interface APIPHRService {
     fun getProtectorList(
     ) : Call<ResponseBody>
 
+    //보호 대상자 리스트 조회
+    @POST("/wellink/caregiver/userList")
+    fun getProtectingList(
+    ): Call<ResponseBody>
+
     //보호자 삭제
     @GET("/wellink/caregiver/delete/{phoneNumber}")
     fun deleteProtector(
         @Path("phoneNumber") phoneNumber: String?
     ): Call<ResponseBody>
+
+
 }

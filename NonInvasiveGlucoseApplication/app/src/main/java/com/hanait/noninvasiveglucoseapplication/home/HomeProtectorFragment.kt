@@ -274,24 +274,67 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.getProtectorList(completion = {
                 completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    when(response?.code()) {
+                        200 -> {
+                            val str = response.body()?.string()
+                            val jsonArray = JSONArray(str)
+
+                            //모든 유저 리스트에 넣기
+                            for(i in 0 until jsonArray.length()) {
+                                val jsonObjectUser = jsonArray.getJSONObject(i).getJSONObject("caregiver")
+                                val phoneNumber = jsonObjectUser.getString("phoneNumber")
+                                val nickname = jsonObjectUser.getString("nickname")
+                                val birthDay = jsonObjectUser.getString("birthDay")
+                                val sex = jsonObjectUser.getString("sex")
+                                val userData = UserData(nickname, phoneNumber, "", birthDay, sex)
+                                protectorList.add(userData)
+                            }
+                            protectorAdapter.notifyItemInserted(protectorList.size)
+                            binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+
+                            //보호 대상자 리스트 가져오기 호출
+                            retrofitGetProtectingList()
+                        }
+                    }
+
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
+                }
+            }
+        })
+    }
+
+    //모든 유저 정보 조회
+    private fun retrofitGetProtectingList() {
+        RetrofitManager.instance.getProtectingList(completion = {
+                completionResponse, response ->
+            //프로그레스 다이어로그 없애기
             customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    val str = response?.body()?.string()
-                    val jsonArray = JSONArray(str)
+                    when(response?.code()) {
+                        200 -> {
+                            val str = response.body()?.string()
+//                    val jsonArray = JSONArray(str)
 
-                    //모든 유저 리스트에 넣기
-                    for(i in 0 until jsonArray.length()) {
-                        val jsonObjectUser = jsonArray.getJSONObject(i).getJSONObject("caregiver")
-                        val phoneNumber = jsonObjectUser.getString("phoneNumber")
-                        val nickname = jsonObjectUser.getString("nickname")
-                        val birthDay = jsonObjectUser.getString("birthDay")
-                        val sex = jsonObjectUser.getString("sex")
-                        val userData = UserData(nickname, phoneNumber, "", birthDay, sex)
-                        protectorList.add(userData)
+                            Log.d("로그", "HomeProtectorFragment - retrofitGetProtectingList : $str")
+                            //모든 유저 리스트에 넣기
+//                    for(i in 0 until jsonArray.length()) {
+//                        val jsonObjectUser = jsonArray.getJSONObject(i).getJSONObject("caregiver")
+//                        val phoneNumber = jsonObjectUser.getString("phoneNumber")
+//                        val nickname = jsonObjectUser.getString("nickname")
+//                        val birthDay = jsonObjectUser.getString("birthDay")
+//                        val sex = jsonObjectUser.getString("sex")
+//                        val userData = UserData(nickname, phoneNumber, "", birthDay, sex)
+//                        protectorList.add(userData)
+//                    }
+//                    protectorAdapter.notifyItemInserted(protectorList.size)
+//                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+                        }
                     }
-                    protectorAdapter.notifyItemInserted(protectorList.size)
-                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")

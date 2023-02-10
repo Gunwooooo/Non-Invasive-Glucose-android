@@ -116,22 +116,8 @@ class RetrofitManager {
     }
 
     //회원 정보 수정
-    fun editLoginedUser(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.editLoginedUser(userData) ?: return
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                completion(CompletionResponse.OK, response)
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                completion(CompletionResponse.FAIL, null)
-            }
-        })
-    }
-
-    //로그아웃
-    fun logoutUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.logoutUser() ?: return
+    fun modifyLoginedUser(userData: UserData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.modifyLoginedUser(userData) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -214,9 +200,22 @@ class RetrofitManager {
         })
     }
 
-    //모든 유저 정보 조회
+    //보호자 리스트 조회
     fun getProtectorList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         val call = apiPHRService?.getProtectorList() ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //보호 대상자 리스트 조회
+    fun getProtectingList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getProtectingList() ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

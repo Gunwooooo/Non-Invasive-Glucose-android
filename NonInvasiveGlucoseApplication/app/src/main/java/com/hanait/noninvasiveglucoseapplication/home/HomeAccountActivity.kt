@@ -113,7 +113,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             binding.homeAccountTextViewBirthday.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
-            retrofitEditLoginedUser()
+            retrofitModifyLoginedUser()
         }
         return datePickerDialogListener
     }
@@ -134,7 +134,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                 }
                 //회원정보 수정 기능
                 binding.homeAccountTextViewNickname.text = data
-                retrofitEditLoginedUser()
+                retrofitModifyLoginedUser()
             }
             override fun onNegativeClicked() {
                 customDialog.dismiss()
@@ -159,7 +159,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
                 //회원정보 수정 기능 추가 필요 ( 성별 )
                 binding.homeAccountTextViewSex.text = data
-                retrofitEditLoginedUser()
+                retrofitModifyLoginedUser()
             }
 
             override fun onNegativeClicked() {
@@ -228,16 +228,31 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         val customDialog = CustomDialogManager(R.layout.home_account_logout_user_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
             override fun onPositiveClicked() {
-                //로그아웃 retrofit 통신 필요
-                retrofitLogoutUser()
                 customDialog.dismiss()
-            }
 
+                Toast.makeText(applicationContext, "로그아웃이 되었습니다.", Toast.LENGTH_SHORT).show()
+
+                //자동로그인 초기화 및 초기 화면으로 이동
+                resetAutoLoginAndFinish()
+            }
             override fun onNegativeClicked() {
                 customDialog.dismiss()
             }
         })
         customDialog.show(supportFragmentManager, "home_account_modify_password_dialog")
+    }
+
+    //자동 로그인 해제 및 초기 화면으로 이동
+    private fun resetAutoLoginAndFinish() {
+        //자동 로그인 해제
+        prefs.setBoolean("AUTO_LOGIN", false)
+        prefs.setString("USER_PHONENUMBER", "")
+        prefs.setString("USER_PASSWORD", "")
+
+        //초기화면으로 돌아가기
+        val intent = Intent(this, UserActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,17 +303,11 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             when (completionResponse) {
                 CompletionResponse.OK -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
-                    //자동 로그인 해제
-                    prefs.setBoolean("AUTO_LOGIN", false)
-                    prefs.setString("USER_PHONENUMBER", "")
-                    prefs.setString("USER_PASSWORD", "")
-
                     Toast.makeText(this, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
 
-                    //초기화면으로 돌아가기
-                    val intent = Intent(this, UserActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    //자동로그인 초기화 및 초기 화면으로 이동
+                    resetAutoLoginAndFinish()
+
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : 통신 실패")
@@ -308,7 +317,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     }
 
     //회원 정보 수정 레트로핏 통신
-    private fun retrofitEditLoginedUser() {
+    private fun retrofitModifyLoginedUser() {
         //로딩 프로그레스 바 출력
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         var sex = "F"
@@ -318,7 +327,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         val phoneNumber = binding.homeAccountTextViewPhoneNumber.text.toString()
         val birthday = binding.homeAccountTextViewBirthday.text.toString()
         val userData = UserData(nickname, phoneNumber, "", birthday, sex)
-        RetrofitManager.instance.editLoginedUser(userData, completion = {completionResponse, response ->
+        RetrofitManager.instance.modifyLoginedUser(userData, completion = {completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -333,24 +342,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                 }
                 CompletionResponse.FAIL -> {
                     Toast.makeText(this, "정보 수정에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-                    Log.d("로그", "HomeAccountActivity - retrofitEditLoginedUser : 통신 실패")
-                }
-            }
-        })
-    }
-
-    //로그아웃 레트로핏 통신
-    private fun retrofitLogoutUser() {
-        //로딩 프로그레스 바 출력
-        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
-        RetrofitManager.instance.logoutUser(completion = {completionResponse, response ->
-            customProgressDialog.dismiss()
-            when(completionResponse) {
-                CompletionResponse.OK -> {
-                    Log.d("로그", "HomeAccountActivity - retrofitLogoutUser : ${response}")
-                }
-                CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeAccountActivity - retrofitLogoutUser : 통신 실패")
+                    Log.d("로그", "HomeAccountActivity - retrofitmodifyLoginedUser : 통신 실패")
                 }
             }
         })

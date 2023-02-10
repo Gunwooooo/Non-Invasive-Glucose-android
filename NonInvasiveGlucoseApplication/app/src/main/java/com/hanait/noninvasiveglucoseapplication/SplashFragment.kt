@@ -3,6 +3,7 @@ package com.hanait.noninvasiveglucoseapplication
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -66,7 +67,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                 retrofitLoginUser(userData)
             }
             false -> {
-                Handler().postDelayed({
+                Handler(Looper.getMainLooper()).postDelayed({
                     mActivity.changeFragmentTransaction(UserSetPhoneNumberFragment())
                 }, SPLASH_TIME_OUT)
             }
@@ -95,7 +96,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                             LoginedUserClient.refreshToken = response.headers()["refresh_token"]
                             Log.d("로그", "SplashFragment - retrofitLoginUser : AT : ${LoginedUserClient.authorization}")
                             Log.d("로그", "SplashFragment - retrofitLoginUser : RT : ${LoginedUserClient.refreshToken}")
-                            Handler().postDelayed({
+                            Handler(Looper.getMainLooper()).postDelayed({
                                 Toast.makeText(requireContext(), "자동 로그인 성공", Toast.LENGTH_SHORT).show()
                                 val mActivity = activity as UserActivity
                                 mActivity.changeFragmentTransaction(UserSetConnectDeviceFragment())
