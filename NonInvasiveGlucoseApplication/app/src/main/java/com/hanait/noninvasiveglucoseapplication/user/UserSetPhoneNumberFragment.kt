@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetPhoneNumberBinding
@@ -18,6 +19,7 @@ import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.jakewharton.rxbinding4.widget.textChanges
+import kotlinx.coroutines.CoroutineScope
 
 
 class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {
@@ -28,6 +30,7 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         super.onViewCreated(view, savedInstanceState)
 
         init()
+
     }
 
     private fun init(){
@@ -55,9 +58,21 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         when(v) {
             binding.userSetPhoneNumberBtnNext -> {
                 _userData.phoneNumber = binding.userSetPhoneNumberEditTextPhoneNumber.text.toString()
+                //전화번호 길이 체크
+                if(_userData.phoneNumber.length != 11) {
+                    Toast.makeText(requireContext(), "올바른 전화번호 양식이 아닙니다.", Toast.LENGTH_SHORT).show()
+                    binding.userSetPhoneNumberEditTextPhoneNumber.setText("")
+                    return
+                }
+                //등록된 회원인지 확인
                 retrofitCheckJoinedUser()
             }
         }
+    }
+
+    //전화번호 포맷 확인
+    private fun checkCorrectPhoneNumber() : Boolean {
+        return _userData.phoneNumber.length == 11
     }
 
     //키보드 올리기

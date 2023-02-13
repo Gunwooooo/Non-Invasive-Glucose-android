@@ -118,22 +118,15 @@
                             android:fontFamily="@font/ps_bold"
                             android:gravity="center_vertical"
                             android:text="         "
-                            android:textColor="@color/toss_black_500"
-                            android:textSize="18dp" />
-                        <TextView
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="님"
                             android:textColor="@color/toss_black_700"
-                            android:fontFamily="@font/ps_bold"
-                            android:textSize="18dp"/>
+                            android:textSize="18dp" />
+
                         <LinearLayout
                             android:focusable="false"
                             android:clickable="false"
                             android:gravity="center"
                             android:layout_marginStart="16dp"
-                            android:background="@drawable/background_layout__toss_black_100_radius_20"
+                            android:background="@drawable/background_layout_toss_black_100_radius_20"
                             android:layout_width="60dp"
                             android:layout_height="match_parent">
                             <TextView

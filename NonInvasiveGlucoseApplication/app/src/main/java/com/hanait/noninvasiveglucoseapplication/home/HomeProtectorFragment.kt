@@ -41,12 +41,8 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         //글라이드로 모든 이미지 불러오기
         setImageViewWithGlide()
 
-        //보호자 리스트 가져오기
+        //보호자 및 보호 대상자 리스트 가져오기
         retrofitGetProtectorList()
-
-        //보호자 임의 데이터 추가
-        protectingList.add(UserData("황의조","010-****-5423","", "2019월 10월 21일", "T"))
-        protectingList.add(UserData("황희찬","010-****-3456","", "2019월 10월 21일", "T"))
 
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}"
 
@@ -318,21 +314,21 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                     when(response?.code()) {
                         200 -> {
                             val str = response.body()?.string()
-//                    val jsonArray = JSONArray(str)
+                            val jsonArray = JSONArray(str)
 
                             Log.d("로그", "HomeProtectorFragment - retrofitGetProtectingList : $str")
                             //모든 유저 리스트에 넣기
-//                    for(i in 0 until jsonArray.length()) {
-//                        val jsonObjectUser = jsonArray.getJSONObject(i).getJSONObject("caregiver")
-//                        val phoneNumber = jsonObjectUser.getString("phoneNumber")
-//                        val nickname = jsonObjectUser.getString("nickname")
-//                        val birthDay = jsonObjectUser.getString("birthDay")
-//                        val sex = jsonObjectUser.getString("sex")
-//                        val userData = UserData(nickname, phoneNumber, "", birthDay, sex)
-//                        protectorList.add(userData)
-//                    }
-//                    protectorAdapter.notifyItemInserted(protectorList.size)
-//                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+                            for(i in 0 until jsonArray.length()) {
+                                val jsonObjectUser = jsonArray.getJSONObject(i)
+                                val phoneNumber = jsonObjectUser.getString("phoneNumber")
+                                val nickname = jsonObjectUser.getString("nickname")
+                                val birthDay = jsonObjectUser.getString("birthDay")
+                                val sex = jsonObjectUser.getString("sex")
+                                val userData = UserData(nickname, phoneNumber, "", birthDay, sex)
+                                protectingList.add(userData)
+                            }
+                            protectingAdapter.notifyItemInserted(protectingList.size)
+                            binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}"
                         }
                     }
                 }

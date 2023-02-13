@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.jakewharton.rxbinding4.widget.textChanges
 import com.wang.avi.AVLoadingIndicatorView
 import java.util.*
 
@@ -115,6 +116,16 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
             R.layout.home_protecting_info_dialog -> {
                 positiveButton = view.findViewById(R.id.homeProtectingInfoDialog_btn_positive) as Button
                 negativeButton = view.findViewById(R.id.homeProtectingInfoDialog_btn_negative) as Button
+                val nickNameTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_nickName) as TextView
+                val ageTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_age) as TextView
+                val sexTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_sex) as TextView
+                val phoneNumberTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_phoneNumber) as TextView
+
+                //닉네임, 나이, 성별 전화번호 뒷자리 출력
+                nickNameTextView.text = mUserData?.nickname
+                ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
+                sexTextView.text = changeSexToString(mUserData!!.sex)
+                phoneNumberTextView.text = mUserData!!.phoneNumber.substring(7, 11)
             }
             //보호자 정보 보기 다이어로그
             R.layout.home_protector_info_dialog -> {
@@ -128,20 +139,21 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
-                phoneNumberTextView.text = mUserData?.phoneNumber?.substring(7, 11)
+                phoneNumberTextView.text = mUserData!!.phoneNumber.substring(7, 11)
             }
             //보호자 검색 및 조회 다이어로그
             R.layout.home_protector_search_info_dialog -> {
-                positiveButton = view.findViewById(R.id.homeProtectorSearchInfo_btn_positive) as Button
-                negativeButton = view.findViewById(R.id.homeProtectorSearchInfo_btn_negative) as Button
-                val nickNameTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_nickName) as TextView
-                val ageTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_age) as TextView
-                val sexTextView = view.findViewById(R.id.homeProtectorSearchInfo_textView_sex) as TextView
-
+                positiveButton = view.findViewById(R.id.homeProtectorSearchInfoDialog_btn_positive) as Button
+                negativeButton = view.findViewById(R.id.homeProtectorSearchInfoDialog_btn_negative) as Button
+                val nickNameTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_nickName) as TextView
+                val ageTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_age) as TextView
+                val sexTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_sex) as TextView
+                val phoneNumberTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_phoneNumber) as TextView
                 //현재 나이, 이름 설정
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
+                phoneNumberTextView.text = mUserData!!.phoneNumber.subSequence(7, 11)
             }
             //프로그레스 다이어로그
             R.layout.common_progress_dialog -> {
@@ -178,27 +190,15 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val curPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_curPassword) as EditText
                 val newPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_newPassword) as EditText
                 val checkPasswordEditText = view.findViewById(R.id.homeAccountModifyPasswordDialog_editText_checkPassword) as EditText
-                curPasswordEditText.addTextChangedListener(object : TextWatcher {
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        stringData1 = curPasswordEditText.text.toString()
-                    }
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun afterTextChanged(s: Editable?) {}
-                })
-                newPasswordEditText.addTextChangedListener(object : TextWatcher {
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        stringData2 = newPasswordEditText.text.toString()
-                    }
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun afterTextChanged(s: Editable?) {}
-                })
-                checkPasswordEditText.addTextChangedListener(object : TextWatcher {
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        stringData3 = checkPasswordEditText.text.toString()
-                    }
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun afterTextChanged(s: Editable?) {}
-                })
+                curPasswordEditText.textChanges().subscribe {
+                    stringData1 = it.toString()
+                }
+                newPasswordEditText.textChanges().subscribe {
+                    stringData2 = it.toString()
+                }
+                checkPasswordEditText.textChanges().subscribe {
+                    stringData3 = it.toString()
+                }
             }
             //회원탈퇴 다이어로그
             R.layout.home_account_delete_user_dialog -> {
@@ -254,13 +254,13 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
             //투 버튼 파지티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
             R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectingInfoDialog_btn_positive,
-            R.id.homeAccountLogoutUserDialog_btn_positive, R.id.homeProtectorSearchInfo_btn_positive,
+            R.id.homeAccountLogoutUserDialog_btn_positive, R.id.homeProtectorSearchInfoDialog_btn_positive,
             -> twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
             R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectingInfoDialog_btn_negative,
-            R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeProtectorSearchInfo_btn_negative,
+            R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeProtectorSearchInfoDialog_btn_negative,
             -> twoButtonDialogListener?.onNegativeClicked()
 
 

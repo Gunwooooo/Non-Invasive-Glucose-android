@@ -79,13 +79,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="OOO"
-                                android:textColor="@color/toss_black_500"
-                                android:fontFamily="@font/ps_bold"
-                                android:textSize="21dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="님"
                                 android:textColor="@color/toss_black_700"
                                 android:fontFamily="@font/ps_bold"
                                 android:textSize="21dp"/>

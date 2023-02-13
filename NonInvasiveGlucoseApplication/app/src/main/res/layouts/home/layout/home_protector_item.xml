@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="8dp"
-        android:paddingEnd="16dp"
+        android:paddingEnd="8dp"
         android:orientation="horizontal"
         android:weightSum="1">
         <LinearLayout
@@ -22,11 +22,12 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="0.2">
+
             <com.github.pavlospt.roundedletterview.RoundedLetterView
-                android:layout_gravity="center"
                 android:id="@+id/homeProtectorItem_rlv"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
                 app:rlv_backgroundColorValue="@color/iphone_blue_500"
                 app:rlv_titleColor="@android:color/white"
                 app:rlv_titleSize="30dp"
@@ -34,46 +35,52 @@
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="0.6">
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+            <LinearLayout
+                android:gravity="center|start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/homeProtectorItem_textView_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:fontFamily="@font/ps_bold"
+                    android:textColor="@color/toss_black_700"/>
+            </LinearLayout>
             <TextView
-                android:layout_marginStart="5dp"
-                android:id="@+id/homeProtectorItem_textView_nickname"
-                android:gravity="center_vertical"
+                android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="OO"
-                android:textSize="18dp"
+                android:layout_height="wrap_content"
+                android:text="상세정보 보기"
+                android:textSize="16dp"
                 android:fontFamily="@font/ps_regular"
-                android:textColor="@color/toss_black_600"/>
-            <TextView
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="님"
-                android:textSize="18dp"
-                android:fontFamily="@font/ps_regular"
-                android:textColor="@color/toss_black_700"/>
+                android:textColor="@color/toss_black_150"/>
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
             android:gravity="end"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="0.2">
-            <TextView
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:focusable="true"
+            <Button
                 android:id="@+id/homeProtectorItem_btn_delete"
-                android:layout_width="wrap_content"
+                android:background="@drawable/btn_border_light_gray2"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="해제"
-                android:textSize="18dp"
+                android:textSize="14dp"
+                android:stateListAnimator="@null"
                 android:fontFamily="@font/ps_regular"
-                android:textColor="@color/toss_black_150"/>
+                android:textColor="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
