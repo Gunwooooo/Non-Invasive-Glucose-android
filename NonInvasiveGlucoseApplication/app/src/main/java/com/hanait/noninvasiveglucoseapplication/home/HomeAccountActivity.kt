@@ -230,7 +230,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             override fun onPositiveClicked() {
                 customDialog.dismiss()
 
-                Toast.makeText(applicationContext, "로그아웃이 되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
 
                 //자동로그인 초기화 및 초기 화면으로 이동
                 resetAutoLoginAndFinish()

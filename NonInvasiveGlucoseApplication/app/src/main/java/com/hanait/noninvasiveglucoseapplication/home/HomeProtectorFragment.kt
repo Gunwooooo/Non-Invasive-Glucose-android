@@ -279,7 +279,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
                             //모든 유저 리스트에 넣기
                             for(i in 0 until jsonArray.length()) {
-                                val jsonObjectUser = jsonArray.getJSONObject(i).getJSONObject("caregiver")
+                                val jsonObjectUser = jsonArray.getJSONObject(i)
                                 val phoneNumber = jsonObjectUser.getString("phoneNumber")
                                 val nickname = jsonObjectUser.getString("nickname")
                                 val birthDay = jsonObjectUser.getString("birthDay")
