@@ -51,7 +51,7 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         showSoftInput()
 
         //서버에 보낼 유저 데이터 클래스 초기화
-        _userData = UserData("", "", "", "", "T")
+        _userData = UserData( "", "", "", "", "T")
     }
 
     override fun onClick(v: View?) {

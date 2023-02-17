@@ -1,6 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import android.util.Log
+import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.NAVER_SMS_URL
@@ -216,6 +217,19 @@ class RetrofitManager {
     //보호 대상자 리스트 조회
     fun getProtectingList(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         val call = apiPHRService?.getProtectingList() ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //호보자 삭제
+    fun deleteProtector(id : Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.deleteProtector(id) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

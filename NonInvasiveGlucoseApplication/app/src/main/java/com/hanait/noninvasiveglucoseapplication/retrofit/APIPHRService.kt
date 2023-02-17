@@ -91,10 +91,16 @@ interface APIPHRService {
     ): Call<ResponseBody>
 
     //보호자 삭제
-    @GET("/wellink/caregiver/delete/{phoneNumber}")
+    @FormUrlEncoded
+    @POST("/wellink/caregiver/caregiverDelete")
     fun deleteProtector(
-        @Path("phoneNumber") phoneNumber: String?
+        @Field("id") id: Int?
+    ): Call<ResponseBody>    
+    
+    //보호 대상자 삭제
+    @FormUrlEncoded
+    @POST("/wellink/caregiver//caregiver/userCaregiverDelete")
+    fun deleteProtecting(
+        @Field("id") id: Int?
     ): Call<ResponseBody>
-
-
 }

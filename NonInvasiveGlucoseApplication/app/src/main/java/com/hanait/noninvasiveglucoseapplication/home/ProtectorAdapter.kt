@@ -11,9 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.pavlospt.roundedletterview.RoundedLetterView
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
 
-class ProtectorAdapter(var context: Context, var data: ArrayList<UserData>) : RecyclerView.Adapter<ProtectorAdapter.VH>() {
+class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>) : RecyclerView.Adapter<ProtectorAdapter.VH>() {
 
     //adapter 클릭 리스너 외부 처리를 위한 인터페이스
     private var mListener: OnItemClickListener? = null
@@ -31,7 +31,7 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<UserData>) : Re
         private lateinit var protectorDeleteBtn : TextView
         private lateinit var protectorInfoBtn: LinearLayout
         @SuppressLint("SetTextI18n")
-        fun setTextView(userData: UserData, position: Int) {
+        fun setTextView(protectorData: ProtectorData, position: Int) {
             protectorRlv = itemView.findViewById(R.id.homeProtectorItem_rlv)
             protectorNickname = itemView.findViewById(R.id.homeProtectorItem_textView_nickname)
             protectorDeleteBtn = itemView.findViewById(R.id.homeProtectorItem_btn_delete)
@@ -42,8 +42,8 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<UserData>) : Re
                 protectorRlv.backgroundColor = ContextCompat.getColor(context, R.color.iphone_yellow)
 
             //text넣기
-            protectorRlv.titleText = userData.nickname[0].toString()
-            protectorNickname.text = userData.nickname
+            protectorRlv.titleText = protectorData.nickname[0].toString()
+            protectorNickname.text = protectorData.nickname
 
             //삭제 클릭 리스너
             protectorDeleteBtn.setOnClickListener {

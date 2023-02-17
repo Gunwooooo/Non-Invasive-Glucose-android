@@ -57,7 +57,6 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         init()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun init() {
         //권한 요청 초기화
         setActivityResultLauncher()
