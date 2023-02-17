@@ -26,6 +26,10 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     private var protectingList: ArrayList<ProtectorData> = ArrayList()
     private var protectorList: ArrayList<ProtectorData> = ArrayList()
 
+    //중복 체크를 위한 해쉬셋
+    private var protectingSet: HashSet<ProtectorData> = HashSet()
+    private var protectorSet: HashSet<ProtectorData> = HashSet()
+
     private val protectingAdapter by lazy { ProtectorAdapter(requireContext(), protectingList) }
     private val protectorAdapter by lazy { ProtectorAdapter(requireContext(), protectorList) }
 
@@ -161,10 +165,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 }
                 else {
                     //보호 대상자 리스트에서 삭제
-                    protectingList.removeAt(pos - 1)
-                    protectorAdapter.notifyItemRemoved(pos - 1)
-                    protectorAdapter.notifyItemRangeChanged(pos -1, protectingList.size)
-                    binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}"
+                    retrofitDeleteProtecting(pos)
                 }
                 customDialog.dismiss()
             }
@@ -344,26 +345,56 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         })
     }
 
-    //보호자 삭제 통식
+    //보호자 삭제 통신
     private fun retrofitDeleteProtector(pos: Int) {
         RetrofitManager.instance.deleteProtector(protectorList[pos - 1].id, completion = {
             completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    val str = response?.body()?.string()
-                    Log.d("로그", "HomeProtectorFragment - retrofitDeleteProtector : ${str}")
+                    when(response!!.code()) {
+                        200 -> {
+                            val str = response.body()?.string()
+                            Log.d("로그", "HomeProtectorFragment - retrofitDeleteProtector : ${str}")
 
-                    //보호자 리스트에서 삭제
-                    protectorList.removeAt(pos - 1)
-                    protectorAdapter.notifyItemRemoved(pos - 1)
-                    protectorAdapter.notifyItemRangeChanged(pos -1, protectorList.size)
-                    binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+                            //보호자 리스트에서 삭제
+                            protectorList.removeAt(pos - 1)
+                            protectorAdapter.notifyItemRemoved(pos - 1)
+                            protectorAdapter.notifyItemRangeChanged(pos -1, protectorList.size)
+                            binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+                        }
+                    }
+
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitDeleteProtector : 통신실패")
                 }
             }
         })
+    }
 
+    //보호대상자 삭제 통신
+    private fun retrofitDeleteProtecting(pos: Int) {
+        RetrofitManager.instance.deleteProtecting(protectingList[pos - 1].id, completion = {
+            completionResponse, response ->
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    when(response!!.code()) {
+                        200 -> {
+                            val str = response.body()?.string()
+                            Log.d("로그", "HomeProtectorFragment - retrofitDeleteProtecting : $str")
+
+                            //보호 대상자 리스트에서 삭제
+                            protectingList.removeAt(pos - 1)
+                            protectingAdapter.notifyItemRemoved(pos - 1)
+                            protectingAdapter.notifyItemRangeChanged(pos -1, protectingList.size)
+                            binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}"
+                        }
+                    }
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeProtectorFragment - retrofitDeleteProtecting : 통신 실패")
+                }
+            }
+        })
     }
 }

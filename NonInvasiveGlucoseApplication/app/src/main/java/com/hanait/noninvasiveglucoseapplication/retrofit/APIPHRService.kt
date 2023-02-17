@@ -99,7 +99,7 @@ interface APIPHRService {
     
     //보호 대상자 삭제
     @FormUrlEncoded
-    @POST("/wellink/caregiver//caregiver/userCaregiverDelete")
+    @POST("/wellink/caregiver/userCaregiverDelete")
     fun deleteProtecting(
         @Field("id") id: Int?
     ): Call<ResponseBody>

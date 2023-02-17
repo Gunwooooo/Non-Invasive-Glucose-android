@@ -272,17 +272,17 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                             LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
                             //유저 개인 정보 담기
                             val jsonObjectUser = jsonArray.getJSONObject(1)
-                            LoginedUserClient.phoneNumber = jsonObjectUser?.getString("phoneNumber")
-                            binding.homeAccountTextViewNickname.text =
-                                "${jsonObjectUser?.getString("nickname")}"
-                            binding.homeAccountTextViewPhoneNumber.text =
-                                "${jsonObjectUser?.getString("phoneNumber")}"
-                            if (jsonObjectUser?.getString("sex").equals("T")) {
+                            LoginedUserClient.phoneNumber = jsonObjectUser!!.getString("phoneNumber")
+                            val nickname = jsonObjectUser.getString("nickname")
+                            binding.homeAccountTextViewNickname.text = nickname
+                            binding.homeAccountRlv.titleText = nickname[0].toString()
+                            binding.homeAccountTextViewPhoneNumber.text = jsonObjectUser.getString("phoneNumber")
+                            if (jsonObjectUser.getString("sex").equals("T")) {
                                 binding.homeAccountTextViewSex.text = "남성"
                             } else
                                 binding.homeAccountTextViewSex.text = "여성"
-                            binding.homeAccountTextViewBirthday.text = jsonObjectUser?.getString("birthDay")
-                            binding.homeAccountTextViewCreatedDate.text = jsonObjectUser?.getString("createdDate")?.substring(0, 10)
+                            binding.homeAccountTextViewBirthday.text = jsonObjectUser.getString("birthDay")
+                            binding.homeAccountTextViewCreatedDate.text = jsonObjectUser.getString("createdDate").substring(0, 10)
                         }
                     }
                 }
@@ -301,11 +301,16 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             customProgressDialog.dismiss()
             when (completionResponse) {
                 CompletionResponse.OK -> {
-                    Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
-                    Toast.makeText(this, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
 
-                    //자동로그인 초기화 및 초기 화면으로 이동
-                    resetAutoLoginAndFinish()
+                    when(response!!.code()) {
+                        200 -> {
+                            Log.d("로그", "HomeAccountActivity - retrofitDeleteLoginedUser : ${response}")
+                            Toast.makeText(this, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+                            //자동로그인 초기화 및 초기 화면으로 이동
+                            resetAutoLoginAndFinish()
+                        }
+                    }
 
                 }
                 CompletionResponse.FAIL -> {
@@ -449,6 +454,9 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                 val imageName = result.data?.getStringExtra("imageName")
                 val mFile = File(cacheDir, imageName!!)
 
+                //프로필 이미지 보이게 설정
+                binding.homeAccountImageViewProfile.visibility = View.VISIBLE
+                binding.homeAccountRlv.visibility = View.GONE
                 //사진 이미지뷰에 넣기
                 glide.load(mFile).circleCrop().into(binding.homeAccountImageViewProfile)
 

@@ -94,12 +94,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <ImageView
-                    android:adjustViewBounds="true"
-                    android:id="@+id/homeDashboard_imageView_profile"
-                    android:layout_gravity="bottom"
+                <com.github.pavlospt.roundedletterview.RoundedLetterView
+                    android:id="@+id/homeDashboard_rlv"
                     android:layout_width="64dp"
-                    android:layout_height="64dp" />
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    app:rlv_backgroundColorValue="@color/iphone_blue_500"
+                    app:rlv_titleColor="@android:color/white"
+                    app:rlv_titleSize="38dp"
+                    app:rlv_titleText="" />
                 <LinearLayout
                     android:gravity="center_vertical"
                     android:layout_marginStart="16dp"

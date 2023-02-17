@@ -102,7 +102,6 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
     private fun setImageViewWithGlide() {
         val glide = Glide.with(requireContext())
         glide.load(R.drawable.background_image_dashboard).into(binding.homeDashboardImageViewDashBoardBackground)
-        glide.load(R.drawable.icon_color_profile).into(binding.homeDashboardImageViewProfile)
         glide.load(R.drawable.icon_color_calendar).into(binding.homeDashboardImageViewCalendar)
         glide.load(R.drawable.ic_baseline_settings_24).into(binding.homeDashboardImageViewSetting)
     }
@@ -323,15 +322,16 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
                             LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
                             //유저 개인 정보 담기
                             val jsonObjectUser = jsonArray.getJSONObject(1)
-                            LoginedUserClient.phoneNumber = jsonObjectUser?.getString("phoneNumber")
-                            binding.homeDashboardTextViewNickname.text =
-                                "${jsonObjectUser?.getString("nickname")}"
-                            if (jsonObjectUser?.getString("sex").equals("T")) {
+                            LoginedUserClient.phoneNumber = jsonObjectUser!!.getString("phoneNumber")
+                            val nickname = jsonObjectUser.getString("nickname")
+                            binding.homeDashboardTextViewNickname.text = nickname
+                            binding.homeDashboardRlv.titleText = nickname[0].toString()
+                            if (jsonObjectUser.getString("sex").equals("T")) {
                                 binding.homeDashboardTextViewSex.text = "남성"
                             } else
                                 binding.homeDashboardTextViewSex.text = "여성"
                             binding.homeDashboardTextViewAge.text =
-                                changeBirthDayToAge(jsonObjectUser?.getString("birthDay"))
+                                changeBirthDayToAge(jsonObjectUser.getString("birthDay"))
                         }
                     }
                 }
