@@ -27,8 +27,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     private var protectorList: ArrayList<ProtectorData> = ArrayList()
 
     //중복 체크를 위한 해쉬셋
-    private var protectingSet: HashSet<ProtectorData> = HashSet()
-    private var protectorSet: HashSet<ProtectorData> = HashSet()
+    private var protectorSet: HashSet<String> = HashSet()
 
     private val protectingAdapter by lazy { ProtectorAdapter(requireContext(), protectingList) }
     private val protectorAdapter by lazy { ProtectorAdapter(requireContext(), protectorList) }
@@ -185,11 +184,15 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")
+                customDialog.dismiss()
 
+                //hashset에서 중복 확인 후 리스트에 추가
+                if(protectorSet.contains(protectorData.phoneNumber)) {
+                    Toast.makeText(requireContext(), "이미 등록된 보호자입니다.", Toast.LENGTH_SHORT).show()
+                    return
+                }
                 //보호자 등록 레트로핏 통신
                 retrofitAddProtector(protectorData)
-
-                customDialog.dismiss()
             }
 
             override fun onNegativeClicked() {
@@ -291,9 +294,13 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                                 val sex = jsonObjectUser.getString("sex")
                                 val protectorData = ProtectorData(id, nickname, phoneNumber, birthDay, sex)
                                 protectorList.add(protectorData)
+
+                                //중복 체크를 위해 hashset에 넣기
+                                protectorSet.add(phoneNumber)
                             }
                             protectorAdapter.notifyItemInserted(protectorList.size)
                             binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+
 
                             //보호 대상자 리스트 가져오기 호출
                             retrofitGetProtectingList()
