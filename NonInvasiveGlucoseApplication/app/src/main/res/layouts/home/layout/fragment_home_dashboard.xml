@@ -359,6 +359,7 @@
 
     <LinearLayout
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -372,15 +373,19 @@
             android:textColor="@color/toss_black_500"
             android:textSize="18dp" />
 
-        <ImageView
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:id="@+id/homeDashboard_imageView_calendar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"/>
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/homeDashboard_imageView_calendar"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
