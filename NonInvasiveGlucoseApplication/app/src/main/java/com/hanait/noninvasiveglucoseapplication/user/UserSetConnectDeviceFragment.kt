@@ -1,10 +1,18 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -13,18 +21,20 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.getSystemService
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetConnectDeviceBinding
 import com.hanait.noninvasiveglucoseapplication.home.HomeCropImageActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.util.CustomBluetoothManager
 
 
 class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBinding>(FragmentUserSetConnectDeviceBinding::inflate), View.OnClickListener {
 
-    //애플리케이션을 떠나지 않은 상태에서 블루투스 활성화 요청
-    // BluetoothAdapter를 사용하여 2단계로 수행
-    //단일 스레드에서의 환경 보장 lazythreadsafetymode.none
-    private val bluetoothAdapter : BluetoothAdapter? by lazy(LazyThreadSafetyMode.NONE) {
+    //블루투스 매니저로 어댑터 선언
+    //비동기화 환경에서 선언
+    private val bluetoothAdapter: BluetoothAdapter? by lazy(LazyThreadSafetyMode.NONE) {
         val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothManager.adapter
     }
@@ -36,8 +46,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     //블루투스 권한 요청 resultLauncher
     private lateinit var activityResultLauncherBluetooth: ActivityResultLauncher<Intent>
 
-    //스캔 시간
-    private val SCAN_PERIOD: Long = 10000
+    private val customBluetoothManager by lazy { CustomBluetoothManager(requireContext(), bluetoothAdapter) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,18 +65,20 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
 
         //키보드 넣기
         if (activity != null && requireActivity().currentFocus != null) {
-            Log.d("로그", "UserSetConnectDeviceFragment - init : asdfasdfasdfasdfasdfasdf")
             // 프래그먼트기 때문에 getActivity() 사용
             val inputManager: InputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS
             )
         }
 
-        //블루투스 설정 result Launcher 초기화
+        //블루투스 연결 콜백 초기화
         setActivityResultLauncher()
         
-        //블루투스 활성화 체크
+        //연결 체크
         checkBluetoothEnable()
+
+        //블루투스 스캔 시작
+        customBluetoothManager.scanLeDevice(true)
     }
 
     override fun onClick(v: View?) {
@@ -79,6 +90,14 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         }
     }
 
+    //블루투스 권한 체크
+    private fun checkBluetoothEnable() {
+        bluetoothAdapter?.takeIf { it.isDisabled }?.apply {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            activityResultLauncherBluetooth.launch(enableBtIntent)
+        }
+    }
+
     //블루투스 설정  resultLauncher 초기화
     private fun setActivityResultLauncher() {
         //갤러리 콜백
@@ -86,16 +105,8 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 //갤러리 호출 반환
                 if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                    Toast.makeText(requireContext(), "ssssss", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "블루투스 ON", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-    
-    //블루투스 권한 체크
-    private fun checkBluetoothEnable() {
-        bluetoothAdapter?.takeIf { it.isDisabled }?.apply { 
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            activityResultLauncherBluetooth.launch(enableBtIntent)
-        }
     }
 }
