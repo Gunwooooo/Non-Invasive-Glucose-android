@@ -1,6 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import android.util.Log
+import com.hanait.noninvasiveglucoseapplication.model.BodyData
 import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import com.hanait.noninvasiveglucoseapplication.model.UserData
@@ -243,6 +244,21 @@ class RetrofitManager {
     //보호 대상자 삭제
     fun deleteProtecting(id : Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
         val call = apiPHRService?.deleteProtecting(id) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //건강 데이터 추가
+    fun addBodyData(bodyData: BodyData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.addBodyData(bodyData) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

@@ -1,12 +1,10 @@
 package com.hanait.noninvasiveglucoseapplication
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentSplashBinding
@@ -21,20 +19,9 @@ import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
-import com.jakewharton.rxbinding4.widget.textChanges
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.lang.Exception
-import java.util.concurrent.Callable
-import java.util.concurrent.Future
-import java.util.concurrent.TimeUnit
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
-
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
-
     private val SPLASH_TIME_OUT:Long = 2000 //2초
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

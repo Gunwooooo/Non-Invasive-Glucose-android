@@ -1,6 +1,7 @@
 package com.hanait.noninvasiveglucoseapplication.retrofit
 
 import com.google.gson.JsonElement
+import com.hanait.noninvasiveglucoseapplication.model.BodyData
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -103,4 +104,13 @@ interface APIPHRService {
     fun deleteProtecting(
         @Field("id") id: Int?
     ): Call<ResponseBody>
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //건강 데이터 추가
+    @POST("/wellink/bodydata")
+    fun addBodyData(
+        @Body bodyData: BodyData
+    ): Call<ResponseBody>
+
 }
