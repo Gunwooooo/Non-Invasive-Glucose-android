@@ -3,7 +3,10 @@ package com.hanait.noninvasiveglucoseapplication.util
 import android.annotation.SuppressLint
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.db.PreferenceManager
+import com.hanait.noninvasiveglucoseapplication.model.BodyData
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import java.util.*
 
@@ -15,7 +18,7 @@ object Constants {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //자동 로그인 변수 저장
-    lateinit var prefs: PreferenceManager
+    lateinit var _prefs: PreferenceManager
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -46,5 +49,21 @@ object Constants {
 
     //스캔 시간
     const val SCAN_PERIOD: Long = 10000
+
+    //블루투스 통신 주기 전역 변수
+    var _checkBluetoothTimer = false
+    //데이터 인덱스 값
+    var _entryIndex = 0f
+
+    //통신으로 실시간으로 받을 badyDataArray
+    val _bodyDataArrayList = ArrayList<BodyData>()
+    val _thermometerArrayList = ArrayList<Entry>()
+    val _heartArrayList = ArrayList<Entry>()
+    val _glucoseArrayList = ArrayList<Entry>()
+
+    //실시간 그래프 출력을 위한 데이터 셋
+    lateinit var _thermometerLineDataSet : LineDataSet
+    lateinit var _heartLineDataSet : LineDataSet
+    lateinit var _glucoseLineDataSet : LineDataSet
 }
 

@@ -502,9 +502,9 @@
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/ps_bold"
                                 android:gravity="bottom"
-                                android:text="측정시간"
+                                android:text="오후 2시 27분"
                                 android:textColor="@color/toss_black_700"
-                                android:textSize="19dp" />
+                                android:textSize="18dp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -517,8 +517,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/ps_regular"
-                                android:text="오후 2시 37분"
-                                android:textColor="@color/toss_black_500"
+                                android:text="확대 차트 보기"
+                                android:textColor="@color/toss_black_170"
                                 android:textSize="16dp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -689,9 +689,9 @@
                                 android:gravity="bottom"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="측정시간"
+                                android:text="오후 2시 27분"
                                 android:fontFamily="@font/ps_bold"
-                                android:textSize="19dp"
+                                android:textSize="18dp"
                                 android:textColor="@color/toss_black_700"/>
                         </LinearLayout>
                         <LinearLayout
@@ -702,10 +702,10 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="오후 2시 37분"
+                                android:text="확대 차트 보기"
                                 android:fontFamily="@font/ps_regular"
                                 android:textSize="16dp"
-                                android:textColor="@color/toss_black_500"/>
+                                android:textColor="@color/toss_black_170"/>
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
@@ -857,9 +857,9 @@
                                 android:gravity="bottom"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="측정시간"
+                                android:text="오후 2시 27분"
                                 android:fontFamily="@font/ps_bold"
-                                android:textSize="19dp"
+                                android:textSize="18dp"
                                 android:textColor="@color/toss_black_700"/>
                         </LinearLayout>
                         <LinearLayout
@@ -870,10 +870,10 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="오후 2시 37분"
+                                android:text="확대 차트 보기"
                                 android:fontFamily="@font/ps_regular"
                                 android:textSize="16dp"
-                                android:textColor="@color/toss_black_500"/>
+                                android:textColor="@color/toss_black_170"/>
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout

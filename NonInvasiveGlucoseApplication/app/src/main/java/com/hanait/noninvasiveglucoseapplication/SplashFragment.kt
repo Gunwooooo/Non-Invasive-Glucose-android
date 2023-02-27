@@ -16,7 +16,7 @@ import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.user.UserSetConnectDeviceFragment
 import com.hanait.noninvasiveglucoseapplication.user.UserSetPhoneNumberFragment
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
@@ -43,13 +43,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
         setImageViewWithGlide()
 
         //sharedPreference에서 사용자 데이터 가져오기
-        prefs = PreferenceManager(requireContext())
+        _prefs = PreferenceManager(requireContext())
 
         //자동 로그인 체크
-        when(prefs.getBoolean("AUTO_LOGIN", false)) {
+        when(_prefs.getBoolean("AUTO_LOGIN", false)) {
             true -> {
-                val phoneNumber = prefs.getString("USER_PHONENUMBER", "")
-                val password = prefs.getString("USER_PASSWORD", "")
+                val phoneNumber = _prefs.getString("USER_PHONENUMBER", "")
+                val password = _prefs.getString("USER_PASSWORD", "")
                 val userData = UserData("", phoneNumber, password, "", "")
                 retrofitLoginUser(userData)
             }
@@ -91,9 +91,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                         }
                         else -> {
                             //자동 로그인 초기화
-                            prefs.setString("USER_PHONENUMBER", "")
-                            prefs.setString("USER_PASSWORD", "")
-                            prefs.setBoolean("AUTO_LOGIN", false)
+                            _prefs.setString("USER_PHONENUMBER", "")
+                            _prefs.setString("USER_PASSWORD", "")
+                            _prefs.setBoolean("AUTO_LOGIN", false)
                             val mActivity = activity as UserActivity
                             mActivity.changeFragmentTransaction(UserSetPhoneNumberFragment())
                         }

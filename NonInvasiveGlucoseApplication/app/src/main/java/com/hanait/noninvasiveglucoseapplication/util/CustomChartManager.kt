@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
 import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.hanait.noninvasiveglucoseapplication.R
+import com.hanait.noninvasiveglucoseapplication.util.Constants._glucoseArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._glucoseLineDataSet
+import com.hanait.noninvasiveglucoseapplication.util.Constants._heartArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._heartLineDataSet
+import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerLineDataSet
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -26,7 +30,7 @@ class CustomChartManager(val context: Context) {
             return INSTANCE as CustomChartManager
         }
     }
-    
+
     class CustomTimeXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val time = value.toInt()
@@ -40,19 +44,6 @@ class CustomChartManager(val context: Context) {
             val time = value.toInt()
             return "${time}일"
         }
-    }
-
-    //실수 난수 생성
-    private fun makeThermometerDashboardLineDataSet() : LineDataSet {
-        val entry: MutableList<Entry> = ArrayList()
-        val max = 40.0
-        val min = 35.0
-        val random = Random()
-        random.setSeed(Date().time)
-        for (i in 1 until 24) {
-            entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
-        }
-        return LineDataSet(entry, "체온")
     }
 
     //실수 난수 생성
@@ -181,87 +172,78 @@ class CustomChartManager(val context: Context) {
     //=================================================================================================
     //심박수 라인 데이터 생성성
     fun setThermometerDashboardLineData() : LineDataSet {
-        val lineDataSet = makeThermometerDashboardLineDataSet()
-        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-//        lineDataSet.setDrawFilled(true)
-//        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.toss_black_500))
-        lineDataSet.lineWidth = 2F //선 굵기
-        lineDataSet.circleRadius = 7F
-        lineDataSet.circleHoleRadius = 4F
-//        lineDataSet.enableDashedLine(10f, 5f, 0f)
-        lineDataSet.setDrawCircles(false)   //동그란거 없애기
-        lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.toss_black_500))
-        lineDataSet.valueTextSize = 0F
-//        lineDataSet.fillAlpha = 50
-//        lineDataSet.highLightColor = Color.BLACK
-//        lineDataSet.highlightLineWidth = 2F
-        lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-        lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-        lineDataSet.setDrawCircleHole(true)
-        return lineDataSet
+        _thermometerLineDataSet = LineDataSet(_thermometerArrayList, "체온")
+        return _thermometerLineDataSet.apply {
+            mode = LineDataSet.Mode.LINEAR
+            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+            color = ContextCompat.getColor(context, R.color.toss_black_500)
+            lineWidth = 2F //선 굵기
+            circleRadius = 3F
+            circleHoleRadius = 1F
+            setDrawCircles(true)   //동그란거 없애기
+            setDrawValues(true)
+            setCircleColor(ContextCompat.getColor(context, R.color.toss_black_500))
+            valueTextSize = 0F
+            isHighlightEnabled = true   //클릭시 마크 보이게
+            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+            setDrawCircleHole(true)
+        }
     }
 
     fun setHeartLineData() : LineDataSet {
-        val lineDataSet = makeHeartDashboardLineDataSet()
-        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-//        lineDataSet.setDrawFilled(true)
-//        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.text_red_200))
-        lineDataSet.lineWidth = 2F //선 굵기
-        lineDataSet.circleRadius = 7F
-        lineDataSet.circleHoleRadius = 4F
-//        lineDataSet.enableDashedLine(10f, 5f, 0f)
-        lineDataSet.setDrawCircles(false)   //동그란거 없애기
-        lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.text_red_200))
-        lineDataSet.valueTextSize = 0F
-//        lineDataSet.fillAlpha = 50
-//        lineDataSet.highLightColor = Color.BLACK
-//        lineDataSet.highlightLineWidth = 2F
-        lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-        lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-        lineDataSet.setDrawCircleHole(true)
-        return lineDataSet
+        _heartLineDataSet = LineDataSet(_heartArrayList, "심박수")
+        return _heartLineDataSet.apply {
+            mode = LineDataSet.Mode.LINEAR
+            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+            color = ContextCompat.getColor(context, R.color.text_red_200)
+            lineWidth = 2F //선 굵기
+            circleRadius = 3F
+            circleHoleRadius = 1F
+            setDrawCircles(true)   //동그란거 없애기
+            setDrawValues(true)
+            setCircleColor(ContextCompat.getColor(context, R.color.text_red_200))
+            valueTextSize = 0F
+            isHighlightEnabled = true   //클릭시 마크 보이게
+            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+            setDrawCircleHole(true)
+        }
     }
 
     fun setGlucoseLineData() : LineDataSet {
-        val lineDataSet = makeGlucoseDashboardLineDataSet()
-        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        lineDataSet.cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+        _glucoseLineDataSet = LineDataSet(_glucoseArrayList, "혈당")
+        return _glucoseLineDataSet.apply {
+            mode = LineDataSet.Mode.LINEAR
+            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+            color = ContextCompat.getColor(context, R.color.text_blue_200)
+            lineWidth = 2F //선 굵기
+            circleRadius = 2.1F
+            circleHoleRadius = 0.1F
+            setDrawCircles(true)   //동그란거 없애기
+            setDrawValues(true)
+            setCircleColor(ContextCompat.getColor(context, R.color.text_blue_200))
+            valueTextSize = 0F
+            isHighlightEnabled = true   //클릭시 마크 보이게
+            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+            setDrawCircleHole(true)
+        }
 //        lineDataSet.setDrawFilled(true)
 //        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        lineDataSet.setColor(ContextCompat.getColor(context, R.color.text_blue_200))
-        lineDataSet.lineWidth = 2F //선 굵기
-        lineDataSet.circleRadius = 7F
-        lineDataSet.circleHoleRadius = 4F
 //        lineDataSet.enableDashedLine(10f, 5f, 0f)
-        lineDataSet.setDrawCircles(false)   //동그란거 없애기
-        lineDataSet.setDrawValues(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.text_blue_200))
-        lineDataSet.valueTextSize = 0F
 //        lineDataSet.fillAlpha = 50
 //        lineDataSet.highLightColor = Color.BLACK
 //        lineDataSet.highlightLineWidth = 2F
-        lineDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
-        lineDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-        lineDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-        lineDataSet.setDrawCircleHole(true)
-        return lineDataSet
     }
 
     //심박수 7일 그래프 생성
     fun setHeart7DayCandleData() : CandleDataSet {
         val candleDataSet = makeHeart7dayCandleDataSet()
-        candleDataSet.run {
+        return candleDataSet.apply {
             //심지 부분
             shadowColor = Color.LTGRAY
             shadowWidth = 1f
@@ -280,13 +262,12 @@ class CustomChartManager(val context: Context) {
             //터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
         }
-        return candleDataSet
     }
 
     //심박수 상세 그래프 생성
     fun setGlucose7DayCandleData() : CandleDataSet {
         val candleDataSet = makeGlucose7dayCandleDataSet()
-        candleDataSet.run {
+        return candleDataSet.apply {
             //심지 부분
             shadowColor = Color.LTGRAY
             shadowWidth = 1f
@@ -305,15 +286,14 @@ class CustomChartManager(val context: Context) {
             //터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
         }
-        return candleDataSet
     }
 
-//==================================================================================================
+    //==================================================================================================
     //체온 7일 상세 그래프 생성
     fun setThermometer7DayCandleLineData() : CandleLineDataSet {
         val candleLindDataSet = makeThermometer7dayCandleLineDataSet()
         val candleDataSet = candleLindDataSet.candleDataSet
-        candleDataSet.run {
+        candleDataSet.apply {
             //심지 부분
             shadowColor = ContextCompat.getColor(context, R.color.toss_black_150)
             shadowWidth = 2f
@@ -334,7 +314,7 @@ class CustomChartManager(val context: Context) {
             highLightColor = Color.TRANSPARENT
         }
         val lineDataSet = candleLindDataSet.lineDataSet
-        lineDataSet.run {
+        lineDataSet.apply {
             mode = LineDataSet.Mode.LINEAR
 //            .cubicIntensity = 0.2F //베지어 곡선 휘는 정도
 //            .setDrawFilled(true)

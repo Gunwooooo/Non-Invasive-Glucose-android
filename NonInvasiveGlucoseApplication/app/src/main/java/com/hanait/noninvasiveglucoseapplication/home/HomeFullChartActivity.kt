@@ -9,6 +9,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeFullChartBinding
+import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerArrayList
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 
@@ -55,6 +56,10 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             setVisibleXRangeMaximum(6f) //
             setBackgroundColor(ContextCompat.getColor(context, R.color.android_blue_100))
             marker = markerView
+
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+            invalidate() //refresh
+            moveViewToX((_thermometerArrayList.size - 1).toFloat())
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
@@ -69,8 +74,8 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 32F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 10F   //최소값
+                axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)

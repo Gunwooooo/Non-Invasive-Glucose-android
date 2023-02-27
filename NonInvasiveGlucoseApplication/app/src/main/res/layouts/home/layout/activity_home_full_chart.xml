@@ -11,8 +11,8 @@
     android:weightSum="1">
 
     <LinearLayout
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/ripple_android_blue_100_radius_20"
         android:focusable="true"
         android:clickable="true"

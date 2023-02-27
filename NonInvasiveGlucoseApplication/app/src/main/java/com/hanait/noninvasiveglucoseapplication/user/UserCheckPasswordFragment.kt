@@ -14,7 +14,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
@@ -36,7 +36,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         mActivity.setPrevFragment(UserSetPhoneNumberFragment())
 
         //자동 로그인 체크
-        binding.userCheckPasswordCheckBoxAutoLogin.isChecked = prefs.getBoolean("AUTO_LOGIN", false)
+        binding.userCheckPasswordCheckBoxAutoLogin.isChecked = _prefs.getBoolean("AUTO_LOGIN", false)
 
         //전화번호 입력해놓기
         binding.userCheckPasswordEditTextPhoneNumber.hint = _userData.phoneNumber
@@ -80,15 +80,15 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
     //자동 로그인 시 데이터 로컬 저장
     private fun setAutoLogin() {
         val autoLoginCheckBox = binding.userCheckPasswordCheckBoxAutoLogin
-        prefs.setBoolean("AUTO_LOGIN", autoLoginCheckBox.isChecked)
+        _prefs.setBoolean("AUTO_LOGIN", autoLoginCheckBox.isChecked)
         when(autoLoginCheckBox.isChecked) {
             true -> {
-                prefs.setString("USER_PHONENUMBER", _userData.phoneNumber)
-                prefs.setString("USER_PASSWORD", _userData.password)
+                _prefs.setString("USER_PHONENUMBER", _userData.phoneNumber)
+                _prefs.setString("USER_PASSWORD", _userData.password)
             }
             false -> {
-                prefs.setString("USER_PHONENUMBER", "")
-                prefs.setString("USER_PASSWORD", "")
+                _prefs.setString("USER_PHONENUMBER", "")
+                _prefs.setString("USER_PASSWORD", "")
             }
         }
     }

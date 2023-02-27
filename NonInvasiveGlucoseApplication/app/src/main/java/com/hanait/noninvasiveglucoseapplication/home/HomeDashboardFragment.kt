@@ -144,6 +144,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 //            setVisibleXRangeMaximum(6f) //
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+            invalidate() //refresh
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
@@ -158,8 +160,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 32F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 10F   //최소값
+                axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -203,6 +205,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 //            setVisibleXRangeMaximum(7f) //
 
             marker = markerView
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+            invalidate() //refresh
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
@@ -216,8 +220,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 32F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 40F   //최소값
+                axisMaximum = 130F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -258,6 +262,8 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
 //            setVisibleXRangeMaximum(7f) //
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+            invalidate() //refresh
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
@@ -271,7 +277,7 @@ class HomeDashboardFragment : BaseFragment<FragmentHomeDashboardBinding>(Fragmen
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 32F   //최소값
+                axisMinimum = 0F   //최소값
                 axisMaximum = 42F   //최대값
                 isEnabled = true
                 animateX(500)

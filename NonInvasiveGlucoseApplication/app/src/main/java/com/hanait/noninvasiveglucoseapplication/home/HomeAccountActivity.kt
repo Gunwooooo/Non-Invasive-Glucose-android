@@ -24,7 +24,7 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseActivity
 import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
-import com.hanait.noninvasiveglucoseapplication.util.Constants.prefs
+import com.hanait.noninvasiveglucoseapplication.util.Constants._prefs
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
@@ -244,9 +244,9 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     //자동 로그인 해제 및 초기 화면으로 이동
     private fun resetAutoLoginAndFinish() {
         //자동 로그인 해제
-        prefs.setBoolean("AUTO_LOGIN", false)
-        prefs.setString("USER_PHONENUMBER", "")
-        prefs.setString("USER_PASSWORD", "")
+        _prefs.setBoolean("AUTO_LOGIN", false)
+        _prefs.setString("USER_PHONENUMBER", "")
+        _prefs.setString("USER_PASSWORD", "")
 
         //초기화면으로 돌아가기
         val intent = Intent(this, UserActivity::class.java)

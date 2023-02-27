@@ -15,15 +15,28 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.github.mikephil.charting.data.Entry
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetConnectDeviceBinding
+import com.hanait.noninvasiveglucoseapplication.model.BodyData
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.CCCD_UUID
 import com.hanait.noninvasiveglucoseapplication.util.Constants.DEVICE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.Constants.SCAN_PERIOD
 import com.hanait.noninvasiveglucoseapplication.util.Constants.TX_CHAR_UUID
 import com.hanait.noninvasiveglucoseapplication.util.Constants.UART_UUID
+import com.hanait.noninvasiveglucoseapplication.util.Constants._bodyDataArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
+import com.hanait.noninvasiveglucoseapplication.util.Constants._entryIndex
+import com.hanait.noninvasiveglucoseapplication.util.Constants._glucoseArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._glucoseLineDataSet
+import com.hanait.noninvasiveglucoseapplication.util.Constants._heartArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._heartLineDataSet
+import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerLineDataSet
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
+import java.util.*
+
 class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBinding>(FragmentUserSetConnectDeviceBinding::inflate), View.OnClickListener {
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
     //블루투스 매니저로 어댑터 선언 / 비동기화 환경에서 선언
@@ -45,6 +58,8 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
 
     //가트 연결 변수
     var bluetoothGatt: BluetoothGatt? = null
+
+    private val timer : Timer by lazy { Timer() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,6 +94,9 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     override fun onClick(v: View?) {
         when(v){
             binding.homeConnectDeviceLottie -> {
+//                val mActivity = activity as UserActivity
+//                mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
+
                 //블루투스 스캔 시작
                 scanLeDevice(true)
             }
@@ -98,7 +116,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         //갤러리 콜백
         activityResultLauncherBluetooth =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                //갤러리 호출 반환
+                //블루투스 호출 반환
                 if (result.resultCode == AppCompatActivity.RESULT_OK) {
                     Toast.makeText(requireContext(), "블루투스 ON", Toast.LENGTH_SHORT).show()
                 }
@@ -170,6 +188,13 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 BluetoothGatt.STATE_CONNECTED -> {
                     //서비스디스커버 호출하기
                     Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버 연결됨 : ${bluetoothGatt!!.discoverServices()}")
+
+                    //5초마다 타이머로 값을 받을지 체크
+                    timer.scheduleAtFixedRate(object : TimerTask() {
+                        override fun run() {
+                            _checkBluetoothTimer = true
+                        }
+                    }, 0, 1000)
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
                     Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
@@ -205,8 +230,32 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             characteristic: BluetoothGattCharacteristic?
         ) {
             super.onCharacteristicChanged(gatt, characteristic)
-            val data = characteristic!!.value
-            Log.d("로그", "CustomBluetoothManager - onCharacteristicChanged : ${String(data)}")
+            //바이트 데이터 스트링으로 변환
+            val data = String(characteristic!!.value)
+            //w나 f면 return
+            if(data == "W" || data == "F") return
+            //5초마다 타이머 체크 후 값 전달 받기
+            if(_checkBluetoothTimer) {
+                Log.d("로그", "UserSetConnectDeviceFragment - onCharacteristicChanged : $data")
+                //인덱스 + 1
+                _entryIndex++
+                _checkBluetoothTimer = false
+                val heart = data.split('!')[0].split('@')[1].toFloat()
+                val thermometer = data.split('/')[0].split('!')[1].toFloat()
+                val glucose = 0f
+                //전역 배열 리스트에 각각 추가하기
+                _thermometerArrayList.add(Entry(_entryIndex, thermometer))
+                _heartArrayList.add(Entry(_entryIndex, heart))
+                _glucoseArrayList.add(Entry(_entryIndex, glucose))
+
+                //그래프 리프레쉬
+                _thermometerLineDataSet.notifyDataSetChanged()
+                _heartLineDataSet.notifyDataSetChanged()
+                _glucoseLineDataSet.notifyDataSetChanged()
+                //서버로 보낼 통합 리스트
+                _bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
+            }
+
         }
         
         private  fun broadcastUpdate(str:String) {
@@ -221,5 +270,4 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             mHandler.obtainMessage().sendToTarget()
         }
     }
-
 }
