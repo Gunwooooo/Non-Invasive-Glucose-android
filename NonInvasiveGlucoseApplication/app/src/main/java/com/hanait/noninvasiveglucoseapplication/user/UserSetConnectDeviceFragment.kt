@@ -1,12 +1,15 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
 import android.annotation.SuppressLint
-import android.bluetooth.*
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -15,25 +18,15 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.github.mikephil.charting.data.Entry
+import androidx.core.content.ContextCompat
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetConnectDeviceBinding
-import com.hanait.noninvasiveglucoseapplication.model.BodyData
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
-import com.hanait.noninvasiveglucoseapplication.util.Constants.CCCD_UUID
 import com.hanait.noninvasiveglucoseapplication.util.Constants.DEVICE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.Constants.SCAN_PERIOD
-import com.hanait.noninvasiveglucoseapplication.util.Constants.TX_CHAR_UUID
-import com.hanait.noninvasiveglucoseapplication.util.Constants.UART_UUID
-import com.hanait.noninvasiveglucoseapplication.util.Constants._bodyDataArrayList
-import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
-import com.hanait.noninvasiveglucoseapplication.util.Constants._entryIndex
-import com.hanait.noninvasiveglucoseapplication.util.Constants._glucoseArrayList
-import com.hanait.noninvasiveglucoseapplication.util.Constants._glucoseLineDataSet
-import com.hanait.noninvasiveglucoseapplication.util.Constants._heartArrayList
-import com.hanait.noninvasiveglucoseapplication.util.Constants._heartLineDataSet
-import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerArrayList
-import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerLineDataSet
+import com.hanait.noninvasiveglucoseapplication.util.Constants.bluetoothResultDevice
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import java.util.*
 
@@ -52,14 +45,8 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     //블루투스 권한 요청 resultLauncher
     private lateinit var activityResultLauncherBluetooth: ActivityResultLauncher<Intent>
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
     //기기 연결 확인 변수
     private var findDeviceFlag = false
-
-    //가트 연결 변수
-    var bluetoothGatt: BluetoothGatt? = null
-
-    private val timer : Timer by lazy { Timer() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,9 +81,6 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     override fun onClick(v: View?) {
         when(v){
             binding.homeConnectDeviceLottie -> {
-//                val mActivity = activity as UserActivity
-//                mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
-
                 //블루투스 스캔 시작
                 scanLeDevice(true)
             }
@@ -133,11 +117,17 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             //한아아이티 기기 발견 시
             if(deviceName != null && deviceName.equals(DEVICE_NAME)) {
                 Log.d("로그", "UserSetConnectDeviceFragment - onScanResult : 장치 발견됨!")
+                //디바이스 정보 전역 변수에 넣기
+                bluetoothResultDevice = result.device
+                
+                //발견됨 플래그
                 findDeviceFlag = true
                 //스캔 종료
                 scanLeDevice(false)
-                //디바이스 연결 / 가트에 정보 넣기
-                bluetoothGatt = result.device.connectGatt(requireContext(), false, gattCallback)
+
+                //프래그먼트 이동
+                val mActivity = activity as UserActivity
+                mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
             }
         }
         override fun onBatchScanResults(results: List<ScanResult>?) {
@@ -175,99 +165,6 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 customProgressDialog.dismiss()
                 bluetoothLeScanner.stopScan(mLeScanCallback)
             }
-        }
-    }
-///////////////////////////////////////블루투스 GATT 연결////////////////////////////////////////////
-
-    //가트 콜백 생성
-    private val gattCallback = object : BluetoothGattCallback() {
-        @SuppressLint("MissingPermission")
-        override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
-            super.onConnectionStateChange(gatt, status, newState)
-            when(newState) {
-                BluetoothGatt.STATE_CONNECTED -> {
-                    //서비스디스커버 호출하기
-                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버 연결됨 : ${bluetoothGatt!!.discoverServices()}")
-
-                    //5초마다 타이머로 값을 받을지 체크
-                    timer.scheduleAtFixedRate(object : TimerTask() {
-                        override fun run() {
-                            _checkBluetoothTimer = true
-                        }
-                    }, 0, 1000)
-                }
-                BluetoothGatt.STATE_DISCONNECTED -> {
-                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
-                }
-            }
-        }
-
-        @SuppressLint("MissingPermission")
-        override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-            super.onServicesDiscovered(gatt, status)
-            when(status) {
-                BluetoothGatt.GATT_SUCCESS -> {
-                    Log.d("로그", "CustomBluetoothManager - onServicesDiscovered : 연결 성공함")
-//                    Log.d("로그", "CustomBluetoothManager - onServicesDiscovered : ${bluetoothGatt.ge}")
-                    val str = gatt!!.getService(UART_UUID).getCharacteristic(TX_CHAR_UUID)
-                    Log.d("로그", "CustomBluetoothManager - onServicesDiscovered : $str")
-                    if (bluetoothGatt!!.setCharacteristicNotification(str, true)) {
-                        val descriptor = str.getDescriptor(CCCD_UUID)
-                        descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                        bluetoothGatt!!.writeDescriptor(descriptor)
-                        broadcastUpdate("커넥티드 한아아이티 기계")
-                    }
-                }
-                BluetoothGatt.GATT_FAILURE -> {
-                    broadcastUpdate("커넥티드 실패")
-                }
-            }
-        }
-
-        //기기에서 오는 데이터 처리
-        override fun onCharacteristicChanged(
-            gatt: BluetoothGatt?,
-            characteristic: BluetoothGattCharacteristic?
-        ) {
-            super.onCharacteristicChanged(gatt, characteristic)
-            //바이트 데이터 스트링으로 변환
-            val data = String(characteristic!!.value)
-            //w나 f면 return
-            if(data == "W" || data == "F") return
-            //5초마다 타이머 체크 후 값 전달 받기
-            if(_checkBluetoothTimer) {
-                Log.d("로그", "UserSetConnectDeviceFragment - onCharacteristicChanged : $data")
-                //인덱스 + 1
-                _entryIndex++
-                _checkBluetoothTimer = false
-                val heart = data.split('!')[0].split('@')[1].toFloat()
-                val thermometer = data.split('/')[0].split('!')[1].toFloat()
-                val glucose = 0f
-                //전역 배열 리스트에 각각 추가하기
-                _thermometerArrayList.add(Entry(_entryIndex, thermometer))
-                _heartArrayList.add(Entry(_entryIndex, heart))
-                _glucoseArrayList.add(Entry(_entryIndex, glucose))
-
-                //그래프 리프레쉬
-                _thermometerLineDataSet.notifyDataSetChanged()
-                _heartLineDataSet.notifyDataSetChanged()
-                _glucoseLineDataSet.notifyDataSetChanged()
-                //서버로 보낼 통합 리스트
-                _bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
-            }
-
-        }
-        
-        private  fun broadcastUpdate(str:String) {
-            val mHandler : Handler = object : Handler(Looper.getMainLooper()) {
-                override fun handleMessage(msg: Message) {
-                    super.handleMessage(msg)
-                    Toast.makeText(requireContext(), str, Toast.LENGTH_SHORT).show()
-                    val mActivity = activity as UserActivity
-                    mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
-                }
-            }
-            mHandler.obtainMessage().sendToTarget()
         }
     }
 }

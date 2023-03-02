@@ -1,25 +1,28 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeProtectorBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeProtectorBinding
 import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.CustomBottomSheetDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import org.json.JSONArray
 import org.json.JSONObject
 
-class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(FragmentHomeProtectorBinding::inflate), View.OnClickListener {
+class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
+    private val binding by lazy { ActivityHomeProtectorBinding.inflate(layoutInflater) }
+
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
     private val bottomSheetDialog by lazy { CustomBottomSheetDialogManager() }
 
@@ -29,14 +32,17 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     //중복 체크를 위한 해쉬셋
     private var protectorSet: HashSet<String> = HashSet()
 
-    private val protectingAdapter by lazy { ProtectorAdapter(requireContext(), protectingList) }
-    private val protectorAdapter by lazy { ProtectorAdapter(requireContext(), protectorList) }
+    private val protectingAdapter by lazy { ProtectorAdapter(applicationContext, protectingList) }
+    private val protectorAdapter by lazy { ProtectorAdapter(applicationContext, protectorList) }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(binding.root)
 
         init()
     }
+
 
     private fun init() {
 
@@ -48,17 +54,21 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}"
 
+        //리사이클러 뷰 생성
         recyclerViewCreate()
+        
         binding.homeProtectorLayoutProtectorAdd.setOnClickListener(this)
+        binding.homeProtectorBtnBack.setOnClickListener(this)
     }
 
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
-        val glide = Glide.with(requireContext())
+        val glide = Glide.with(applicationContext)
         glide.load(R.drawable.background_image_protector).into(binding.homeProtectorImageViewProtectorBackground)
         glide.load(R.drawable.icon_color_add).into(binding.homeProtectorImageViewAdd)
     }
 
+    //리사이클러 뷰 연결하기
     private fun recyclerViewCreate() {
         val protectingRecyclerView = binding.homeProtectorRecyclerViewProtecting
 
@@ -73,7 +83,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             }
         })
 
-        val layoutManagerProtecting = LinearLayoutManager(context)
+        val layoutManagerProtecting = LinearLayoutManager(applicationContext)
         protectingRecyclerView.layoutManager = layoutManagerProtecting
         protectingRecyclerView.adapter = protectingAdapter
 
@@ -90,7 +100,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 showDeleteProtectorDialog(pos, true)
             }
         })
-        val layoutManagerProtector = LinearLayoutManager(context)
+        val layoutManagerProtector = LinearLayoutManager(applicationContext)
         protectorRecyclerView.layoutManager = layoutManagerProtector
         protectorRecyclerView.adapter = protectorAdapter
     }
@@ -100,6 +110,9 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
             //바텀 시트 다이어로그 호출
             binding.homeProtectorLayoutProtectorAdd -> {
                 showBottomSheetDialog()
+            }
+            binding.homeProtectorBtnBack -> {
+                finish()
             }
         }
     }
@@ -112,14 +125,14 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 Log.d("로그", "HomeProtectorFragment - onSearchClicked : $phoneNumber")
                 //자기 번호인지 체크
                 if(LoginedUserClient.phoneNumber.equals(phoneNumber)) {
-                    Toast.makeText(requireContext(), "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "자신을 보호자로 설정할 수 없어요.", Toast.LENGTH_SHORT).show()
                     return
                 }
                 //보호자 검색 retrofit 통신
                 retrofitCheckJoinedProtector(phoneNumber)
             }
         })
-        bottomSheetDialog.show(requireFragmentManager(), bottomSheetDialog.tag)
+        bottomSheetDialog.show(supportFragmentManager, bottomSheetDialog.tag)
     }
 
     //보호 대상자 정보 다이어로그 호출
@@ -136,7 +149,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_protecting_info_dialog")
+        customDialog.show(supportFragmentManager, "home_protecting_info_dialog")
     }
 
     //보호자 정보 다이어로그 호출
@@ -149,7 +162,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_protector_info_dialog")
+        customDialog.show(supportFragmentManager, "home_protector_info_dialog")
     }
 
     //보호자 및 보호 대상자 삭제 다이어로그 호출
@@ -173,7 +186,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_protecting_delete_dialog")
+        customDialog.show(supportFragmentManager, "home_protecting_delete_dialog")
     }
 
     //보호자 정보 조회 다이어로그 호출
@@ -188,7 +201,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
 
                 //hashset에서 중복 확인 후 리스트에 추가
                 if(protectorSet.contains(protectorData.phoneNumber)) {
-                    Toast.makeText(requireContext(), "이미 등록된 보호자입니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "이미 등록된 보호자입니다.", Toast.LENGTH_SHORT).show()
                     return
                 }
                 //보호자 등록 레트로핏 통신
@@ -200,7 +213,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                 customDialog.dismiss()
             }
         })
-        customDialog.show(childFragmentManager, "home_protector_delete_dialog")
+        customDialog.show(supportFragmentManager, "home_protector_delete_dialog")
     }
 
 
@@ -209,7 +222,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     //보호자 조회 retrofit 통신
     private fun retrofitCheckJoinedProtector(phoneNumber: String) {
         //로딩 프로그레스 바 출력
-        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.checkJoinedProtector(phoneNumber, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
@@ -233,7 +246,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
                             showProtectorSearchInfoDialog(protectorData)
                         }
                         else -> {
-                            Toast.makeText(requireContext(), "등록되지 않은 사용자 입니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "등록되지 않은 사용자 입니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
 
@@ -248,7 +261,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     //호보자 등록 레트로핏 통신
     private fun retrofitAddProtector(protectorData: ProtectorData) {
         //로딩 프로그레스 바 출력
-        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         val userData = UserData(protectorData.nickname, protectorData.phoneNumber, "", protectorData.birthDay, protectorData.sex)
         RetrofitManager.instance.addProtector(userData, completion = { completionResponse, response ->
             customProgressDialog.dismiss()
@@ -274,7 +287,7 @@ class HomeProtectorFragment : BaseFragment<FragmentHomeProtectorBinding>(Fragmen
     //모든 유저 정보 조회
     private fun retrofitGetProtectorList() {
         //로딩 프로그레스 바 출력
-        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.getProtectorList(completion = {
                 completionResponse, response ->
             when(completionResponse) {

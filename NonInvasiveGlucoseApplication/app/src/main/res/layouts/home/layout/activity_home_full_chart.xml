@@ -11,29 +11,50 @@
     android:weightSum="1">
 
     <LinearLayout
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ripple_android_blue_100_radius_20"
-        android:focusable="true"
-        android:clickable="true"
-        android:id="@+id/homeFullChart_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/toss_black_500" />
-        <TextView
-            android:layout_marginTop="3dp"
-            android:gravity="center"
-            android:layout_marginStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ripple_android_blue_100_radius_20"
+            android:focusable="true"
+            android:clickable="true"
+            android:id="@+id/homeFullChart_btn_back"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Home"
-            android:textColor="@color/toss_black_700"
-            android:textSize="18dp"
-            android:fontFamily="@font/ps_regular"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:tint="@color/toss_black_500" />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Home"
+                android:textColor="@color/toss_black_700"
+                android:textSize="18dp"
+                android:fontFamily="@font/ps_regular"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/homeFullChart_imageView_calendar"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -46,6 +67,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="평균 체온"
+            android:textColor="@color/toss_black_200"
+            android:fontFamily="@font/ps_regular"/>
+
+        <TextView
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,11 +85,12 @@
             android:fontFamily="@font/ps_bold"/>
 
         <TextView
+            android:id="@+id/homeFullChart_textView_date"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:text="2023.01.10 - 실시간 체온(℃)"
+            android:text="2023.01.10"
             android:textColor="@color/toss_black_200"
             android:fontFamily="@font/ps_regular"/>
 

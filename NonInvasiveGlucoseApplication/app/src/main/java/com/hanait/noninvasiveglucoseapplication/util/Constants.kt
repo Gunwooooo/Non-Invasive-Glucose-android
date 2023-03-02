@@ -1,6 +1,8 @@
 package com.hanait.noninvasiveglucoseapplication.util
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.data.Entry
@@ -52,18 +54,17 @@ object Constants {
 
     //블루투스 통신 주기 전역 변수
     var _checkBluetoothTimer = false
+
     //데이터 인덱스 값
     var _entryIndex = 0f
 
+    //블루투스 장치 연결 GATT
+    lateinit var bluetoothResultDevice : BluetoothDevice
+
     //통신으로 실시간으로 받을 badyDataArray
     val _bodyDataArrayList = ArrayList<BodyData>()
-    val _thermometerArrayList = ArrayList<Entry>()
-    val _heartArrayList = ArrayList<Entry>()
-    val _glucoseArrayList = ArrayList<Entry>()
 
-    //실시간 그래프 출력을 위한 데이터 셋
-    lateinit var _thermometerLineDataSet : LineDataSet
-    lateinit var _heartLineDataSet : LineDataSet
-    lateinit var _glucoseLineDataSet : LineDataSet
+    //Gatt 연결 상태 확인 변수
+    var _bluetoothGattConnected = false
 }
 

@@ -1,21 +1,24 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.LineData
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeFullChartBinding
-import com.hanait.noninvasiveglucoseapplication.util.Constants._thermometerArrayList
+import com.hanait.noninvasiveglucoseapplication.home.HomeActivity.Companion.thermometerLineData
+import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
+import java.util.*
 
 class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeFullChartBinding.inflate(layoutInflater) }
-    private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,13 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun init() {
         setThermometerLineChart()
 
+        //캘린더 이미지 넣기
+        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeFullChartImageViewCalendar)
+
+        //오늘 날짜 설정
+        setTodayDate()
+
+        binding.homeFullChartImageViewCalendar.setOnClickListener(this)
         binding.homeFullChartBtnBack.setOnClickListener(this)
     }
 
@@ -35,17 +45,38 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             binding.homeFullChartBtnBack -> {
                 finish()
             }
+            binding.homeFullChartImageViewCalendar -> {
+                CustomCalendarManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
+            }
         }
+    }
+
+    //초기 오늘 날짜 표시 되도록 설정
+    @SuppressLint("SetTextI18n")
+    private fun setTodayDate() {
+        val gregorianCalendar = GregorianCalendar()
+        val year = gregorianCalendar.get(Calendar.YEAR)
+        val month = gregorianCalendar.get(Calendar.MONTH)
+        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
+        binding.homeFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+    }
+
+    //데이터피커 리스너 설정
+    @SuppressLint("SetTextI18n")
+    private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
+        val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            binding.homeFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+        }
+        return datePickerDialogListener
     }
 
     //체온 차트 설정
     private fun setThermometerLineChart() {
-        val thermometerLineData =  customChartManager.setThermometerDashboardLineData()
-        val lineData = LineData(thermometerLineData)
         val lineThermometerDay = binding.homeFullChartLineChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(this, R.layout.custom_marker_view)
         lineThermometerDay.run {
+            data = thermometerLineData
             setScaleEnabled(false) //핀치 줌 안되도록
             data = lineData
             description.isEnabled = false
@@ -58,8 +89,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             marker = markerView
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
-            invalidate() //refresh
-            moveViewToX((_thermometerArrayList.size - 1).toFloat())
+            moveViewToX((thermometerLineData.entryCount).toFloat())
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가

@@ -1,10 +1,9 @@
 package com.hanait.noninvasiveglucoseapplication.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.os.PersistableBundle
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
@@ -13,20 +12,22 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.FragmentHomeThermometerBinding
-import com.hanait.noninvasiveglucoseapplication.user.UserActivity
-import com.hanait.noninvasiveglucoseapplication.user.UserSetSexFragment
-import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
+import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeThermometerBinding
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
 import kotlin.math.max
 import kotlin.math.min
 
 
-class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(FragmentHomeThermometerBinding::inflate), View.OnClickListener, OnChartValueSelectedListener {
-    private val customChartManager by lazy { CustomChartManager.getInstance(requireContext())}
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+class HomeThermometerActivity : AppCompatActivity(), View.OnClickListener, OnChartValueSelectedListener {
+    private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext)}
+    private val binding by lazy { ActivityHomeThermometerBinding.inflate(layoutInflater) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(binding.root)
 
         init()
     }
@@ -49,15 +50,14 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
     override fun onClick(v: View?) {
         when(v) {
             binding.homeThermometerBtnBack -> {
-                val mActivity = activity as HomeActivity
-                mActivity.changeFragmentTransactionNoAnimation(HomeDashboardFragment())
+                finish()
             }
         }
     }
 
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
-        val glide = Glide.with(requireContext())
+        val glide = Glide.with(applicationContext)
         glide.load(R.drawable.background_image_detail).into(binding.homeThermometerImageViewDetailBackground)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeThermometerImageViewBack)
     }
@@ -74,7 +74,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
         combinedData.setData(lineData)
 
         //마커 뷰 설정
-        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
 
         //클릭 리스너 설정
         candleThermometerDay.setOnChartValueSelectedListener(this)
@@ -94,8 +94,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
                 valueFormatter = CustomChartManager.CustomDateXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
-//                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+//                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
@@ -106,8 +106,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 animateX(1000)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
-                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기
@@ -117,7 +117,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -133,7 +133,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
 
 
         //마커 뷰 설정
-        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
 
         barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -151,8 +151,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
-//                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+//                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
@@ -163,8 +163,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 animateX(1000)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
-                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기
@@ -174,7 +174,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
@@ -191,7 +191,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
 //        lineThermometerDay.setData(lineData)
 
         //마커 뷰 설정
-        val markerView = CustomMarkerViewManager(context, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
 
         barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -209,8 +209,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
-//                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+//                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
@@ -221,8 +221,8 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 animateX(1000)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
-                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_150)    //y그리드 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기
@@ -232,7 +232,7 @@ class HomeThermometerFragment : BaseFragment<FragmentHomeThermometerBinding>(Fra
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(5f, 5f, 5f, 15f)
-                textColor = ContextCompat.getColor(requireContext(), R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
