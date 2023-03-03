@@ -26,7 +26,7 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetConne
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants.DEVICE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.Constants.SCAN_PERIOD
-import com.hanait.noninvasiveglucoseapplication.util.Constants.bluetoothResultDevice
+import com.hanait.noninvasiveglucoseapplication.util.Constants._bluetoothResultDevice
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import java.util.*
 
@@ -118,7 +118,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             if(deviceName != null && deviceName.equals(DEVICE_NAME)) {
                 Log.d("로그", "UserSetConnectDeviceFragment - onScanResult : 장치 발견됨!")
                 //디바이스 정보 전역 변수에 넣기
-                bluetoothResultDevice = result.device
+                _bluetoothResultDevice = result.device
                 
                 //발견됨 플래그
                 findDeviceFlag = true

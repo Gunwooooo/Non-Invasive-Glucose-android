@@ -6,16 +6,13 @@ import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.os.*
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.forEach
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
@@ -29,9 +26,16 @@ import com.hanait.noninvasiveglucoseapplication.model.BodyData
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.*
+import com.hanait.noninvasiveglucoseapplication.util.Constants._bluetoothResultDevice
+import com.hanait.noninvasiveglucoseapplication.util.Constants._bodyDataArrayList
+import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
+import com.hanait.noninvasiveglucoseapplication.util.Constants._entryIndex
 import org.json.JSONArray
 import java.io.File
 import java.lang.Compiler.enable
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -46,8 +50,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     //가트 연결 변수
     var bluetoothGatt: BluetoothGatt? = null
 
+    //Gatt 연결 상태 확인 변수
+    var bluetoothGattConnected = false
+
     //데이터 가져오는 시간
-    val REFRESH_TIME = 3000L
+    val REFRESH_TIME = 1000L
 
     //실시간 데이터 받기 타이머
     private val timer : Timer by lazy { Timer() }
@@ -66,6 +73,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         init()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
 
@@ -95,8 +103,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         setGlucoseLineChart()
 
         //블루투스 GATT 연결하기 -> 실시간 데이터 받기
-        if(!Constants._bluetoothGattConnected)
-            bluetoothGatt = Constants.bluetoothResultDevice.connectGatt(this, false, gattCallback)
+        if(!bluetoothGattConnected)
+            bluetoothGatt = _bluetoothResultDevice.connectGatt(this, false, gattCallback)
 
         binding.homeBtnThermometer.setOnClickListener(this)
         binding.homeBtnHeart.setOnClickListener(this)
@@ -147,23 +155,30 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        Log.w("로그", "HomeFragment - onPause : /////////////////////////////////")
         getRealTimeThread?.interrupt()
     }
 
     //실시간 라인 데이터 가져오기
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun refreshRealTimeData() {
         getRealTimeThread?.interrupt()
         val runnable = Runnable {
             binding.homeThermometerChart.notifyDataSetChanged()
+//            binding.homeThermometerChart.setVisibleXRangeMaximum(6f)
 //            binding.homeThermometerChart.moveViewToX((thermometerLineData.entryCount).toFloat())
             binding.homeThermometerChart.invalidate()
             binding.homeHeartChart.notifyDataSetChanged()
+//            binding.homeHeartChart.setVisibleXRangeMaximum(6f)
 //            binding.homeHeartChart.moveViewToX((heartLineData.entryCount).toFloat())
             binding.homeHeartChart.invalidate()
             binding.homeGlucoseChart.notifyDataSetChanged()
+//            binding.homeGlucoseChart.setVisibleXRangeMaximum(6f)
 //            binding.homeGlucoseChart.moveViewToX((glucoseLineData.entryCount).toFloat())
             binding.homeGlucoseChart.invalidate()
+
+            //시간 업데이트
+            val now = LocalDateTime.now()
+            binding.homeTextViewTime.text = now.format(DateTimeFormatter.ofPattern("a hh:mm"))
         }
 
         getRealTimeThread = Thread {
@@ -177,19 +192,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         getRealTimeThread!!.start()
-
-        //데이터 리스너
-//        timer.scheduleAtFixedRate(object : TimerTask() {
-//            override fun run() {
-//                Log.d("로그", "HomeFragment - run :개수 ${lineData1.entryCount}  ${lineData2.entryCount}  ${lineData3.entryCount}")
-//                binding.homeThermometerChart.notifyDataSetChanged()
-//                binding.homeThermometerChart.invalidate()
-//                binding.homeHeartChart.notifyDataSetChanged()
-//                binding.homeHeartChart.invalidate()
-//                binding.homeGlucoseChart.notifyDataSetChanged()
-//                binding.homeGlucoseChart.invalidate()
-//            }
-//        }, 0, 1000)
     }
 
     //초기 글라이드로 이미지 불러오기
@@ -197,6 +199,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val glide = Glide.with(this)
         glide.load(R.drawable.background_image_dashboard).into(binding.homeImageViewDashBoardBackground)
         glide.load(R.drawable.ic_baseline_settings_24).into(binding.homeImageViewSetting)
+        glide.load(R.drawable.ic_baseline_access_time_24).into(binding.homeImageViewClock)
     }
     //=================================================================================================
     ///////////////////////////////////////블루투스 GATT 연결////////////////////////////////////////////
@@ -208,8 +211,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             super.onConnectionStateChange(gatt, status, newState)
             when(newState) {
                 BluetoothGatt.STATE_CONNECTED -> {
+
+
                     //가트 연결 상태 확인 전역 변수
-                    Constants._bluetoothGattConnected = true
+                    bluetoothGattConnected = true
 
                     //서비스디스커버 호출하기
                     Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버 연결됨 : ${bluetoothGatt!!.discoverServices()}")
@@ -222,7 +227,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     }, 0, REFRESH_TIME)
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
-                    Constants._bluetoothGattConnected = false
+                    bluetoothGattConnected = false
                     Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
                 }
             }
@@ -252,6 +257,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         //기기에서 오는 데이터 처리
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onCharacteristicChanged(
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?
@@ -262,14 +268,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             //w나 f면 return
             if(data == "W" || data == "F") return
             //5초마다 타이머 체크 후 값 전달 받기
-            if(Constants._checkBluetoothTimer) {
+            if(_checkBluetoothTimer) {
                 Log.d("로그", "UserSetConnectDeviceFragment - onCharacteristicChanged : $data")
                 //인덱스 + 1
-                Constants._entryIndex++
-                Constants._checkBluetoothTimer = false
+                _entryIndex++
+                _checkBluetoothTimer = false
                 val heart = data.split('!')[0].split('@')[1].toFloat()
                 val thermometer = data.split('/')[0].split('!')[1].toFloat()
                 val glucose = 0f
+
+                //요약 데이터 업데이트 하기
+                updateSummaryValue(String.format("%.1f", thermometer), String.format("%.1f", heart), String.format("%.1f", glucose))
 
                 Log.d("로그", "HomeFragment - onCharacteristicChanged : ${thermometerLineData.entryCount}  ${heartLineData.entryCount}  ${glucoseLineData.entryCount}")
 
@@ -281,7 +290,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 glucoseLineData.addEntry(Entry(Constants._entryIndex, glucose), 0)
                 glucoseLineData.notifyDataChanged()
                 //서버로 보낼 통합 리스트
-                Constants._bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
+                _bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
             }
 
         }
@@ -297,6 +306,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //요약 데이터 업데이트
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updateSummaryValue(thermometer : String, heart : String, glucose : String) {
+        binding.homeTextViewThermometerSummary.text = thermometer
+        binding.homeTextViewThermometerValue.text = thermometer
+        binding.homeTextViewHeartSummary.text = heart
+        binding.homeTextViewHeartValue.text = heart
+        binding.homeTextViewGlucoseSummary.text = glucose
+        binding.homeTextViewGlucoseValue.text = glucose
+    }
+
     //=================================================================================================
 
     //심박수 라인 데이터 생성성
@@ -304,7 +324,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val thermometerLineDataSet = LineDataSet(null, "체온")
         return thermometerLineDataSet.apply {
             mode = LineDataSet.Mode.LINEAR
-            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+//            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
             lineWidth = 2F //선 굵기
@@ -326,7 +346,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val heartLineDataSet = LineDataSet(null, "체온")
         return heartLineDataSet.apply {
             mode = LineDataSet.Mode.LINEAR
-            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+//            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
             lineWidth = 2F //선 굵기
@@ -348,7 +368,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val glucoseLineDataSet = LineDataSet(null, "혈당")
         return glucoseLineDataSet.apply {
             mode = LineDataSet.Mode.LINEAR
-            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+//            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             lineWidth = 2F //선 굵기
@@ -388,9 +408,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
-//            setVisibleXRangeMaximum(10f)
-//            notifyDataSetChanged()  //차트 값 변동을 감지함
-//            moveViewToX(3f);
+//            setVisibleXRangeMaximum(6f)
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+//            moveViewToX((thermometerLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
@@ -444,10 +464,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isScaleXEnabled = false //가로 확대 없애기
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
-//            setVisibleXRangeMaximum(10f)
+//            setVisibleXRangeMaximum(6f)
             marker = markerView
-//            notifyDataSetChanged()  //차트 값 변동을 감지함
-//            moveViewToX(3f);
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+//            moveViewToX((heartLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
@@ -497,11 +517,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 
-//            setVisibleXRangeMaximum(10f)
+//            setVisibleXRangeMaximum(6f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
-//            notifyDataSetChanged()  //차트 값 변동을 감지함
-//            moveViewToX(3f);
+            notifyDataSetChanged()  //차트 값 변동을 감지함
+//            moveViewToX((glucoseLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
