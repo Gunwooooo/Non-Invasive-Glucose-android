@@ -28,7 +28,6 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.*
 import com.hanait.noninvasiveglucoseapplication.util.Constants._bluetoothResultDevice
 import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
-import com.hanait.noninvasiveglucoseapplication.util.Constants._entryIndex
 import org.json.JSONArray
 import java.io.File
 import java.time.LocalDateTime
@@ -308,21 +307,23 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             if(_checkBluetoothTimer) {
                 Log.d("로그", "HomeActivity - onCharacteristicChanged : $data")
                 //인덱스 + 1
-                _entryIndex++
+
+                val currentTimeMillis = System.currentTimeMillis()
+
                 _checkBluetoothTimer = false
                 val heart = (data.split('!')[0].split('@')[1].toFloat() * 10).roundToInt() / 10.0F
                 val thermometer = (data.split('/')[0].split('!')[1].toFloat() * 10).roundToInt() / 10.0F
                 val glucose = 0f
 
                 //전역 배열 리스트에 각각 추가하기
-                thermometerLineData.addEntry(Entry(_entryIndex, thermometer), 0)
+                thermometerLineData.addEntry(Entry(currentTimeMillis, thermometer), 0)
                 thermometerLineData.notifyDataChanged()
-                heartLineData.addEntry(Entry(_entryIndex, heart), 0)
+                heartLineData.addEntry(Entry(currentTimeMillis, heart), 0)
                 heartLineData.notifyDataChanged()
-                glucoseLineData.addEntry(Entry(_entryIndex, glucose), 0)
+                glucoseLineData.addEntry(Entry(currentTimeMillis, glucose), 0)
                 glucoseLineData.notifyDataChanged()
                 //서버로 보낼 통합 리스트
-                bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
+                bodyDataArrayList.add(BodyData(thermometer, heart, glucose, currentTimeMillis))
 
                 //바디 데이터가 10개 쌓일 때마다 서버에 보내기
                 if(bodyDataArrayList.size == 10) retrofitAddBodyData()

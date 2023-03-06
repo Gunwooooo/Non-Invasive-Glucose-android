@@ -55,8 +55,8 @@ object Constants {
     //블루투스 통신 주기 전역 변수
     var _checkBluetoothTimer = false
 
-    //데이터 인덱스 값
-    var _entryIndex = 0f
+//    //데이터 인덱스 값
+//    var _entryIndex = 0f
 
     //블루투스 장치 연결 GATT
     lateinit var _bluetoothResultDevice : BluetoothDevice

@@ -9,6 +9,7 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.hanait.noninvasiveglucoseapplication.R
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 class CustomChartManager(val context: Context) {
@@ -27,8 +28,7 @@ class CustomChartManager(val context: Context) {
 
     class CustomTimeXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
-            val time = value.toInt()
-//            if(0<time)
+            val valueToMunutes = TimeUnit.MINUTES.toMillis(value.to)
             return "${time}시"
         }
     }
