@@ -60,8 +60,5 @@ object Constants {
 
     //블루투스 장치 연결 GATT
     lateinit var _bluetoothResultDevice : BluetoothDevice
-
-    //통신으로 실시간으로 받을 badyDataArray
-    val _bodyDataArrayList = ArrayList<BodyData>()
 }
 

@@ -101,24 +101,10 @@
         android:background="@color/android_blue_100"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.7">
+        android:layout_weight="0.8">
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/homeFullChart_lineChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
-
-    <LinearLayout
-        android:gravity="center"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.1">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/icon_no_color_swiping"
-            app:tint="@color/toss_black_600" />
-    </LinearLayout>
-
 </LinearLayout>

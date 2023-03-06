@@ -234,6 +234,40 @@
                         android:textSize="18dp" />
 
                     <LinearLayout
+                        android:visibility="visible"
+                        android:id="@+id/home_linearLayout_disconnected"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_gravity="bottom"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/background_toss_black_100_ring_shape">
+                            <LinearLayout
+                                android:layout_gravity="center"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:background="@drawable/background_toss_black_200_ring_shape" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:gravity="bottom"
+                            android:layout_marginStart="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="연결안됨"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/ps_regular"
+                            android:textColor="@color/toss_black_500"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/home_linearLayout_connected"
                         android:layout_marginEnd="8dp"
                         android:gravity="end"
                         android:layout_width="match_parent"
@@ -249,20 +283,20 @@
                                 android:layout_gravity="center"
                                 android:layout_width="10dp"
                                 android:layout_height="10dp"
-                                android:background="@drawable/background_iphone_green_200_ring_shape"/>
+                                android:background="@drawable/background_iphone_green_200_ring_shape" />
                         </FrameLayout>
 
                         <TextView
-                            android:id="@+id/home_textView_connected"
                             android:gravity="bottom"
                             android:layout_marginStart="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="Connected"
+                            android:text="연결됨"
                             android:textSize="16dp"
                             android:fontFamily="@font/ps_regular"
                             android:textColor="@color/toss_black_500"/>
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout

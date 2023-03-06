@@ -84,7 +84,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-            setVisibleXRangeMaximum(6f) //
+//            setVisibleXRangeMaximum(6f) //
             setBackgroundColor(ContextCompat.getColor(context, R.color.android_blue_100))
             marker = markerView
 

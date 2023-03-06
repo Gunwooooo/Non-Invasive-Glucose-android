@@ -41,7 +41,9 @@ class ConnectionLoadingFragment : BaseFragment<FragmentConnectionLoadingBinding>
         mActivity.setProgressDialogValueAndVisible(100, View.GONE)
         mActivity.setPrevFragment(UserSetConnectDeviceFragment())
 
-        binding.connectionLoadingLottie.visibility = View.VISIBLE
+        binding.connectionLoadingLottie.progress = 1F
+
+
 
         binding.connectionLoadingBtnNext.setOnClickListener(this)
     }

@@ -257,8 +257,8 @@ class RetrofitManager {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //건강 데이터 추가
-    fun addBodyData(bodyData: BodyData, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.addBodyData(bodyData) ?: return
+    fun addBodyData(bodyDataArrayList: ArrayList<BodyData>, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.addBodyData(bodyDataArrayList) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

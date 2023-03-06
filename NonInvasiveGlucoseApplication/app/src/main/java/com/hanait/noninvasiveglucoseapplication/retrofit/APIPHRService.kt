@@ -110,7 +110,6 @@ interface APIPHRService {
     //건강 데이터 추가
     @POST("/wellink/bodydata")
     fun addBodyData(
-        @Body bodyData: BodyData
+        @Body bodyDataArrayList: ArrayList<BodyData>
     ): Call<ResponseBody>
-
 }

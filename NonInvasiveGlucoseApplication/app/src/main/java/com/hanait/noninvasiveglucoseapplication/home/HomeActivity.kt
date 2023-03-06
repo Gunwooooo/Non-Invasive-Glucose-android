@@ -27,16 +27,14 @@ import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.*
 import com.hanait.noninvasiveglucoseapplication.util.Constants._bluetoothResultDevice
-import com.hanait.noninvasiveglucoseapplication.util.Constants._bodyDataArrayList
 import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
 import com.hanait.noninvasiveglucoseapplication.util.Constants._entryIndex
 import org.json.JSONArray
 import java.io.File
-import java.lang.Compiler.enable
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.math.roundToInt
 import kotlin.system.exitProcess
 
 
@@ -54,17 +52,26 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     var bluetoothGattConnected = false
 
     //데이터 가져오는 시간
-    val REFRESH_TIME = 1000L
+    val REFRESH_TIME = 3000L
+    
+    //타이머 태스크 정의 (timer 새로운 객체로 생성되는 것을 방지)
+    var timerTask: TimerTask = object : TimerTask() {
+        override fun run() {
+            //데이터 받을 수 있도록 플래그 변경
+            _checkBluetoothTimer = true
+        }
+    }
 
-    //실시간 데이터 받기 타이머
-    private val timer : Timer by lazy { Timer() }
-
+    //라인 데이터 전역 변수
     companion object {
         lateinit var thermometerLineData : LineData
         lateinit var heartLineData : LineData
         lateinit var glucoseLineData : LineData
     }
 
+    private val bodyDataArrayList = ArrayList<BodyData>()
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,8 +79,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         init()
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun onResume() {
         super.onResume()
 
@@ -82,11 +88,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
         //사용자 정보 가져오기
         retrofitInfoLoginedUser()
-
-        //실시간 데이터 표시
-        refreshRealTimeData()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingPermission")
     private fun init() {
         //글라이드로 모든 이미지 가져오기
@@ -102,9 +106,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         setHeartLineChart()
         setGlucoseLineChart()
 
-        //블루투스 GATT 연결하기 -> 실시간 데이터 받기
-        if(!bluetoothGattConnected)
-            bluetoothGatt = _bluetoothResultDevice.connectGatt(this, false, gattCallback)
+        //실시간 데이터 표시
+        refreshRealTimeData()
 
         binding.homeBtnThermometer.setOnClickListener(this)
         binding.homeBtnHeart.setOnClickListener(this)
@@ -159,10 +162,40 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //실시간 라인 데이터 가져오기
+    @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun refreshRealTimeData() {
         getRealTimeThread?.interrupt()
         val runnable = Runnable {
+            //가트 연결이 해제됐을 경우 자동으로 연결 체크
+            if(!bluetoothGattConnected) {
+                Log.d("로그", "HomeActivity - refreshRealTimeData : ######  연결 시도   #######")
+                //연결됨 뷰 변경
+                binding.homeLinearLayoutConnected.visibility = View.GONE
+                binding.homeLinearLayoutDisconnected.visibility = View.VISIBLE
+
+                //재연결
+                bluetoothGatt = _bluetoothResultDevice.connectGatt(applicationContext, false, gattCallback)
+                return@Runnable
+            }
+
+            //연결됨 표시로 변경
+            binding.homeLinearLayoutConnected.visibility = View.VISIBLE
+            binding.homeLinearLayoutDisconnected.visibility = View.GONE
+            
+            //최근 데이터값 가져와서 요약에 표시하도록 설정
+            val thermometerDataSet = thermometerLineData.dataSets[0]
+            val heartDataSet = heartLineData.dataSets[0]
+            val glucoseDataSet = glucoseLineData.dataSets[0]
+            if(thermometerDataSet.entryCount != 0 && heartDataSet.entryCount != 0 && glucoseDataSet.entryCount != 0) {
+                val thermometer = thermometerDataSet.getEntryForIndex(thermometerDataSet.entryCount - 1).y
+                val heart = heartDataSet.getEntryForIndex(heartDataSet.entryCount - 1).y
+                val glucose = glucoseDataSet.getEntryForIndex(glucoseDataSet.entryCount - 1).y
+
+                //요약 데이터 업데이트 하기
+                updateSummaryValue(thermometer.toString(), heart.toString(), glucose.toString())
+            }
+
             binding.homeThermometerChart.notifyDataSetChanged()
 //            binding.homeThermometerChart.setVisibleXRangeMaximum(6f)
 //            binding.homeThermometerChart.moveViewToX((thermometerLineData.entryCount).toFloat())
@@ -209,10 +242,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         @SuppressLint("MissingPermission")
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             super.onConnectionStateChange(gatt, status, newState)
+            val timer = Timer()
             when(newState) {
                 BluetoothGatt.STATE_CONNECTED -> {
-
-
                     //가트 연결 상태 확인 전역 변수
                     bluetoothGattConnected = true
 
@@ -220,15 +252,20 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버 연결됨 : ${bluetoothGatt!!.discoverServices()}")
 
                     //5초마다 타이머로 값을 받을지 체크
-                    timer.scheduleAtFixedRate(object : TimerTask() {
-                        override fun run() {
-                            Constants._checkBluetoothTimer = true
-                        }
-                    }, 0, REFRESH_TIME)
+                    timer.scheduleAtFixedRate(timerTask, 0, REFRESH_TIME)
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
                     bluetoothGattConnected = false
                     Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
+                    //가트 연결 해제
+                    bluetoothGatt!!.disconnect()
+                    bluetoothGatt!!.close()
+
+                    //스레드 종료
+//                    getRealTimeThread?.interrupt()
+
+                    //타이머 종료
+                    timer.cancel()
                 }
             }
         }
@@ -238,20 +275,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             super.onServicesDiscovered(gatt, status)
             when(status) {
                 BluetoothGatt.GATT_SUCCESS -> {
-                    //연결 상태 변경
-
                     Log.d("로그", "CustomBluetoothManager - onServicesDiscovered : 연결 성공함")
                     val str = gatt!!.getService(Constants.UART_UUID).getCharacteristic(Constants.TX_CHAR_UUID)
-                    Log.d("로그", "CustomBluetoothManager - onServicesDiscovered : $str")
                     if (bluetoothGatt!!.setCharacteristicNotification(str, true)) {
                         val descriptor = str.getDescriptor(Constants.CCCD_UUID)
                         descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                         bluetoothGatt!!.writeDescriptor(descriptor)
-                        broadcastUpdate("커넥티드 한아아이티 기계")
+                        broadcastUpdate("데이터 기록을 시작합니다. 잠시만 기다려주세요.\n(기기 특성상 최대 1분 정도 소요될 수 있습니다)")
                     }
                 }
                 BluetoothGatt.GATT_FAILURE -> {
-                    broadcastUpdate("커넥티드 실패")
+                    broadcastUpdate("블루투스 연결에 실패하였습니다.")
                 }
             }
         }
@@ -266,31 +300,32 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             //바이트 데이터 스트링으로 변환
             val data = String(characteristic!!.value)
             //w나 f면 return
-            if(data == "W" || data == "F") return
+            if(data == "W" || data == "F") {
+                Log.d("로그", "HomeActivity - onCharacteristicChanged : $data")
+                return
+            }
             //5초마다 타이머 체크 후 값 전달 받기
             if(_checkBluetoothTimer) {
-                Log.d("로그", "UserSetConnectDeviceFragment - onCharacteristicChanged : $data")
+                Log.d("로그", "HomeActivity - onCharacteristicChanged : $data")
                 //인덱스 + 1
                 _entryIndex++
                 _checkBluetoothTimer = false
-                val heart = data.split('!')[0].split('@')[1].toFloat()
-                val thermometer = data.split('/')[0].split('!')[1].toFloat()
+                val heart = (data.split('!')[0].split('@')[1].toFloat() * 10).roundToInt() / 10.0F
+                val thermometer = (data.split('/')[0].split('!')[1].toFloat() * 10).roundToInt() / 10.0F
                 val glucose = 0f
 
-                //요약 데이터 업데이트 하기
-                updateSummaryValue(String.format("%.1f", thermometer), String.format("%.1f", heart), String.format("%.1f", glucose))
-
-                Log.d("로그", "HomeFragment - onCharacteristicChanged : ${thermometerLineData.entryCount}  ${heartLineData.entryCount}  ${glucoseLineData.entryCount}")
-
                 //전역 배열 리스트에 각각 추가하기
-                thermometerLineData.addEntry(Entry(Constants._entryIndex, thermometer), 0)
+                thermometerLineData.addEntry(Entry(_entryIndex, thermometer), 0)
                 thermometerLineData.notifyDataChanged()
-                heartLineData.addEntry(Entry(Constants._entryIndex, heart), 0)
+                heartLineData.addEntry(Entry(_entryIndex, heart), 0)
                 heartLineData.notifyDataChanged()
-                glucoseLineData.addEntry(Entry(Constants._entryIndex, glucose), 0)
+                glucoseLineData.addEntry(Entry(_entryIndex, glucose), 0)
                 glucoseLineData.notifyDataChanged()
                 //서버로 보낼 통합 리스트
-                _bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
+                bodyDataArrayList.add(BodyData(thermometer, heart, glucose))
+
+                //바디 데이터가 10개 쌓일 때마다 서버에 보내기
+                if(bodyDataArrayList.size == 10) retrofitAddBodyData()
             }
 
         }
@@ -299,7 +334,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             val mHandler : Handler = object : Handler(Looper.getMainLooper()) {
                 override fun handleMessage(msg: Message) {
                     super.handleMessage(msg)
-                    Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, str, Toast.LENGTH_LONG).show()
                 }
             }
             mHandler.obtainMessage().sendToTarget()
@@ -605,7 +640,32 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    //바디 데이터 특정 개수마다 서버로 보내기
+    private fun retrofitAddBodyData() {
+        RetrofitManager.instance.addBodyData(bodyDataArrayList, completion = { completionResponse, response ->
+            //바디 데이터 리스트 초기화 하기
+            bodyDataArrayList.clear()
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    val str = response!!.body()!!.string()
+                    Log.d("로그", "HomeActivity - retrofitAddBodyData : ${str}")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeActivity - retrofitAddBodyData : 통신 실패")
+                }
+            }
+        })
+    }
 
+    @SuppressLint("MissingPermission")
+    override fun onDestroy() {
+        super.onDestroy()
+
+        //가트 연결 해제
+        bluetoothGattConnected = false
+        bluetoothGatt!!.disconnect()
+        bluetoothGatt!!.close()
+    }
 
     //뒤로가기 키 눌렸을 때 종료
     @Override
