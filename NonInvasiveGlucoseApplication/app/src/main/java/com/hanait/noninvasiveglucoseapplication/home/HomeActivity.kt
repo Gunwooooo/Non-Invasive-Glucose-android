@@ -31,6 +31,8 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTi
 import org.json.JSONArray
 import java.io.File
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
@@ -68,7 +70,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         lateinit var glucoseLineData : LineData
     }
 
-    private val bodyDataArrayList = ArrayList<BodyData>()
+    private var bodyDataArrayList = ArrayList<BodyData>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -305,27 +307,32 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             //5초마다 타이머 체크 후 값 전달 받기
             if(_checkBluetoothTimer) {
-                Log.d("로그", "HomeActivity - onCharacteristicChanged : $data")
-                //인덱스 + 1
+                //현재 시간
+                val dateTime = LocalDateTime.now()
+                //서버로 보낼 데이터 형식
+                val dateTimeString = dateTime.format(DateTimeFormatter.ISO_DATE_TIME)
 
-                val currentTimeMillis = System.currentTimeMillis()
+
+                //인덱스로 사용할 데이터 형식
+                val index = dateTime.toLocalTime().toSecondOfDay().toFloat()
+                Log.d("로그", "HomeActivity - onCharacteristicChanged : 날짜...${index} - $data")
 
                 _checkBluetoothTimer = false
                 val heart = (data.split('!')[0].split('@')[1].toFloat() * 10).roundToInt() / 10.0F
                 val thermometer = (data.split('/')[0].split('!')[1].toFloat() * 10).roundToInt() / 10.0F
                 val glucose = 0f
-
                 //전역 배열 리스트에 각각 추가하기
-                thermometerLineData.addEntry(Entry(currentTimeMillis, thermometer), 0)
+                thermometerLineData.addEntry(Entry(index, thermometer), 0)
                 thermometerLineData.notifyDataChanged()
-                heartLineData.addEntry(Entry(currentTimeMillis, heart), 0)
+                heartLineData.addEntry(Entry(index, heart), 0)
                 heartLineData.notifyDataChanged()
-                glucoseLineData.addEntry(Entry(currentTimeMillis, glucose), 0)
+                glucoseLineData.addEntry(Entry(index, glucose), 0)
                 glucoseLineData.notifyDataChanged()
-                //서버로 보낼 통합 리스트
-                bodyDataArrayList.add(BodyData(thermometer, heart, glucose, currentTimeMillis))
 
-                //바디 데이터가 10개 쌓일 때마다 서버에 보내기
+                //서버로 보낼 통합 리스트
+                bodyDataArrayList.add(BodyData(thermometer, heart, glucose, dateTimeString))
+
+//                바디 데이터가 10개 쌓일 때마다 서버에 보내기
                 if(bodyDataArrayList.size == 10) retrofitAddBodyData()
             }
 
@@ -648,8 +655,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             bodyDataArrayList.clear()
             when(completionResponse) {
                 CompletionResponse.OK -> {
-                    val str = response!!.body()!!.string()
-                    Log.d("로그", "HomeActivity - retrofitAddBodyData : ${str}")
+                    when(response!!.code()) {
+                        200 -> {
+                            val str = response.body()!!.string()
+                            Log.d("로그", "HomeActivity - retrofitAddBodyData : ${str}")
+                        }
+                    }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeActivity - retrofitAddBodyData : 통신 실패")

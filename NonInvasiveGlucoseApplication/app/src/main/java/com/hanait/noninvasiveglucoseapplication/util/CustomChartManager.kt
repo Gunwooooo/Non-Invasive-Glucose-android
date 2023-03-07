@@ -4,10 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.hanait.noninvasiveglucoseapplication.R
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
@@ -25,45 +30,21 @@ class CustomChartManager(val context: Context) {
             return INSTANCE as CustomChartManager
         }
     }
-
+    @SuppressLint("SimpleDateFormat")
     class CustomTimeXAxisFormatter : ValueFormatter() {
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun getFormattedValue(value: Float): String {
-            val valueToMunutes = TimeUnit.MINUTES.toMillis(value.to)
-            return "${time}시"
+            val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
+            return LocalTime.ofSecondOfDay(value.toLong()).format(timeFormat)
         }
     }
 
     class CustomDateXAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
-            val time = value.toInt()
-            return "${time}일"
+            val time = TimeUnit.MINUTES.toMillis(value.toLong())
+            val timeMinutes = Date(time)
+            return SimpleDateFormat("HH:mm").format(timeMinutes)
         }
-    }
-
-    //실수 난수 생성
-    private fun makeHeartDashboardLineDataSet() : LineDataSet {
-        val entry: MutableList<Entry> = ArrayList()
-        val max = 40.0
-        val min = 35.0
-        val random = Random()
-        random.setSeed(Date().time)
-        for (i in 1 until 24) {
-            entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
-        }
-        return LineDataSet(entry, "심박수")
-    }
-
-    //실수 난수 생성
-    private fun makeGlucoseDashboardLineDataSet() : LineDataSet {
-        val entry: MutableList<Entry> = ArrayList()
-        val max = 40.0
-        val min = 35.0
-        val random = Random()
-        random.setSeed(Date().time)
-        for (i in 1 until 24) {
-            entry.add(Entry(i.toFloat(), (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)))
-        }
-        return LineDataSet(entry, "혈당")
     }
 
     //==============================================================================================

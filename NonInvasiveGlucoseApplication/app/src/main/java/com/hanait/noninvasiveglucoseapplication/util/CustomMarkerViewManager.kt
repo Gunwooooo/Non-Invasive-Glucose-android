@@ -29,9 +29,9 @@ class CustomMarkerViewManager(context: Context?, layoutResource: Int) :
             customMarkerViewTextView.text = text
         } else {
             val text = StringBuilder()
-            text.append("10월 ${e.x.toInt()}일\n")
-            text.append("평균 체온 ${e.y}")
-            customMarkerViewTextView.text = "${e.y}℃"
+            text.append("x : ${e.x}\n")
+            text.append("y : ${e.y}")
+            customMarkerViewTextView.text = text
         }
         super.refreshContent(e, highlight)
     }
