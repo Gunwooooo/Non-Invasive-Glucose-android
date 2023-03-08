@@ -74,7 +74,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun setThermometerLineChart() {
         val lineThermometerDay = binding.homeFullChartLineChart
         //마커 뷰 설정
-        val markerView = CustomMarkerViewManager(this, R.layout.custom_marker_view)
+        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         lineThermometerDay.run {
             data = thermometerLineData
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -84,8 +84,8 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-//            setVisibleXRangeMaximum(6f) //
-            setBackgroundColor(ContextCompat.getColor(context, R.color.android_blue_100))
+            setVisibleXRangeMaximum(3f) //
+            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
             marker = markerView
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
@@ -98,7 +98,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //                labelCount = 8
 //                granularity = 3f  //X축 간격
                 textSize = 12f
-                textColor = ContextCompat.getColor(context, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
@@ -110,9 +110,9 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 animateX(500)
                 animateY(1000)
                 textSize = 12f
-                textColor = ContextCompat.getColor(context, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
-                    ContextCompat.getColor(context, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기
@@ -122,7 +122,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(15f, 15f, 15f, 15f)
-                textColor = ContextCompat.getColor(context, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }

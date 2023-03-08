@@ -54,6 +54,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     //데이터 가져오는 시간
     val REFRESH_TIME = 3000L
+
+    var dataCount = 0
     
     //타이머 태스크 정의 (timer 새로운 객체로 생성되는 것을 방지)
     var timerTask: TimerTask = object : TimerTask() {
@@ -94,6 +96,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingPermission")
     private fun init() {
+        //데이터 받아오는 횟수 초기화
+        dataCount = 0
+
         //글라이드로 모든 이미지 가져오기
         setImageViewWithGlide()
 
@@ -307,6 +312,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             //5초마다 타이머 체크 후 값 전달 받기
             if(_checkBluetoothTimer) {
+                //데이터 받아오는 횟수 카운트
+                dataCount++
+
                 //현재 시간
                 val dateTime = LocalDateTime.now()
                 //서버로 보낼 데이터 형식
@@ -333,7 +341,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 bodyDataArrayList.add(BodyData(thermometer, heart, glucose, dateTimeString))
 
 //                바디 데이터가 10개 쌓일 때마다 서버에 보내기
-                if(bodyDataArrayList.size == 10) retrofitAddBodyData()
+                if(dataCount % 10 == 0) retrofitAddBodyData()
             }
 
         }
@@ -442,8 +450,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         lineThermometerDay.run {
-            data = thermometerLineData
             setScaleEnabled(false) //핀치 줌 안되도록
+            data = thermometerLineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
@@ -451,7 +459,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
-//            setVisibleXRangeMaximum(6f)
+            setVisibleXRangeMaximum(6f)
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((thermometerLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
@@ -499,15 +507,15 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val lineChartHeart = binding.homeHeartChart
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         lineChartHeart.run {
-            data = heartLineData
             setScaleEnabled(false) //핀치 줌 안되도록
+            data = heartLineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
-//            setVisibleXRangeMaximum(6f)
+            setVisibleXRangeMaximum(6f)
             marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((heartLineData.entryCount).toFloat())
@@ -553,14 +561,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val lineGlucoseBlood = binding.homeGlucoseChart
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         lineGlucoseBlood.run {
-            data = glucoseLineData
             setScaleEnabled(false) //핀치 줌 안되도록
+            data = glucoseLineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 
-//            setVisibleXRangeMaximum(6f)
+            setVisibleXRangeMaximum(6f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
@@ -651,12 +659,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     //바디 데이터 특정 개수마다 서버로 보내기
     private fun retrofitAddBodyData() {
         RetrofitManager.instance.addBodyData(bodyDataArrayList, completion = { completionResponse, response ->
-            //바디 데이터 리스트 초기화 하기
-            bodyDataArrayList.clear()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response!!.code()) {
                         200 -> {
+                            //바디 데이터 리스트 초기화 하기
+                            bodyDataArrayList.clear()
                             val str = response.body()!!.string()
                             Log.d("로그", "HomeActivity - retrofitAddBodyData : ${str}")
                         }
@@ -672,6 +680,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("MissingPermission")
     override fun onDestroy() {
         super.onDestroy()
+
+        //데이터 받아온 횟수 초기화
+        dataCount = 0
 
         //가트 연결 해제
         bluetoothGattConnected = false
