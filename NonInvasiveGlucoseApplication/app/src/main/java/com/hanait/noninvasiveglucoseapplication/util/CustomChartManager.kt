@@ -8,14 +8,16 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
 import com.hanait.noninvasiveglucoseapplication.R
-import java.text.SimpleDateFormat
+import java.text.DecimalFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
+
 
 class CustomChartManager(val context: Context) {
 
@@ -39,11 +41,10 @@ class CustomChartManager(val context: Context) {
         }
     }
 
-    class CustomDateXAxisFormatter : ValueFormatter() {
+    class CustomDecimalYAxisFormatter : ValueFormatter() {
+        private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.0")
         override fun getFormattedValue(value: Float): String {
-            val time = TimeUnit.MINUTES.toMillis(value.toLong())
-            val timeMinutes = Date(time)
-            return SimpleDateFormat("HH:mm").format(timeMinutes)
+            return mFormat.format(value.toDouble()) // e.g. append a dollar-sign
         }
     }
 

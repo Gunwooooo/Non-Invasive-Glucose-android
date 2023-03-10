@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -203,16 +204,19 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             binding.homeThermometerChart.notifyDataSetChanged()
-//            binding.homeThermometerChart.setVisibleXRangeMaximum(6f)
-//            binding.homeThermometerChart.moveViewToX((thermometerLineData.entryCount).toFloat())
+            val thermometerData = binding.homeThermometerChart.data
+            binding.homeThermometerChart.setVisibleXRangeMaximum(20f)
+            binding.homeThermometerChart.moveViewToX(thermometerData.xMax)
             binding.homeThermometerChart.invalidate()
             binding.homeHeartChart.notifyDataSetChanged()
-//            binding.homeHeartChart.setVisibleXRangeMaximum(6f)
-//            binding.homeHeartChart.moveViewToX((heartLineData.entryCount).toFloat())
+            val heartData = binding.homeHeartChart.data
+            binding.homeHeartChart.setVisibleXRangeMaximum(20f)
+            binding.homeHeartChart.moveViewToX(heartData.xMax)
             binding.homeHeartChart.invalidate()
             binding.homeGlucoseChart.notifyDataSetChanged()
-//            binding.homeGlucoseChart.setVisibleXRangeMaximum(6f)
-//            binding.homeGlucoseChart.moveViewToX((glucoseLineData.entryCount).toFloat())
+            val glucoseData = binding.homeGlucoseChart.data
+            binding.homeGlucoseChart.setVisibleXRangeMaximum(20f)
+            binding.homeGlucoseChart.moveViewToX(glucoseData.xMax)
             binding.homeGlucoseChart.invalidate()
 
             //시간 업데이트
@@ -378,13 +382,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
+            valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             lineWidth = 2F //선 굵기
             circleRadius = 3F
             circleHoleRadius = 1F
             setDrawCircles(true)   //동그란거 없애기
             setDrawValues(true)
             setCircleColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
-            valueTextSize = 0F
+            valueTextSize = 12F
             isHighlightEnabled = true   //클릭시 마크 보이게
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
             setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
@@ -400,13 +405,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
+            valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter()
             lineWidth = 2F //선 굵기
             circleRadius = 3F
             circleHoleRadius = 1F
             setDrawCircles(true)   //동그란거 없애기
             setDrawValues(true)
             setCircleColor(ContextCompat.getColor(applicationContext, R.color.text_red_200))
-            valueTextSize = 0F
+            valueTextSize = 12F
             isHighlightEnabled = true   //클릭시 마크 보이게
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
             setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
@@ -422,13 +428,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
+            valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter()
             lineWidth = 2F //선 굵기
             circleRadius = 2.1F
             circleHoleRadius = 0.1F
             setDrawCircles(true)   //동그란거 없애기
             setDrawValues(true)
             setCircleColor(ContextCompat.getColor(applicationContext, R.color.text_blue_200))
-            valueTextSize = 0F
+            valueTextSize = 12F
             isHighlightEnabled = true   //클릭시 마크 보이게
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
             setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
@@ -456,10 +463,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
-
+//            setVisibleXRangeMaximum(3f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-            marker = markerView
-            setVisibleXRangeMaximum(6f)
+//            marker = markerView
+
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((thermometerLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
@@ -485,11 +492,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
-            axisRight.run { //오른쪽 y축축
+            axisRight.run { //오른쪽 y축
                 isEnabled = false  //오른쪽 y축 없애기
             }
             legend.run {
-
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
@@ -515,8 +521,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isScaleXEnabled = false //가로 확대 없애기
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
-            setVisibleXRangeMaximum(6f)
-            marker = markerView
+//            setVisibleXRangeMaximum(3f)
+//            marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((heartLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
@@ -568,9 +574,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 
-            setVisibleXRangeMaximum(6f)
+//            setVisibleXRangeMaximum(3f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-            marker = markerView
+//            marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((glucoseLineData.entryCount).toFloat())
             xAxis.run { //아래 라벨 X축
@@ -658,7 +664,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     //바디 데이터 특정 개수마다 서버로 보내기
     private fun retrofitAddBodyData() {
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.addBodyData(bodyDataArrayList, completion = { completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response!!.code()) {

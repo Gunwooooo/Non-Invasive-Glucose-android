@@ -2,8 +2,11 @@ package com.hanait.noninvasiveglucoseapplication.home
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -12,14 +15,22 @@ import com.github.mikephil.charting.components.XAxis
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeFullChartBinding
 import com.hanait.noninvasiveglucoseapplication.home.HomeActivity.Companion.thermometerLineData
+import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
+import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeFullChartBinding.inflate(layoutInflater) }
 
+    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -27,6 +38,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
         init()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
         setThermometerLineChart()
 
@@ -35,6 +47,11 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
         //오늘 날짜 설정
         setTodayDate()
+
+        //현재 시간
+        val now = LocalDateTime.now()
+        //날짜에 해당하는 데이터 가져오기
+        retrofitGetBodyDataAsDate(now.year, now.monthValue, now.dayOfMonth)
 
         binding.homeFullChartImageViewCalendar.setOnClickListener(this)
         binding.homeFullChartBtnBack.setOnClickListener(this)
@@ -66,6 +83,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             binding.homeFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+            retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
         }
         return datePickerDialogListener
     }
@@ -81,12 +99,12 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             data = lineData
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-            setVisibleXRangeMaximum(3f) //
+//            setVisibleXRangeMaximum(3f) //
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
-            marker = markerView
+//            marker = markerView
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
             moveViewToX((thermometerLineData.entryCount).toFloat())
@@ -109,7 +127,7 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
-                textSize = 12f
+                textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
@@ -128,6 +146,25 @@ class HomeFullChartActivity : AppCompatActivity(), View.OnClickListener {
             }
             invalidate()
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //해당 날짜의 건강 데이터 조회
+    private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
+        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
+        Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
+        RetrofitManager.instance.getBodyDataAsDate(year, month, day, completion = {
+            completionResponse, response ->
+            customProgressDialog.dismiss()
+            when(completionResponse) {
+                CompletionResponse.OK -> {
+                    Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : $response")
+                }
+                CompletionResponse.FAIL -> {
+                    Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : 통신 실패")
+                }
+            }
+        })
     }
 
 }

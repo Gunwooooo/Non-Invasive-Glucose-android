@@ -112,4 +112,13 @@ interface APIPHRService {
     fun addBodyData(
         @Body bodyDataArrayList: ArrayList<BodyData>
     ): Call<ResponseBody>
+
+    //건강 데이터 가져요기
+    @FormUrlEncoded
+    @POST("/wellink/calendar")
+    fun getBodyDataAsDate(
+        @Field("year") year: Int?,
+        @Field("month") month: Int?,
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
 }
