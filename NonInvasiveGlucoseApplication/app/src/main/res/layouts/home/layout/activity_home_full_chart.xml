@@ -94,16 +94,14 @@
             android:textColor="@color/toss_black_200"
             android:fontFamily="@font/ps_regular"/>
 
-
-
     </LinearLayout>
     <LinearLayout
         android:background="@color/android_blue_100"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="0.8">
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/homeFullChart_lineChart"
+        <com.github.mikephil.charting.charts.ScatterChart
+            android:id="@+id/homeFullChart_scatterChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
