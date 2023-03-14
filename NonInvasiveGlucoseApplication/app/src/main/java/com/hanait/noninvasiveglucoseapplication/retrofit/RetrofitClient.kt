@@ -62,6 +62,7 @@ object RetrofitClient {
                 newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
                 val expireDate = LoginedUserClient.exp?.times(1000)
                 //만기일 체크
+                Log.d("로그", "RetrofitClient - getPHRServiceClient : ${System.currentTimeMillis()}  -  ${expireDate}")
                 if(System.currentTimeMillis() >= expireDate!!) {
                     Log.d("로그", "RetrofitClient - getPHRServiceClient : AT토큰이 만료되었습니다!!!")
 //                    LoginedUserClient.authorization = null

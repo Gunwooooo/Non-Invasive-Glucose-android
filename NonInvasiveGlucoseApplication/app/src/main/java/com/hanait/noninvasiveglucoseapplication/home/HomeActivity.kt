@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -32,8 +31,6 @@ import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTi
 import org.json.JSONArray
 import java.io.File
 import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
@@ -56,7 +53,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     //데이터 가져오는 시간
     val REFRESH_TIME = 3000L
 
+    //데이터 받아오는 횟수
     var dataCount = 0
+
+    //스레드 종료 시점 구현
+    var tryConnectCount = 0
+    var stopFlag = false
     
     //타이머 태스크 정의 (timer 새로운 객체로 생성되는 것을 방지)
     var timerTask: TimerTask = object : TimerTask() {
@@ -143,10 +145,18 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, HomeThermometerActivity::class.java)
                 startActivity(intent)
             }
-            binding.homeBtnThermometer, binding.homeBtnHeart, binding.homeBtnGlucose -> {
-                val intent = Intent(this, HomeFullChartActivity::class.java)
+            binding.homeBtnThermometer -> {
+                val intent = Intent(this, HomeThermometerFullChartActivity::class.java)
                 startActivity(intent)
             }
+            binding.homeBtnHeart -> {
+                val intent = Intent(this, HomeHeartHeartFullChartActivity::class.java)
+                startActivity(intent)
+            }
+//            binding.homeBtnGlucose -> {
+//                val intent = Intent(this, HomeThermometerFullChartActivity::class.java)
+//                startActivity(intent)
+//            }
             binding.homeBtnAccount -> {
                 val intent = Intent(this, HomeAccountActivity::class.java)
                 startActivity(intent)
@@ -169,10 +179,18 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private fun refreshRealTimeData() {
         getRealTimeThread?.interrupt()
         val runnable = Runnable {
-            Log.d("로그", "HomeActivity - refreshRealTimeData : 000000000000000000000000000000000000000")
             //가트 연결이 해제됐을 경우 자동으로 연결 체크
             if(!bluetoothGattConnected) {
-                Log.d("로그", "HomeActivity - refreshRealTimeData : ######  @@ 연결 시도   #######")
+                //연결 시도 횟수 카운트
+                tryConnectCount++
+                
+                //120번 연결 시도 했으면 종료 시키고 토스트 출력
+                if(tryConnectCount == 120) {
+                    Toast.makeText(applicationContext, "기기와 연결이 해제되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    stopFlag = true
+                }
+
+                Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
                 //연결됨 뷰 변경
                 binding.homeLinearLayoutConnected.visibility = View.GONE
                 binding.homeLinearLayoutDisconnected.visibility = View.VISIBLE
@@ -183,11 +201,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             //연결됨 표시로 변경
-            Log.d("로그", "HomeActivity - refreshRealTimeData : 11111111111111111111111111")
             binding.homeLinearLayoutConnected.visibility = View.VISIBLE
             binding.homeLinearLayoutDisconnected.visibility = View.GONE
 
-            Log.d("로그", "HomeActivity - refreshRealTimeData : 2222222222222222222222222222")
 
             //최근 데이터값 가져와서 요약에 표시하도록 설정
             val thermometerDataSet = thermometerLineData.dataSets[0]
@@ -201,35 +217,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 //요약 데이터 업데이트 하기
                 updateSummaryValue(thermometer.toString(), heart.toString(), glucose.toString())
             }
-            Log.d("로그", "HomeActivity - refreshRealTimeData : 33333333333333333333333333333333333333")
-            binding.homeThermometerChart.notifyDataSetChanged()
-            val thermometerData = binding.homeThermometerChart.data
-            binding.homeThermometerChart.setVisibleXRangeMaximum(20f)
-            binding.homeThermometerChart.moveViewToX(thermometerData.xMax)
-            binding.homeThermometerChart.invalidate()
-            binding.homeHeartChart.notifyDataSetChanged()
-            val heartData = binding.homeHeartChart.data
-            binding.homeHeartChart.setVisibleXRangeMaximum(20f)
-            binding.homeHeartChart.moveViewToX(heartData.xMax)
-            binding.homeHeartChart.invalidate()
-            binding.homeGlucoseChart.notifyDataSetChanged()
-            val glucoseData = binding.homeGlucoseChart.data
-            binding.homeGlucoseChart.setVisibleXRangeMaximum(20f)
-            binding.homeGlucoseChart.moveViewToX(glucoseData.xMax)
-            binding.homeGlucoseChart.invalidate()
 
-            Log.d("로그", "HomeActivity - refreshRealTimeData : 444444444444444444444444444444444444444")
             //시간 업데이트
             val now = LocalDateTime.now()
             binding.homeTextViewTime.text = now.format(DateTimeFormatter.ofPattern("a hh:mm"))
-            Log.d("로그", "HomeActivity - refreshRealTimeData : 555555555555555555555555555555555555555555555555555")
         }
 
         getRealTimeThread = Thread {
-            while (true) {
+            while (!stopFlag) {
                 this.runOnUiThread(runnable)
                 try {
-                    Thread.sleep(REFRESH_TIME)
+                    Thread.sleep(100)
                 } catch (ie: InterruptedException) {
                     ie.printStackTrace()
                 }
@@ -264,6 +262,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
                     //5초마다 타이머로 값을 받을지 체크
                     timer.scheduleAtFixedRate(timerTask, 0, REFRESH_TIME)
+
+                    //연결 시도 횟수 초기화
+                    tryConnectCount = 0
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
                     bluetoothGattConnected = false
@@ -271,9 +272,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     //가트 연결 해제
                     bluetoothGatt!!.disconnect()
                     bluetoothGatt!!.close()
-
-                    //스레드 종료
-//                    getRealTimeThread?.interrupt()
 
                     //타이머 종료
                     timer.cancel()
@@ -334,13 +332,25 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 val heart = (data.split('!')[0].split('@')[1].toFloat() * 10).roundToInt() / 10.0F
                 val thermometer = (data.split('/')[0].split('!')[1].toFloat() * 10).roundToInt() / 10.0F
                 val glucose = 0f
-                //전역 배열 리스트에 각각 추가하기
+
+                //챠트 실시간으로 업데이트
                 thermometerLineData.addEntry(Entry(index, thermometer), 0)
                 thermometerLineData.notifyDataChanged()
+                binding.homeThermometerChart.notifyDataSetChanged()
+                binding.homeThermometerChart.setVisibleXRangeMaximum(10f)
+                binding.homeThermometerChart.moveViewToX(binding.homeThermometerChart.data.xMax)
+
                 heartLineData.addEntry(Entry(index, heart), 0)
                 heartLineData.notifyDataChanged()
+                binding.homeHeartChart.notifyDataSetChanged()
+                binding.homeHeartChart.setVisibleXRangeMaximum(10f)
+                binding.homeHeartChart.moveViewToX(binding.homeHeartChart.data.xMax)
+
                 glucoseLineData.addEntry(Entry(index, glucose), 0)
                 glucoseLineData.notifyDataChanged()
+                binding.homeGlucoseChart.notifyDataSetChanged()
+                binding.homeGlucoseChart.setVisibleXRangeMaximum(10f)
+                binding.homeGlucoseChart.moveViewToX(binding.homeGlucoseChart.data.xMax)
 
                 //서버로 보낼 통합 리스트
                 bodyDataArrayList.add(BodyData(thermometer, heart, glucose, dateTimeString))
@@ -464,7 +474,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
-//            setVisibleXRangeMaximum(3f)
+//            setVisibleXRangeMaximum(10f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 //            marker = markerView
 
@@ -522,7 +532,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isScaleXEnabled = false //가로 확대 없애기
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
-//            setVisibleXRangeMaximum(3f)
+//            setVisibleXRangeMaximum(10f)
 //            marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((heartLineData.entryCount).toFloat())
@@ -538,8 +548,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 40F   //최소값
-                axisMaximum = 130F   //최대값
+                axisMinimum = 0F   //최소값
+                axisMaximum = 150F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -575,7 +585,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 
-//            setVisibleXRangeMaximum(3f)
+//            setVisibleXRangeMaximum(10f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 //            marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
@@ -665,13 +675,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     //바디 데이터 특정 개수마다 서버로 보내기
     private fun retrofitAddBodyData() {
-        customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.addBodyData(bodyDataArrayList, completion = { completionResponse, response ->
-            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response!!.code()) {
-                        200 -> {
+                        201 -> {
                             //바디 데이터 리스트 초기화 하기
                             bodyDataArrayList.clear()
                             val str = response.body()!!.string()

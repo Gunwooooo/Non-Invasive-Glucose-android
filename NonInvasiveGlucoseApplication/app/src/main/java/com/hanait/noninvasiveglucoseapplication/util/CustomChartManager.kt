@@ -32,6 +32,8 @@ class CustomChartManager(val context: Context) {
             return INSTANCE as CustomChartManager
         }
     }
+    
+    //시간:분으로 X축 설정
     @SuppressLint("SimpleDateFormat")
     class CustomTimeXAxisFormatter : ValueFormatter() {
         @RequiresApi(Build.VERSION_CODES.O)
@@ -41,6 +43,15 @@ class CustomChartManager(val context: Context) {
         }
     }
 
+//    //3시간씩 X축 고정값 설정
+//    class CustomFixedTimeXAxisFormatter : ValueFormatter() {
+//        val xValues = listOf(7200f, 14440f, 21600f, 28800f, 36000f, 43200f, 50400f, 57600f, 64800f, 72000f, 79200f, 86400f)
+//        override fun getFormattedValue(value: Float): String {
+//            return xValues.format(value.toDouble()) // e.g. append a dollar-sign
+//        }
+//    }
+
+    //소수점 첫째자리까지 Y값 설정
     class CustomDecimalYAxisFormatter : ValueFormatter() {
         private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.0")
         override fun getFormattedValue(value: Float): String {
