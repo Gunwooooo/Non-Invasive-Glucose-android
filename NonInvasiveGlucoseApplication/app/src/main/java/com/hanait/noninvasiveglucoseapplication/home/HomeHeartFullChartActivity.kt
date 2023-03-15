@@ -31,7 +31,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
 
-class HomeHeartHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
+class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeHeartFullChartBinding.inflate(layoutInflater) }
 
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
@@ -135,7 +135,6 @@ class HomeHeartHeartFullChartActivity : AppCompatActivity(), View.OnClickListene
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-//            setVisibleXRangeMaximum(8f) //
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
 
@@ -143,12 +142,12 @@ class HomeHeartHeartFullChartActivity : AppCompatActivity(), View.OnClickListene
 //            moveViewToX((heartLineData.entryCount).toFloat())
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
-                axisMinimum = 43200f
+                axisMinimum = 0f
                 axisMaximum = 86400f
-                setDrawGridLines(false)   //배경 그리드 추가
+                setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 8
+                labelCount = 4
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -216,6 +215,7 @@ class HomeHeartHeartFullChartActivity : AppCompatActivity(), View.OnClickListene
                             //리스트 가져와서 차트 새로 그리기
                             heartScatterData = ScatterData(makeHeartSet(list))
                             binding.homeHeartFullChartScatterChart.data = heartScatterData
+                            binding.homeHeartFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeHeartFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
