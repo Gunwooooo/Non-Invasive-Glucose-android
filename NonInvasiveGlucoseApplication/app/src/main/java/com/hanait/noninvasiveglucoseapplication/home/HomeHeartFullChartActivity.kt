@@ -147,7 +147,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 4
+//                labelCount = 6
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -216,6 +216,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             heartScatterData = ScatterData(makeHeartSet(list))
                             binding.homeHeartFullChartScatterChart.data = heartScatterData
                             binding.homeHeartFullChartScatterChart.setVisibleXRangeMaximum(28800f)
+                            binding.homeHeartFullChartScatterChart.xAxis.granularity = 1000f
                             binding.homeHeartFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {

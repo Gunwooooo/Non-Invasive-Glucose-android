@@ -150,7 +150,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             binding.homeBtnHeart -> {
-                val intent = Intent(this, HomeHeartHeartFullChartActivity::class.java)
+                val intent = Intent(this, HomeHeartFullChartActivity::class.java)
                 startActivity(intent)
             }
 //            binding.homeBtnGlucose -> {

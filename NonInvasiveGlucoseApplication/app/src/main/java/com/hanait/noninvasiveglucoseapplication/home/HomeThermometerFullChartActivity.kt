@@ -150,8 +150,8 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 4
-//                granularity = 3f  //X축 간격
+                labelCount = 9
+//                granularity = f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
