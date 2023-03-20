@@ -3,12 +3,12 @@ package com.hanait.noninvasiveglucoseapplication.home
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.ScatterChart
@@ -18,7 +18,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.ScatterData
 import com.github.mikephil.charting.data.ScatterDataSet
 import com.hanait.noninvasiveglucoseapplication.R
-import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeHeartFullChartBinding
+import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeGlucoseFullChartBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDatePickerDialogManager
@@ -31,12 +31,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
 
-class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeHeartFullChartBinding.inflate(layoutInflater) }
+class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
+    private val binding by lazy { ActivityHomeGlucoseFullChartBinding.inflate(layoutInflater) }
 
     private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
 
-    private lateinit var heartScatterData : ScatterData
+    private lateinit var glucoseScatterData : ScatterData
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +48,10 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        setHeartScatterChart()
+        setGlucoseScatterChart()
 
         //캘린더 이미지 넣기
-        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeHeartFullChartImageViewCalendar)
+        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeGlucoseFullChartImageViewCalendar)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -61,17 +61,17 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         //날짜에 해당하는 데이터 가져오기
         retrofitGetBodyDataAsDate(now.year, now.monthValue, now.dayOfMonth)
 
-        binding.homeHeartFullChartImageViewCalendar.setOnClickListener(this)
-        binding.homeHeartFullChartBtnBack.setOnClickListener(this)
+        binding.homeGlucoseFullChartImageViewCalendar.setOnClickListener(this)
+        binding.homeGlucoseFullChartBtnBack.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeHeartFullChartBtnBack -> {
+            binding.homeGlucoseFullChartBtnBack -> {
                 finish()
             }
-            binding.homeHeartFullChartImageViewCalendar -> {
+            binding.homeGlucoseFullChartImageViewCalendar -> {
                 CustomDatePickerDialogManager(this, null).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
@@ -84,7 +84,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         val year = gregorianCalendar.get(Calendar.YEAR)
         val month = gregorianCalendar.get(Calendar.MONTH)
         val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+        binding.homeGlucoseFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -92,20 +92,20 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+            binding.homeGlucoseFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
             retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
         }
         return datePickerDialogListener
     }
 
     //심박수 라인 데이터 생성성
-    private fun makeHeartSet(values : ArrayList<Entry>) : ScatterDataSet {
-        val heartLineDataSet = ScatterDataSet(values, "체온")
-        return heartLineDataSet.apply {
+    private fun makeGlucoseSet(values : ArrayList<Entry>) : ScatterDataSet {
+        val glucoseLineDataSet = ScatterDataSet(values, "체온")
+        return glucoseLineDataSet.apply {
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
+            color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             setScatterShape(ScatterChart.ScatterShape.CIRCLE)
 //            lineWidth = 2F //선 굵기
@@ -124,11 +124,11 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //체온 차트 설정
-    private fun setHeartScatterChart() {
-        val lineHeartDay = binding.homeHeartFullChartScatterChart
+    private fun setGlucoseScatterChart() {
+        val lineGlucoseDay = binding.homeGlucoseFullChartScatterChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
-        lineHeartDay.run {
+        lineGlucoseDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -139,7 +139,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //            marker = markerView
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
-//            moveViewToX((heartLineData.entryCount).toFloat())
+//            moveViewToX((glucoseLineData.entryCount).toFloat())
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 axisMinimum = 0f
@@ -156,8 +156,8 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 10F   //최소값
-                axisMaximum = 150F   //최대값
+                axisMinimum = 0F   //최소값
+                axisMaximum = 42F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -187,7 +187,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
-        Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
+        Log.d("로그", "HomeGlucoseFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
         RetrofitManager.instance.getBodyDataAsDate(year, month, day, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
@@ -197,41 +197,41 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : 제이슨어레이 갯수 :  ${jsonArray.length()}")
+                            Log.d("로그", "HomeGlucoseFullChartActivity - retrofitGetBodyDataAsDate : 제이슨어레이 갯수 :  ${jsonArray.length()}")
                             val list = ArrayList<Entry>()
                             var average = 0F
                             for(i in 0 until jsonArray.length()) {
                                 val jsonObject = jsonArray.getJSONObject(i)
-                                val createDate = jsonObject.getString("createdDate")
+                                val createdDate = jsonObject.getString("createdDate")
                                 //시간만 second 변경
-                                val index = LocalDateTime.parse(createDate, DateTimeFormatter.ISO_DATE_TIME).toLocalTime().toSecondOfDay().toFloat()
-                                val heart = jsonObject.getDouble("heart").toFloat()
-                                Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : ${index} - $heart")
-                                list.add(Entry(index, heart))
+                                val index = LocalDateTime.parse(createdDate, DateTimeFormatter.ISO_DATE_TIME).toLocalTime().toSecondOfDay().toFloat()
+                                val glucose = jsonObject.getDouble("glucose").toFloat()
+                                Log.d("로그", "HomeGlucoseFullChartActivity - retrofitGetBodyDataAsDate : ${index} - $glucose")
+                                list.add(Entry(index, glucose))
 
                                 //평균값 계산을 위해 더하기
-                                average += heart
+                                average += glucose
                             }
                             //리스트 가져와서 차트 새로 그리기
-                            heartScatterData = ScatterData(makeHeartSet(list))
-                            binding.homeHeartFullChartScatterChart.data = heartScatterData
-                            binding.homeHeartFullChartScatterChart.setVisibleXRangeMaximum(28800f)
-                            binding.homeHeartFullChartScatterChart.invalidate()
+                            glucoseScatterData = ScatterData(makeGlucoseSet(list))
+                            binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
+                            binding.homeGlucoseFullChartScatterChart.setVisibleXRangeMaximum(28800f)
+                            binding.homeGlucoseFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeHeartFullChartTextViewAverage.text = " - "
+                                binding.homeGlucoseFullChartTextViewAverage.text = " - "
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
-                            binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.homeGlucoseFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }
 
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : 통신 실패")
+                    Log.d("로그", "HomeGlucoseFullChartActivity - retrofitGetBodyDataAsDate : 통신 실패")
                 }
             }
         })

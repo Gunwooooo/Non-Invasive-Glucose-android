@@ -21,7 +21,6 @@ import kotlin.math.roundToInt
 
 class CustomChartManager(val context: Context) {
 
-
     companion object {
         @SuppressLint("StaticFieldLeak")
         var INSTANCE: CustomChartManager? = null

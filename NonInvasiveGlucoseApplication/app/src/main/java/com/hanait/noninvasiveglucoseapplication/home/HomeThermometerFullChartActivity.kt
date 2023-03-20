@@ -21,7 +21,7 @@ import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeThermometerFullChartBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
+import com.hanait.noninvasiveglucoseapplication.util.CustomDatePickerDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
@@ -75,7 +75,9 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 finish()
             }
             binding.homeFullChartImageViewCalendar -> {
-                CustomCalendarManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                val localDateTime = LocalDateTime.now()
+                localDateTime.plusDays(3)
+                CustomDatePickerDialogManager(this, localDateTime).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
     }

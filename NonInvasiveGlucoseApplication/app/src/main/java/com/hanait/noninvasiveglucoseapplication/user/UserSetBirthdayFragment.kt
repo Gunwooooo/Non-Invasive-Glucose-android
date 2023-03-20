@@ -2,15 +2,17 @@ package com.hanait.noninvasiveglucoseapplication.user
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.hanait.noninvasiveglucoseapplication.util.BaseFragment
 import com.hanait.noninvasiveglucoseapplication.util.Constants._userData
-import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
+import com.hanait.noninvasiveglucoseapplication.util.CustomDatePickerDialogManager
 import java.util.*
 
 class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(FragmentUserSetBirthdayBinding::inflate), View.OnClickListener{
@@ -39,6 +41,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetBirthdayBtnNext -> {
@@ -48,7 +51,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
                 mActivity.changeFragmentTransaction(UserSetSexFragment())
             }
             binding.userSetBirthdayBtnCalendar -> {
-                CustomCalendarManager(requireContext()).makeDatePickerDialog(setDataPickerDialogListener()).show()
+                CustomDatePickerDialogManager(requireContext(), null).makeDatePickerDialog(setDataPickerDialogListener()).show()
             }
         }
     }

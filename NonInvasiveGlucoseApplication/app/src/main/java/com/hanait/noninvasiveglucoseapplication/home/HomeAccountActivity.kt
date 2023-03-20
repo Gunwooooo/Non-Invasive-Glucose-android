@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.hanait.noninvasiveglucoseapplication.R
@@ -25,7 +27,7 @@ import com.hanait.noninvasiveglucoseapplication.user.UserActivity
 import com.hanait.noninvasiveglucoseapplication.util.BaseActivity
 import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.Constants._prefs
-import com.hanait.noninvasiveglucoseapplication.util.CustomCalendarManager
+import com.hanait.noninvasiveglucoseapplication.util.CustomDatePickerDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import okhttp3.MediaType
@@ -80,6 +82,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         binding.homeAccountBtnBack.setOnClickListener(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onClick(v: View?) {
         when (v) {
             binding.homeAccountLayoutModifyProfile -> {
@@ -91,7 +94,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             binding.homeAccountLayoutModifySex ->
                 showModifySexDialog()
             binding.homeAccountLayoutModifyBirthday ->
-                CustomCalendarManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                CustomDatePickerDialogManager(this, null).makeDatePickerDialog(setDatePickerDialogListener()).show()
             binding.homeAccountBtnModifyPassword ->
                 showModifyPasswordDialog()
             binding.homeAccountBtnDeleteUser ->

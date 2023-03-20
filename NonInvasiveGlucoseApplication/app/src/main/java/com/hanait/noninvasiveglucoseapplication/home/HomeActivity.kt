@@ -153,10 +153,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, HomeHeartFullChartActivity::class.java)
                 startActivity(intent)
             }
-//            binding.homeBtnGlucose -> {
-//                val intent = Intent(this, HomeThermometerFullChartActivity::class.java)
-//                startActivity(intent)
-//            }
+            binding.homeBtnGlucose -> {
+                val intent = Intent(this, HomeGlucoseFullChartActivity::class.java)
+                startActivity(intent)
+            }
             binding.homeBtnAccount -> {
                 val intent = Intent(this, HomeAccountActivity::class.java)
                 startActivity(intent)
