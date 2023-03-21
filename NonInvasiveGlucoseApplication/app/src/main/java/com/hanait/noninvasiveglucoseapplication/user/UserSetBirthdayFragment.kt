@@ -51,7 +51,7 @@ class UserSetBirthdayFragment : BaseFragment<FragmentUserSetBirthdayBinding>(Fra
                 mActivity.changeFragmentTransaction(UserSetSexFragment())
             }
             binding.userSetBirthdayBtnCalendar -> {
-                CustomDatePickerDialogManager(requireContext(), null).makeDatePickerDialog(setDataPickerDialogListener()).show()
+                CustomDatePickerDialogManager(requireContext()).makeDatePickerDialog(setDataPickerDialogListener()).show()
             }
         }
     }

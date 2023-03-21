@@ -94,7 +94,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
             binding.homeAccountLayoutModifySex ->
                 showModifySexDialog()
             binding.homeAccountLayoutModifyBirthday ->
-                CustomDatePickerDialogManager(this, null).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             binding.homeAccountBtnModifyPassword ->
                 showModifyPasswordDialog()
             binding.homeAccountBtnDeleteUser ->

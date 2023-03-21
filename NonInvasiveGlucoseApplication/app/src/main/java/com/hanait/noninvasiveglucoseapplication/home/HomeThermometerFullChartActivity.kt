@@ -17,14 +17,12 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.ScatterData
 import com.github.mikephil.charting.data.ScatterDataSet
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeThermometerFullChartBinding
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomDatePickerDialogManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomChartManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
-import com.hanait.noninvasiveglucoseapplication.util.CustomMarkerViewManager
+import com.hanait.noninvasiveglucoseapplication.util.*
 import org.json.JSONArray
 import java.lang.Math.round
 import java.time.LocalDateTime
@@ -57,8 +55,6 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         //오늘 날짜 설정
         setTodayDate()
 
-        Log.d("로그", "HomeFullChartActivity - init : awefawefawedddddddddddddddddddddfawefawefawefaewf")
-
         //현재 시간
         val now = LocalDateTime.now()
         //날짜에 해당하는 데이터 가져오기
@@ -75,9 +71,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 finish()
             }
             binding.homeFullChartImageViewCalendar -> {
-                val localDateTime = LocalDateTime.now()
-                localDateTime.plusDays(3)
-                CustomDatePickerDialogManager(this, localDateTime).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
     }

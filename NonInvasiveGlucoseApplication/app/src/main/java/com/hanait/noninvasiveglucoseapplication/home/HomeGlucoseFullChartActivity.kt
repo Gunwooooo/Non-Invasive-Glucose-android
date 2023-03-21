@@ -72,7 +72,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             binding.homeGlucoseFullChartImageViewCalendar -> {
-                CustomDatePickerDialogManager(this, null).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
     }

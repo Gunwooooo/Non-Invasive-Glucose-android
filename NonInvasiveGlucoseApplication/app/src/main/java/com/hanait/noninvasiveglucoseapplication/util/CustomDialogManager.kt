@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -155,11 +156,6 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.subSequence(7, 11)
             }
-            //프로그레스 다이어로그
-            R.layout.common_progress_dialog -> {
-                val indicatorView = view.findViewById(R.id.commonProgressDialog_indicator) as AVLoadingIndicatorView
-                indicatorView.show()
-            }
             //////////////////////////////////////////    Account   /////////////////////////////////////
             //사용자 성별 수정 다이어로그
             R.layout.home_account_modify_sex_dialog -> {
@@ -224,6 +220,12 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                     override fun afterTextChanged(s: Editable?) {}
                 })
             }
+            //////////////////////////////////////////    Common   /////////////////////////////////////
+            //프로그레스 다이어로그
+            R.layout.common_progress_dialog -> {
+                val indicatorView = view.findViewById(R.id.commonProgressDialog_indicator) as AVLoadingIndicatorView
+                indicatorView.show()
+            }
         }
         positiveButton?.setOnClickListener(this)
         negativeButton?.setOnClickListener(this)
@@ -240,8 +242,8 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
 
     //성별 T,f -> 남성 여성
     private fun changeSexToString(sex: String) : String {
-        if(sex == "T") return "남성"
-        else return "여성"
+        return if(sex == "T") "남성"
+        else "여성"
     }
 
     //다이어로그 버튼 별 클릭 리스너 등록

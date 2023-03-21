@@ -11,7 +11,6 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >@color/android_blue_100</item>
-
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/iphone_green_200</item>
 <!--        <item name="android:datePickerStyle">@style/CustomDatePicker</item>-->
@@ -23,6 +22,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
 <!--    데이터 피커 스타일 : 스피너-->
 <!--    <style name="CustomDatePicker">-->
@@ -46,8 +46,6 @@
 <!--        <item name="bottomSheetStyle">@style/AppModalStyle</item>-->
 <!--    </style>-->
 
-
-
     <style name="CustomBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="android:windowIsFloating">false</item>
@@ -59,6 +57,5 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_android_blue_100_radius_top_20</item>
     </style>
-
 
 </resources>

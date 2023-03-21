@@ -72,7 +72,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             binding.homeHeartFullChartImageViewCalendar -> {
-                CustomDatePickerDialogManager(this, null).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
     }
