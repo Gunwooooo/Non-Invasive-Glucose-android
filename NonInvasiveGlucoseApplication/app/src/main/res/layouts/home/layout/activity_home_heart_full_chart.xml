@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:text="평균 심박수"
+            android:text="평균 심박수(bpm)"
             android:textColor="@color/toss_black_200"
             android:fontFamily="@font/ps_regular"/>
 

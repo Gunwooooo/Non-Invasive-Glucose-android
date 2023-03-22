@@ -190,7 +190,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     stopFlag = true
                 }
 
-                Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
+//                Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
                 //연결됨 뷰 변경
                 binding.homeLinearLayoutConnected.visibility = View.GONE
                 binding.homeLinearLayoutDisconnected.visibility = View.VISIBLE
@@ -268,7 +268,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
                     bluetoothGattConnected = false
-                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
+//                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
                     //가트 연결 해제
                     bluetoothGatt!!.disconnect()
                     bluetoothGatt!!.close()
@@ -312,7 +312,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             val data = String(characteristic!!.value)
             //w나 f면 return
             if(data == "W" || data == "F") {
-                Log.d("로그", "HomeActivity - onCharacteristicChanged : $data")
+//                Log.d("로그", "HomeActivity - onCharacteristicChanged : $data")
                 return
             }
             //5초마다 타이머 체크 후 값 전달 받기

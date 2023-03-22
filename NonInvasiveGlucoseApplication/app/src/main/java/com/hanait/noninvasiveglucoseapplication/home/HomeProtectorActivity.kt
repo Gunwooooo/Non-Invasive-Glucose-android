@@ -50,7 +50,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
         setImageViewWithGlide()
 
         //보호자 및 보호 대상자 리스트 가져오기
-        retrofitGetProtectorList()
+        retrofitGetProtectorList(false)
 
         binding.homeProtectorTextViewProtectingCount.text = "${protectingList.size}"
 
@@ -167,26 +167,39 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
 
     //보호자 및 보호 대상자 삭제 다이어로그 호출
     fun showDeleteProtectorDialog(pos: Int, isProtector: Boolean) {
-        val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog, null)
-        customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
-
-            override fun onPositiveClicked() {
-                if(isProtector) {
-                    //보호자 삭제 retrofit 통신
-                    retrofitDeleteProtector(pos)
-                }
-                else {
-                    //보호 대상자 리스트에서 삭제
-                    retrofitDeleteProtecting(pos)
-                }
-                customDialog.dismiss()
+        when(isProtector) {
+            true -> {
+                //보호자일 경우 다이어로그 호출
+                val customDialog = CustomDialogManager(R.layout.home_protector_delete_dialog, null)
+                customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+                    override fun onPositiveClicked() {
+                        customDialog.dismiss()
+                        //보호자 삭제 retrofit 통신
+                        retrofitDeleteProtector(pos)
+                    }
+                    override fun onNegativeClicked() {
+                        customDialog.dismiss()
+                    }
+                })
+                customDialog.show(supportFragmentManager, "home_protector_delete_dialog")
             }
-
-            override fun onNegativeClicked() {
-                customDialog.dismiss()
+            //보호 대상자일 경우 다이어로그 호출
+            false -> {
+                val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog, null)
+                customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
+                    override fun onPositiveClicked() {
+                        customDialog.dismiss()
+                        //보호 대상자 리스트에서 삭제
+                        retrofitDeleteProtecting(pos)
+                    }
+                    override fun onNegativeClicked() {
+                        customDialog.dismiss()
+                    }
+                })
+                customDialog.show(supportFragmentManager, "home_protecting_delete_dialog")
             }
-        })
-        customDialog.show(supportFragmentManager, "home_protecting_delete_dialog")
+        }
+
     }
 
     //보호자 정보 조회 다이어로그 호출
@@ -270,12 +283,14 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
                     when(response?.code()) {
                         200 -> {
                             //유저 데이터 리스트에 추가
-                            protectorList.add(protectorData)
-                            protectorAdapter.notifyItemInserted(protectorList.size)
-                            binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+//                            protectorList.add(protectorData)
+//                            protectorAdapter.notifyItemInserted(protectorList.size)
+//                            binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
+
+                            //등록 후 새로 보호자 정보 가져오기
+                            retrofitGetProtectorList(true)
                         }
                     }
-
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeProtectorFragment - retrofitJoinProtector : 통신 실패")
@@ -284,8 +299,8 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    //모든 유저 정보 조회
-    private fun retrofitGetProtectorList() {
+    //모든 보호자 정보 조회
+    private fun retrofitGetProtectorList(addProtectorFlag : Boolean) {
         //로딩 프로그레스 바 출력
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.getProtectorList(completion = {
@@ -296,6 +311,9 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             val str = response.body()?.string()
                             val jsonArray = JSONArray(str)
+
+                            //보호자 리스트 초기화 시키기
+                            protectorList.clear()
 
                             //모든 유저 리스트에 넣기
                             for(i in 0 until jsonArray.length()) {
@@ -314,9 +332,10 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
                             protectorAdapter.notifyItemInserted(protectorList.size)
                             binding.homeProtectorTextViewProtectorCount.text = "${protectorList.size}"
 
-
-                            //보호 대상자 리스트 가져오기 호출
-                            retrofitGetProtectingList()
+                            // 보호자 추가했을 경우 스킵
+                            // 아닐 경우 보호 대상자 리스트 가져오기 호출
+                            if(!addProtectorFlag) retrofitGetProtectingList()
+                            else customProgressDialog.dismiss()
                         }
                     }
 
@@ -328,7 +347,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    //모든 유저 정보 조회
+    //모든 보호대상자 정보 조회
     private fun retrofitGetProtectingList() {
         RetrofitManager.instance.getProtectingList(completion = {
                 completionResponse, response ->
@@ -340,6 +359,8 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             val str = response.body()?.string()
                             val jsonArray = JSONArray(str)
+                            //보호 대상자 리스트 새로 불러오기
+                            protectingList.clear()
 
                             Log.d("로그", "HomeProtectorFragment - retrofitGetProtectingList : $str")
                             //모든 유저 리스트에 넣기
@@ -375,6 +396,8 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             val str = response.body()?.string()
                             Log.d("로그", "HomeProtectorFragment - retrofitDeleteProtector : ${str}")
+                            //중복확인을 위한 hashset에서도 지우기
+                            protectorSet.remove(protectorList[pos - 1].phoneNumber)
 
                             //보호자 리스트에서 삭제
                             protectorList.removeAt(pos - 1)

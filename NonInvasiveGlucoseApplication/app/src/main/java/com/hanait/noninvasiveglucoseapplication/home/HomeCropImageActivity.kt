@@ -17,6 +17,9 @@ import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeCropImag
 import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -67,16 +70,16 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
             val croppedImage = resizeBitmapImage(result.bitmap)
 
             //이미지 캐쉬 폴더에 쓰기
-            val timeMillis = System.currentTimeMillis().toString()
-            val fileName = LoginedUserClient.phoneNumber + "_" + timeMillis + PROFILE_IMAGE_NAME
-
+            val fileName = LoginedUserClient.phoneNumber + PROFILE_IMAGE_NAME
             //파일명 : 전화번호_시간_profile.png
-            saveImageToFile(croppedImage, fileName)
-
-            //캐쉬 파일 전달하기
-            intent.putExtra("imageName", fileName)
-            setResult(RESULT_OK, intent)
-            finish()
+            //이미지 저장 시 시간이 걸리므로 코루틴을 이용
+            CoroutineScope(Dispatchers.IO).launch {
+                saveImageToFile(croppedImage, fileName)
+                //캐쉬 파일 전달하기
+                intent.putExtra("imageName", fileName)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
         }
 
         //크롭이미지뷰 셋팅
@@ -104,7 +107,14 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //이미지 파일로 쓰기
-    private fun saveImageToFile(croppedImage : Bitmap, fileName : String) {
+    private suspend fun saveImageToFile(croppedImage : Bitmap, fileName : String) {
+        //캐쉬 비우기
+        val mCacheFiles = cacheDir.listFiles()
+        for (cacheFile in mCacheFiles!!) {
+            if (!cacheFile.isDirectory) {
+                cacheFile.delete()
+            }
+        }
         val mFile = File(cacheDir, fileName)
         try {
             mFile.createNewFile()
@@ -115,6 +125,4 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
             Log.d("로그", "HomeCropImageActivity - saveImageToFile : 파일 쓰기 에러")
         }
     }
-
-
 }

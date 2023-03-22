@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.hanait.noninvasiveglucoseapplication.databinding.FragmentSplashBinding
 import com.hanait.noninvasiveglucoseapplication.db.PreferenceManager
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
@@ -64,7 +66,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(requireContext())
-        glide.load(R.drawable.icon_color_splash_logo).into(binding.homeSplashImageViewSplashLogo)
+//        glide.load(R.drawable.icon_color_splash_logo).into(binding.homeSplashImageViewSplashLogo)
+        glide.load("${PHR_BASE_URL}wellink/images/01040547199_profile.png").diskCacheStrategy(
+            DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.homeSplashImageViewSplashLogo)
     }
 
 //    ///////////////////////////////////////////////////////////////////////////////////////////

@@ -23,7 +23,7 @@ class RetrofitManager {
     }
 
     private val apiNaverCloudService: APINaverCloudService? = RetrofitClient.getNaverCloudServiceClient(NAVER_SMS_URL)?.create(APINaverCloudService::class.java)
-    private val apiPHRService: APIPHRService? = RetrofitClient.getPHRServiceClient(PHR_BASE_URL)?.create(APIPHRService::class.java)
+    private val apiPHRService: APIPHRService? = RetrofitClient.getPHRServiceClient(PHR_BASE_URL + "connection/")?.create(APIPHRService::class.java)
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -56,7 +56,8 @@
                         android:background="@drawable/background_white_ring_shape"
                         android:padding="5dp"
                         android:layout_width="112dp"
-                        android:layout_height="112dp">
+                        android:layout_height="112dp"
+                        android:orientation="horizontal">
                         <com.github.pavlospt.roundedletterview.RoundedLetterView
                             android:id="@+id/homeAccount_rlv"
                             android:layout_width="match_parent"

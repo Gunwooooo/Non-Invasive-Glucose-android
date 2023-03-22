@@ -131,7 +131,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
@@ -143,10 +143,12 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             xAxis.run { //아래 라벨 X축
                 axisMinimum = 0f
                 axisMaximum = 86400f
+                spaceMin = 10800f
+                spaceMax = 10800f
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 9
+//                labelCount = 5
 //                granularity = f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -166,7 +168,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
-                isEnabled = false  //오른쪽 y축 없애기
+                isEnabled = true  //오른쪽 y축 없애기
             }
             legend.run {
                 isEnabled = true //레전드 아이콘 표시
@@ -214,7 +216,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                             //리스트 가져와서 차트 새로 그리기
                             thermometerScatterData = ScatterData(makeThermometerSet(list))
                             binding.homeFullChartScatterChart.data = thermometerScatterData
-                            binding.homeFullChartScatterChart.setVisibleXRangeMaximum(28800f)
+//                            binding.homeFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {

@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.pavlospt.roundedletterview.RoundedLetterView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -121,12 +122,15 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val ageTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_age) as TextView
                 val sexTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_sex) as TextView
                 val phoneNumberTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_phoneNumber) as TextView
+                val profileRlv = view.findViewById(R.id.homeProtectingInfoDialog_rlv) as RoundedLetterView
 
                 //닉네임, 나이, 성별 전화번호 뒷자리 출력
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.substring(7, 11)
+                profileRlv.titleText = mUserData!!.nickname[0].toString()
+
             }
             //보호자 정보 보기 다이어로그
             R.layout.home_protector_info_dialog -> {
@@ -135,12 +139,14 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val ageTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_age) as TextView
                 val sexTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_sex) as TextView
                 val phoneNumberTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_phoneNumber) as TextView
+                val profileRlv = view.findViewById(R.id.homeProtectorInfoDialog_rlv) as RoundedLetterView
 
                 //닉네임, 나이, 성별 전화번호 뒷자리 출력
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.substring(7, 11)
+                profileRlv.titleText = mUserData!!.nickname[0].toString()
             }
             //보호자 검색 및 조회 다이어로그
             R.layout.home_protector_search_info_dialog -> {
@@ -150,11 +156,14 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val ageTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_age) as TextView
                 val sexTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_sex) as TextView
                 val phoneNumberTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_phoneNumber) as TextView
+                val profileRlv = view.findViewById(R.id.homeProtectorSearchInfoDialog_rlv) as RoundedLetterView
+
                 //현재 나이, 이름 설정
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.subSequence(7, 11)
+                profileRlv.titleText = mUserData!!.nickname[0].toString()
             }
             //////////////////////////////////////////    Account   /////////////////////////////////////
             //사용자 성별 수정 다이어로그

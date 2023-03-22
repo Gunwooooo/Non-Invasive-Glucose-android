@@ -63,7 +63,7 @@ interface APIPHRService {
 
     //프로필 사진 등록
     @Multipart
-    @POST(".")
+    @POST("/wellink/user/profileImg")
     fun modifyProfileImage(
         @Part profileImage: MultipartBody.Part
     ) : Call<ResponseBody>

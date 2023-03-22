@@ -147,7 +147,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 9
+                labelCount = 6
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -167,7 +167,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
-                isEnabled = false  //오른쪽 y축 없애기
+                isEnabled = true  //오른쪽 y축 없애기
             }
             legend.run {
                 isEnabled = true //레전드 아이콘 표시

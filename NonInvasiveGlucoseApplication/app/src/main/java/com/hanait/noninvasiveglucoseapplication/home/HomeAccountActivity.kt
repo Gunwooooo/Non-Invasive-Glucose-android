@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
@@ -461,7 +462,8 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                 binding.homeAccountImageViewProfile.visibility = View.VISIBLE
                 binding.homeAccountRlv.visibility = View.GONE
                 //사진 이미지뷰에 넣기
-                glide.load(mFile).circleCrop().into(binding.homeAccountImageViewProfile)
+                //파일 이름이 동일한 캐시가 있을 수 있으므로 캐시 모두 지우기
+                glide.load(mFile).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(binding.homeAccountImageViewProfile)
 
                 //서버에 파일 전송
                 retrofitModifyProfileImage(mFile)

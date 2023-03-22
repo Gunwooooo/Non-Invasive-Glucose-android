@@ -719,7 +719,7 @@
                                 <TextView
                                     android:layout_marginTop="4dp"
                                     android:gravity="center_vertical|end"
-                                    android:layout_width="32dp"
+                                    android:layout_width="36dp"
                                     android:layout_height="match_parent"
                                     android:text="bpm"
                                     android:textColor="@color/toss_black_170"
