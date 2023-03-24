@@ -20,6 +20,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -73,8 +74,10 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
             val fileName = LoginedUserClient.phoneNumber + PROFILE_IMAGE_NAME
             //파일명 : 전화번호_시간_profile.png
             //이미지 저장 시 시간이 걸리므로 코루틴을 이용
-            CoroutineScope(Dispatchers.IO).launch {
-                saveImageToFile(croppedImage, fileName)
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.IO) {
+                    saveImageToFile(croppedImage, fileName)
+                }
                 //캐쉬 파일 전달하기
                 intent.putExtra("imageName", fileName)
                 setResult(RESULT_OK, intent)
@@ -99,8 +102,8 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
     private fun resizeBitmapImage(bitmapImage: Bitmap): Bitmap {
         val width = bitmapImage.width
         val height = bitmapImage.height
-        val scaleWidth = 224f / width
-        val scaleHeight = 224f / height
+        val scaleWidth = 448f / width
+        val scaleHeight = 448f / height
         val matrix = Matrix()
         matrix.postScale(scaleWidth, scaleHeight)
         return Bitmap.createBitmap(bitmapImage, 0, 0, width, height, matrix, false)
@@ -116,13 +119,11 @@ class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         val mFile = File(cacheDir, fileName)
-        try {
+        runCatching {
             mFile.createNewFile()
             val fileOutputStream = FileOutputStream(mFile)
             croppedImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
             fileOutputStream.close()
-        } catch (e: Exception) {
-            Log.d("로그", "HomeCropImageActivity - saveImageToFile : 파일 쓰기 에러")
         }
     }
 }

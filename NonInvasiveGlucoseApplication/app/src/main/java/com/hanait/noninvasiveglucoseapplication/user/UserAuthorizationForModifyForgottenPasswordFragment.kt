@@ -21,7 +21,7 @@ import com.hanait.noninvasiveglucoseapplication.util.NaverCloudServiceManager
 
 class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<FragmentUserAuthorizationForModifyForgottenPasswordBinding>
     (FragmentUserAuthorizationForModifyForgottenPasswordBinding::inflate), View.OnClickListener {
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(requireContext(), R.layout.common_progress_dialog, null) }
 
     var countDowntimer: CountDownTimer? = null
 

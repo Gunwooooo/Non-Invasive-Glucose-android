@@ -31,7 +31,7 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import java.util.*
 
 class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBinding>(FragmentUserSetConnectDeviceBinding::inflate), View.OnClickListener {
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(requireContext(), R.layout.common_progress_dialog, null) }
     //블루투스 매니저로 어댑터 선언 / 비동기화 환경에서 선언
     private val bluetoothAdapter: BluetoothAdapter? by lazy(LazyThreadSafetyMode.NONE) {
         val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager

@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeAccountBinding
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.hanait.noninvasiveglucoseapplication.retrofit.API
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
@@ -43,7 +44,7 @@ import java.util.regex.Pattern
 
 
 class HomeAccountActivity : View.OnClickListener, BaseActivity() {
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
 
     private val PERM_STORAGE = 99   //외부 저장소 권한 처리
 
@@ -125,7 +126,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //닉네임 변경 다이어로그 호출
     private fun showModifyNicknameDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_account_modify_nickname_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_nickname_dialog, null)
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 customDialog.dismiss()
@@ -149,7 +150,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     //보호자 삭제 다이어로그 호출
     private fun showModifySexDialog() {
         Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
-        val customDialog = CustomDialogManager(R.layout.home_account_modify_sex_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_sex_dialog, null)
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 customDialog.dismiss()
@@ -174,7 +175,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //비밀번호 변경 다이어로그 출력
     private fun showModifyPasswordDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_account_modify_password_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_password_dialog, null)
         customDialog.setTwoButtonWithThreeDataDialogListener(object : CustomDialogManager.TwoButtonWithThreeDataDialogListener {
             override fun onPositiveClicked(data1: String, data2: String, data3: String) {
                 customDialog.dismiss()
@@ -211,7 +212,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //회원 탈퇴 다이어로그 출력
     private fun showDeleteUserDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_account_delete_user_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_delete_user_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
             override fun onPositiveClicked() {
                 //회원탈퇴 retrofit 통신 필요
@@ -228,7 +229,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //로그아웃 다이어로그 출력
     private fun showLogoutUserDialog() {
-        val customDialog = CustomDialogManager(R.layout.home_account_logout_user_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_logout_user_dialog, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
             override fun onPositiveClicked() {
                 customDialog.dismiss()
@@ -279,7 +280,11 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                             LoginedUserClient.phoneNumber = jsonObjectUser!!.getString("phoneNumber")
                             val nickname = jsonObjectUser.getString("nickname")
                             binding.homeAccountTextViewNickname.text = nickname
-                            binding.homeAccountRlv.titleText = nickname[0].toString()
+                            //프로필 이미지 가져오기
+                            val sb = StringBuilder()
+                            sb.append(API.PHR_PROFILE_BASE_URL).append(LoginedUserClient.phoneNumber).append(PROFILE_IMAGE_NAME)
+                            glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                                .placeholder(R.drawable.icon_color_profile).circleCrop().into(binding.homeAccountImageViewProfile)
                             binding.homeAccountTextViewPhoneNumber.text = jsonObjectUser.getString("phoneNumber")
                             if (jsonObjectUser.getString("sex").equals("T")) {
                                 binding.homeAccountTextViewSex.text = "남성"
@@ -458,9 +463,6 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                 val imageName = result.data?.getStringExtra("imageName")
                 val mFile = File(cacheDir, imageName!!)
 
-                //프로필 이미지 보이게 설정
-                binding.homeAccountImageViewProfile.visibility = View.VISIBLE
-                binding.homeAccountRlv.visibility = View.GONE
                 //사진 이미지뷰에 넣기
                 //파일 이름이 동일한 캐시가 있을 수 있으므로 캐시 모두 지우기
                 glide.load(mFile).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).circleCrop().into(binding.homeAccountImageViewProfile)

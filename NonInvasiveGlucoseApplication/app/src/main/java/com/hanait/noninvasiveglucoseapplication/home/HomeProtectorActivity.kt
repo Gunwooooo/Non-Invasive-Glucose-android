@@ -23,7 +23,7 @@ import org.json.JSONObject
 class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeProtectorBinding.inflate(layoutInflater) }
 
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
     private val bottomSheetDialog by lazy { CustomBottomSheetDialogManager() }
 
     private var protectingList: ArrayList<ProtectorData> = ArrayList()
@@ -139,7 +139,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
     private fun showInfoProtectingDialog(protectorData: ProtectorData) {
         //userData로 변환
         val userData = UserData(protectorData.nickname, protectorData.phoneNumber, "", protectorData.birthDay, protectorData.sex)
-        val customDialog = CustomDialogManager(R.layout.home_protecting_info_dialog, userData)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_protecting_info_dialog, userData)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 사용자 건강정보 조회 버튼 클릭")
@@ -156,7 +156,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
     private fun showInfoProtectorDialog(protectorData: ProtectorData) {
         //userData로 변환
         val userData = UserData(protectorData.nickname, protectorData.phoneNumber, "", protectorData.birthDay, protectorData.sex)
-        val customDialog = CustomDialogManager(R.layout.home_protector_info_dialog, userData)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_protector_info_dialog, userData)
         customDialog.setOneButtonDialogListener(object : CustomDialogManager.OneButtonDialogListener{
             override fun onPositiveClicked() {
                 customDialog.dismiss()
@@ -170,7 +170,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
         when(isProtector) {
             true -> {
                 //보호자일 경우 다이어로그 호출
-                val customDialog = CustomDialogManager(R.layout.home_protector_delete_dialog, null)
+                val customDialog = CustomDialogManager(applicationContext, R.layout.home_protector_delete_dialog, null)
                 customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
                     override fun onPositiveClicked() {
                         customDialog.dismiss()
@@ -185,7 +185,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
             }
             //보호 대상자일 경우 다이어로그 호출
             false -> {
-                val customDialog = CustomDialogManager(R.layout.home_protecting_delete_dialog, null)
+                val customDialog = CustomDialogManager(applicationContext, R.layout.home_protecting_delete_dialog, null)
                 customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
                     override fun onPositiveClicked() {
                         customDialog.dismiss()
@@ -206,7 +206,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
     private fun showProtectorSearchInfoDialog(protectorData: ProtectorData) {
         //userData로 변환
         val userData = UserData(protectorData.nickname, protectorData.phoneNumber, "", protectorData.birthDay, protectorData.sex)
-        val customDialog = CustomDialogManager(R.layout.home_protector_search_info_dialog, userData)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_protector_search_info_dialog, userData)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
                 Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 예 버튼 클릭")

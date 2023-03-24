@@ -5,13 +5,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.pavlospt.roundedletterview.RoundedLetterView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.model.ProtectorData
+import com.hanait.noninvasiveglucoseapplication.retrofit.API
+import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
+import com.hanait.noninvasiveglucoseapplication.util.Constants
+import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
+import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
 class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>) : RecyclerView.Adapter<ProtectorAdapter.VH>() {
 
@@ -26,23 +34,23 @@ class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>)
     }
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var protectorRlv: RoundedLetterView
+        private lateinit var protectorProfile: ImageView
         private lateinit var protectorNickname: TextView
         private lateinit var protectorDeleteBtn : TextView
         private lateinit var protectorInfoBtn: LinearLayout
         @SuppressLint("SetTextI18n")
         fun setTextView(protectorData: ProtectorData, position: Int) {
-            protectorRlv = itemView.findViewById(R.id.homeProtectorItem_rlv)
+            protectorProfile = itemView.findViewById(R.id.homeProtectorItem_imageView_profile)
             protectorNickname = itemView.findViewById(R.id.homeProtectorItem_textView_nickname)
             protectorDeleteBtn = itemView.findViewById(R.id.homeProtectorItem_btn_delete)
             protectorInfoBtn = itemView.findViewById(R.id.homeProtectorItem_layout_Info)
 
-            //라운드 텍스트 이미지 넣기
-            if(position % 2 ==0)
-                protectorRlv.backgroundColor = ContextCompat.getColor(context, R.color.iphone_yellow)
-
-            //text넣기
-            protectorRlv.titleText = protectorData.nickname[0].toString()
+            //프로필 이미지 넣기
+            val glide = Glide.with(context)
+            val sb = StringBuilder()
+            sb.append(PHR_PROFILE_BASE_URL).append(protectorData.phoneNumber).append(PROFILE_IMAGE_NAME)
+            glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                .placeholder(R.drawable.icon_color_profile).circleCrop().into(protectorProfile)
             protectorNickname.text = protectorData.nickname
 
             //삭제 클릭 리스너

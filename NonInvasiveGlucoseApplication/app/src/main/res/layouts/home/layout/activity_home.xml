@@ -112,15 +112,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <com.github.pavlospt.roundedletterview.RoundedLetterView
-                            android:id="@+id/home_rlv"
+                        <ImageView
+                            android:id="@+id/home_imageView_profile"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
-                            android:layout_gravity="center"
-                            app:rlv_backgroundColorValue="@color/iphone_blue_500"
-                            app:rlv_titleColor="@android:color/white"
-                            app:rlv_titleSize="38dp"
-                            app:rlv_titleText="" />
+                            android:layout_gravity="center" />
                         <LinearLayout
                             android:gravity="center_vertical"
                             android:layout_marginStart="16dp"

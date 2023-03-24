@@ -19,21 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.github.pavlospt.roundedletterview.RoundedLetterView
-                android:id="@+id/homeProtectingInfoDialog_rlv"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                app:rlv_backgroundColorValue="@color/iphone_blue_500"
-                app:rlv_titleColor="@android:color/white"
-                app:rlv_titleSize="48dp"
-                app:rlv_titleText="" />
             <ImageView
-                android:visibility="gone"
                 android:adjustViewBounds="true"
                 android:id="@+id/homeProtectingInfoDialog_imageView_profile"
                 android:layout_gravity="bottom"
-                android:src="@drawable/icon_color_profile"
                 android:layout_width="80dp"
                 android:layout_height="80dp" />
         </LinearLayout>

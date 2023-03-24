@@ -33,7 +33,7 @@ import kotlin.math.roundToInt
 class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeThermometerFullChartBinding.inflate(layoutInflater) }
 
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
 
     private lateinit var thermometerScatterData : ScatterData
 

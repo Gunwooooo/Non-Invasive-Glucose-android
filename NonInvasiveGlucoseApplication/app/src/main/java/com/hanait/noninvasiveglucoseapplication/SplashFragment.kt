@@ -12,6 +12,7 @@ import com.hanait.noninvasiveglucoseapplication.databinding.FragmentSplashBindin
 import com.hanait.noninvasiveglucoseapplication.db.PreferenceManager
 import com.hanait.noninvasiveglucoseapplication.model.UserData
 import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
+import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.user.UserActivity
@@ -23,7 +24,7 @@ import com.hanait.noninvasiveglucoseapplication.util.CustomDialogManager
 import com.hanait.noninvasiveglucoseapplication.util.LoginedUserClient
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(requireContext(), R.layout.common_progress_dialog, null) }
     private val SPLASH_TIME_OUT:Long = 2000 //2초
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,12 +67,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(requireContext())
-//        glide.load(R.drawable.icon_color_splash_logo).into(binding.homeSplashImageViewSplashLogo)
-        glide.load("${PHR_BASE_URL}wellink/images/01040547199_profile.png").diskCacheStrategy(
-            DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.homeSplashImageViewSplashLogo)
-    }
+        glide.load(R.drawable.icon_color_splash_logo).into(binding.homeSplashImageViewSplashLogo)
 
+    }
 //    ///////////////////////////////////////////////////////////////////////////////////////////
+    //자동 로그인 시 유저 데이터 가져오기
     private fun retrofitLoginUser(userData : UserData) {
     customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.loginUser(userData, completion = {

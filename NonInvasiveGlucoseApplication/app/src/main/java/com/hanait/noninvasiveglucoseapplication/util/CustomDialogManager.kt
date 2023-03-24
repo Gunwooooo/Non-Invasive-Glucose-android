@@ -3,6 +3,7 @@ package com.hanait.noninvasiveglucoseapplication.util
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,23 +14,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.pavlospt.roundedletterview.RoundedLetterView
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.model.UserData
+import com.hanait.noninvasiveglucoseapplication.retrofit.API
+import com.hanait.noninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
+import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.wang.avi.AVLoadingIndicatorView
 import java.util.*
 
 
-class CustomDialogManager(private val layout: Int, userData: UserData?) : DialogFragment(), View.OnClickListener {
+class CustomDialogManager(private val mContext: Context, private val layout: Int, userData: UserData?) : DialogFragment(), View.OnClickListener {
 
     private var stringData1 = ""
     private var stringData2 = ""
@@ -122,14 +125,20 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val ageTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_age) as TextView
                 val sexTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_sex) as TextView
                 val phoneNumberTextView = view.findViewById(R.id.homeProtectingInfoDialog_textView_phoneNumber) as TextView
-                val profileRlv = view.findViewById(R.id.homeProtectingInfoDialog_rlv) as RoundedLetterView
+                val profile = view.findViewById(R.id.homeProtectingInfoDialog_imageView_profile) as ImageView
 
                 //닉네임, 나이, 성별 전화번호 뒷자리 출력
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.substring(7, 11)
-                profileRlv.titleText = mUserData!!.nickname[0].toString()
+
+                //프로필 이미지 넣기
+                val glide = Glide.with(mContext)
+                val sb = StringBuilder()
+                sb.append(PHR_PROFILE_BASE_URL).append(mUserData!!.phoneNumber).append(PROFILE_IMAGE_NAME)
+                glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                    .placeholder(R.drawable.icon_color_profile).circleCrop().into(profile)
 
             }
             //보호자 정보 보기 다이어로그
@@ -139,14 +148,20 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val ageTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_age) as TextView
                 val sexTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_sex) as TextView
                 val phoneNumberTextView = view.findViewById(R.id.homeProtectorInfoDialog_textView_phoneNumber) as TextView
-                val profileRlv = view.findViewById(R.id.homeProtectorInfoDialog_rlv) as RoundedLetterView
+                val profile = view.findViewById(R.id.homeProtectorInfoDialog_imageView_profile) as ImageView
 
                 //닉네임, 나이, 성별 전화번호 뒷자리 출력
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.substring(7, 11)
-                profileRlv.titleText = mUserData!!.nickname[0].toString()
+
+                //프로필 이미지 넣기
+                val glide = Glide.with(mContext)
+                val sb = StringBuilder()
+                sb.append(PHR_PROFILE_BASE_URL).append(mUserData!!.phoneNumber).append(PROFILE_IMAGE_NAME)
+                glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                    .placeholder(R.drawable.icon_color_profile).circleCrop().into(profile)
             }
             //보호자 검색 및 조회 다이어로그
             R.layout.home_protector_search_info_dialog -> {
@@ -156,14 +171,19 @@ class CustomDialogManager(private val layout: Int, userData: UserData?) : Dialog
                 val ageTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_age) as TextView
                 val sexTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_sex) as TextView
                 val phoneNumberTextView = view.findViewById(R.id.homeProtectorSearchInfoDialog_textView_phoneNumber) as TextView
-                val profileRlv = view.findViewById(R.id.homeProtectorSearchInfoDialog_rlv) as RoundedLetterView
+                val profile = view.findViewById(R.id.homeProtectorSearchInfoDialog_imageView_profile) as ImageView
 
                 //현재 나이, 이름 설정
                 nickNameTextView.text = mUserData?.nickname
                 ageTextView.text = changeBirthDayToAge(mUserData!!.birthDay)
                 sexTextView.text = changeSexToString(mUserData!!.sex)
                 phoneNumberTextView.text = mUserData!!.phoneNumber.subSequence(7, 11)
-                profileRlv.titleText = mUserData!!.nickname[0].toString()
+                //프로필 이미지 넣기
+                val glide = Glide.with(mContext)
+                val sb = StringBuilder()
+                sb.append(PHR_PROFILE_BASE_URL).append(mUserData!!.phoneNumber).append(PROFILE_IMAGE_NAME)
+                glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                    .placeholder(R.drawable.icon_color_profile).circleCrop().into(profile)
             }
             //////////////////////////////////////////    Account   /////////////////////////////////////
             //사용자 성별 수정 다이어로그

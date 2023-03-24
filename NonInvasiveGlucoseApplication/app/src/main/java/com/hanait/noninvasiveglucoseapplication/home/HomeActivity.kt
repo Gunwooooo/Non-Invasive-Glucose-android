@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -23,9 +24,11 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.hanait.noninvasiveglucoseapplication.R
 import com.hanait.noninvasiveglucoseapplication.databinding.ActivityHomeBinding
 import com.hanait.noninvasiveglucoseapplication.model.BodyData
+import com.hanait.noninvasiveglucoseapplication.retrofit.API
 import com.hanait.noninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.hanait.noninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.hanait.noninvasiveglucoseapplication.util.*
+import com.hanait.noninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.hanait.noninvasiveglucoseapplication.util.Constants._bluetoothResultDevice
 import com.hanait.noninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
 import org.json.JSONArray
@@ -41,7 +44,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
     private var waitTime = 0L
 
-    private val customProgressDialog by lazy { CustomDialogManager(R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
+    private val glide by lazy { Glide.with(this) }
+
     var getRealTimeThread: Thread? = null
 
     //가트 연결 변수
@@ -238,7 +243,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
-        val glide = Glide.with(this)
         glide.load(R.drawable.background_image_dashboard).into(binding.homeImageViewDashBoardBackground)
         glide.load(R.drawable.ic_baseline_settings_24).into(binding.homeImageViewSetting)
         glide.load(R.drawable.ic_baseline_access_time_24).into(binding.homeImageViewClock)
@@ -654,9 +658,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                             //유저 개인 정보 담기
                             val jsonObjectUser = jsonArray.getJSONObject(1)
                             LoginedUserClient.phoneNumber = jsonObjectUser!!.getString("phoneNumber")
+                            //프로필 이미지 가져오기
+                            val sb = StringBuilder()
+                            sb.append(API.PHR_PROFILE_BASE_URL).append(LoginedUserClient.phoneNumber).append(PROFILE_IMAGE_NAME)
+                            Log.d("로그", "HomeActivity - setImageViewWithGlide : $sb")
+                            glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                                .placeholder(R.drawable.icon_color_profile).circleCrop().into(binding.homeImageViewProfile)
                             val nickname = jsonObjectUser.getString("nickname")
                             binding.homeTextViewNickname.text = nickname
-                            binding.homeRlv.titleText = nickname[0].toString()
                             if (jsonObjectUser.getString("sex").equals("T")) {
                                 binding.homeTextViewSex.text = "남성"
                             } else

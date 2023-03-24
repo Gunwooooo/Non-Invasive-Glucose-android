@@ -23,15 +23,11 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
 
-            <com.github.pavlospt.roundedletterview.RoundedLetterView
-                android:id="@+id/homeProtectorItem_rlv"
+            <ImageView
+                android:id="@+id/homeProtectorItem_imageView_profile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="center"
-                app:rlv_backgroundColorValue="@color/iphone_blue_500"
-                app:rlv_titleColor="@android:color/white"
-                app:rlv_titleSize="30dp"
-                app:rlv_titleText="김" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <LinearLayout
