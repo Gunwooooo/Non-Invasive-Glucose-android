@@ -100,7 +100,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
     //심박수 라인 데이터 생성성
     private fun makeHeartSet(values : ArrayList<Entry>) : ScatterDataSet {
-        val heartLineDataSet = ScatterDataSet(values, "체온")
+        val heartLineDataSet = ScatterDataSet(values, "심박수")
         return heartLineDataSet.apply {
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
@@ -125,14 +125,14 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
     //체온 차트 설정
     private fun setHeartScatterChart() {
-        val lineHeartDay = binding.homeHeartFullChartScatterChart
+        val homeHeartFullChartScatterChart = binding.homeHeartFullChartScatterChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
-        lineHeartDay.run {
+        homeHeartFullChartScatterChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
@@ -142,12 +142,13 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //            moveViewToX((heartLineData.entryCount).toFloat())
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
+                setDrawAxisLine(true)
                 axisMinimum = 0f
                 axisMaximum = 86400f
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 6
+//                labelCount = 6
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -157,7 +158,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
                 axisMinimum = 10F   //최소값
-                axisMaximum = 150F   //최대값
+                axisMaximum = 140F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -167,7 +168,16 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
-                isEnabled = true  //오른쪽 y축 없애기
+                setDrawAxisLine(true)  //좌측 선 없애기
+                axisMinimum = 10F   //최소값
+                axisMaximum = 140F   //최대값
+                isEnabled = true
+                animateX(500)
+                animateY(1000)
+                textSize = 15f
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                gridColor =
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             legend.run {
                 isEnabled = true //레전드 아이콘 표시
@@ -215,7 +225,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             //리스트 가져와서 차트 새로 그리기
                             heartScatterData = ScatterData(makeHeartSet(list))
                             binding.homeHeartFullChartScatterChart.data = heartScatterData
-                            binding.homeHeartFullChartScatterChart.setVisibleXRangeMaximum(28800f)
+//                            binding.homeHeartFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeHeartFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {

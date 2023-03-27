@@ -147,7 +147,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         when (v) {
             //화면 이동 클릭 리스너
             binding.homeTextViewThermometerDetail, binding.homeTextViewHeartDetail, binding.homeTextViewGlucoseDetail -> {
-                val intent = Intent(this, HomeThermometerActivity::class.java)
+                val intent = Intent(this, HomeThermometerAnalysisActivity::class.java)
                 startActivity(intent)
             }
             binding.homeBtnThermometer -> {
@@ -190,7 +190,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 tryConnectCount++
                 
                 //120번 연결 시도 했으면 종료 시키고 토스트 출력
-                if(tryConnectCount == 120) {
+                if(tryConnectCount == 1000) {
                     Toast.makeText(applicationContext, "기기와 연결이 해제되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
                     stopFlag = true
                 }

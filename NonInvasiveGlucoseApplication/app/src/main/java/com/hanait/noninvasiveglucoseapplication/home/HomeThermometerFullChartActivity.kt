@@ -124,10 +124,10 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
     //체온 차트 설정
     private fun setThermometerScatterChart() {
-        val lineThermometerDay = binding.homeFullChartScatterChart
+        val homeFullChartScatterChart = binding.homeFullChartScatterChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
-        lineThermometerDay.run {
+        homeFullChartScatterChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -143,8 +143,8 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             xAxis.run { //아래 라벨 X축
                 axisMinimum = 0f
                 axisMaximum = 86400f
-                spaceMin = 10800f
-                spaceMax = 10800f
+//                spaceMin = 10800f
+//                spaceMax = 10800f
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
@@ -168,6 +168,16 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
+                setDrawAxisLine(true)  //좌측 선 없애기
+                axisMinimum = 10F   //최소값
+                axisMaximum = 40F   //최대값
+                isEnabled = true
+                animateX(500)
+                animateY(1000)
+                textSize = 15f
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                gridColor =
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
                 isEnabled = true  //오른쪽 y축 없애기
             }
             legend.run {

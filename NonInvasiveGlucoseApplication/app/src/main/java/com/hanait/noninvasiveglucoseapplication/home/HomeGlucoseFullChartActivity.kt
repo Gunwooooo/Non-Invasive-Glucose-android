@@ -125,14 +125,14 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
     //체온 차트 설정
     private fun setGlucoseScatterChart() {
-        val lineGlucoseDay = binding.homeGlucoseFullChartScatterChart
+        val homeGlucoseFullChartScatterChart = binding.homeGlucoseFullChartScatterChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
-        lineGlucoseDay.run {
+        homeGlucoseFullChartScatterChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = true
+            isDragEnabled = false
             isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
@@ -147,7 +147,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 6
+//                labelCount = 6
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -157,7 +157,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
                 axisMinimum = 0F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -167,7 +167,16 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
-                isEnabled = true  //오른쪽 y축 없애기
+                setDrawAxisLine(true)  //좌측 선 없애기
+                axisMinimum = 0F   //최소값
+                axisMaximum = 40F   //최대값
+                isEnabled = true
+                animateX(500)
+                animateY(1000)
+                textSize = 15f
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                gridColor =
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
             legend.run {
                 isEnabled = true //레전드 아이콘 표시
@@ -215,7 +224,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             //리스트 가져와서 차트 새로 그리기
                             glucoseScatterData = ScatterData(makeGlucoseSet(list))
                             binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
-                            binding.homeGlucoseFullChartScatterChart.setVisibleXRangeMaximum(28800f)
+//                            binding.homeGlucoseFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeGlucoseFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {

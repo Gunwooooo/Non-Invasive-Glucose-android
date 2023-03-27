@@ -59,8 +59,8 @@ class CustomChartManager(val context: Context) {
     }
 
     //==============================================================================================
-    //캔들 데이터 생성
-    private fun makeThermometer7dayCandleLineDataSet() : CandleLineDataSet {
+    //캔들라인 데이터 생성
+    public fun makeThermometer7dayCandleLineDataSet() : CandleLineDataSet {
         val entryCandle: MutableList<CandleEntry> = ArrayList()
         val entryLine: MutableList<Entry> = ArrayList()
         val max = 40.0
@@ -74,11 +74,11 @@ class CustomChartManager(val context: Context) {
             entryCandle.add(CandleEntry(i.toFloat(), shadowLow,  shadowHigh, midValue, midValue))
             entryLine.add(Entry(i.toFloat(), midValue))
         }
-        return CandleLineDataSet(CandleDataSet(entryCandle, "체온"), LineDataSet(entryLine, "평균체온"))
+        return CandleLineDataSet(CandleDataSet(entryCandle, "범위"), LineDataSet(entryLine, "평균"))
     }
 
     //실수 난수 생성
-    private fun makeThermometer7dayLineDataSet() : LineDataSet {
+    fun makeThermometer7dayLineDataSet() : LineDataSet {
         val entry: MutableList<Entry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -92,7 +92,7 @@ class CustomChartManager(val context: Context) {
 
 
     //심박수 캔들 데이터 생성
-    private fun makeHeart7dayCandleDataSet() : CandleDataSet {
+    fun makeHeart7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -107,7 +107,7 @@ class CustomChartManager(val context: Context) {
     }
 
     //혈당 캔들 데이터 생성
-    private fun makeGlucose7dayCandleDataSet() : CandleDataSet {
+    fun makeGlucose7dayCandleDataSet() : CandleDataSet {
         val entry: MutableList<CandleEntry> = ArrayList()
         val max = 40.0
         val min = 35.0
@@ -122,7 +122,7 @@ class CustomChartManager(val context: Context) {
     }
     //================================================================================================
     //분석2 BarChart 데이터 생성
-    private fun makeThermometerAnalysis2BarDataSet() : BarDataSet {
+    fun makeThermometerAnalysis2BarDataSet() : BarDataSet {
         val entry: MutableList<BarEntry> = ArrayList()
         val random = Random()
         random.setSeed(Date().time)
@@ -205,81 +205,12 @@ class CustomChartManager(val context: Context) {
     }
 
     //==================================================================================================
-    //체온 7일 상세 그래프 생성
-    fun setThermometer7DayCandleLineData() : CandleLineDataSet {
-        val candleLindDataSet = makeThermometer7dayCandleLineDataSet()
-        val candleDataSet = candleLindDataSet.candleDataSet
-        candleDataSet.apply {
-            //심지 부분
-            shadowColor = ContextCompat.getColor(context, R.color.toss_black_150)
-            shadowWidth = 2f
 
-            //음봉
-            decreasingColor = ContextCompat.getColor(context, R.color.transparent)
-            decreasingPaintStyle = Paint.Style.STROKE
-
-            //양봉
-            increasingColor = ContextCompat.getColor(context, R.color.transparent)
-            increasingPaintStyle = Paint.Style.STROKE
-
-            neutralColor = ContextCompat.getColor(context, R.color.  transparent)
-
-
-            setDrawValues(false)
-            //터치시 노란 선 제거
-            highLightColor = Color.TRANSPARENT
-        }
-        val lineDataSet = candleLindDataSet.lineDataSet
-        lineDataSet.apply {
-            mode = LineDataSet.Mode.LINEAR
-//            .cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-//            .setDrawFilled(true)
-//            .fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            setColor(ContextCompat.getColor(context, R.color.toss_black_500))
-            lineWidth = 2F //선 굵기
-            circleRadius = 3F
-            circleHoleRadius = 1F
-//          enableDashedLine(10f, 5f, 0f)
-            setDrawCircles(true)   //동그란거 없애기
-            setDrawValues(false)
-            setCircleColor(ContextCompat.getColor(context, R.color.toss_black_500))
-            valueTextSize = 0F
-//            fillAlpha = 50
-            isHighlightEnabled = false   //클릭시 마크 보이게
-            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-            setDrawCircleHole(true)
-//        barDataSet.setDrawCircleHole(true)
-        }
-        return candleLindDataSet
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //analysis2 bar chart 데이터셋 생성
     //심박수 막대 데이터 생성성
-    fun setThermometerAbnormalData() : BarDataSet {
-        val barDataSet = makeThermometerAnalysis2BarDataSet()
-//        barDataSet.mode = LineDataSet.Mode.LINEAR
-//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-        barDataSet.setColor(ContextCompat.getColor(context, R.color.text_red_200))
-//        barDataSet.lineWidth = 3F //선 굵기
-//        barDataSet.circleRadius = 7F
-//        barDataSet.circleHoleRadius = 4F
-//        barDataSet.setDrawCircles(true)   //동그란거 없애기
-        barDataSet.valueTextColor = ContextCompat.getColor(context, R.color.toss_black_500)
-        barDataSet.setDrawValues(true)
-//        barDataSet.setCircleColor(ContextCompat.getColor(context, R.color.graph_thermometer_100))
-        barDataSet.valueTextSize = 12F
-//        lineDataSet.fillAlpha = 50
-//        lineDataSet.highLightColor = Color.BLACK
-//        lineDataSet.highlightLineWidth = 2F
-        barDataSet.isHighlightEnabled = true   //클릭시 마크 보이게
-//        barDataSet.setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-//        barDataSet.setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-//        barDataSet.setDrawCircleHole(true)
-        return barDataSet
-    }
+
 
     //심박수 막대 데이터 생성성
     fun setThermometerNormalData() : BarDataSet {
