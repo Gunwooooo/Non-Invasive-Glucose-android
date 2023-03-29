@@ -1,5 +1,6 @@
 package com.hanait.noninvasiveglucoseapplication.user
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
@@ -7,6 +8,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,6 +20,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -110,10 +113,10 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
     ////////////////////////////////////////////블루투스 스캔////////////////////////////////////////////
     //블루투스 스캔 콜백 함수
     private val mLeScanCallback: ScanCallback = object : ScanCallback() {
-        @SuppressLint("MissingPermission")
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             super.onScanResult(callbackType, result)
             val deviceName = result.device.name
+            Log.d("로그", "UserSetConnectDeviceFragment - onScanResult : $deviceName")
             //한아아이티 기기 발견 시
             if(deviceName != null && deviceName.equals(DEVICE_NAME)) {
                 Log.d("로그", "UserSetConnectDeviceFragment - onScanResult : 장치 발견됨!")
@@ -142,13 +145,15 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         }
     }
 
-    @SuppressLint("MissingPermission")
     fun scanLeDevice(enable : Boolean) {
         val bluetoothLeScanner = bluetoothAdapter!!.bluetoothLeScanner
         when(enable) {
             true -> {
                 Handler(Looper.getMainLooper()).postDelayed({
                     customProgressDialog.dismiss()
+                    if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                        return@postDelayed
+                    }
                     bluetoothLeScanner.stopScan(mLeScanCallback)
                     if(!findDeviceFlag) {
                         Toast.makeText(requireContext(), "장치를 발견하지 못했어요.", Toast.LENGTH_SHORT).show()
