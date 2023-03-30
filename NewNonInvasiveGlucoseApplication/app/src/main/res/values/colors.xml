@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="StatusBarColor">#FAFAFA</color>
+
+    <color name="toss_blue_100">#eaf3fe</color>
+    <color name="toss_blue_200">#487fee</color>
+    <color name="toss_blue_700">#355eb0</color>
+    <color name="toss_black_100">#f2f4f6</color>
+    <color name="toss_black_120">#E8E8E8</color>
+    <color name="toss_black_150">#c7c7c7</color>
+    <color name="toss_black_170">#A8A8A8</color>
+    <color name="toss_black_200">#6d7582</color>
+
+    <color name="toss_black_500">#505866</color>
+    <color name="toss_black_600">#364357</color>
+    <color name="toss_black_700">#1a1e27</color>
+
+
+    <color name="text_red_100">#f4c6c9</color>
+    <color name="text_red_200">#d0252e</color>
+    <color name="text_red_500">#d0252e</color>
+    <color name="text_blue_100">#c0ddeb</color>
+    <color name="text_blue_200">#51a6cb</color>
+    <color name="text_blue_500">#0482bd</color>
+
+    <!--    수치 정상, 경고, 위험 색상-->
+    <color name="text_value_normal">#0f995d</color>
+    <color name="text_value_warn">#ffb53e</color>
+    <color name="text_value_danger">#ff2020</color>
+
+
+    <color name="border_avocado_200">#c0ca33</color>
+    <color name="border_pistachio_200">#7cb342</color>
+    <color name="border_sage_200">#33b679</color>
+
+    <!--    캘린더 circle 색상-->
+    <color name="circle_red_100">#ff5b49</color>
+
+    <!--    그래프 색상-->
+    <color name="graph_thermometer_100">#57ba83</color>
+    <color name="graph_heart_100">#de3478</color>
+    <color name="graph_glucose_100">#fecf5c</color>
+
+    <!--    그래프 색상 보색-->
+    <color name="graph_thermometer_opposite_100">#A8457C</color>
+    <color name="graph_heart_opposite_100">#21CB87</color>
+    <color name="graph_glucose_opposite_100">#0130A3</color>
+
+    <!--    아이폰 생활 색깔-->
+    <!--    <color name="iphone_green_200">#bafd4f</color>-->
+    <!--    달력 내부 구분선 칼라-->
+    <color name="iphone_yellow">#FADF70</color>
+    <color name="iphone_green_100">#EEF3D7</color>
+    <color name="iphone_green_200">#DFFF28</color>
+
+    <color name="iphone_green_500">#D7DD1A</color>
+    <color name="iphone_green_700">#C9E623</color>
+    <!--    <color name="iphone_red_200">#e53653</color>-->
+    <color name="iphone_red_200">#F42749</color>
+    <color name="iphone_red_500">#D85113</color>
+    <!--    <color name="iphone_blue">#75fbf4</color>-->
+    <color name="iphone_blue_100">#eaf3fe</color>
+    <color name="iphone_blue_200">#62FFF7</color>
+    <color name="iphone_blue_500">#9DC1F6</color>
+    <color name="iphone_blue_700">#83AFF1</color>
+    <!--    <color name="iphone_gray_200">#1c1c1d</color>-->
+    <color name="iphone_gray_100">#E6E6E6</color>
+
+    <color name="iphone_gray_150">#575353</color>
+    <color name="iphone_gray_200">#302B2B</color>
+
+    <color name="iphone_gray_500">#423C3C</color>
+    <!--    <color name="iphone_gray_600">#151515</color>-->
+    <color name="iphone_gray_600">#1E1B1B</color>
+
+    <color name="android_blue_100">#F5F8FD</color>
+
+    <!--    transparent-->
+    <color name="transparent">#00000000</color>
+</resources>
