@@ -281,4 +281,17 @@ class RetrofitManager {
             }
         })
     }
+
+    //분석 평균 체온 데이터 가져오기(7, 30, 90)
+    fun getAnalysisThermometerAverage(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisThermometerAverage(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
 }

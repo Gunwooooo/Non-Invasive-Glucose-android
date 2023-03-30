@@ -121,4 +121,11 @@ interface APIPHRService {
         @Field("month") month: Int?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
+
+    //분석 평균 체온 데이터 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/thermometer/avg")
+    fun getAnalysisThermometerAverage(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
 }

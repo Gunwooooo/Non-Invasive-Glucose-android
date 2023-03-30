@@ -58,22 +58,22 @@ class CustomChartManager(val context: Context) {
 
     //==============================================================================================
     //캔들라인 데이터 생성
-    public fun makeThermometer7dayCandleLineDataSet() : CandleLineDataSet {
-        val entryCandle: MutableList<CandleEntry> = ArrayList()
-        val entryLine: MutableList<Entry> = ArrayList()
-        val max = 40.0
-        val min = 35.0
-        val random = Random()
-        random.setSeed(Date().time)
-        for (i in 1 until 50) {
-            val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
-            val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
-            val midValue = ((shadowHigh + shadowLow) / 2F * 10).roundToInt()/10f
-            entryCandle.add(CandleEntry(i.toFloat(), shadowLow,  shadowHigh, midValue, midValue))
-            entryLine.add(Entry(i.toFloat(), midValue))
-        }
-        return CandleLineDataSet(CandleDataSet(entryCandle, "범위"), LineDataSet(entryLine, "평균"))
-    }
+//    public fun makeThermometer7dayCandleLineDataSet() : CandleLineDataSet {
+//        val entryCandle: MutableList<CandleEntry> = ArrayList()
+//        val entryLine: MutableList<Entry> = ArrayList()
+//        val max = 40.0
+//        val min = 35.0
+//        val random = Random()
+//        random.setSeed(Date().time)
+//        for (i in 0 until 8) {
+//            val shadowHigh = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
+//            val shadowLow = (((min + random.nextFloat() * (max - min))*10).roundToInt()/10f)
+//            val midValue = ((shadowHigh + shadowLow) / 2F * 10).roundToInt()/10f
+//            entryCandle.add(CandleEntry((i*3*3600).toFloat(), shadowLow,  shadowHigh, midValue, midValue))
+//            entryLine.add(Entry((i*3*3600).toFloat(), midValue))
+//        }
+//        return CandleLineDataSet(CandleDataSet(entryCandle, "범위"), LineDataSet(entryLine, "평균"))
+//    }
 
     //실수 난수 생성
     fun makeThermometer7dayLineDataSet() : LineDataSet {
@@ -234,5 +234,3 @@ class CustomChartManager(val context: Context) {
         return barDataSet
     }
 }
-
-data class CandleLineDataSet(var candleDataSet: CandleDataSet, var lineDataSet: LineDataSet)
