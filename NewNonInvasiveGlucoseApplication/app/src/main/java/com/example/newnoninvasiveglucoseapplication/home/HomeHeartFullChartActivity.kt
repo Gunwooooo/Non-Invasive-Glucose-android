@@ -207,7 +207,6 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : 제이슨어레이 갯수 :  ${jsonArray.length()}")
                             val list = ArrayList<Entry>()
                             var average = 0F
                             for(i in 0 until jsonArray.length()) {

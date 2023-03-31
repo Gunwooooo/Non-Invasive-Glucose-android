@@ -35,8 +35,6 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
     private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
 
-    private lateinit var thermometerScatterData : ScatterData
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -208,7 +206,6 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : 제이슨어레이 갯수 :  ${jsonArray.length()}")
                             val list = ArrayList<Entry>()
                             var average = 0F
                             for(i in 0 until jsonArray.length()) {
@@ -224,7 +221,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                                 average += thermometer
                             }
                             //리스트 가져와서 차트 새로 그리기
-                            thermometerScatterData = ScatterData(makeThermometerSet(list))
+                            val thermometerScatterData = ScatterData(makeThermometerSet(list))
                             binding.homeFullChartScatterChart.data = thermometerScatterData
 //                            binding.homeFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeFullChartScatterChart.invalidate()

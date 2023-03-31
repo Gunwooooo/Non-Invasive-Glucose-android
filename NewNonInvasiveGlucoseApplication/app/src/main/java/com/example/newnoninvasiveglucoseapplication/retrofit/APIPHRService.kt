@@ -113,7 +113,7 @@ interface APIPHRService {
         @Body bodyDataArrayList: ArrayList<BodyData>
     ): Call<ResponseBody>
 
-    //건강 데이터 가져요기
+    //건강 데이터 가져오기
     @FormUrlEncoded
     @POST("/wellink/calendar")
     fun getBodyDataAsDate(
@@ -126,6 +126,19 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/thermometer/avg")
     fun getAnalysisThermometerAverage(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    //정상 범위 체온 빈도수 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/thermometer/count")
+    fun getAnalysisThermometerNormal(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/thermometer/countOther")
+    fun getAnalysisThermometerAbnormal(
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 }
