@@ -40,6 +40,17 @@ class CustomChartManager(val context: Context) {
         }
     }
 
+    //세 시간 간격으로 0~3 3~6 설정
+    @SuppressLint("SimpleDateFormat")
+    class CustomBarChartXAxisFormatter : ValueFormatter() {
+        @RequiresApi(Build.VERSION_CODES.O)
+        override fun getFormattedValue(value: Float): String {
+            val start = value.toInt() * 3
+            val end = value.toInt() * 3 + 3
+            return "$start-$end"
+        }
+    }
+
     //소수점 첫째자리까지 Y값 설정
     class CustomDecimalYAxisFormatter : ValueFormatter() {
         private val mFormat: DecimalFormat = DecimalFormat("###,###,##0.0")
@@ -56,4 +67,4 @@ class CustomChartManager(val context: Context) {
     }
 }
 
-data class CandleLineDataSet(var candleDataSet: CandleDataSet, var lineDataSet: LineDataSet)
+data class CandleScatterDataSet(var candleDataSet: CandleDataSet, var scatterDataSet: ScatterDataSet)

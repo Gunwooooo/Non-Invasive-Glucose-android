@@ -1,12 +1,11 @@
 package com.example.newnoninvasiveglucoseapplication.home
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -15,10 +14,10 @@ import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeThermometerAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.example.newnoninvasiveglucoseapplication.util.CandleLineDataSet
+import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomMarkerViewManager
 import com.gigamole.navigationtabstrip.NavigationTabStrip
+import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
@@ -32,8 +31,7 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-
-class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListener, OnChartValueSelectedListener {
+class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext)}
     private val binding by lazy { ActivityHomeThermometerAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
@@ -69,9 +67,9 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         retrofitGetAnalysisThermometerAbnormal(7)
 
         //초기 기간(7일)로 텍스트뷰 범위 세팅
-        setPeriodAverageTextView(7)
-        setPeriodNormalTextView(7)
-        setPeriodAbnormalTextView(7)
+        setPeriodTextView(7, 0)
+        setPeriodTextView(7, 1)
+        setPeriodTextView(7, 2)
 
         binding.homeThermometerAnalysisBtnBack.setOnClickListener(this)
     }
@@ -94,56 +92,51 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     /////////////////////////////////////////////   평균 체온 캔들라인 차트   ///////////////////////////////////////
     //평균 체온 차트 설정
-    private fun makeThermometerCandleLineData(candleLineDataSet : CandleLineDataSet) : CandleLineDataSet {
-        val candleDataSet = candleLineDataSet.candleDataSet
+    private fun makeThermometerCandleScatterData(candleScatterDataSet : CandleScatterDataSet) : CandleScatterDataSet {
+        val candleDataSet = candleScatterDataSet.candleDataSet
         //범위 데이터
         candleDataSet.apply {
             //심지 부분
             shadowColor = ContextCompat.getColor(applicationContext, R.color.toss_black_150)
-            shadowWidth = 2f
+            shadowWidth = 4f
             //레전드 색깔
             color = ContextCompat.getColor(applicationContext, R.color.toss_black_150)
 
-            //음봉
-            decreasingColor = ContextCompat.getColor(applicationContext, R.color.transparent)
-            decreasingPaintStyle = Paint.Style.STROKE
+//            //음봉
+//            decreasingColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+//            decreasingPaintStyle = Paint.Style.FILL
+//
+//            //양봉
+//            increasingColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+//            increasingPaintStyle = Paint.Style.FILL
 
-            //양봉
-            increasingColor = ContextCompat.getColor(applicationContext, R.color.transparent)
-            increasingPaintStyle = Paint.Style.STROKE
-
-            neutralColor = ContextCompat.getColor(applicationContext, R.color.  transparent)
+            neutralColor = ContextCompat.getColor(applicationContext, R.color.transparent)
 
             setDrawValues(false)
-            //터치시 노란 선 제거
-            highLightColor = Color.TRANSPARENT
+
+            //터치시 붉은 선 보이기
+            isHighlightEnabled = false
         }
         //평균 데이터
-        val lineDataSet = candleLineDataSet.lineDataSet
-        lineDataSet.apply {
-            mode = LineDataSet.Mode.LINEAR
-//            .cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-//            .setDrawFilled(true)
-//            .fillDrawable = ContextCompat.getDrawable(context, R.color.graph_blue_100)
-            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            setColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
-
-            lineWidth = 2F //선 굵기
-            circleRadius = 3F
-            circleHoleRadius = 1F
-//          enableDashedLine(10f, 5f, 0f)
-            setDrawCircles(true)   //동그란거 없애기
-            setDrawValues(false)
-            setCircleColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
+        val scatterDataSet = candleScatterDataSet.scatterDataSet
+        scatterDataSet.apply {
+//            mode = LineDataSet.Mode.LINEAR
+//            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
+            setDrawHorizontalHighlightIndicator(true)  //클릭 시 선 보이게 하기
+            setDrawVerticalHighlightIndicator(true)  //클릭 시 선 보이게 하기
+            color = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
+            valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
+            setScatterShape(ScatterChart.ScatterShape.CIRCLE)
+            setDrawValues(true)
             valueTextSize = 0F
-//            fillAlpha = 50
-            isHighlightEnabled = false   //클릭시 마크 보이게
-            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-            setDrawCircleHole(true)
-//        barDataSet.setDrawCircleHole(true)
+            isHighlightEnabled = true   //클릭시 마크 보이게
+            highLightColor = ContextCompat.getColor(applicationContext, R.color.circle_red_100)
+//            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
+//            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+//            setDrawCircleHole(true)
+            scatterShapeSize = 16f
         }
-        return candleLineDataSet
+        return candleScatterDataSet
     }
 
     //평균 체온 차트 설정
@@ -151,14 +144,27 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         val homeThermometerAnalysisAverageChart = binding.homeThermometerAnalysisAverageChart
 
         //마커 뷰 설정
-        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
+//        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
 
         //클릭 리스너 설정
-        homeThermometerAnalysisAverageChart.setOnChartValueSelectedListener(this)
+        homeThermometerAnalysisAverageChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            //그래프 터치시 값 변경 리스너
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                val index = (e!!.x / 3).toInt()
+                val candleData = binding.homeThermometerAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
+                Log.d("로그", "HomeThermometerAnalysisActivity - onValueSelected : $index   =-   $candleData")
+                val minVal = min(candleData.high, candleData.low)
+                val maxVal = max(candleData.high, candleData.low)
 
+                binding.homeThermometerAnalysisTextViewMinValue.text = "$minVal"
+                binding.homeThermometerAnalysisTextViewMaxValue.text = "$maxVal"
+            }
+            override fun onNothingSelected() {
+            }
+        })
         //레전드 각각 설정
-        val legend1 = LegendEntry("평균", Legend.LegendForm.DEFAULT, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_700))
-        val legend2 = LegendEntry("범위", Legend.LegendForm.DEFAULT, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_150))
+        val legend1 = LegendEntry("평균", Legend.LegendForm.CIRCLE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_700))
+        val legend2 = LegendEntry("범위", Legend.LegendForm.SQUARE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_150))
 
         homeThermometerAnalysisAverageChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -169,24 +175,24 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 //            enableScroll()
 //            setVisibleXRangeMaximum(7f) //
 //            setVisibleXRangeMinimum(7f)
-            marker = markerView
+//            marker = markerView
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
-                setDrawGridLines(true)   //배경 그리드 추가
                 axisMinimum = 0f
-                axisMaximum = 86400f
-                labelCount = 11
+                axisMaximum = 24f
+                labelCount = 8
+                setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
+                valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 20F   //최소값
-                axisMaximum = 40F   //최대값
+                axisMinimum = 25F   //최소값
+                axisMaximum = 45F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -241,9 +247,9 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
-                textSize = 12f
-                setDrawGridLines(true)   //배경 그리드 추가
-                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
+                textSize = 10f
+                setDrawGridLines(false)   //배경 그리드 추가
+                valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -305,8 +311,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
-                textSize = 12f
-                valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
+                textSize = 10f
+                valueFormatter = CustomChartManager.CustomBarChartXAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -338,44 +344,31 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         }
     }
 
-    //평균 기간 텍스트 뷰 셋팅
+    //기간 텍스트 뷰 셋팅
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setPeriodAverageTextView(period : Long) {
+    private fun setPeriodTextView(period : Long, flag : Int) {
         val now = LocalDateTime.now()
-        val end = now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-        val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-        Log.d("로그", "HomeThermometerAnalysisActivity - setPeriodAverageTextView : $start   $end")
-        binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start ~ $end"
-    }
-    //정상 바차트 기간 텍스트 뷰 셋팅
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setPeriodNormalTextView(period : Long) {
-        val now = LocalDateTime.now()
-        val end = now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-        val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-        Log.d("로그", "HomeThermometerAnalysisActivity - setPeriodAverageTextView : $start   $end")
-        binding.homeThermometerAnalysisTextViewPeriodNormal.text = "$start ~ $end"
-    }
-    //비정상 바차트 기간 텍스트 뷰 셋팅
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setPeriodAbnormalTextView(period : Long) {
-        val now = LocalDateTime.now()
-        val end = now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-        val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-        Log.d("로그", "HomeThermometerAnalysisActivity - setPeriodAverageTextView : $start   $end")
-        binding.homeThermometerAnalysisTextViewPeriodAbnormal.text = "$start ~ $end"
-    }
+        val end = now.format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+        val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+        Log.d("로그", "HomeThermometerAnalysisActivity - setPeriodTextView : @@@@@@@@@@@@@@@@@     $flag")
+        when(flag) {
+            0 -> binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+            1 -> binding.homeThermometerAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
+            2 -> binding.homeThermometerAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
+        }
+    }
     
     //평균 체온 차트 일수 변경 리스너
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setTabStripSelectedIndexListener() {
         binding.homeThermometerAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+
             override fun onStartTabSelected(title: String?, index: Int) {
                 //7, 30, 90 데이터 가져오기
                 retrofitGetAnalysisThermometerAverage(daysArray[index])
+                setPeriodTextView(daysArray[index].toLong(), 0)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
@@ -384,6 +377,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             override fun onStartTabSelected(title: String?, index: Int) {
                 retrofitGetAnalysisThermometerNormal(daysArray[index])
                 binding.homeThermometerAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
+
+                setPeriodTextView(daysArray[index].toLong(), 1)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
@@ -392,28 +387,17 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             override fun onStartTabSelected(title: String?, index: Int) {
                 retrofitGetAnalysisThermometerAbnormal(daysArray[index])
                 binding.homeThermometerAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
+
+                setPeriodTextView(daysArray[index].toLong(), 2)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
+
+
     }
     
 
-    //그래프 터치시 값 변경 리스너
-    override fun onValueSelected(e: Entry?, h: Highlight?) {
-        if (e is CandleEntry) {
-            val minVal = min(e.low, e.high)
-            val maxVal = max(e.low, e.high)
-
-            binding.homeThermometerAnalysisTextViewMinValue.text = "$minVal"
-            binding.homeThermometerAnalysisTextViewMaxValue.text = "$maxVal"
-
-//            binding.homeAnalysisThermometerTextViewMinValue.setTextColor(ContextCompat.getColor(R.color.))
-        }
-    }
-
-    override fun onNothingSelected() {
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //평균, 최대, 최소 일수별 체온 가져오기
@@ -426,28 +410,35 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            val listCandleData: MutableList<CandleEntry> = ArrayList()
-                            val listLineData: MutableList<Entry> = ArrayList()
+                            val listCandleData: ArrayList<CandleEntry> = ArrayList()
+                            val listScatterData: MutableList<Entry> = ArrayList()
                             for(i in 0 until jsonArray.length()) {
                                 val jsonObject = jsonArray.getJSONObject(i)
                                 val avg = jsonObject.getDouble("avgData").toFloat()
                                 val min = jsonObject.getDouble("minData").toFloat()
                                 val max = jsonObject.getDouble("maxData").toFloat()
-                                val index = (i + 1) * 3 * 3600 - 5400
-                                listCandleData.add(CandleEntry(index.toFloat(), min,  max, avg, avg))
-                                listLineData.add(Entry(index.toFloat(), avg))
+                                val timeSlot = jsonObject.getDouble("timeSlot").toFloat()
+                                listCandleData.add(CandleEntry((timeSlot * 3 + 1.5).toFloat(), min,  max, avg, avg))
+                                listScatterData.add(Entry((timeSlot * 3 + 1.5).toFloat(), avg))
                             }
                             //체온 컴바인 데이터 만들기
-                            val candleLineDataSet = makeThermometerCandleLineData( CandleLineDataSet(CandleDataSet(listCandleData, "범위"), LineDataSet(listLineData, "평균")))
+                            val candleScatterDataSet = makeThermometerCandleScatterData(CandleScatterDataSet(CandleDataSet(listCandleData, "범위"), ScatterDataSet(listScatterData, "평균")))
                             val combinedData = CombinedData()
-                            combinedData.setData(CandleData(candleLineDataSet.candleDataSet))
-                            combinedData.setData(LineData(candleLineDataSet.lineDataSet))
-                 
+                            combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
+                            combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
+
+                            Log.d(
+                                "로그",
+                                "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAverage : ${combinedData.candleData.dataSets}"
+                            )
+                            Log.d(
+                                "로그",
+                                "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAverage : ${combinedData.scatterData.dataSets}"
+                            )
                             binding.homeThermometerAnalysisAverageChart.data = combinedData
                             binding.homeThermometerAnalysisAverageChart.invalidate()
                         }
                     }
-
                 }
                 CompletionResponse.FAIL -> {
                     Log.d(
@@ -523,9 +514,4 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             }
         })
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //심박수 라인 데이터 생성성
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
 }
