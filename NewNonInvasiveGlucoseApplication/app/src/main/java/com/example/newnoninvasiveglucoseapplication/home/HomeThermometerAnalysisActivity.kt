@@ -30,11 +30,16 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext)}
     private val binding by lazy { ActivityHomeThermometerAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
+
+    //평균 체온 인덱스 순서 저장
+    private val averageThermometerIndexList = ArrayList<Int>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,47 +99,26 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     //평균 체온 차트 설정
     private fun makeThermometerCandleScatterData(candleScatterDataSet : CandleScatterDataSet) : CandleScatterDataSet {
         val candleDataSet = candleScatterDataSet.candleDataSet
-        //범위 데이터
         candleDataSet.apply {
-            //심지 부분
-            shadowColor = ContextCompat.getColor(applicationContext, R.color.toss_black_150)
-            shadowWidth = 4f
-            //레전드 색깔
-            color = ContextCompat.getColor(applicationContext, R.color.toss_black_150)
-
-//            //음봉
-//            decreasingColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
-//            decreasingPaintStyle = Paint.Style.FILL
-//
-//            //양봉
-//            increasingColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
-//            increasingPaintStyle = Paint.Style.FILL
-
+            shadowColor = ContextCompat.getColor(applicationContext, R.color.toss_black_600)             //심지 부분
+            shadowWidth = 3f
+//            color = ContextCompat.getColor(applicationContext, R.color.toss_black_150)             //레전드 색깔
             neutralColor = ContextCompat.getColor(applicationContext, R.color.transparent)
-
             setDrawValues(false)
-
-            //터치시 붉은 선 보이기
-            isHighlightEnabled = false
+            isHighlightEnabled = false  //터치시 붉은 선 보이기
         }
         //평균 데이터
         val scatterDataSet = candleScatterDataSet.scatterDataSet
         scatterDataSet.apply {
-//            mode = LineDataSet.Mode.LINEAR
-//            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(true)  //클릭 시 선 보이게 하기
             setDrawVerticalHighlightIndicator(true)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
+            color = ContextCompat.getColor(applicationContext, R.color.teal_200)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
-            setScatterShape(ScatterChart.ScatterShape.CIRCLE)
-            setDrawValues(true)
-            valueTextSize = 0F
-            isHighlightEnabled = true   //클릭시 마크 보이게
-            highLightColor = ContextCompat.getColor(applicationContext, R.color.circle_red_100)
-//            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-//            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-//            setDrawCircleHole(true)
-            scatterShapeSize = 16f
+            setScatterShape(ScatterChart.ScatterShape.CIRCLE)   //원으로 표시
+            setDrawValues(false)    //값 안보이도록
+            isHighlightEnabled = true   //클릭시 선 보이게 설정
+            highLightColor = ContextCompat.getColor(applicationContext, R.color.circle_red_100) //클릭시 보이는 선 색깔
+            scatterShapeSize = 18f
         }
         return candleScatterDataSet
     }
@@ -150,21 +134,30 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         homeThermometerAnalysisAverageChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             //그래프 터치시 값 변경 리스너
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                val index = (e!!.x / 3).toInt()
+                val index = averageThermometerIndexList.indexOf((e!!.x / 3).toInt())
                 val candleData = binding.homeThermometerAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
-                Log.d("로그", "HomeThermometerAnalysisActivity - onValueSelected : $index   =-   $candleData")
+                val scatterData = binding.homeThermometerAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
+
                 val minVal = min(candleData.high, candleData.low)
                 val maxVal = max(candleData.high, candleData.low)
+                val averageVal = scatterData.y
 
                 binding.homeThermometerAnalysisTextViewMinValue.text = "$minVal"
                 binding.homeThermometerAnalysisTextViewMaxValue.text = "$maxVal"
+                binding.homeThermometerAnalysisTextViewAverageValue.text = "$averageVal"
+                binding.homeThermometerAnalysisTextViewMaxUnit.visibility = View.VISIBLE
+                binding.homeThermometerAnalysisTextViewMinUnit.visibility = View.VISIBLE
+                binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.VISIBLE
+
+                //로티 시작하기
+                binding.homeThermometerAnalysisLottie.playAnimation()
             }
             override fun onNothingSelected() {
             }
         })
         //레전드 각각 설정
-        val legend1 = LegendEntry("평균", Legend.LegendForm.CIRCLE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_700))
-        val legend2 = LegendEntry("범위", Legend.LegendForm.SQUARE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_150))
+        val legend1 = LegendEntry("평균", Legend.LegendForm.CIRCLE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.teal_200))
+        val legend2 = LegendEntry("범위", Legend.LegendForm.SQUARE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_600))
 
         homeThermometerAnalysisAverageChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -191,8 +184,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 25F   //최소값
-                axisMaximum = 45F   //최대값
+                axisMinimum = 27F   //최소값
+                axisMaximum = 42F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -225,8 +218,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
             valueTextColor = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
             setDrawValues(true)
-            valueTextSize = 12F
-            isHighlightEnabled = true   //클릭시 마크 보이게
+            valueTextSize = 14F
+            isHighlightEnabled = false   //클릭시 마크 보이게
         }
         return barDataSet
     }
@@ -249,7 +242,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 10f
                 setDrawGridLines(false)   //배경 그리드 추가
-                valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter()
+                valueFormatter = CustomChartManager.CustomBarChartXAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(applicationContext, R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
@@ -289,8 +282,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
             valueTextColor = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
             setDrawValues(true)
-            valueTextSize = 12F
-            isHighlightEnabled = true   //클릭시 마크 보이게
+            valueTextSize = 14F
+            isHighlightEnabled = false   //클릭시 마크 보이게
         }
         return barDataSet
     }
@@ -351,9 +344,16 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         val now = LocalDateTime.now()
         val end = now.format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
-        Log.d("로그", "HomeThermometerAnalysisActivity - setPeriodTextView : @@@@@@@@@@@@@@@@@     $flag")
         when(flag) {
-            0 -> binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+            0 -> {
+                binding.homeThermometerAnalysisTextViewMinValue.text = "-"
+                binding.homeThermometerAnalysisTextViewMaxValue.text = "-"
+                binding.homeThermometerAnalysisTextViewAverageValue.text = "-"
+                binding.homeThermometerAnalysisTextViewMaxUnit.visibility = View.GONE
+                binding.homeThermometerAnalysisTextViewMinUnit.visibility = View.GONE
+                binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.GONE
+                binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+            }
             1 -> binding.homeThermometerAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
             2 -> binding.homeThermometerAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
@@ -410,16 +410,22 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
+                            if(jsonArray.length() == 0) return@getAnalysisThermometerAverage
+
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
+                            averageThermometerIndexList.clear()
+
                             for(i in 0 until jsonArray.length()) {
                                 val jsonObject = jsonArray.getJSONObject(i)
                                 val avg = jsonObject.getDouble("avgData").toFloat()
                                 val min = jsonObject.getDouble("minData").toFloat()
                                 val max = jsonObject.getDouble("maxData").toFloat()
-                                val timeSlot = jsonObject.getDouble("timeSlot").toFloat()
+                                val timeSlot = jsonObject.getDouble("timeSlot")
+                                //인덱스 순서 저장
+                                averageThermometerIndexList.add(timeSlot.toInt())
                                 listCandleData.add(CandleEntry((timeSlot * 3 + 1.5).toFloat(), min,  max, avg, avg))
-                                listScatterData.add(Entry((timeSlot * 3 + 1.5).toFloat(), avg))
+                                listScatterData.add(Entry((timeSlot * 3 + 1.5).toFloat(), (avg  * 10).roundToInt() / 10.0F))
                             }
                             //체온 컴바인 데이터 만들기
                             val candleScatterDataSet = makeThermometerCandleScatterData(CandleScatterDataSet(CandleDataSet(listCandleData, "범위"), ScatterDataSet(listScatterData, "평균")))
@@ -427,14 +433,6 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                             combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
-                            Log.d(
-                                "로그",
-                                "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAverage : ${combinedData.candleData.dataSets}"
-                            )
-                            Log.d(
-                                "로그",
-                                "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAverage : ${combinedData.scatterData.dataSets}"
-                            )
                             binding.homeThermometerAnalysisAverageChart.data = combinedData
                             binding.homeThermometerAnalysisAverageChart.invalidate()
                         }
@@ -460,6 +458,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
+                            if(jsonArray.length() == 0) return@getAnalysisThermometerNormal
+
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
                             var sum = 0
@@ -493,6 +493,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
+                            if(jsonArray.length() == 0) return@getAnalysisThermometerAbnormal
+
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0
                             for(i in 0 until jsonArray.length()) {

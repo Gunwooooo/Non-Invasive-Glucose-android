@@ -26,6 +26,9 @@
         android:theme="@style/Theme.NewNonInvasiveGlucoseApplication.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".HomeGlucoseAnalysisActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeHeartAnalysisActivity"
             android:exported="false" />
         <activity

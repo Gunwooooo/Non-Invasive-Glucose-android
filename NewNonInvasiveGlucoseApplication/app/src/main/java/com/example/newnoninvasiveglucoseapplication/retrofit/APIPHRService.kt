@@ -136,9 +136,52 @@ interface APIPHRService {
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
+    //비정상 범위 체온 빈도수 가져오기
     @FormUrlEncoded
     @POST("/wellink/bodydata/thermometer/countOther")
     fun getAnalysisThermometerAbnormal(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    //분석 평균 심박수 데이터 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/thermometer/avg")
+    fun getAnalysisHeartAverage(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    //정상 범위 심박수 빈도수 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/heart/count")
+    fun getAnalysisHeartNormal(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+    
+    //비정상 범위 심박수 빈도수 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/heart/countOther")
+    fun getAnalysisHeartAbnormal(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    //분석 평균 혈당 데이터 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/glucose/avg")
+    fun getAnalysisGlucoseAverage(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    //정상 범위 혈당 빈도수 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/glucose/count")
+    fun getAnalysisGlucoseNormal(
+        @Field("day") day: Int?,
+    ): Call<ResponseBody>
+
+    //비정상 범위 혈당 빈도수 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/bodydata/glucose/countOther")
+    fun getAnalysisGlucoseAbnormal(
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 }

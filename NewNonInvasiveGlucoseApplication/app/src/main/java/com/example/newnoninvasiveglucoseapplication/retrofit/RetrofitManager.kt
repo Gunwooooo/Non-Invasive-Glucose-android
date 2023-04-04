@@ -320,4 +320,82 @@ class RetrofitManager {
             }
         })
     }
+
+    //분석 평균 심박수 데이터 가져오기(7, 30, 90)
+    fun getAnalysisHeartAverage(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisHeartAverage(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //정상 범위 심박수 빈도수 가져오기
+    fun getAnalysisHeartNormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisHeartNormal(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //비정상 범위 심박수 빈도수 가져오기
+    fun getAnalysisHeartAbnormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisHeartAbnormal(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //분석 평균 혈당 데이터 가져오기(7, 30, 90)
+    fun getAnalysisGlucoseAverage(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisGlucoseAverage(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //정상 범위 혈당 빈도수 가져오기
+    fun getAnalysisGlucoseNormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisGlucoseNormal(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
+
+    //비정상 범위 혈당 빈도수 가져오기
+    fun getAnalysisGlucoseAbnormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisGlucoseAbnormal(day - 1) ?: return
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                completion(CompletionResponse.OK, response)
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                completion(CompletionResponse.FAIL, null)
+            }
+        })
+    }
 }
