@@ -9,6 +9,7 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -44,6 +45,8 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
 
     //블루투스 권한 요청 resultLauncher
     private lateinit var activityResultLauncherBluetooth: ActivityResultLauncher<Intent>
+    //위치 권한 요청 resultLauncher
+    private lateinit var locationPermissionRequest : ActivityResultLauncher<Array<String>>
 
     //기기 연결 확인 변수
     private var findDeviceFlag = false
@@ -71,11 +74,14 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             )
         }
 
-        //블루투스 연결 콜백 초기화
+        //블루투스 연결 콜백, 위치 서비스 콜백 초기화
         setActivityResultLauncher()
-        
-        //연결 체크
+        setLocationPermissionRequest()
+
+        //블루투스 연결 체크, 위치서비스 체크
         checkBluetoothEnable()
+
+        checkLocationEnable()
     }
 
     override fun onClick(v: View?) {
@@ -95,6 +101,12 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         }
     }
 
+    private fun checkLocationEnable() {
+        locationPermissionRequest.launch((arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION)))
+    }
+
     //블루투스 설정  resultLauncher 초기화
     private fun setActivityResultLauncher() {
         //갤러리 콜백
@@ -106,6 +118,23 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 }
             }
     }
+    //위치 서비스 콜백 초기화
+    private fun setLocationPermissionRequest() {
+        locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    // Only approximate location access granted.
+                } else -> {
+                // No location access granted.
+                }
+            }
+        }
+    }
 
     ////////////////////////////////////////////블루투스 스캔////////////////////////////////////////////
     //블루투스 스캔 콜백 함수
@@ -115,6 +144,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
             super.onScanResult(callbackType, result)
             val deviceName = result.device.name
             //한아아이티 기기 발견 시
+            Log.d("로그", "UserSetConnectDeviceFragment - onScanResult : 디바이스 : $deviceName")
             if(deviceName != null && deviceName.equals(DEVICE_NAME)) {
                 Log.d("로그", "UserSetConnectDeviceFragment - onScanResult : 장치 발견됨!")
                 //디바이스 정보 전역 변수에 넣기
@@ -167,5 +197,18 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 bluetoothLeScanner.stopScan(mLeScanCallback)
             }
         }
+    }
+
+
+    private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+        if (context != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 }

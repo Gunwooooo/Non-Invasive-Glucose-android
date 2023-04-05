@@ -26,14 +26,20 @@
         android:theme="@style/Theme.NewNonInvasiveGlucoseApplication.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".HomeGlucoseAnalysisActivity"
-            android:exported="false" />
+            android:name=".home.HomeGlucoseAnalysisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
-            android:name=".HomeHeartAnalysisActivity"
-            android:exported="false" />
+            android:name=".home.HomeHeartAnalysisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".home.HomeGlucoseFullChartActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".home.HomeHeartFullChartActivity"
             android:exported="false"

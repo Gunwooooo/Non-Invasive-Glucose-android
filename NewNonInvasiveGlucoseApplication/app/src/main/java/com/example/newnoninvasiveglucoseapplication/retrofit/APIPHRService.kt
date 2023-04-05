@@ -145,7 +145,7 @@ interface APIPHRService {
 
     //분석 평균 심박수 데이터 가져오기
     @FormUrlEncoded
-    @POST("/wellink/bodydata/thermometer/avg")
+    @POST("/wellink/bodydata/heart/avg")
     fun getAnalysisHeartAverage(
         @Field("day") day: Int?,
     ): Call<ResponseBody>

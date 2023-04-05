@@ -58,8 +58,8 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
         //차트 보여주기 설정하기
         setHeartCombineChart()
-        setHeartAbnormalChart()
         setHeartNormalChart()
+        setHeartAbnormalChart()
 
         //일수 선택 리스너 설정
         setTabStripSelectedIndexListener()
@@ -183,8 +183,8 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 27F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 0F   //최소값
+                axisMaximum = 150F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -225,8 +225,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //심박수 차트 설정
     private fun setHeartAbnormalChart() {
-        val barHeartDay = binding.homeHeartAnalysisAbnormalChart
-        barHeartDay.run {
+            binding.homeHeartAnalysisAbnormalChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -288,18 +287,11 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setHeartNormalChart() {
-        val barHeartDay = binding.homeHeartAnalysisNormalChart
-
-        barHeartDay.run {
+            binding.homeHeartAnalysisNormalChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isScaleXEnabled = false //가로 확대 없애기
-//            isDragEnabled = true    //드래그 가능
-//            enableScroll()
-//            setVisibleXRangeMaximum(7f)
-//            marker = markerView
-//            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM

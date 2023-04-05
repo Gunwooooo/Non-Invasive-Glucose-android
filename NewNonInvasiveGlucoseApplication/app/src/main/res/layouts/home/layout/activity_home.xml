@@ -466,7 +466,7 @@
                                     android:gravity="center"
                                     android:text="분석"
                                     android:textColor="@color/toss_blue_700"
-                                    android:textSize="15dp" />
+                                    android:textSize="16dp" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -635,7 +635,7 @@
                                     android:gravity="center"
                                     android:text="분석"
                                     android:textColor="@color/toss_blue_700"
-                                    android:textSize="15dp" />
+                                    android:textSize="16dp" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -779,7 +779,7 @@
                                     android:gravity="center"
                                     android:text="분석"
                                     android:textColor="@color/toss_blue_700"
-                                    android:textSize="15dp" />
+                                    android:textSize="16dp" />
                             </LinearLayout>
 
                         </LinearLayout>

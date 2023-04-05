@@ -69,7 +69,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         retrofitGetAnalysisGlucoseNormal(7)
         retrofitGetAnalysisGlucoseAbnormal(7)
 
-        //초기 기간(7일)로 텍스트뷰 범위 세팅
+        //초기 기간(7일)로 텍스트뷰 범위 세팅 플래그 별로 각각 평균, 정상, 비정상
         setPeriodTextView(7, 0)
         setPeriodTextView(7, 1)
         setPeriodTextView(7, 2)
@@ -183,8 +183,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 27F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 0F   //최소값
+                axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)

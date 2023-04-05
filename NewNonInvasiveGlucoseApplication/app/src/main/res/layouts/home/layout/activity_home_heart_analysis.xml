@@ -375,7 +375,6 @@
                         app:nts_typeface="@font/ps_regular"
                         app:nts_weight="3dp" />
 
-
                     <TextView
                         android:id="@+id/homeHeartAnalysis_textView_periodNormal"
                         android:layout_width="match_parent"

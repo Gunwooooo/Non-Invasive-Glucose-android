@@ -146,8 +146,16 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             //화면 이동 클릭 리스너
-            binding.homeTextViewThermometerDetail, binding.homeTextViewHeartDetail, binding.homeTextViewGlucoseDetail -> {
+            binding.homeTextViewThermometerDetail -> {
                 val intent = Intent(this, HomeThermometerAnalysisActivity::class.java)
+                startActivity(intent)
+            }
+            binding.homeTextViewHeartDetail -> {
+                val intent = Intent(this, HomeHeartAnalysisActivity::class.java)
+                startActivity(intent)
+            }
+            binding.homeTextViewGlucoseDetail -> {
+                val intent = Intent(this, HomeGlucoseAnalysisActivity::class.java)
                 startActivity(intent)
             }
             binding.homeBtnThermometer -> {
