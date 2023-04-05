@@ -174,6 +174,11 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
 
     @SuppressLint("MissingPermission")
     fun scanLeDevice(enable : Boolean) {
+        //어댑터가 disable 상태이면 재 선언
+        if(bluetoothAdapter == null || !bluetoothAdapter!!.isEnabled) {
+            val bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+            bluetoothManager.adapter
+        }
         val bluetoothLeScanner = bluetoothAdapter!!.bluetoothLeScanner
         when(enable) {
             true -> {
@@ -193,6 +198,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 bluetoothLeScanner.startScan(mLeScanCallback)
             }
             else -> {
+                Log.d("로그", "UserSetConnectDeviceFragment - scanLeDevice : 스캔 종료")
                 customProgressDialog.dismiss()
                 bluetoothLeScanner.stopScan(mLeScanCallback)
             }

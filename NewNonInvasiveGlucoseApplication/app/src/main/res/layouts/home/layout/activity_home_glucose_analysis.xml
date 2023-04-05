@@ -73,7 +73,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/ps_bold"
                             android:gravity="bottom"
-                            android:text="평균 심박수"
+                            android:text="평균 혈당"
                             android:textColor="@color/toss_black_700"
                             android:textSize="21dp" />
                     </LinearLayout>
@@ -220,7 +220,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/ps_regular"
-                                        android:text="최고 심박수"
+                                        android:text="최고 혈당"
                                         android:textColor="@color/toss_black_600"
                                         android:textSize="18dp" />
 
@@ -260,7 +260,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/ps_regular"
-                                        android:text="최저 심박수"
+                                        android:text="최저 혈당"
                                         android:textColor="@color/toss_black_600"
                                         android:textSize="18dp" />
 
@@ -301,7 +301,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="정상 심박수"
+                    android:text="정상 혈당"
                     android:textColor="@color/toss_black_700"
                     android:fontFamily="@font/ps_bold"
                     android:textSize="21dp"/>
@@ -402,7 +402,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="비정상 심박수"
+                    android:text="비정상 혈당"
                     android:textColor="@color/toss_black_700"
                     android:fontFamily="@font/ps_bold"
                     android:textSize="21dp"/>
