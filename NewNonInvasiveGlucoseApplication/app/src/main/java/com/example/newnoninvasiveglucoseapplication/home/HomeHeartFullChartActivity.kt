@@ -232,8 +232,8 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             if(list.size == 0) {
                                 binding.homeHeartFullChartTextViewAverage.visibility = View.GONE
                                 binding.homeHeartFullChartScatterChart.visibility = View.GONE
-                                binding.homeHeartFullchartLottie.visibility = View.VISIBLE
-                                binding.homeHeartFullchartLottie.playAnimation()
+                                binding.homeHeartFullChartLottie.visibility = View.VISIBLE
+                                binding.homeHeartFullChartLottie.playAnimation()
                                 binding.homeHeartFullChartTextViewUnit.text = "측정된 데이터가 없어요"
                                 return@getBodyDataAsDate
                             }
@@ -242,7 +242,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             binding.homeHeartFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeHeartFullChartScatterChart.visibility = View.VISIBLE
-                            binding.homeHeartFullchartLottie.visibility = View.GONE
+                            binding.homeHeartFullChartLottie.visibility = View.GONE
                             binding.homeHeartFullChartTextViewUnit.text = "bpm"
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()

@@ -501,7 +501,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-//                labelCount = 8
+                labelCount = 2
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -557,7 +557,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-//                labelCount = 8
+                labelCount = 2
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(this, R.color.toss_black_100)  //x그리그 색깔 변경
@@ -611,7 +611,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-//                labelCount = 8
+                labelCount = 2
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(this, R.color.toss_black_100)  //x그리그 색깔 변경

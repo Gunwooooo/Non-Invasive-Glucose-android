@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -23,6 +24,8 @@ import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeTher
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.*
+import com.github.mikephil.charting.listener.ChartTouchListener
+import com.github.mikephil.charting.listener.OnChartGestureListener
 import org.json.JSONArray
 import java.lang.Math.round
 import java.time.LocalDateTime
@@ -30,10 +33,15 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
 
+@RequiresApi(Build.VERSION_CODES.O)
 class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeThermometerFullChartBinding.inflate(layoutInflater) }
 
     private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
+
+    //현재 선택된 날짜 가지고 있기
+    private val now by lazy { Calendar.getInstance() }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +61,8 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         //오늘 날짜 설정
         setTodayDate()
 
-        //현재 시간
-        val now = LocalDateTime.now()
         //날짜에 해당하는 데이터 가져오기
-        retrofitGetBodyDataAsDate(now.year, now.monthValue, now.dayOfMonth)
+        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
 
         binding.homeThermometerFullChartImageViewCalendar.setOnClickListener(this)
         binding.homeThermometerFullChartBtnBack.setOnClickListener(this)
@@ -77,11 +83,12 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     //초기 오늘 날짜 표시 되도록 설정
     @SuppressLint("SetTextI18n")
     private fun setTodayDate() {
-        val gregorianCalendar = GregorianCalendar()
-        val year = gregorianCalendar.get(Calendar.YEAR)
-        val month = gregorianCalendar.get(Calendar.MONTH)
-        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+        val now = now
+        val year = now.get(Calendar.YEAR)
+        val month = now.get(Calendar.MONTH).plus(1)
+        now.set(Calendar.MONTH, month)
+        val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
+        binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -89,7 +96,10 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+            now.set(Calendar.YEAR, year)
+            now.set(Calendar.MONTH, month + 1)
+            now.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
             retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
         }
         return datePickerDialogListener
@@ -134,6 +144,30 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
+
+            onChartGestureListener = object : OnChartGestureListener {
+                override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+                override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+                override fun onChartLongPressed(me: MotionEvent?) {}
+                override fun onChartDoubleTapped(me: MotionEvent?) {}
+                override fun onChartSingleTapped(me: MotionEvent?) {}
+                //스와이프 이벤트 설정
+                @SuppressLint("SetTextI18n")
+                override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
+                    val x1 = me1!!.x
+                    val x2 = me2!!.x
+                    Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : $velocityX     $velocityY")
+                    //오른쪽으로 스와이프 -> 이전 날짜 호출
+                    if(x1 < x2) {
+                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
+                        now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).minus(1))
+                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+                    }
+                }
+                override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
+                override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
+            }
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((thermometerLineData.entryCount).toFloat())
@@ -216,7 +250,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                                 val thermometer = jsonObject.getDouble("thermometer").toFloat()
                                 Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : ${index} - $thermometer")
                                 list.add(Entry(index, thermometer))
-                                
+
                                 //평균값 계산을 위해 더하기
                                 average += thermometer
                             }
@@ -229,11 +263,11 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                             binding.homeThermometerFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeThermometerFullChartTextViewAverage.visibility = View.GONE
                                 binding.homeThermometerFullChartScatterChart.visibility = View.GONE
-                                binding.homeThermometerFullchartLottie.visibility = View.VISIBLE
-                                binding.homeThermometerFullchartLottie.playAnimation()
-                                binding.homeThermometerFullChartTextViewUnit.text = "측정된 데이터가 없어요"
+                                binding.homeThermometerFullChartLottie.visibility = View.VISIBLE
+                                binding.homeThermometerFullChartLottie.playAnimation()
+                                binding.homeThermometerFullChartTextViewAverage.text = "데이터 없음"
+                                binding.homeThermometerFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
@@ -241,7 +275,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                             binding.homeThermometerFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeThermometerFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeThermometerFullChartScatterChart.visibility = View.VISIBLE
-                            binding.homeThermometerFullchartLottie.visibility = View.GONE
+                            binding.homeThermometerFullChartLottie.visibility = View.GONE
                             binding.homeThermometerFullChartTextViewUnit.text = "℃"
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
