@@ -91,8 +91,8 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeGlucoseFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
-            retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
+            binding.homeGlucoseFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+            retrofitGetBodyDataAsDate(year, month + 1, dayOfMonth)
         }
         return datePickerDialogListener
     }
@@ -117,7 +117,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
             isHighlightEnabled = true   //클릭시 마크 보이게
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
             setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-            scatterShapeSize = 15f
+            scatterShapeSize = 11f
 //            setDrawCircleHole(true)
         }
     }
@@ -155,8 +155,8 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 0F   //최소값
-                axisMaximum = 40F   //최대값
+                axisMinimum = 50F   //최소값
+                axisMaximum = 140F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -165,10 +165,10 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
             }
-            axisRight.run { //오른쪽 y축축
+            axisRight.run { //오른쪽 y축
                 setDrawAxisLine(true)  //좌측 선 없애기
-                axisMinimum = 0F   //최소값
-                axisMaximum = 40F   //최대값
+                axisMinimum = 50F   //최소값
+                axisMaximum = 140F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -215,23 +215,32 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                                 val glucose = jsonObject.getDouble("glucose").toFloat()
                                 Log.d("로그", "HomeGlucoseFullChartActivity - retrofitGetBodyDataAsDate : ${index} - $glucose")
                                 list.add(Entry(index, glucose))
-
                                 //평균값 계산을 위해 더하기
                                 average += glucose
                             }
+                            //데이터 한번 X 오름차순으로 정렬
+                            list.sortBy { it.x }
+
                             //리스트 가져와서 차트 새로 그리기
                             glucoseScatterData = ScatterData(makeGlucoseSet(list))
                             binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
-//                            binding.homeGlucoseFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeGlucoseFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeGlucoseFullChartTextViewAverage.text = " - "
+                                binding.homeGlucoseFullChartTextViewAverage.visibility = View.GONE
+                                binding.homeGlucoseFullChartScatterChart.visibility = View.GONE
+                                binding.homeGlucoseFullchartLottie.visibility = View.VISIBLE
+                                binding.homeGlucoseFullchartLottie.playAnimation()
+                                binding.homeGlucoseFullChartTextViewUnit.text = "측정된 데이터가 없어요"
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
+                            binding.homeGlucoseFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.homeGlucoseFullChartScatterChart.visibility = View.VISIBLE
+                            binding.homeGlucoseFullchartLottie.visibility = View.GONE
+                            binding.homeGlucoseFullChartTextViewUnit.text = "mg/dL"
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

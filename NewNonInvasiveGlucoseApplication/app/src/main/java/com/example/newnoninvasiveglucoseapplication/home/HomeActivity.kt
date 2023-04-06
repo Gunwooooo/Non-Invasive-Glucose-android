@@ -343,7 +343,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 _checkBluetoothTimer = false
                 val heart = (data.split('!')[0].split('@')[1].toFloat() * 10).roundToInt() / 10.0F
                 val thermometer = (data.split('/')[0].split('!')[1].toFloat() * 10).roundToInt() / 10.0F
-                val glucose = 0f
+                //혈당 랜던값 생성
+                val max = 110.0
+                val min = 70.0
+                val random = Random()
+                random.setSeed(Date().time)
+                val glucose = ((min + random.nextFloat() * (max - min))*10).roundToInt() / 10f
 
                 //챠트 실시간으로 업데이트
                 thermometerLineData.addEntry(Entry(index, thermometer), 0)
@@ -614,8 +619,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 0F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 50F   //최소값
+                axisMaximum = 140F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)

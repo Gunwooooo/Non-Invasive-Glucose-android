@@ -118,7 +118,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
             isHighlightEnabled = true   //클릭시 마크 보이게
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
             setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-            scatterShapeSize = 15f
+            scatterShapeSize = 11f
 //            setDrawCircleHole(true)
         }
     }
@@ -221,19 +221,29 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                                 //평균값 계산을 위해 더하기
                                 average += heart
                             }
+                            //데이터 한번 X 오름차순으로 정렬
+                            list.sortBy { it.x }
+
                             //리스트 가져와서 차트 새로 그리기
                             heartScatterData = ScatterData(makeHeartSet(list))
                             binding.homeHeartFullChartScatterChart.data = heartScatterData
-//                            binding.homeHeartFullChartScatterChart.setVisibleXRangeMaximum(28800f)
                             binding.homeHeartFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeHeartFullChartTextViewAverage.text = " - "
+                                binding.homeHeartFullChartTextViewAverage.visibility = View.GONE
+                                binding.homeHeartFullChartScatterChart.visibility = View.GONE
+                                binding.homeHeartFullchartLottie.visibility = View.VISIBLE
+                                binding.homeHeartFullchartLottie.playAnimation()
+                                binding.homeHeartFullChartTextViewUnit.text = "측정된 데이터가 없어요"
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
+                            binding.homeHeartFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.homeHeartFullChartScatterChart.visibility = View.VISIBLE
+                            binding.homeHeartFullchartLottie.visibility = View.GONE
+                            binding.homeHeartFullChartTextViewUnit.text = "bpm"
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

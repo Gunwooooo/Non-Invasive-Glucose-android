@@ -48,7 +48,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         setThermometerScatterChart()
 
         //캘린더 이미지 넣기
-        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeFullChartImageViewCalendar)
+        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeThermometerFullChartImageViewCalendar)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -58,17 +58,17 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         //날짜에 해당하는 데이터 가져오기
         retrofitGetBodyDataAsDate(now.year, now.monthValue, now.dayOfMonth)
 
-        binding.homeFullChartImageViewCalendar.setOnClickListener(this)
-        binding.homeFullChartBtnBack.setOnClickListener(this)
+        binding.homeThermometerFullChartImageViewCalendar.setOnClickListener(this)
+        binding.homeThermometerFullChartBtnBack.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeFullChartBtnBack -> {
+            binding.homeThermometerFullChartBtnBack -> {
                 finish()
             }
-            binding.homeFullChartImageViewCalendar -> {
+            binding.homeThermometerFullChartImageViewCalendar -> {
                 CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
@@ -81,7 +81,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         val year = gregorianCalendar.get(Calendar.YEAR)
         val month = gregorianCalendar.get(Calendar.MONTH)
         val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        binding.homeFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+        binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -89,7 +89,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+            binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
             retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
         }
         return datePickerDialogListener
@@ -116,13 +116,13 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
             setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
 //            setDrawCircleHole(true)
-            scatterShapeSize = 15f
+            scatterShapeSize = 11f
         }
     }
 
     //체온 차트 설정
     private fun setThermometerScatterChart() {
-        val homeFullChartScatterChart = binding.homeFullChartScatterChart
+        val homeFullChartScatterChart = binding.homeThermometerFullChartScatterChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         homeFullChartScatterChart.run {
@@ -220,19 +220,29 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                                 //평균값 계산을 위해 더하기
                                 average += thermometer
                             }
+                            //데이터 한번 X 오름차순으로 정렬
+                            list.sortBy { it.x }
+
                             //리스트 가져와서 차트 새로 그리기
                             val thermometerScatterData = ScatterData(makeThermometerSet(list))
-                            binding.homeFullChartScatterChart.data = thermometerScatterData
-//                            binding.homeFullChartScatterChart.setVisibleXRangeMaximum(28800f)
-                            binding.homeFullChartScatterChart.invalidate()
+                            binding.homeThermometerFullChartScatterChart.data = thermometerScatterData
+                            binding.homeThermometerFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeThermometerFullChartTextViewAverage.text = " - "
+                                binding.homeThermometerFullChartTextViewAverage.visibility = View.GONE
+                                binding.homeThermometerFullChartScatterChart.visibility = View.GONE
+                                binding.homeThermometerFullchartLottie.visibility = View.VISIBLE
+                                binding.homeThermometerFullchartLottie.playAnimation()
+                                binding.homeThermometerFullChartTextViewUnit.text = "측정된 데이터가 없어요"
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
+                            binding.homeThermometerFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeThermometerFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.homeThermometerFullChartScatterChart.visibility = View.VISIBLE
+                            binding.homeThermometerFullchartLottie.visibility = View.GONE
+                            binding.homeThermometerFullChartTextViewUnit.text = "℃"
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

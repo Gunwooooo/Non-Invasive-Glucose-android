@@ -198,9 +198,9 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
-                                            android:text="℃"
+                                            android:text="mg/dL"
                                             android:textColor="@color/teal_700"
-                                            android:textSize="18dp" />
+                                            android:textSize="11dp" />
                                     </LinearLayout>
                                 </FrameLayout>
                             </LinearLayout>
@@ -244,9 +244,9 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
-                                            android:text="℃"
+                                            android:text="mg/dL"
                                             android:textColor="@color/text_red_200"
-                                            android:textSize="18dp" />
+                                            android:textSize="11dp" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -284,9 +284,9 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
-                                            android:text="℃"
+                                            android:text="mg/dL"
                                             android:textColor="@color/text_blue_200"
-                                            android:textSize="18dp" />
+                                            android:textSize="11dp" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
@@ -345,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="-"
-                    android:textColor="@color/circle_red_100"
+                    android:textColor="@color/text_blue_500"
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -446,7 +446,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="-"
-                    android:textColor="@color/circle_red_100"
+                    android:textColor="@color/text_red_500"
                     android:textSize="18dp" />
             </LinearLayout>
 
