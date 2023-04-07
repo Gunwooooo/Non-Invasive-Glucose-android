@@ -230,15 +230,16 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             binding.homeHeartFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeHeartFullChartTextViewAverage.visibility = View.GONE
                                 binding.homeHeartFullChartScatterChart.visibility = View.GONE
                                 binding.homeHeartFullChartLottie.visibility = View.VISIBLE
                                 binding.homeHeartFullChartLottie.playAnimation()
-                                binding.homeHeartFullChartTextViewUnit.text = "측정된 데이터가 없어요"
+                                binding.homeHeartFullChartTextViewAverage.text = "데이터 없음"
+                                binding.homeHeartFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
+                            binding.homeHeartFullChartTextViewUnit.visibility = View.VISIBLE
                             binding.homeHeartFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeHeartFullChartScatterChart.visibility = View.VISIBLE

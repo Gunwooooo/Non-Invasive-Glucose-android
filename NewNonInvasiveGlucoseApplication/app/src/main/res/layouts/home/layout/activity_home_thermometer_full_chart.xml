@@ -110,6 +110,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/homethermometerFullChart_layout"
         android:gravity="center"
         android:background="@color/android_blue_100"
         android:layout_width="match_parent"

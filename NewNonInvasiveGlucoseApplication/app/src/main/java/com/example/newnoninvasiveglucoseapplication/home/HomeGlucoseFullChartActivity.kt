@@ -227,15 +227,16 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             binding.homeGlucoseFullChartScatterChart.invalidate()
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeGlucoseFullChartTextViewAverage.visibility = View.GONE
                                 binding.homeGlucoseFullChartScatterChart.visibility = View.GONE
                                 binding.homeGlucoseFullChartLottie.visibility = View.VISIBLE
                                 binding.homeGlucoseFullChartLottie.playAnimation()
-                                binding.homeGlucoseFullChartTextViewUnit.text = "측정된 데이터가 없어요"
+                                binding.homeGlucoseFullChartTextViewAverage.text = "데이터 없음"
+                                binding.homeGlucoseFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
+                            binding.homeGlucoseFullChartTextViewUnit.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeGlucoseFullChartScatterChart.visibility = View.VISIBLE
