@@ -59,10 +59,8 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         //오늘 날짜 설정
         setTodayDate()
 
-        //현재 시간
-        val now = LocalDateTime.now()
         //날짜에 해당하는 데이터 가져오기
-        retrofitGetBodyDataAsDate(now.year, now.monthValue, now.dayOfMonth)
+        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
 
         //스와이프 리스너 설정
         setLayoutSwipeListener()
@@ -91,15 +89,15 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onSwipeLeft() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
-                now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).plus(1))
-                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                now.add(Calendar.DAY_OF_MONTH, 1)
+                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
 
             override fun onSwipeRight() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
-                now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).minus(1))
-                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                now.add(Calendar.DAY_OF_MONTH, -1)
+                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
         })
@@ -110,10 +108,9 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun setTodayDate() {
         val now = now
         val year = now.get(Calendar.YEAR)
-        val month = now.get(Calendar.MONTH).plus(1)
-        now.set(Calendar.MONTH, month)
+        val month = now.get(Calendar.MONTH)
         val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
-        binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month}월 ${dayOfMonth}일"
+        binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -121,8 +118,8 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
-            retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
+            binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+            retrofitGetBodyDataAsDate(year, month, dayOfMonth)
         }
         return datePickerDialogListener
     }
@@ -184,13 +181,13 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                     //오른쪽으로 스와이프 -> 이전 날짜 호출
                     if(x1 < x2) {
                         Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
-                        now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).minus(1))
-                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        now.add(Calendar.DAY_OF_MONTH, -1)
+                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                         retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                     } else if(x1 > x2) {
                         Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
-                        now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).plus(1))
-                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        now.add(Calendar.DAY_OF_MONTH, 1)
+                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                         retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                     }
                 }
@@ -259,7 +256,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
-        RetrofitManager.instance.getBodyDataAsDate(year, month, day, completion = {
+        RetrofitManager.instance.getBodyDataAsDate(year, month + 1, day, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {

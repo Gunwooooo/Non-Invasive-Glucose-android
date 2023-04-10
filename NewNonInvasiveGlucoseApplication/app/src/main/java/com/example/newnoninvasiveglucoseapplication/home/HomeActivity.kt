@@ -126,6 +126,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         binding.homeTextViewHeartDetail.setOnClickListener(this)
         binding.homeTextViewGlucoseDetail.setOnClickListener(this)
         binding.homeImageViewSetting.setOnClickListener(this)
+        binding.homeLinearLayoutDisconnected.setOnClickListener(this)
 
         //바텀 네비게이션 리스너
         binding.homeBottomNav.setOnItemSelectedListener { item ->
@@ -143,6 +144,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v) {
             //화면 이동 클릭 리스너
@@ -198,10 +200,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 tryConnectCount++
                 
                 //120번 연결 시도 했으면 종료 시키고 토스트 출력
-                if(tryConnectCount == 1000) {
-                    Toast.makeText(applicationContext, "기기와 연결이 해제되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
-                    stopFlag = true
-                }
+//                if(tryConnectCount == 1000) {
+//                    Toast.makeText(applicationContext, "기기와 연결에 실패했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+//                    stopFlag = true
+//                }
 
 //                Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
                 //연결됨 뷰 변경
@@ -264,6 +266,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             super.onConnectionStateChange(gatt, status, newState)
             val timer = Timer()
+            //연결 시도 횟수 초기화
+            tryConnectCount = 0
             when(newState) {
                 BluetoothGatt.STATE_CONNECTED -> {
                     //가트 연결 상태 확인 전역 변수
@@ -274,16 +278,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
                     //5초마다 타이머로 값을 받을지 체크
                     timer.scheduleAtFixedRate(timerTask, 0, REFRESH_TIME)
-
-                    //연결 시도 횟수 초기화
-                    tryConnectCount = 0
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
                     bluetoothGattConnected = false
-//                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
+                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
                     //가트 연결 해제
-                    bluetoothGatt!!.disconnect()
-                    bluetoothGatt!!.close()
+                    gatt!!.disconnect()
+                    gatt.close()
 
                     //타이머 종료
                     timer.cancel()
@@ -354,19 +355,19 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 thermometerLineData.addEntry(Entry(index, thermometer), 0)
                 thermometerLineData.notifyDataChanged()
                 binding.homeThermometerChart.notifyDataSetChanged()
-                binding.homeThermometerChart.setVisibleXRangeMaximum(10f)
+                binding.homeThermometerChart.setVisibleXRangeMaximum(22f)
                 binding.homeThermometerChart.moveViewToX(binding.homeThermometerChart.data.xMax)
 
                 heartLineData.addEntry(Entry(index, heart), 0)
                 heartLineData.notifyDataChanged()
                 binding.homeHeartChart.notifyDataSetChanged()
-                binding.homeHeartChart.setVisibleXRangeMaximum(10f)
+                binding.homeHeartChart.setVisibleXRangeMaximum(22f)
                 binding.homeHeartChart.moveViewToX(binding.homeHeartChart.data.xMax)
 
                 glucoseLineData.addEntry(Entry(index, glucose), 0)
                 glucoseLineData.notifyDataChanged()
                 binding.homeGlucoseChart.notifyDataSetChanged()
-                binding.homeGlucoseChart.setVisibleXRangeMaximum(10f)
+                binding.homeGlucoseChart.setVisibleXRangeMaximum(22f)
                 binding.homeGlucoseChart.moveViewToX(binding.homeGlucoseChart.data.xMax)
 
                 //서버로 보낼 통합 리스트
@@ -491,7 +492,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
-//            setVisibleXRangeMaximum(10f)
+
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 //            marker = markerView
 
@@ -501,7 +502,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-                labelCount = 2
+                labelCount = 4
 //                granularity = 3f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -549,7 +550,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isScaleXEnabled = false //가로 확대 없애기
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 
-//            setVisibleXRangeMaximum(10f)
 //            marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((heartLineData.entryCount).toFloat())
@@ -557,7 +557,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-                labelCount = 2
+                labelCount = 4
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(this, R.color.toss_black_100)  //x그리그 색깔 변경
@@ -602,7 +602,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = true
             isScaleXEnabled = false //가로 확대 없애기
 
-//            setVisibleXRangeMaximum(10f)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
 //            marker = markerView
             notifyDataSetChanged()  //차트 값 변동을 감지함
@@ -611,7 +610,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 textSize = 12f
-                labelCount = 2
+                labelCount = 4
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(this, R.color.toss_black_100)  //x그리그 색깔 변경

@@ -96,7 +96,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:text=""
                 android:textColor="@color/toss_black_700"
-                android:textSize="32dp" />
+                android:textSize="28dp" />
         </LinearLayout>
 
         <TextView
@@ -122,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
