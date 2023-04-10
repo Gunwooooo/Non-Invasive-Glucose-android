@@ -109,7 +109,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     //스와이프 리스너 설정
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun setLayoutSwipeListener() {
-        binding.homethermometerFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
+        binding.homeThermometerFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
             override fun onSwipeLeft() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
                 now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).plus(1))
@@ -265,6 +265,9 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 CompletionResponse.OK -> {
                     when(response!!.code()) {
                         200 -> {
+                            //스와이프 애니메이션 표시
+                            binding.homeThermometerFullChartLottieSwipe.playAnimation()
+
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
                             val list = ArrayList<Entry>()

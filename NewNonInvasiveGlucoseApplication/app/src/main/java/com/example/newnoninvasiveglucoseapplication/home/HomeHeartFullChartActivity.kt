@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -21,10 +22,9 @@ import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeHeartFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomDatePickerDialogManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomMarkerViewManager
+import com.example.newnoninvasiveglucoseapplication.util.*
+import com.github.mikephil.charting.listener.ChartTouchListener
+import com.github.mikephil.charting.listener.OnChartGestureListener
 import org.json.JSONArray
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -37,6 +37,9 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
 
     private lateinit var heartScatterData : ScatterData
+
+    //현재 선택된 날짜 가지고 있기
+    private val now by lazy { GregorianCalendar.getInstance() }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +64,9 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         //날짜에 해당하는 데이터 가져오기
         retrofitGetBodyDataAsDate(now.year, now.monthValue, now.dayOfMonth)
 
+        //스와이프 리스너 설정
+        setLayoutSwipeListener()
+
         binding.homeHeartFullChartImageViewCalendar.setOnClickListener(this)
         binding.homeHeartFullChartBtnBack.setOnClickListener(this)
     }
@@ -77,14 +83,37 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //스와이프 리스너 설정
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
+    private fun setLayoutSwipeListener() {
+        binding.homeHeartFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
+
+            override fun onSwipeLeft() {
+                Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
+                now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).plus(1))
+                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+            }
+
+            override fun onSwipeRight() {
+                Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
+                now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).minus(1))
+                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+            }
+        })
+    }
+
     //초기 오늘 날짜 표시 되도록 설정
     @SuppressLint("SetTextI18n")
     private fun setTodayDate() {
-        val gregorianCalendar = GregorianCalendar()
-        val year = gregorianCalendar.get(Calendar.YEAR)
-        val month = gregorianCalendar.get(Calendar.MONTH)
-        val dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH)
-        binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+        val now = now
+        val year = now.get(Calendar.YEAR)
+        val month = now.get(Calendar.MONTH).plus(1)
+        now.set(Calendar.MONTH, month)
+        val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
+        binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -92,7 +121,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month+1}월 ${dayOfMonth}일"
+            binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
             retrofitGetBodyDataAsDate(year, month+1, dayOfMonth)
         }
         return datePickerDialogListener
@@ -124,6 +153,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //체온 차트 설정
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setHeartScatterChart() {
         val homeHeartFullChartScatterChart = binding.homeHeartFullChartScatterChart
         //마커 뷰 설정
@@ -137,6 +167,37 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
+
+            //스와이프 제스처 이벤트 설정
+            onChartGestureListener = object : OnChartGestureListener {
+                override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+                override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+                override fun onChartLongPressed(me: MotionEvent?) {}
+                override fun onChartDoubleTapped(me: MotionEvent?) {}
+                override fun onChartSingleTapped(me: MotionEvent?) {}
+                //스와이프 이벤트 설정
+                @SuppressLint("SetTextI18n")
+                override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
+                    val x1 = me1!!.x
+                    val x2 = me2!!.x
+                    Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : $velocityX     $velocityY")
+                    //오른쪽으로 스와이프 -> 이전 날짜 호출
+                    if(x1 < x2) {
+                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
+                        now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).minus(1))
+                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+                    } else if(x1 > x2) {
+                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
+                        now.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH).plus(1))
+                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH)}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+                    }
+                }
+                override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
+                override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
+            }
+
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((heartLineData.entryCount).toFloat())
@@ -205,6 +266,9 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 CompletionResponse.OK -> {
                     when(response!!.code()) {
                         200 -> {
+                            //스와이프 애니메이션 표시
+                            binding.homeHeartFullChartLottieSwipe.playAnimation()
+
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
                             val list = ArrayList<Entry>()
