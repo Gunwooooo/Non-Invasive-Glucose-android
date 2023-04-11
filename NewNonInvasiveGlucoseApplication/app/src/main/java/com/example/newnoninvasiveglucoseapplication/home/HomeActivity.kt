@@ -46,6 +46,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private var waitTime = 0L
 
     private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
+
     private val glide by lazy { Glide.with(this) }
 
     var getRealTimeThread: Thread? = null
@@ -128,6 +129,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         binding.homeTextViewGlucoseDetail.setOnClickListener(this)
         binding.homeImageViewSetting.setOnClickListener(this)
         binding.homeLinearLayoutDisconnected.setOnClickListener(this)
+        binding.homeLayoutReconnect.setOnClickListener(this)
 
         //바텀 네비게이션 리스너
         binding.homeBottomNav.setOnItemSelectedListener { item ->
@@ -181,6 +183,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, HomeDeviceActivity::class.java)
                 startActivity(intent)
             }
+            binding.homeLayoutReconnect -> {
+                binding.homeLottieRefresh.repeatCount = 5
+                binding.homeLottieRefresh.playAnimation()
+                Toast.makeText(applicationContext, "장치의 전원을 가까이서 켜주세요.", Toast.LENGTH_SHORT).show()
+                //재 검색 시작
+                stopFlag = false
+                refreshRealTimeData()
+            }
         }
     }
 
@@ -193,9 +203,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun refreshRealTimeData() {
-        getRealTimeThread?.interrupt()
+//        getRealTimeThread?.interrupt()
+        Log.d("로그", "HomeActivity - refreshRealTimeData : 스레드 호출됨~")
         val runnable = Runnable {
             //가트 연결이 해제됐을 경우 자동으로 연결 체크
+
             if(!bluetoothGattConnected) {
                 //연결 시도 횟수 카운트
                 tryConnectCount++
@@ -206,13 +218,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 //                    stopFlag = true
 //                }
 
-//                Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
-                //연결됨 뷰 변경
+                Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
+                //연결안됨 뷰 변경
                 binding.homeLinearLayoutConnected.visibility = View.GONE
                 binding.homeLinearLayoutDisconnected.visibility = View.VISIBLE
 
-                //재연결
+                //연결 시도
                 bluetoothGatt = _bluetoothResultDevice.connectGatt(applicationContext, false, gattCallback)
+
                 return@Runnable
             }
 
@@ -239,11 +252,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             binding.homeTextViewTime.text = now.format(DateTimeFormatter.ofPattern("a hh:mm"))
         }
 
+        //1초에 한번씩 찍기
         getRealTimeThread = Thread {
             while (!stopFlag) {
                 this.runOnUiThread(runnable)
                 try {
-                    Thread.sleep(100)
+                    Thread.sleep(1000)
                 } catch (ie: InterruptedException) {
                     ie.printStackTrace()
                 }
@@ -281,14 +295,31 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     timer.scheduleAtFixedRate(timerTask, 0, REFRESH_TIME)
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
+                    Log.d("로그", "HomeActivity - onConnectionStateChange : 가트 서버 연결 끊김")
+
+                    //스레드 종료
+                    stopFlag = true
+
+//                    getRealTimeThread?.interrupt()
+
+                   //블루투스 해제
                     bluetoothGattConnected = false
-                    Log.d("로그", "CustomBluetoothManager - onConnectionStateChange : 가트 서버에서 연결 해제됨")
                     //가트 연결 해제
                     gatt!!.disconnect()
                     gatt.close()
 
                     //타이머 종료
                     timer.cancel()
+
+                    Log.d("로그", "HomeActivity - onConnectionStateChange : ----------------------")
+
+                    runOnUiThread {
+                        Toast.makeText(applicationContext, "장치 연결에 실패했어요.\n다시 연결하기를 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        //연결안됨 뷰 변경
+                        binding.homeLinearLayoutConnected.visibility = View.GONE
+                        binding.homeLinearLayoutDisconnected.visibility = View.VISIBLE
+                        binding.homeLottieRefresh.cancelAnimation()
+                    }
                 }
             }
         }
@@ -305,7 +336,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                         val descriptor = str.getDescriptor(Constants.CCCD_UUID)
                         descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                         bluetoothGatt!!.writeDescriptor(descriptor)
-                        broadcastUpdate("데이터 기록을 시작할게요.\n기기를 부착하고 잠시만 기다려주세요😀")
+                        broadcastUpdate("데이터 기록을 시작할게요.\n잠시만 기다려주세요😀")
                     }
 
                 }
@@ -411,14 +442,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
+            color = ContextCompat.getColor(applicationContext, R.color.teal_700)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             lineWidth = 2F //선 굵기
             circleRadius = 3F
             circleHoleRadius = 1F
             setDrawCircles(true)   //동그란거 없애기
             setDrawValues(true)
-            setCircleColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
+            setCircleColor(ContextCompat.getColor(applicationContext, R.color.teal_700))
             valueTextSize = 12F
             isHighlightEnabled = true   //클릭시 마크 보이게
             setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
@@ -460,8 +491,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter()
             lineWidth = 2F //선 굵기
-            circleRadius = 2.1F
-            circleHoleRadius = 0.1F
+            circleRadius = 3F
+            circleHoleRadius = 1F
             setDrawCircles(true)   //동그란거 없애기
             setDrawValues(true)
             setCircleColor(ContextCompat.getColor(applicationContext, R.color.text_blue_200))

@@ -235,40 +235,49 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="end"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <FrameLayout
-                            android:layout_gravity="bottom"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/background_toss_black_100_ring_shape">
-                            <LinearLayout
-                                android:layout_gravity="center"
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
-                                android:background="@drawable/background_toss_black_200_ring_shape" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:gravity="bottom"
-                            android:layout_marginStart="4dp"
+                        <LinearLayout
+                            android:id="@+id/home_layout_reconnect"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:gravity="center"
+                            android:background="@drawable/ripple_android_blue_100_radius_20"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="연결하는 중..."
-                            android:textSize="16dp"
-                            android:fontFamily="@font/ps_regular"
-                            android:textColor="@color/toss_black_500"/>
+                            android:orientation="horizontal">
+                            <FrameLayout
+                                android:layout_gravity="center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/background_white_ring_shape">
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:background="@drawable/background_toss_black_200_ring_shape" />
+                            </FrameLayout>
 
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:gravity="bottom"
-                            android:layout_marginStart="4dp"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:id="@+id/home_lottie_refresh"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/lottie_refresh"/>
+                            <TextView
+                                android:gravity="center"
+                                android:layout_marginStart="4dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="연결하기"
+                                android:textSize="16dp"
+                                android:fontFamily="@font/ps_regular"
+                                android:textColor="@color/toss_black_500"/>
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_marginStart="4dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/home_lottie_refresh"
+                                app:lottie_rawRes="@raw/lottie_refresh"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -281,7 +290,7 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
-                            android:layout_gravity="bottom"
+                            android:layout_gravity="center"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/background_iphone_green_100_ring_shape">
@@ -293,7 +302,7 @@
                         </FrameLayout>
 
                         <TextView
-                            android:gravity="bottom"
+                            android:gravity="center"
                             android:layout_marginStart="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"

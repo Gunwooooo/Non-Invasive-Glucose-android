@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
+import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.user.Agreement1Fragment
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
 import com.example.newnoninvasiveglucoseapplication.model.UserData
@@ -14,10 +15,13 @@ import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants
 import com.example.newnoninvasiveglucoseapplication.util.Constants._prefs
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
+import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 
 
 class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(FragmentUserSetAgreementBinding::inflate), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    private val customProgressDialog by lazy { CustomDialogManager(requireContext(), R.layout.common_progress_dialog, null) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -87,7 +91,9 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
 
     //로그인 레트로핏 통싱
     private fun retrofitLoginUser() {
+        customProgressDialog.show(childFragmentManager, "common_progress_dialog")
         RetrofitManager.instance.loginUser(_userData, completion = { completionResponse, response ->
+            customProgressDialog.dismiss()
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response?.code()) {

@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="장치 연결 없이 보호자 기능만 이용할게요"
             android:textColor="@color/toss_black_500"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:fontFamily="@font/ps_regular"/>
     </LinearLayout>
     <LinearLayout
