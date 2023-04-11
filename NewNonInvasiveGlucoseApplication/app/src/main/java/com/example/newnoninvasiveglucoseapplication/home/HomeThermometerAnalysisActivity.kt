@@ -184,8 +184,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 27F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 20F   //최소값
+                axisMaximum = 45F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)

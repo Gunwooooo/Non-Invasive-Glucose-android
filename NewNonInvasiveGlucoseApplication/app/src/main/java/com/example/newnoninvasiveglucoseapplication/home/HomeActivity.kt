@@ -304,7 +304,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                         val descriptor = str.getDescriptor(Constants.CCCD_UUID)
                         descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                         bluetoothGatt!!.writeDescriptor(descriptor)
-                        broadcastUpdate("데이터 기록을 시작합니다. 잠시만 기다려주세요.\n(기기 특성상 최대 1분 정도 소요될 수 있습니다)")
+                        broadcastUpdate("데이터 기록을 시작할게요.\n기기를 부착하고 잠시만 기다려주세요😀")
                     }
 
                 }

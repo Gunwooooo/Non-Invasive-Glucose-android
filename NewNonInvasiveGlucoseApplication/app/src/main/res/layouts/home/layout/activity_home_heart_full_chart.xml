@@ -92,7 +92,7 @@
                 android:id="@+id/homeHeartFullChart_textView_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="28dp"
+                android:textSize="24dp"
                 android:text=""
                 android:textColor="@color/toss_black_700"
                 android:fontFamily="@font/ps_regular"/>

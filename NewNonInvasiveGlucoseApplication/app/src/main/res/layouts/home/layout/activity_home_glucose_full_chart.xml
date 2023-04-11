@@ -96,7 +96,7 @@
                 android:fontFamily="@font/ps_regular"
                 android:text=""
                 android:textColor="@color/toss_black_700"
-                android:textSize="28dp" />
+                android:textSize="24dp" />
         </LinearLayout>
 
         <TextView

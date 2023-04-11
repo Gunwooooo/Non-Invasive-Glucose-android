@@ -183,7 +183,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 50F   //최소값
+                axisMinimum = 10F   //최소값
                 axisMaximum = 140F   //최대값
                 isEnabled = true
                 animateX(1000)

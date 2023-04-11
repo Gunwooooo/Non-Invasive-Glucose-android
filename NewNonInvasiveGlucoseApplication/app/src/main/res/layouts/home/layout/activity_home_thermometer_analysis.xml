@@ -156,7 +156,7 @@
                             <LinearLayout
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.6"
+                                android:layout_weight="0.65"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -190,7 +190,7 @@
                                             android:fontFamily="@font/ps_regular"
                                             android:text="-"
                                             android:textColor="@color/teal_700"
-                                            android:textSize="27dp" />
+                                            android:textSize="25dp" />
                                         <TextView
                                             android:gravity="center"
                                             android:visibility="gone"
@@ -200,7 +200,7 @@
                                             android:fontFamily="@font/ps_regular"
                                             android:text="℃"
                                             android:textColor="@color/teal_700"
-                                            android:textSize="16dp" />
+                                            android:textSize="13dp" />
                                     </LinearLayout>
                                 </FrameLayout>
                             </LinearLayout>
@@ -208,7 +208,7 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_width="0dip"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4"
+                                android:layout_weight="0.35"
                                 android:orientation="vertical">
 
                                 <LinearLayout
@@ -237,7 +237,7 @@
                                             android:fontFamily="@font/ps_regular"
                                             android:text="-"
                                             android:textColor="@color/text_red_200"
-                                            android:textSize="27dp" />
+                                            android:textSize="25dp" />
                                         <TextView
                                             android:visibility="gone"
                                             android:id="@+id/homeThermometerAnalysis_textView_maxUnit"
@@ -246,7 +246,7 @@
                                             android:fontFamily="@font/ps_regular"
                                             android:text="℃"
                                             android:textColor="@color/text_red_200"
-                                            android:textSize="16dp" />
+                                            android:textSize="13dp" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -277,7 +277,7 @@
                                             android:fontFamily="@font/ps_regular"
                                             android:text="-"
                                             android:textColor="@color/text_blue_200"
-                                            android:textSize="27dp" />
+                                            android:textSize="25dp" />
                                         <TextView
                                             android:visibility="gone"
                                             android:id="@+id/homeThermometerAnalysis_textView_minUnit"
@@ -286,7 +286,7 @@
                                             android:fontFamily="@font/ps_regular"
                                             android:text="℃"
                                             android:textColor="@color/text_blue_200"
-                                            android:textSize="16dp" />
+                                            android:textSize="13dp" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>

@@ -11,6 +11,8 @@ import com.example.newnoninvasiveglucoseapplication.model.UserData
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
+import com.example.newnoninvasiveglucoseapplication.util.Constants
+import com.example.newnoninvasiveglucoseapplication.util.Constants._prefs
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 
@@ -94,6 +96,11 @@ class UserSetAgreementFragment : BaseFragment<FragmentUserSetAgreementBinding>(F
                             //토큰 값 저장
                             LoginedUserClient.authorization = response.headers()["Authorization"]
                             LoginedUserClient.refreshToken = response.headers()["refresh_token"]
+
+                            //자동 로그인 설정
+                            _prefs.setBoolean("AUTO_LOGIN", true)
+                            _prefs.setString("USER_PHONENUMBER", _userData.phoneNumber)
+                            _prefs.setString("USER_PASSWORD", _userData.password)
 
                             //전역 유저 데이터 초기화
                             _userData = UserData("", "", "", "", "T")

@@ -88,14 +88,15 @@
                 android:text=""
                 android:textColor="@color/toss_black_700"
                 android:fontFamily="@font/ps_bold"/>
+
             <TextView
                 android:id="@+id/homeThermometerFullChart_textView_unit"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="28dp"
+                android:fontFamily="@font/ps_regular"
                 android:text=""
                 android:textColor="@color/toss_black_700"
-                android:fontFamily="@font/ps_regular"/>
+                android:textSize="24dp" />
         </LinearLayout>
 
 
