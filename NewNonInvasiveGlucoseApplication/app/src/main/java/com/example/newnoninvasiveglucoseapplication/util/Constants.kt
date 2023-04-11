@@ -43,7 +43,7 @@ object Constants {
     const val DEVICE_NAME = "HANAIT_BPM&TEMP"
 
     //스캔 시간
-    const val SCAN_PERIOD: Long = 100000
+    const val SCAN_PERIOD: Long = 60000
 
     //블루투스 통신 주기 전역 변수
     var _checkBluetoothTimer = false

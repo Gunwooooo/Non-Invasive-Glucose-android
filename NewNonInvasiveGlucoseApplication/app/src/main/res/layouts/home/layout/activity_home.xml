@@ -507,7 +507,7 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
-                                android:background="@drawable/background_toss_black_200_ring_shape">
+                                android:background="@drawable/background_teal_700_ring_shape">
 
                                 <ImageView
                                     android:layout_width="match_parent"

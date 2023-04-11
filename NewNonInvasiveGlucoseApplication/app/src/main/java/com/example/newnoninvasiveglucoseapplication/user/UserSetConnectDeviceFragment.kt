@@ -69,7 +69,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         //텍스트에 밑줄 넣기
         binding.userSetConnectDeviceTextViewSkipConnect.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-        binding.userConnectDeviceLottie.setOnClickListener(this)
+        binding.userSetConnectDeviceLottie.setOnClickListener(this)
 
         //키보드 넣기
         if (activity != null && requireActivity().currentFocus != null) {
@@ -91,9 +91,12 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
 
     override fun onClick(v: View?) {
         when(v){
-            binding.userConnectDeviceLottie -> {
+            binding.userSetConnectDeviceLottie -> {
                 //블루투스 스캔 시작
                 scanLeDevice(true)
+            }
+            binding.userSetConnectDeviceLayoutSkipConnect -> {
+
             }
         }
     }
@@ -188,6 +191,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         val bluetoothLeScanner = bluetoothAdapter!!.bluetoothLeScanner
         when(enable) {
             true -> {
+                //1분동안 스캔하기
                 Handler(Looper.getMainLooper()).postDelayed({
                     customProgressDialog.dismiss()
 

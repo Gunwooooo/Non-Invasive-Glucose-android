@@ -129,7 +129,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.toss_black_500)
+            color = ContextCompat.getColor(applicationContext, R.color.teal_700)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             setScatterShape(ScatterChart.ScatterShape.CIRCLE)
 //            lineWidth = 2F //선 굵기
@@ -197,18 +197,20 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 axisMinimum = 0f
-                axisMaximum = 86400f
+                axisMaximum = 85399f
 //                spaceMin = 10800f
 //                spaceMax = 10800f
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
-//                labelCount = 5
-//                granularity = f  //X축 간격
+//                labelCount = 12
+                granularity = 10800f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
 //                animateXY(1000, 1000)
+//                setDrawLabels(true)
+//                setDrawAxisLine(false)
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기

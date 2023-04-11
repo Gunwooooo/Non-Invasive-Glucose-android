@@ -35,7 +35,7 @@ class CustomChartManager(val context: Context) {
     class CustomTimeXAxisFormatter : ValueFormatter() {
         @RequiresApi(Build.VERSION_CODES.O)
         override fun getFormattedValue(value: Float): String {
-            val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
+            val timeFormat = DateTimeFormatter.ofPattern("H:mm")
             return LocalTime.ofSecondOfDay(value.toLong()).format(timeFormat)
         }
     }

@@ -202,12 +202,12 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
             xAxis.run { //아래 라벨 X축
                 setDrawAxisLine(true)
                 axisMinimum = 0f
-                axisMaximum = 86400f
+                axisMaximum = 85399f
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                labelCount = 6
-//                granularity = 3f  //X축 간격
+                granularity = 10800f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경

@@ -18,7 +18,7 @@
         android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/ps_bold"
         android:text="장치를 연결할게요!\n장치의 전원을 켜고, 가운데 전원 버튼을 눌러주세요."
         android:textColor="@color/toss_black_700"
@@ -29,7 +29,7 @@
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/userConnectDevice_lottie"
+        android:id="@+id/userSetConnectDevice_lottie"
         app:lottie_rawRes="@raw/lottie_connect"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
@@ -46,7 +46,7 @@
 <!--        android:stateListAnimator="@null"-->
 <!--        android:background="@drawable/btn_border_blue"/>-->
     <LinearLayout
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:id="@+id/userSetConnectDevice_layout_skipConnect"
         android:clickable="true"
         android:focusable="true"
@@ -57,7 +57,7 @@
             android:id="@+id/userSetConnectDevice_textView_skipConnect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="기기 연결 없이 보호자 기능만 이용할게요."
+            android:text="장치 연결 없이 보호자 기능만 이용할게요"
             android:textColor="@color/toss_black_500"
             android:textSize="18dp"
             android:fontFamily="@font/ps_regular"/>
