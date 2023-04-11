@@ -1,5 +1,6 @@
 package com.example.newnoninvasiveglucoseapplication.user
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -35,6 +36,7 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
         init()
     }
 
+    @SuppressLint("CheckResult")
     private fun init() {
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity

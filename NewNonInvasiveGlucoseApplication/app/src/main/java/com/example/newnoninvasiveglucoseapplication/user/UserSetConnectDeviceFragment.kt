@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetConnectDeviceBinding
+import com.example.newnoninvasiveglucoseapplication.home.HomeActivity
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants.DEVICE_NAME
 import com.example.newnoninvasiveglucoseapplication.util.Constants.SCAN_PERIOD
@@ -155,9 +156,10 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 //스캔 종료
                 scanLeDevice(false)
 
-                //프래그먼트 이동
+                //홈액티비티 실행
+                startActivity(Intent(context, HomeActivity::class.java))
                 val mActivity = activity as UserActivity
-                mActivity.changeFragmentTransaction(ConnectionLoadingFragment())
+                mActivity.finish()
             }
         }
         override fun onBatchScanResults(results: List<ScanResult>?) {

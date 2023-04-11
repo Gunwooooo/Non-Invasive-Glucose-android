@@ -79,6 +79,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         fragmentTransaction.replace(R.id.user_frameId, prevFragment).commitAllowingStateLoss()
     }
 
+    @Deprecated("Deprecated in Java")
     @Override
     override fun onBackPressed() {
         if(System.currentTimeMillis() - waitTime >=1500 ) {
