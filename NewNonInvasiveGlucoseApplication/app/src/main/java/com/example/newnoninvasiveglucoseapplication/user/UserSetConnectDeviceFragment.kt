@@ -9,6 +9,7 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -65,7 +66,10 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         mActivity.setProgressDialogValueAndVisible(99, View.GONE)
         mActivity.setPrevFragment(UserSetAgreementFragment())
 
-        binding.homeConnectDeviceLottie.setOnClickListener(this)
+        //텍스트에 밑줄 넣기
+        binding.userSetConnectDeviceTextViewSkipConnect.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+
+        binding.userConnectDeviceLottie.setOnClickListener(this)
 
         //키보드 넣기
         if (activity != null && requireActivity().currentFocus != null) {
@@ -87,7 +91,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
 
     override fun onClick(v: View?) {
         when(v){
-            binding.homeConnectDeviceLottie -> {
+            binding.userConnectDeviceLottie -> {
                 //블루투스 스캔 시작
                 scanLeDevice(true)
             }
