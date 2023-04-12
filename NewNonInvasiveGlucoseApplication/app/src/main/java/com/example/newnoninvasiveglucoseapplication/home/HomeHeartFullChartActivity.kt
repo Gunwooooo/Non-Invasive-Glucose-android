@@ -287,8 +287,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
                             //리스트 가져와서 차트 새로 그리기
                             heartScatterData = ScatterData(makeHeartSet(list))
-                            binding.homeHeartFullChartScatterChart.data = heartScatterData
-                            binding.homeHeartFullChartScatterChart.invalidate()
+
                             //데이터가 없으면 종료
                             if(list.size == 0) {
                                 binding.homeHeartFullChartScatterChart.visibility = View.GONE
@@ -300,12 +299,18 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             }
                             //평균값 표시
                             average /= list.size
+                            
+                            //데이터가 있을 경우
                             binding.homeHeartFullChartTextViewUnit.visibility = View.VISIBLE
                             binding.homeHeartFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeHeartFullChartScatterChart.visibility = View.VISIBLE
                             binding.homeHeartFullChartLottie.visibility = View.GONE
                             binding.homeHeartFullChartTextViewUnit.text = "bpm"
+
+                            binding.homeHeartFullChartScatterChart.data = heartScatterData
+                            binding.homeHeartFullChartScatterChart.invalidate()
+                            binding.homeHeartFullChartScatterChart.animateX(1000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

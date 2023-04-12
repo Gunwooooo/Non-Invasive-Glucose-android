@@ -345,6 +345,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         val end = now.format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         when(flag) {
+            //평균
             0 -> {
                 binding.homeThermometerAnalysisTextViewMinValue.text = "-"
                 binding.homeThermometerAnalysisTextViewMaxValue.text = "-"
@@ -354,7 +355,9 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                 binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.GONE
                 binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
             }
+            //정상 빈도수
             1 -> binding.homeThermometerAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
+            //비정상 빈도수
             2 -> binding.homeThermometerAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
         }
@@ -432,9 +435,10 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                             val combinedData = CombinedData()
                             combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
-
+                            binding.homeThermometerAnalysisAverageChart.clear()
                             binding.homeThermometerAnalysisAverageChart.data = combinedData
                             binding.homeThermometerAnalysisAverageChart.invalidate()
+                            binding.homeThermometerAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
@@ -471,7 +475,10 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                             val barDataSet = BarData(setThermometerNormalData(listBarData))
                             binding.homeThermometerAnalysisNormalChart.data = barDataSet
                             binding.homeThermometerAnalysisNormalChart.invalidate()
+                            binding.homeThermometerAnalysisNormalChart.animateY( 1000)
 
+
+                            //총 개수 카운트
                             binding.homeThermometerAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
                     }
@@ -505,6 +512,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                             val barDataSet = BarData(setThermometerAbnormalData(listBarData))
                             binding.homeThermometerAnalysisAbnormalChart.data = barDataSet
                             binding.homeThermometerAnalysisAbnormalChart.invalidate()
+                            binding.homeThermometerAnalysisAbnormalChart.animateY( 1000)
 
                             binding.homeThermometerAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }

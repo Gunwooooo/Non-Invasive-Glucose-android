@@ -428,6 +428,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
                             binding.homeHeartAnalysisAverageChart.data = combinedData
                             binding.homeHeartAnalysisAverageChart.invalidate()
+                            binding.homeHeartAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
@@ -464,6 +465,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             val barDataSet = BarData(setHeartNormalData(listBarData))
                             binding.homeHeartAnalysisNormalChart.data = barDataSet
                             binding.homeHeartAnalysisNormalChart.invalidate()
+                            binding.homeHeartAnalysisNormalChart.animateY( 1000)
 
                             binding.homeHeartAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
@@ -498,6 +500,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             val barDataSet = BarData(setHeartAbnormalData(listBarData))
                             binding.homeHeartAnalysisAbnormalChart.data = barDataSet
                             binding.homeHeartAnalysisAbnormalChart.invalidate()
+                            binding.homeHeartAnalysisAbnormalChart.animateY(1000)
 
                             binding.homeHeartAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }

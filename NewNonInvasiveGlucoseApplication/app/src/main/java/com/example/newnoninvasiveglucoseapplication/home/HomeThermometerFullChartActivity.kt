@@ -214,7 +214,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 10F   //최소값
+                axisMinimum = 20F   //최소값
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(500)
@@ -226,7 +226,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기
-                axisMinimum = 10F   //최소값
+                axisMinimum = 20F   //최소값
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(500)
@@ -287,8 +287,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
                             //리스트 가져와서 차트 새로 그리기
                             val thermometerScatterData = ScatterData(makeThermometerSet(list))
-                            binding.homeThermometerFullChartScatterChart.data = thermometerScatterData
-                            binding.homeThermometerFullChartScatterChart.invalidate()
+    
                             //데이터가 없으면 종료
                             if(list.size == 0) {
                                 binding.homeThermometerFullChartScatterChart.visibility = View.GONE
@@ -300,12 +299,18 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                             }
                             //평균값 표시
                             average /= list.size
+
+                            //데이터가 있을 경우
                             binding.homeThermometerFullChartTextViewUnit.visibility = View.VISIBLE
                             binding.homeThermometerFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeThermometerFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeThermometerFullChartScatterChart.visibility = View.VISIBLE
                             binding.homeThermometerFullChartLottie.visibility = View.GONE
                             binding.homeThermometerFullChartTextViewUnit.text = "℃"
+
+                            binding.homeThermometerFullChartScatterChart.data = thermometerScatterData
+                            binding.homeThermometerFullChartScatterChart.invalidate()
+                            binding.homeThermometerFullChartScatterChart.animateX(1000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

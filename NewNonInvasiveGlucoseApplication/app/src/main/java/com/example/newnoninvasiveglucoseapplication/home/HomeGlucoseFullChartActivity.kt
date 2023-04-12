@@ -286,8 +286,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
                             //리스트 가져와서 차트 새로 그리기
                             glucoseScatterData = ScatterData(makeGlucoseSet(list))
-                            binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
-                            binding.homeGlucoseFullChartScatterChart.invalidate()
+
                             //데이터가 없으면 종료
                             if(list.size == 0) {
                                 binding.homeGlucoseFullChartScatterChart.visibility = View.GONE
@@ -297,14 +296,21 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                                 binding.homeGlucoseFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
+
                             //평균값 표시
                             average /= list.size
+                            
+                            //데이터가 있을 경우
                             binding.homeGlucoseFullChartTextViewUnit.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeGlucoseFullChartScatterChart.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartLottie.visibility = View.GONE
                             binding.homeGlucoseFullChartTextViewUnit.text = "mg/dL"
+
+                            binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
+                            binding.homeGlucoseFullChartScatterChart.invalidate()
+                            binding.homeGlucoseFullChartScatterChart.animateX(1000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

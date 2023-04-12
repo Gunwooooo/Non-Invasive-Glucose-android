@@ -436,6 +436,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
                             binding.homeGlucoseAnalysisAverageChart.data = combinedData
                             binding.homeGlucoseAnalysisAverageChart.invalidate()
+                            binding.homeGlucoseAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
@@ -472,6 +473,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             val barDataSet = BarData(setGlucoseNormalData(listBarData))
                             binding.homeGlucoseAnalysisNormalChart.data = barDataSet
                             binding.homeGlucoseAnalysisNormalChart.invalidate()
+                            binding.homeGlucoseAnalysisNormalChart.animateY( 1000)
 
                             binding.homeGlucoseAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
@@ -506,6 +508,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             val barDataSet = BarData(setGlucoseAbnormalData(listBarData))
                             binding.homeGlucoseAnalysisAbnormalChart.data = barDataSet
                             binding.homeGlucoseAnalysisAbnormalChart.invalidate()
+                            binding.homeGlucoseAnalysisAbnormalChart.animateY( 1000)
 
                             binding.homeGlucoseAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }
