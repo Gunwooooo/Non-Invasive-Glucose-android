@@ -164,7 +164,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
-
+            animateX(1000)
             //스와이프 제스처 이벤트 설정
             onChartGestureListener = object : OnChartGestureListener {
                 override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
@@ -218,8 +218,6 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 axisMinimum = 10F   //최소값
                 axisMaximum = 140F   //최대값
                 isEnabled = true
-                animateX(500)
-                animateY(1000)
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
@@ -230,8 +228,6 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 axisMinimum = 10F   //최소값
                 axisMaximum = 140F   //최대값
                 isEnabled = true
-                animateX(500)
-                animateY(1000)
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =

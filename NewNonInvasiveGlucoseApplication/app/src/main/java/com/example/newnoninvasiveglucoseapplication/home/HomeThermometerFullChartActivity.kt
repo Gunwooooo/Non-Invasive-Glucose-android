@@ -191,7 +191,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
                 override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
             }
-
+            animateX(1000)
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((thermometerLineData.entryCount).toFloat())
 //            moveViewToX(3f);
@@ -217,8 +217,6 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 axisMinimum = 20F   //최소값
                 axisMaximum = 40F   //최대값
                 isEnabled = true
-                animateX(500)
-                animateY(1000)
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
@@ -229,8 +227,6 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 axisMinimum = 20F   //최소값
                 axisMaximum = 40F   //최대값
                 isEnabled = true
-                animateX(500)
-                animateY(1000)
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
