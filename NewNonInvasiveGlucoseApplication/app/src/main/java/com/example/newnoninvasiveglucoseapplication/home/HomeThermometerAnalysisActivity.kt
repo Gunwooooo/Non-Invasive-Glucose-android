@@ -435,6 +435,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                             val combinedData = CombinedData()
                             combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
+
+                            //차트 다시 그리기
                             binding.homeThermometerAnalysisAverageChart.clear()
                             binding.homeThermometerAnalysisAverageChart.data = combinedData
                             binding.homeThermometerAnalysisAverageChart.invalidate()

@@ -434,6 +434,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
+                            //차트 다시 그리기
+                            binding.homeGlucoseAnalysisAverageChart.clear()
                             binding.homeGlucoseAnalysisAverageChart.data = combinedData
                             binding.homeGlucoseAnalysisAverageChart.invalidate()
                             binding.homeGlucoseAnalysisAverageChart.animateXY(1000, 1000)

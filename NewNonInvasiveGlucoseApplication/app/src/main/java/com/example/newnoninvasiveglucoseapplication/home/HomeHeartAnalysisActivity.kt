@@ -426,6 +426,8 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
+                            //차트 다시 그리기
+                            binding.homeHeartAnalysisAverageChart.clear()
                             binding.homeHeartAnalysisAverageChart.data = combinedData
                             binding.homeHeartAnalysisAverageChart.invalidate()
                             binding.homeHeartAnalysisAverageChart.animateXY(1000, 1000)
