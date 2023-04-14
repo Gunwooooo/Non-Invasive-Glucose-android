@@ -198,7 +198,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
-                                            android:text="bpm"
+                                            android:text="BPM"
                                             android:textColor="@color/teal_700"
                                             android:textSize="13dp" />
                                     </LinearLayout>
@@ -244,7 +244,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
-                                            android:text="bpm"
+                                            android:text="BPM"
                                             android:textColor="@color/text_red_200"
                                             android:textSize="16dp" />
                                     </LinearLayout>
@@ -284,7 +284,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
-                                            android:text="bpm"
+                                            android:text="BPM"
                                             android:textColor="@color/text_blue_200"
                                             android:textSize="16dp" />
                                     </LinearLayout>

@@ -157,7 +157,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = false
-            isScaleXEnabled = false //가로 확대 없애기
+//            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
@@ -306,11 +306,10 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
                             binding.homeThermometerFullChartScatterChart.data = thermometerScatterData
                             binding.homeThermometerFullChartScatterChart.invalidate()
-                            binding.homeThermometerFullChartScatterChart.animateX(1000)
+                            binding.homeThermometerFullChartScatterChart.animateX(2000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }
-
                 }
                 CompletionResponse.FAIL -> {
                     Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : 통신 실패")

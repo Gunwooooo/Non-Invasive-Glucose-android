@@ -176,7 +176,7 @@
                                     android:gravity="center_vertical"
                                     android:text="전화번호"
                                     android:textColor="@color/toss_black_150"
-                                    android:textSize="21dp" />
+                                    android:textSize="18dp" />
                             </LinearLayout>
                             <LinearLayout
                                 android:gravity="end"
@@ -191,7 +191,7 @@
                                     android:text="000-0000-0000"
                                     android:textColor="@color/toss_black_150"
                                     android:fontFamily="@font/ps_regular"
-                                    android:textSize="21dp"/>
+                                    android:textSize="18dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -222,7 +222,7 @@
                                     android:text="성별"
                                     android:textColor="@color/toss_black_500"
                                     android:fontFamily="@font/ps_regular"
-                                    android:textSize="21dp"/>
+                                    android:textSize="18dp"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:gravity="end"
@@ -237,7 +237,7 @@
                                     android:text="    "
                                     android:textColor="@color/toss_black_500"
                                     android:fontFamily="@font/ps_regular"
-                                    android:textSize="21dp"/>
+                                    android:textSize="18dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -268,7 +268,7 @@
                                     android:text="생년월일"
                                     android:textColor="@color/toss_black_500"
                                     android:fontFamily="@font/ps_regular"
-                                    android:textSize="21dp"/>
+                                    android:textSize="18dp"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:gravity="end"
@@ -283,7 +283,7 @@
                                     android:text="YYYY-MM-dd"
                                     android:textColor="@color/toss_black_500"
                                     android:fontFamily="@font/ps_regular"
-                                    android:textSize="21dp"/>
+                                    android:textSize="18dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -316,7 +316,7 @@
                             android:gravity="center_vertical"
                             android:text="비밀번호 변경"
                             android:textColor="@color/toss_black_500"
-                            android:textSize="21dp" />
+                            android:textSize="18dp" />
                         <View
                             android:layout_width="wrap_content"
                             android:layout_height="0.1dp"
@@ -335,7 +335,7 @@
                             android:gravity="center_vertical"
                             android:text="로그아웃"
                             android:textColor="@color/toss_black_500"
-                            android:textSize="21dp" />
+                            android:textSize="18dp" />
                         <View
                             android:layout_width="wrap_content"
                             android:layout_height="0.1dp"
@@ -354,7 +354,7 @@
                             android:gravity="center_vertical"
                             android:text="회원 탈퇴"
                             android:textColor="@color/iphone_red_200"
-                            android:textSize="21dp" />
+                            android:textSize="18dp" />
 
                     </LinearLayout>
                 </LinearLayout>

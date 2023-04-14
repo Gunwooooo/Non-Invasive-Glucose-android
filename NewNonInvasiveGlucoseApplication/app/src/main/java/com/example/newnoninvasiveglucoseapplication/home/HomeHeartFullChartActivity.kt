@@ -160,7 +160,7 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = false
-            isScaleXEnabled = false //가로 확대 없애기
+//            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
@@ -302,11 +302,11 @@ class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeHeartFullChartScatterChart.visibility = View.VISIBLE
                             binding.homeHeartFullChartLottie.visibility = View.GONE
-                            binding.homeHeartFullChartTextViewUnit.text = "bpm"
+                            binding.homeHeartFullChartTextViewUnit.text = "BPM"
 
                             binding.homeHeartFullChartScatterChart.data = heartScatterData
                             binding.homeHeartFullChartScatterChart.invalidate()
-                            binding.homeHeartFullChartScatterChart.animateX(1000)
+                            binding.homeHeartFullChartScatterChart.animateX(2000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

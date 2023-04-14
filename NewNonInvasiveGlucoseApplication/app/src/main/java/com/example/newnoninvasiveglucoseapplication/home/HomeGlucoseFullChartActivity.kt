@@ -162,7 +162,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isDragEnabled = false
-            isScaleXEnabled = false //가로 확대 없애기
+//            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
@@ -306,7 +306,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
                             binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
                             binding.homeGlucoseFullChartScatterChart.invalidate()
-                            binding.homeGlucoseFullChartScatterChart.animateX(1000)
+                            binding.homeGlucoseFullChartScatterChart.animateX(2000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }
