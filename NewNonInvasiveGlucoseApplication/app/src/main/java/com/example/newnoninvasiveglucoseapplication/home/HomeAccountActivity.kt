@@ -78,7 +78,6 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
         binding.homeAccountBtnBack.setOnClickListener(this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onClick(v: View?) {
         when (v) {
             binding.homeAccountLayoutModifyProfile -> {

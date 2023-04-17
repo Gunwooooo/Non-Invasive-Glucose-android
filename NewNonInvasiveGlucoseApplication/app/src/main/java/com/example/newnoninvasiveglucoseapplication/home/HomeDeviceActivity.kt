@@ -2,6 +2,7 @@ package com.example.newnoninvasiveglucoseapplication.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
