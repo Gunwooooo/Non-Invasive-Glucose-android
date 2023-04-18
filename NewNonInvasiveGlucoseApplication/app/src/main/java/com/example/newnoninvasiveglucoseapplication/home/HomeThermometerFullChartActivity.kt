@@ -252,7 +252,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
-        RetrofitManager.instance.getBodyDataAsDate(year, month + 1, day, completion = {
+        RetrofitManager.instance.getBodyDataAsDate(LoginedUserClient.phoneNumber!!, year, month + 1, day, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {

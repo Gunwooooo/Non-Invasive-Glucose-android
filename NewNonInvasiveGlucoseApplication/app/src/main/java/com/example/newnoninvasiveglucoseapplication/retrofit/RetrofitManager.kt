@@ -270,8 +270,8 @@ class RetrofitManager {
     }
 
     //날짜로 건강 데이터 조회
-    fun getBodyDataAsDate(year: Int, month: Int, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getBodyDataAsDate(year, month, day) ?: return
+    fun getBodyDataAsDate(phoneNumber: String, year: Int, month: Int, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getBodyDataAsDate(phoneNumber, year, month, day) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

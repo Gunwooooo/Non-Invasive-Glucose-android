@@ -7,5 +7,5 @@
             <corners android:radius="20dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/shape_white_radius_10" />
+    <item android:drawable="@drawable/shape_white_radius_20" />
 </ripple>

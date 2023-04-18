@@ -1,7 +1,7 @@
 package com.example.newnoninvasiveglucoseapplication.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -136,14 +136,23 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //보호 대상자 정보 다이어로그 호출
+
     private fun showInfoProtectingDialog(protectorData: ProtectorData) {
         //userData로 변환
         val userData = UserData(protectorData.nickname, protectorData.phoneNumber, "", protectorData.birthDay, protectorData.sex)
         val customDialog = CustomDialogManager(applicationContext, R.layout.home_protecting_info_dialog, userData)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener{
             override fun onPositiveClicked() {
-                Log.d("로그", "HomeProtectorFragment - onPositiveClicked : 사용자 건강정보 조회 버튼 클릭")
                 customDialog.dismiss()
+                
+                //보호 대상자 메뉴로 이동 (보호 대상자 정보 함께 보내기)
+                val intent = Intent(applicationContext, HomeProtectingMenuActivity::class.java)
+                intent.putExtra("protectingDataId", protectorData.id)
+                intent.putExtra("protectingDataNickname", protectorData.nickname)
+                intent.putExtra("protectingDataPhoneNumber", protectorData.phoneNumber)
+                intent.putExtra("protectingDataBirthDay", protectorData.birthDay)
+                intent.putExtra("protectingDataSex", protectorData.sex)
+                startActivity(intent)
             }
             override fun onNegativeClicked() {
                 customDialog.dismiss()

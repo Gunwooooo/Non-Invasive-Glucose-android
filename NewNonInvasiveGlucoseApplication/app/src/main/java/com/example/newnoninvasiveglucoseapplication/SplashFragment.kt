@@ -29,7 +29,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("로그", "SplashFragment - onViewCreated : 재바래받래받랩닯대랍대ㅏㄼ대랍대ㅏㄼㄷㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ")
         init()
 //        binding.editText.textChanges().subscribe {
 //            Log.d("로그", "SplashFragment - onViewCreated : text : $it")

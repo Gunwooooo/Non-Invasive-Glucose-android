@@ -1,5 +1,7 @@
 package com.example.newnoninvasiveglucoseapplication.model
 
+import java.io.Serializable
+
 data class ProtectorData(var id: Int, var nickname: String, var phoneNumber: String, var birthDay: String, var sex: String)
 
 //남자 true, 여자 false

@@ -22,10 +22,7 @@ import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeGlucoseFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomDatePickerDialogManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
-import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
-import com.example.newnoninvasiveglucoseapplication.util.OnSwipeTouchListener
+import com.example.newnoninvasiveglucoseapplication.util.*
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import org.json.JSONArray
@@ -252,7 +249,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         Log.d("로그", "HomeGlucoseFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
-        RetrofitManager.instance.getBodyDataAsDate(year, month + 1, day, completion = {
+        RetrofitManager.instance.getBodyDataAsDate(LoginedUserClient.phoneNumber!!, year, month + 1, day, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {
