@@ -1,4 +1,4 @@
-package com.example.newnoninvasiveglucoseapplication.home
+package com.example.newnoninvasiveglucoseapplication.care
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -32,7 +32,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
+class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeGlucoseAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
 

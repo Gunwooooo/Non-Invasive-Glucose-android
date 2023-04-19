@@ -15,6 +15,7 @@ import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
+import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
@@ -393,7 +394,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //평균, 최대, 최소 일수별 심박수 가져오기
     private fun retrofitGetAnalysisHeartAverage(day : Int) {
-        RetrofitManager.instance.getAnalysisHeartAverage(day, completion = {
+        RetrofitManager.instance.getAnalysisHeartAverage(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -446,7 +447,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //정상 범위 심박수 빈도수 가져오기
     private fun retrofitGetAnalysisHeartNormal(day : Int) {
-        RetrofitManager.instance.getAnalysisHeartNormal(day, completion = {
+        RetrofitManager.instance.getAnalysisHeartNormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -482,7 +483,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //정상 범위 심박수 빈도수 가져오기
     private fun retrofitGetAnalysisHeartAbnormal(day : Int) {
-        RetrofitManager.instance.getAnalysisHeartAbnormal(day, completion = {
+        RetrofitManager.instance.getAnalysisHeartAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {

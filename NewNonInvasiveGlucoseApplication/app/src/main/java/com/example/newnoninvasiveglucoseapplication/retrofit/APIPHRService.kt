@@ -127,6 +127,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/thermometer/avg")
     fun getAnalysisThermometerAverage(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -134,6 +135,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/thermometer/count")
     fun getAnalysisThermometerNormal(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -141,6 +143,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/thermometer/countOther")
     fun getAnalysisThermometerAbnormal(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -148,6 +151,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/heart/avg")
     fun getAnalysisHeartAverage(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -155,6 +159,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/heart/count")
     fun getAnalysisHeartNormal(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
     
@@ -162,6 +167,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/heart/countOther")
     fun getAnalysisHeartAbnormal(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -169,6 +175,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/glucose/avg")
     fun getAnalysisGlucoseAverage(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -176,6 +183,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/glucose/count")
     fun getAnalysisGlucoseNormal(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 
@@ -183,6 +191,7 @@ interface APIPHRService {
     @FormUrlEncoded
     @POST("/wellink/bodydata/glucose/countOther")
     fun getAnalysisGlucoseAbnormal(
+        @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
 }

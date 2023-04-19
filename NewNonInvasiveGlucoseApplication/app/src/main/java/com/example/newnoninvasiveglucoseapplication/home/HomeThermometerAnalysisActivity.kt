@@ -16,6 +16,7 @@ import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
+import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
@@ -405,7 +406,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //평균, 최대, 최소 일수별 체온 가져오기
     private fun retrofitGetAnalysisThermometerAverage(day : Int) {
-        RetrofitManager.instance.getAnalysisThermometerAverage(day, completion = {
+        RetrofitManager.instance.getAnalysisThermometerAverage(LoginedUserClient.phoneNumber!!, day, completion = {
             completionResponse, response -> 
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -456,7 +457,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     //정상 범위 체온 빈도수 가져오기
     private fun retrofitGetAnalysisThermometerNormal(day : Int) {
-        RetrofitManager.instance.getAnalysisThermometerNormal(day, completion = {
+        RetrofitManager.instance.getAnalysisThermometerNormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -494,7 +495,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     //정상 범위 체온 빈도수 가져오기
     private fun retrofitGetAnalysisThermometerAbnormal(day : Int) {
-        RetrofitManager.instance.getAnalysisThermometerAbnormal(day, completion = {
+        RetrofitManager.instance.getAnalysisThermometerAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {

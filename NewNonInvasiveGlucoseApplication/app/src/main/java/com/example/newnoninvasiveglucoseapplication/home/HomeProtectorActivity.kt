@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
+import com.example.newnoninvasiveglucoseapplication.care.HomeProtectingMenuActivity
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeProtectorBinding
 import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
 import com.example.newnoninvasiveglucoseapplication.model.UserData

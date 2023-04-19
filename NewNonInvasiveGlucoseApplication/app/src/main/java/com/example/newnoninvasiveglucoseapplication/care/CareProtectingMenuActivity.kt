@@ -1,4 +1,4 @@
-package com.example.newnoninvasiveglucoseapplication.home
+package com.example.newnoninvasiveglucoseapplication.care
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,12 +7,13 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeProtectingMenuBinding
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareProtectingMenuBinding
+
 import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
 import java.util.*
 
-class HomeProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeProtectingMenuBinding.inflate(layoutInflater) }
+class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
+    private val binding by lazy { ActivityCareProtectingMenuBinding.inflate(layoutInflater) }
     private lateinit var protectingData: ProtectorData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +27,7 @@ class HomeProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
 
         //스테이터스바 색상 변경
         window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
-        window.decorView.systemUiVisibility
+
         //글라이드로 이미지 불러오기
         setImageViewWithGlide()
 

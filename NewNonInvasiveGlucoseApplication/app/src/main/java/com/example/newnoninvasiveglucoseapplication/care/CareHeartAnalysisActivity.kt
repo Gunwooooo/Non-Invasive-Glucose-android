@@ -1,4 +1,4 @@
-package com.example.newnoninvasiveglucoseapplication.home
+package com.example.newnoninvasiveglucoseapplication.care
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeGlucoseAnalysisBinding
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeHeartAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
@@ -32,12 +32,12 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeGlucoseAnalysisBinding.inflate(layoutInflater) }
+class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
+    private val binding by lazy { ActivityHomeHeartAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
 
-    //평균 혈당 인덱스 순서 저장
-    private val averageGlucoseIndexList = ArrayList<Int>()
+    //평균 심박수 인덱스 순서 저장
+    private val averageHeartIndexList = ArrayList<Int>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,37 +50,37 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        binding.homeGlucoseAnalysisNtsAverageChart.setTabIndex(0, true)
-        binding.homeGlucoseAnalysisNtsAbnormalChart.setTabIndex(0, true)
-        binding.homeGlucoseAnalysisNtsNormalChart.setTabIndex(0, true)
+        binding.homeHeartAnalysisNtsAverageChart.setTabIndex(0, true)
+        binding.homeHeartAnalysisNtsAbnormalChart.setTabIndex(0, true)
+        binding.homeHeartAnalysisNtsNormalChart.setTabIndex(0, true)
 
         //초기 글라이드로 이미지 불러오기
         setImageViewWithGlide()
 
         //차트 보여주기 설정하기
-        setGlucoseCombineChart()
-        setGlucoseAbnormalChart()
-        setGlucoseNormalChart()
+        setHeartCombineChart()
+        setHeartNormalChart()
+        setHeartAbnormalChart()
 
         //일수 선택 리스너 설정
         setTabStripSelectedIndexListener()
 
-        //평균, 최대, 최소 혈당 데이터 가져오기
-        retrofitGetAnalysisGlucoseAverage(7)
-        retrofitGetAnalysisGlucoseNormal(7)
-        retrofitGetAnalysisGlucoseAbnormal(7)
+        //평균, 최대, 최소 심박수 데이터 가져오기
+        retrofitGetAnalysisHeartAverage(7)
+        retrofitGetAnalysisHeartNormal(7)
+        retrofitGetAnalysisHeartAbnormal(7)
 
-        //초기 기간(7일)로 텍스트뷰 범위 세팅 플래그 별로 각각 평균, 정상, 비정상
+        //초기 기간(7일)로 텍스트뷰 범위 세팅
         setPeriodTextView(7, 0)
         setPeriodTextView(7, 1)
         setPeriodTextView(7, 2)
 
-        binding.homeGlucoseAnalysisBtnBack.setOnClickListener(this)
+        binding.homeHeartAnalysisBtnBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeGlucoseAnalysisBtnBack -> {
+            binding.homeHeartAnalysisBtnBack -> {
                 finish()
             }
         }
@@ -89,14 +89,14 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail).into(binding.homeGlucoseAnalysisImageViewDetailBackground)
-        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeGlucoseAnalysisImageViewBack)
+        glide.load(R.drawable.background_image_detail).into(binding.homeHeartAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeHeartAnalysisImageViewBack)
     }
 
 
-    /////////////////////////////////////////////   평균 혈당 캔들라인 차트   ///////////////////////////////////////
-    //평균 혈당 차트 설정
-    private fun makeGlucoseCandleScatterData(candleScatterDataSet : CandleScatterDataSet) : CandleScatterDataSet {
+    /////////////////////////////////////////////   평균 심박수 캔들라인 차트   ///////////////////////////////////////
+    //평균 심박수 차트 설정
+    private fun makeHeartCandleScatterData(candleScatterDataSet : CandleScatterDataSet) : CandleScatterDataSet {
         val candleDataSet = candleScatterDataSet.candleDataSet
         candleDataSet.apply {
             shadowColor = ContextCompat.getColor(applicationContext, R.color.toss_black_600)             //심지 부분
@@ -122,35 +122,35 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         return candleScatterDataSet
     }
 
-    //평균 혈당 차트 설정
-    private fun setGlucoseCombineChart() {
-        val homeGlucoseAnalysisAverageChart = binding.homeGlucoseAnalysisAverageChart
+    //평균 심박수 차트 설정
+    private fun setHeartCombineChart() {
+        val homeHeartAnalysisAverageChart = binding.homeHeartAnalysisAverageChart
 
         //마커 뷰 설정
 //        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
 
         //클릭 리스너 설정
-        homeGlucoseAnalysisAverageChart.setOnChartValueSelectedListener(object :
+        homeHeartAnalysisAverageChart.setOnChartValueSelectedListener(object :
             OnChartValueSelectedListener {
             //그래프 터치시 값 변경 리스너
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                val index = averageGlucoseIndexList.indexOf((e!!.x / 3).toInt())
-                val candleData = binding.homeGlucoseAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
-                val scatterData = binding.homeGlucoseAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
+                val index = averageHeartIndexList.indexOf((e!!.x / 3).toInt())
+                val candleData = binding.homeHeartAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
+                val scatterData = binding.homeHeartAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
 
                 val minVal = min(candleData.high, candleData.low)
                 val maxVal = max(candleData.high, candleData.low)
                 val averageVal = scatterData.y
 
-                binding.homeGlucoseAnalysisTextViewMinValue.text = "$minVal"
-                binding.homeGlucoseAnalysisTextViewMaxValue.text = "$maxVal"
-                binding.homeGlucoseAnalysisTextViewAverageValue.text = "$averageVal"
-                binding.homeGlucoseAnalysisTextViewMaxUnit.visibility = View.VISIBLE
-                binding.homeGlucoseAnalysisTextViewMinUnit.visibility = View.VISIBLE
-                binding.homeGlucoseAnalysisTextViewAverageUnit.visibility = View.VISIBLE
+                binding.homeHeartAnalysisTextViewMinValue.text = "$minVal"
+                binding.homeHeartAnalysisTextViewMaxValue.text = "$maxVal"
+                binding.homeHeartAnalysisTextViewAverageValue.text = "$averageVal"
+                binding.homeHeartAnalysisTextViewMaxUnit.visibility = View.VISIBLE
+                binding.homeHeartAnalysisTextViewMinUnit.visibility = View.VISIBLE
+                binding.homeHeartAnalysisTextViewAverageUnit.visibility = View.VISIBLE
 
                 //로티 시작하기
-                binding.homeGlucoseAnalysisLottie.playAnimation()
+                binding.homeHeartAnalysisLottie.playAnimation()
             }
             override fun onNothingSelected() {
             }
@@ -159,7 +159,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         val legend1 = LegendEntry("평균", Legend.LegendForm.CIRCLE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.teal_200))
         val legend2 = LegendEntry("범위", Legend.LegendForm.SQUARE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_600))
 
-        homeGlucoseAnalysisAverageChart.run {
+        homeHeartAnalysisAverageChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -184,8 +184,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 0F   //최소값
-                axisMaximum = 150F   //최대값
+                axisMinimum = 10F   //최소값
+                axisMaximum = 140F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -211,8 +211,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /////////////////////////////////////////////   비정상 바 차트   ///////////////////////////////////////
-    private fun setGlucoseAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "비정상 혈당 빈도수")
+    private fun setHeartAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
+        val barDataSet = BarDataSet(values, "비정상 심박수 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -224,10 +224,9 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         return barDataSet
     }
 
-    //혈당 차트 설정
-    private fun setGlucoseAbnormalChart() {
-        val barGlucoseDay = binding.homeGlucoseAnalysisAbnormalChart
-        barGlucoseDay.run {
+    //심박수 차트 설정
+    private fun setHeartAbnormalChart() {
+            binding.homeHeartAnalysisAbnormalChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -275,8 +274,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /////////////////////////////////////////////   정상 바 차트   ///////////////////////////////////////
-    private fun setGlucoseNormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "정상 혈당 빈도수")
+    private fun setHeartNormalData(values : ArrayList<BarEntry>) : BarDataSet {
+        val barDataSet = BarDataSet(values, "정상 심박수 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -288,19 +287,12 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         return barDataSet
     }
 
-    private fun setGlucoseNormalChart() {
-        val barGlucoseDay = binding.homeGlucoseAnalysisNormalChart
-
-        barGlucoseDay.run {
+    private fun setHeartNormalChart() {
+            binding.homeHeartAnalysisNormalChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
             isScaleXEnabled = false //가로 확대 없애기
-//            isDragEnabled = true    //드래그 가능
-//            enableScroll()
-//            setVisibleXRangeMaximum(7f)
-//            marker = markerView
-//            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 setDrawGridLines(false)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
@@ -346,47 +338,47 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         when(flag) {
             0 -> {
-                binding.homeGlucoseAnalysisTextViewMinValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewMaxValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewAverageValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewMaxUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewMinUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewAverageUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+                binding.homeHeartAnalysisTextViewMinValue.text = "-"
+                binding.homeHeartAnalysisTextViewMaxValue.text = "-"
+                binding.homeHeartAnalysisTextViewAverageValue.text = "-"
+                binding.homeHeartAnalysisTextViewMaxUnit.visibility = View.GONE
+                binding.homeHeartAnalysisTextViewMinUnit.visibility = View.GONE
+                binding.homeHeartAnalysisTextViewAverageUnit.visibility = View.GONE
+                binding.homeHeartAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
             }
-            1 -> binding.homeGlucoseAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
-            2 -> binding.homeGlucoseAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
+            1 -> binding.homeHeartAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
+            2 -> binding.homeHeartAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
         }
     }
 
-    //평균 혈당 차트 일수 변경 리스너
+    //평균 심박수 차트 일수 변경 리스너
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTabStripSelectedIndexListener() {
-        binding.homeGlucoseAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.homeHeartAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
 
             override fun onStartTabSelected(title: String?, index: Int) {
                 //7, 30, 90 데이터 가져오기
-                retrofitGetAnalysisGlucoseAverage(daysArray[index])
+                retrofitGetAnalysisHeartAverage(daysArray[index])
                 setPeriodTextView(daysArray[index].toLong(), 0)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeGlucoseAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.homeHeartAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
-                retrofitGetAnalysisGlucoseNormal(daysArray[index])
-                binding.homeGlucoseAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
+                retrofitGetAnalysisHeartNormal(daysArray[index])
+                binding.homeHeartAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 1)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeGlucoseAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.homeHeartAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
-                retrofitGetAnalysisGlucoseAbnormal(daysArray[index])
-                binding.homeGlucoseAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
+                retrofitGetAnalysisHeartAbnormal(daysArray[index])
+                binding.homeHeartAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 2)
             }
@@ -400,9 +392,9 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //평균, 최대, 최소 일수별 혈당 가져오기
-    private fun retrofitGetAnalysisGlucoseAverage(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseAverage(LoginedUserClient.phoneNumber!!, day, completion = {
+    //평균, 최대, 최소 일수별 심박수 가져오기
+    private fun retrofitGetAnalysisHeartAverage(day : Int) {
+        RetrofitManager.instance.getAnalysisHeartAverage(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -410,11 +402,11 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAverage
+                            if(jsonArray.length() == 0) return@getAnalysisHeartAverage
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
-                            averageGlucoseIndexList.clear()
+                            averageHeartIndexList.clear()
 
                             for(i in 0 until jsonArray.length()) {
                                 val jsonObject = jsonArray.getJSONObject(i)
@@ -423,12 +415,12 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 val max = jsonObject.getDouble("maxData").toFloat()
                                 val timeSlot = jsonObject.getDouble("timeSlot")
                                 //인덱스 순서 저장
-                                averageGlucoseIndexList.add(timeSlot.toInt())
+                                averageHeartIndexList.add(timeSlot.toInt())
                                 listCandleData.add(CandleEntry((timeSlot * 3 + 1.5).toFloat(), min,  max, avg, avg))
                                 listScatterData.add(Entry((timeSlot * 3 + 1.5).toFloat(), (avg  * 10).roundToInt() / 10.0F))
                             }
-                            //혈당 컴바인 데이터 만들기
-                            val candleScatterDataSet = makeGlucoseCandleScatterData(
+                            //심박수 컴바인 데이터 만들기
+                            val candleScatterDataSet = makeHeartCandleScatterData(
                                 CandleScatterDataSet(CandleDataSet(listCandleData, "범위"), ScatterDataSet(listScatterData, "평균"))
                             )
                             val combinedData = CombinedData()
@@ -436,26 +428,26 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
                             //차트 다시 그리기
-                            binding.homeGlucoseAnalysisAverageChart.clear()
-                            binding.homeGlucoseAnalysisAverageChart.data = combinedData
-                            binding.homeGlucoseAnalysisAverageChart.invalidate()
-                            binding.homeGlucoseAnalysisAverageChart.animateXY(1000, 1000)
+                            binding.homeHeartAnalysisAverageChart.clear()
+                            binding.homeHeartAnalysisAverageChart.data = combinedData
+                            binding.homeHeartAnalysisAverageChart.invalidate()
+                            binding.homeHeartAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d(
                         "로그",
-                        "HomeGlucoseAnalysisActivity - retrofitGetAnalysisGlucoseAverage : 통신 실패"
+                        "HomeHeartAnalysisActivity - retrofitGetAnalysisHeartAverage : 통신 실패"
                     )
                 }
             }
         })
     }
 
-    //정상 범위 혈당 빈도수 가져오기
-    private fun retrofitGetAnalysisGlucoseNormal(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseNormal(LoginedUserClient.phoneNumber!!, day, completion = {
+    //정상 범위 심박수 빈도수 가져오기
+    private fun retrofitGetAnalysisHeartNormal(day : Int) {
+        RetrofitManager.instance.getAnalysisHeartNormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -463,7 +455,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseNormal
+                            if(jsonArray.length() == 0) return@getAnalysisHeartNormal
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
@@ -473,25 +465,25 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 sum += value
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
-                            val barDataSet = BarData(setGlucoseNormalData(listBarData))
-                            binding.homeGlucoseAnalysisNormalChart.data = barDataSet
-                            binding.homeGlucoseAnalysisNormalChart.invalidate()
-                            binding.homeGlucoseAnalysisNormalChart.animateY( 1000)
+                            val barDataSet = BarData(setHeartNormalData(listBarData))
+                            binding.homeHeartAnalysisNormalChart.data = barDataSet
+                            binding.homeHeartAnalysisNormalChart.invalidate()
+                            binding.homeHeartAnalysisNormalChart.animateY( 1000)
 
-                            binding.homeGlucoseAnalysisTextViewPeriodNormalSum.text = sum.toString()
+                            binding.homeHeartAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeGlucoseAnalysisActivity - retrofitGetAnalysisGlucoseAverage : 통신 실패")
+                    Log.d("로그", "HomeHeartAnalysisActivity - retrofitGetAnalysisHeartAverage : 통신 실패")
                 }
             }
         })
     }
 
-    //정상 범위 혈당 빈도수 가져오기
-    private fun retrofitGetAnalysisGlucoseAbnormal(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
+    //정상 범위 심박수 빈도수 가져오기
+    private fun retrofitGetAnalysisHeartAbnormal(day : Int) {
+        RetrofitManager.instance.getAnalysisHeartAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -499,7 +491,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAbnormal
+                            if(jsonArray.length() == 0) return@getAnalysisHeartAbnormal
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0
@@ -508,17 +500,17 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 sum += value
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
-                            val barDataSet = BarData(setGlucoseAbnormalData(listBarData))
-                            binding.homeGlucoseAnalysisAbnormalChart.data = barDataSet
-                            binding.homeGlucoseAnalysisAbnormalChart.invalidate()
-                            binding.homeGlucoseAnalysisAbnormalChart.animateY( 1000)
+                            val barDataSet = BarData(setHeartAbnormalData(listBarData))
+                            binding.homeHeartAnalysisAbnormalChart.data = barDataSet
+                            binding.homeHeartAnalysisAbnormalChart.invalidate()
+                            binding.homeHeartAnalysisAbnormalChart.animateY(1000)
 
-                            binding.homeGlucoseAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
+                            binding.homeHeartAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeGlucoseAnalysisActivity - retrofitGetAnalysisGlucoseAbnormal : 통신 실패")
+                    Log.d("로그", "HomeHeartAnalysisActivity - retrofitGetAnalysisHeartAbnormal : 통신 실패")
                 }
             }
         })

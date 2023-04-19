@@ -283,8 +283,8 @@ class RetrofitManager {
     }
 
     //분석 평균 체온 데이터 가져오기(7, 30, 90)
-    fun getAnalysisThermometerAverage(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisThermometerAverage(day - 1) ?: return
+    fun getAnalysisThermometerAverage(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisThermometerAverage(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -296,8 +296,8 @@ class RetrofitManager {
     }
 
     //정상 범위 체온 빈도수 가져오기
-    fun getAnalysisThermometerNormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisThermometerNormal(day - 1) ?: return
+    fun getAnalysisThermometerNormal(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisThermometerNormal(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -309,8 +309,8 @@ class RetrofitManager {
     }
 
     //비정상 범위 체온 빈도수 가져오기
-    fun getAnalysisThermometerAbnormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisThermometerAbnormal(day - 1) ?: return
+    fun getAnalysisThermometerAbnormal(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisThermometerAbnormal(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -322,8 +322,8 @@ class RetrofitManager {
     }
 
     //분석 평균 심박수 데이터 가져오기(7, 30, 90)
-    fun getAnalysisHeartAverage(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisHeartAverage(day - 1) ?: return
+    fun getAnalysisHeartAverage(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisHeartAverage(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -335,8 +335,8 @@ class RetrofitManager {
     }
 
     //정상 범위 심박수 빈도수 가져오기
-    fun getAnalysisHeartNormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisHeartNormal(day - 1) ?: return
+    fun getAnalysisHeartNormal(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisHeartNormal(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -348,8 +348,8 @@ class RetrofitManager {
     }
 
     //비정상 범위 심박수 빈도수 가져오기
-    fun getAnalysisHeartAbnormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisHeartAbnormal(day - 1) ?: return
+    fun getAnalysisHeartAbnormal(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisHeartAbnormal(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -361,8 +361,8 @@ class RetrofitManager {
     }
 
     //분석 평균 혈당 데이터 가져오기(7, 30, 90)
-    fun getAnalysisGlucoseAverage(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisGlucoseAverage(day - 1) ?: return
+    fun getAnalysisGlucoseAverage(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisGlucoseAverage(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -374,8 +374,8 @@ class RetrofitManager {
     }
 
     //정상 범위 혈당 빈도수 가져오기
-    fun getAnalysisGlucoseNormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisGlucoseNormal(day - 1) ?: return
+    fun getAnalysisGlucoseNormal(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisGlucoseNormal(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)
@@ -387,8 +387,8 @@ class RetrofitManager {
     }
 
     //비정상 범위 혈당 빈도수 가져오기
-    fun getAnalysisGlucoseAbnormal(day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getAnalysisGlucoseAbnormal(day - 1) ?: return
+    fun getAnalysisGlucoseAbnormal(phoneNumber: String, day: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getAnalysisGlucoseAbnormal(phoneNumber, day - 1) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

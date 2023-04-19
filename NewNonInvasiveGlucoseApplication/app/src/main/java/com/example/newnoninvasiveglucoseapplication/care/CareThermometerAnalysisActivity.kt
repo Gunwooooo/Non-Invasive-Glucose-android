@@ -1,16 +1,16 @@
-package com.example.newnoninvasiveglucoseapplication.home
+package com.example.newnoninvasiveglucoseapplication.care
 
 import android.annotation.SuppressLint
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeGlucoseAnalysisBinding
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeThermometerAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
@@ -27,17 +27,18 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import org.json.JSONArray
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.ArrayList
+import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeGlucoseAnalysisBinding.inflate(layoutInflater) }
+class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListener {
+    private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext)}
+    private val binding by lazy { ActivityHomeThermometerAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
 
-    //평균 혈당 인덱스 순서 저장
-    private val averageGlucoseIndexList = ArrayList<Int>()
+    //평균 체온 인덱스 순서 저장
+    private val averageThermometerIndexList = ArrayList<Int>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,37 +51,37 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        binding.homeGlucoseAnalysisNtsAverageChart.setTabIndex(0, true)
-        binding.homeGlucoseAnalysisNtsAbnormalChart.setTabIndex(0, true)
-        binding.homeGlucoseAnalysisNtsNormalChart.setTabIndex(0, true)
+        binding.homeThermometerAnalysisNtsAverageChart.setTabIndex(0, true)
+        binding.homeThermometerAnalysisNtsAbnormalChart.setTabIndex(0, true)
+        binding.homeThermometerAnalysisNtsNormalChart.setTabIndex(0, true)
 
         //초기 글라이드로 이미지 불러오기
         setImageViewWithGlide()
 
         //차트 보여주기 설정하기
-        setGlucoseCombineChart()
-        setGlucoseAbnormalChart()
-        setGlucoseNormalChart()
+        setThermometerCombineChart()
+        setThermometerAbnormalChart()
+        setThermometerNormalChart()
 
         //일수 선택 리스너 설정
         setTabStripSelectedIndexListener()
 
-        //평균, 최대, 최소 혈당 데이터 가져오기
-        retrofitGetAnalysisGlucoseAverage(7)
-        retrofitGetAnalysisGlucoseNormal(7)
-        retrofitGetAnalysisGlucoseAbnormal(7)
+        //평균, 최대, 최소 체온 데이터 가져오기
+        retrofitGetAnalysisThermometerAverage(7)
+        retrofitGetAnalysisThermometerNormal(7)
+        retrofitGetAnalysisThermometerAbnormal(7)
 
-        //초기 기간(7일)로 텍스트뷰 범위 세팅 플래그 별로 각각 평균, 정상, 비정상
+        //초기 기간(7일)로 텍스트뷰 범위 세팅
         setPeriodTextView(7, 0)
         setPeriodTextView(7, 1)
         setPeriodTextView(7, 2)
 
-        binding.homeGlucoseAnalysisBtnBack.setOnClickListener(this)
+        binding.homeThermometerAnalysisBtnBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeGlucoseAnalysisBtnBack -> {
+            binding.homeThermometerAnalysisBtnBack -> {
                 finish()
             }
         }
@@ -89,14 +90,14 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail).into(binding.homeGlucoseAnalysisImageViewDetailBackground)
-        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeGlucoseAnalysisImageViewBack)
+        glide.load(R.drawable.background_image_detail).into(binding.homeThermometerAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeThermometerAnalysisImageViewBack)
     }
 
 
-    /////////////////////////////////////////////   평균 혈당 캔들라인 차트   ///////////////////////////////////////
-    //평균 혈당 차트 설정
-    private fun makeGlucoseCandleScatterData(candleScatterDataSet : CandleScatterDataSet) : CandleScatterDataSet {
+    /////////////////////////////////////////////   평균 체온 캔들라인 차트   ///////////////////////////////////////
+    //평균 체온 차트 설정
+    private fun makeThermometerCandleScatterData(candleScatterDataSet : CandleScatterDataSet) : CandleScatterDataSet {
         val candleDataSet = candleScatterDataSet.candleDataSet
         candleDataSet.apply {
             shadowColor = ContextCompat.getColor(applicationContext, R.color.toss_black_600)             //심지 부분
@@ -122,35 +123,34 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         return candleScatterDataSet
     }
 
-    //평균 혈당 차트 설정
-    private fun setGlucoseCombineChart() {
-        val homeGlucoseAnalysisAverageChart = binding.homeGlucoseAnalysisAverageChart
+    //평균 체온 차트 설정
+    private fun setThermometerCombineChart() {
+        val homeThermometerAnalysisAverageChart = binding.homeThermometerAnalysisAverageChart
 
         //마커 뷰 설정
 //        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
 
         //클릭 리스너 설정
-        homeGlucoseAnalysisAverageChart.setOnChartValueSelectedListener(object :
-            OnChartValueSelectedListener {
+        homeThermometerAnalysisAverageChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             //그래프 터치시 값 변경 리스너
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                val index = averageGlucoseIndexList.indexOf((e!!.x / 3).toInt())
-                val candleData = binding.homeGlucoseAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
-                val scatterData = binding.homeGlucoseAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
+                val index = averageThermometerIndexList.indexOf((e!!.x / 3).toInt())
+                val candleData = binding.homeThermometerAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
+                val scatterData = binding.homeThermometerAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
 
                 val minVal = min(candleData.high, candleData.low)
                 val maxVal = max(candleData.high, candleData.low)
                 val averageVal = scatterData.y
 
-                binding.homeGlucoseAnalysisTextViewMinValue.text = "$minVal"
-                binding.homeGlucoseAnalysisTextViewMaxValue.text = "$maxVal"
-                binding.homeGlucoseAnalysisTextViewAverageValue.text = "$averageVal"
-                binding.homeGlucoseAnalysisTextViewMaxUnit.visibility = View.VISIBLE
-                binding.homeGlucoseAnalysisTextViewMinUnit.visibility = View.VISIBLE
-                binding.homeGlucoseAnalysisTextViewAverageUnit.visibility = View.VISIBLE
+                binding.homeThermometerAnalysisTextViewMinValue.text = "$minVal"
+                binding.homeThermometerAnalysisTextViewMaxValue.text = "$maxVal"
+                binding.homeThermometerAnalysisTextViewAverageValue.text = "$averageVal"
+                binding.homeThermometerAnalysisTextViewMaxUnit.visibility = View.VISIBLE
+                binding.homeThermometerAnalysisTextViewMinUnit.visibility = View.VISIBLE
+                binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.VISIBLE
 
                 //로티 시작하기
-                binding.homeGlucoseAnalysisLottie.playAnimation()
+                binding.homeThermometerAnalysisLottie.playAnimation()
             }
             override fun onNothingSelected() {
             }
@@ -159,7 +159,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         val legend1 = LegendEntry("평균", Legend.LegendForm.CIRCLE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.teal_200))
         val legend2 = LegendEntry("범위", Legend.LegendForm.SQUARE, 10f, 2f, null, ContextCompat.getColor(applicationContext, R.color.toss_black_600))
 
-        homeGlucoseAnalysisAverageChart.run {
+        homeThermometerAnalysisAverageChart.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -184,8 +184,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 0F   //최소값
-                axisMaximum = 150F   //최대값
+                axisMinimum = 20F   //최소값
+                axisMaximum = 45F   //최대값
                 isEnabled = true
                 animateX(1000)
                 animateY(1000)
@@ -211,8 +211,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /////////////////////////////////////////////   비정상 바 차트   ///////////////////////////////////////
-    private fun setGlucoseAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "비정상 혈당 빈도수")
+    private fun setThermometerAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
+        val barDataSet = BarDataSet(values, "비정상 체온 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -224,10 +224,10 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         return barDataSet
     }
 
-    //혈당 차트 설정
-    private fun setGlucoseAbnormalChart() {
-        val barGlucoseDay = binding.homeGlucoseAnalysisAbnormalChart
-        barGlucoseDay.run {
+    //체온 차트 설정
+    private fun setThermometerAbnormalChart() {
+        val barThermometerDay = binding.homeThermometerAnalysisAbnormalChart
+        barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -275,8 +275,8 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /////////////////////////////////////////////   정상 바 차트   ///////////////////////////////////////
-    private fun setGlucoseNormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "정상 혈당 빈도수")
+    private fun setThermometerNormalData(values : ArrayList<BarEntry>) : BarDataSet {
+        val barDataSet = BarDataSet(values, "정상 체온 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -288,10 +288,10 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         return barDataSet
     }
 
-    private fun setGlucoseNormalChart() {
-        val barGlucoseDay = binding.homeGlucoseAnalysisNormalChart
+    private fun setThermometerNormalChart() {
+        val barThermometerDay = binding.homeThermometerAnalysisNormalChart
 
-        barGlucoseDay.run {
+        barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
@@ -345,48 +345,51 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         val end = now.format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         when(flag) {
+            //평균
             0 -> {
-                binding.homeGlucoseAnalysisTextViewMinValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewMaxValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewAverageValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewMaxUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewMinUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewAverageUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+                binding.homeThermometerAnalysisTextViewMinValue.text = "-"
+                binding.homeThermometerAnalysisTextViewMaxValue.text = "-"
+                binding.homeThermometerAnalysisTextViewAverageValue.text = "-"
+                binding.homeThermometerAnalysisTextViewMaxUnit.visibility = View.GONE
+                binding.homeThermometerAnalysisTextViewMinUnit.visibility = View.GONE
+                binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.GONE
+                binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
             }
-            1 -> binding.homeGlucoseAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
-            2 -> binding.homeGlucoseAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
+            //정상 빈도수
+            1 -> binding.homeThermometerAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
+            //비정상 빈도수
+            2 -> binding.homeThermometerAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
         }
     }
-
-    //평균 혈당 차트 일수 변경 리스너
+    
+    //평균 체온 차트 일수 변경 리스너
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTabStripSelectedIndexListener() {
-        binding.homeGlucoseAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.homeThermometerAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
 
             override fun onStartTabSelected(title: String?, index: Int) {
                 //7, 30, 90 데이터 가져오기
-                retrofitGetAnalysisGlucoseAverage(daysArray[index])
+                retrofitGetAnalysisThermometerAverage(daysArray[index])
                 setPeriodTextView(daysArray[index].toLong(), 0)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeGlucoseAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.homeThermometerAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
-                retrofitGetAnalysisGlucoseNormal(daysArray[index])
-                binding.homeGlucoseAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
+                retrofitGetAnalysisThermometerNormal(daysArray[index])
+                binding.homeThermometerAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 1)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeGlucoseAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.homeThermometerAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
-                retrofitGetAnalysisGlucoseAbnormal(daysArray[index])
-                binding.homeGlucoseAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
+                retrofitGetAnalysisThermometerAbnormal(daysArray[index])
+                binding.homeThermometerAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 2)
             }
@@ -396,25 +399,25 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
 
     }
-
+    
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //평균, 최대, 최소 일수별 혈당 가져오기
-    private fun retrofitGetAnalysisGlucoseAverage(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseAverage(LoginedUserClient.phoneNumber!!, day, completion = {
-                completionResponse, response ->
+    //평균, 최대, 최소 일수별 체온 가져오기
+    private fun retrofitGetAnalysisThermometerAverage(day : Int) {
+        RetrofitManager.instance.getAnalysisThermometerAverage(LoginedUserClient.phoneNumber!!, day, completion = {
+            completionResponse, response -> 
             when(completionResponse) {
                 CompletionResponse.OK -> {
                     when(response!!.code()) {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAverage
+                            if(jsonArray.length() == 0) return@getAnalysisThermometerAverage
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
-                            averageGlucoseIndexList.clear()
+                            averageThermometerIndexList.clear()
 
                             for(i in 0 until jsonArray.length()) {
                                 val jsonObject = jsonArray.getJSONObject(i)
@@ -423,39 +426,37 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 val max = jsonObject.getDouble("maxData").toFloat()
                                 val timeSlot = jsonObject.getDouble("timeSlot")
                                 //인덱스 순서 저장
-                                averageGlucoseIndexList.add(timeSlot.toInt())
+                                averageThermometerIndexList.add(timeSlot.toInt())
                                 listCandleData.add(CandleEntry((timeSlot * 3 + 1.5).toFloat(), min,  max, avg, avg))
                                 listScatterData.add(Entry((timeSlot * 3 + 1.5).toFloat(), (avg  * 10).roundToInt() / 10.0F))
                             }
-                            //혈당 컴바인 데이터 만들기
-                            val candleScatterDataSet = makeGlucoseCandleScatterData(
-                                CandleScatterDataSet(CandleDataSet(listCandleData, "범위"), ScatterDataSet(listScatterData, "평균"))
-                            )
+                            //체온 컴바인 데이터 만들기
+                            val candleScatterDataSet = makeThermometerCandleScatterData(CandleScatterDataSet(CandleDataSet(listCandleData, "범위"), ScatterDataSet(listScatterData, "평균")))
                             val combinedData = CombinedData()
                             combinedData.setData(CandleData(candleScatterDataSet.candleDataSet))
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
                             //차트 다시 그리기
-                            binding.homeGlucoseAnalysisAverageChart.clear()
-                            binding.homeGlucoseAnalysisAverageChart.data = combinedData
-                            binding.homeGlucoseAnalysisAverageChart.invalidate()
-                            binding.homeGlucoseAnalysisAverageChart.animateXY(1000, 1000)
+                            binding.homeThermometerAnalysisAverageChart.clear()
+                            binding.homeThermometerAnalysisAverageChart.data = combinedData
+                            binding.homeThermometerAnalysisAverageChart.invalidate()
+                            binding.homeThermometerAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
                     Log.d(
                         "로그",
-                        "HomeGlucoseAnalysisActivity - retrofitGetAnalysisGlucoseAverage : 통신 실패"
+                        "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAverage : 통신 실패"
                     )
                 }
             }
         })
     }
 
-    //정상 범위 혈당 빈도수 가져오기
-    private fun retrofitGetAnalysisGlucoseNormal(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseNormal(LoginedUserClient.phoneNumber!!, day, completion = {
+    //정상 범위 체온 빈도수 가져오기
+    private fun retrofitGetAnalysisThermometerNormal(day : Int) {
+        RetrofitManager.instance.getAnalysisThermometerNormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -463,7 +464,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseNormal
+                            if(jsonArray.length() == 0) return@getAnalysisThermometerNormal
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
@@ -473,25 +474,27 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 sum += value
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
-                            val barDataSet = BarData(setGlucoseNormalData(listBarData))
-                            binding.homeGlucoseAnalysisNormalChart.data = barDataSet
-                            binding.homeGlucoseAnalysisNormalChart.invalidate()
-                            binding.homeGlucoseAnalysisNormalChart.animateY( 1000)
+                            val barDataSet = BarData(setThermometerNormalData(listBarData))
+                            binding.homeThermometerAnalysisNormalChart.data = barDataSet
+                            binding.homeThermometerAnalysisNormalChart.invalidate()
+                            binding.homeThermometerAnalysisNormalChart.animateY( 1000)
 
-                            binding.homeGlucoseAnalysisTextViewPeriodNormalSum.text = sum.toString()
+
+                            //총 개수 카운트
+                            binding.homeThermometerAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeGlucoseAnalysisActivity - retrofitGetAnalysisGlucoseAverage : 통신 실패")
+                    Log.d("로그", "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAverage : 통신 실패")
                 }
             }
         })
     }
 
-    //정상 범위 혈당 빈도수 가져오기
-    private fun retrofitGetAnalysisGlucoseAbnormal(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
+    //정상 범위 체온 빈도수 가져오기
+    private fun retrofitGetAnalysisThermometerAbnormal(day : Int) {
+        RetrofitManager.instance.getAnalysisThermometerAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -499,7 +502,7 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAbnormal
+                            if(jsonArray.length() == 0) return@getAnalysisThermometerAbnormal
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0
@@ -508,17 +511,17 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 sum += value
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
-                            val barDataSet = BarData(setGlucoseAbnormalData(listBarData))
-                            binding.homeGlucoseAnalysisAbnormalChart.data = barDataSet
-                            binding.homeGlucoseAnalysisAbnormalChart.invalidate()
-                            binding.homeGlucoseAnalysisAbnormalChart.animateY( 1000)
+                            val barDataSet = BarData(setThermometerAbnormalData(listBarData))
+                            binding.homeThermometerAnalysisAbnormalChart.data = barDataSet
+                            binding.homeThermometerAnalysisAbnormalChart.invalidate()
+                            binding.homeThermometerAnalysisAbnormalChart.animateY( 1000)
 
-                            binding.homeGlucoseAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
+                            binding.homeThermometerAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }
                     }
                 }
                 CompletionResponse.FAIL -> {
-                    Log.d("로그", "HomeGlucoseAnalysisActivity - retrofitGetAnalysisGlucoseAbnormal : 통신 실패")
+                    Log.d("로그", "HomeThermometerAnalysisActivity - retrofitGetAnalysisThermometerAbnormal : 통신 실패")
                 }
             }
         })

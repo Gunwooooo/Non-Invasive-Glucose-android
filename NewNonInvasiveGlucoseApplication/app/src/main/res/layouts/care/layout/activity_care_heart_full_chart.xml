@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.HomeHeartFullChartActivity"
+    android:background="@color/android_blue_100"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ripple_android_blue_100_radius_20"
+            android:focusable="true"
+            android:clickable="true"
+            android:id="@+id/homeHeartFullChart_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:tint="@color/toss_black_500" />
+            <TextView
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Home"
+                android:textColor="@color/toss_black_700"
+                android:textSize="18dp"
+                android:fontFamily="@font/ps_regular"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/homeHeartFullChart_imageView_calendar"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="평균 심박수"
+            android:textColor="@color/toss_black_200"
+            android:fontFamily="@font/ps_regular"/>
+
+        <LinearLayout
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/homeHeartFullChart_textView_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="38dp"
+                android:text=""
+                android:textColor="@color/toss_black_700"
+                android:fontFamily="@font/ps_bold"/>
+            <TextView
+                android:id="@+id/homeHeartFullChart_textView_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:text=""
+                android:textColor="@color/toss_black_700"
+                android:fontFamily="@font/ps_regular"/>
+        </LinearLayout>
+
+        <TextView
+            android:gravity="bottom"
+            android:id="@+id/homeHeartFullChart_textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21dp"
+            android:text=""
+            android:textColor="@color/toss_black_500"
+            android:fontFamily="@font/ps_regular"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/homeHeartFullChart_layout"
+        android:background="@color/android_blue_100"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <com.github.mikephil.charting.charts.ScatterChart
+            android:id="@+id/homeHeartFullChart_scatterChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_marginBottom="40dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/homeHeartFullChart_lottie"
+            app:lottie_rawRes="@raw/lottie_no_data"
+            app:lottie_autoPlay="false"/>
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/homeHeartFullChart_lottie_swipe"
+        app:lottie_rawRes="@raw/lottie_swipe_available"
+        app:lottie_autoPlay="true"/>
+</LinearLayout>
