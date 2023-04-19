@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
+import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareThermometerFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeThermometerFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
@@ -33,7 +35,7 @@ import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeThermometerFullChartBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityCareThermometerFullChartBinding.inflate(layoutInflater) }
 
     private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
 
@@ -47,6 +49,8 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         setContentView(binding.root)
 
         init()
+
+        Log.d("로그", "CareThermometerFullChartActivity - onCreate : 보호대상자 폰번호 $_protectingPhoneNumber")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -54,7 +58,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         setThermometerScatterChart()
 
         //캘린더 이미지 넣기
-        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeThermometerFullChartImageViewCalendar)
+        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.careThermometerFullChartImageViewCalendar)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -65,17 +69,17 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         //스와이프 리스너 설정
         setLayoutSwipeListener()
         
-        binding.homeThermometerFullChartImageViewCalendar.setOnClickListener(this)
-        binding.homeThermometerFullChartBtnBack.setOnClickListener(this)
+        binding.careThermometerFullChartImageViewCalendar.setOnClickListener(this)
+        binding.careThermometerFullChartBtnBack.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeThermometerFullChartBtnBack -> {
+            binding.careThermometerFullChartBtnBack -> {
                 finish()
             }
-            binding.homeThermometerFullChartImageViewCalendar -> {
+            binding.careThermometerFullChartImageViewCalendar -> {
                 CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
@@ -88,7 +92,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         val year = now.get(Calendar.YEAR)
         val month = now.get(Calendar.MONTH)
         val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
-        binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+        binding.careThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -96,7 +100,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+            binding.careThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
             retrofitGetBodyDataAsDate(year, month, dayOfMonth)
         }
         return datePickerDialogListener
@@ -105,18 +109,18 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     //스와이프 리스너 설정
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun setLayoutSwipeListener() {
-        binding.homeThermometerFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
+        binding.careThermometerFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
             override fun onSwipeLeft() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
                 now.add(Calendar.DAY_OF_MONTH, 1)
-                binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                binding.careThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
 
             override fun onSwipeRight() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
                 now.add(Calendar.DAY_OF_MONTH, -1)
-                binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                binding.careThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
         })
@@ -149,7 +153,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
     //체온 차트 설정
     private fun setThermometerScatterChart() {
-        val homeFullChartScatterChart = binding.homeThermometerFullChartScatterChart
+        val homeFullChartScatterChart = binding.careThermometerFullChartScatterChart
         //마커 뷰 설정
         val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         homeFullChartScatterChart.run {
@@ -179,12 +183,12 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                     if(x1 < x2) {
                         Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
                         now.add(Calendar.DAY_OF_MONTH, -1)
-                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        binding.careThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                         retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                     } else if(x1 > x2) {
                         Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
                         now.add(Calendar.DAY_OF_MONTH, 1)
-                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        binding.careThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                         retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                     }
                 }
@@ -252,7 +256,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         Log.d("로그", "HomeFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
-        RetrofitManager.instance.getBodyDataAsDate(LoginedUserClient.phoneNumber!!, year, month + 1, day, completion = {
+        RetrofitManager.instance.getBodyDataAsDate(_protectingPhoneNumber!!, year, month + 1, day, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {
@@ -260,7 +264,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                     when(response!!.code()) {
                         200 -> {
                             //스와이프 애니메이션 표시
-                            binding.homeThermometerFullChartLottieSwipe.playAnimation()
+                            binding.careThermometerFullChartLottieSwipe.playAnimation()
 
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
@@ -286,27 +290,27 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeThermometerFullChartScatterChart.visibility = View.GONE
-                                binding.homeThermometerFullChartLottie.visibility = View.VISIBLE
-                                binding.homeThermometerFullChartLottie.playAnimation()
-                                binding.homeThermometerFullChartTextViewAverage.text = "데이터 없음"
-                                binding.homeThermometerFullChartTextViewUnit.visibility = View.GONE
+                                binding.careThermometerFullChartScatterChart.visibility = View.GONE
+                                binding.careThermometerFullChartLottie.visibility = View.VISIBLE
+                                binding.careThermometerFullChartLottie.playAnimation()
+                                binding.careThermometerFullChartTextViewAverage.text = "데이터 없음"
+                                binding.careThermometerFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
 
                             //데이터가 있을 경우
-                            binding.homeThermometerFullChartTextViewUnit.visibility = View.VISIBLE
-                            binding.homeThermometerFullChartTextViewAverage.visibility = View.VISIBLE
-                            binding.homeThermometerFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
-                            binding.homeThermometerFullChartScatterChart.visibility = View.VISIBLE
-                            binding.homeThermometerFullChartLottie.visibility = View.GONE
-                            binding.homeThermometerFullChartTextViewUnit.text = "℃"
+                            binding.careThermometerFullChartTextViewUnit.visibility = View.VISIBLE
+                            binding.careThermometerFullChartTextViewAverage.visibility = View.VISIBLE
+                            binding.careThermometerFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.careThermometerFullChartScatterChart.visibility = View.VISIBLE
+                            binding.careThermometerFullChartLottie.visibility = View.GONE
+                            binding.careThermometerFullChartTextViewUnit.text = "℃"
 
-                            binding.homeThermometerFullChartScatterChart.data = thermometerScatterData
-                            binding.homeThermometerFullChartScatterChart.invalidate()
-                            binding.homeThermometerFullChartScatterChart.animateX(2000)
+                            binding.careThermometerFullChartScatterChart.data = thermometerScatterData
+                            binding.careThermometerFullChartScatterChart.invalidate()
+                            binding.careThermometerFullChartScatterChart.animateX(2000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

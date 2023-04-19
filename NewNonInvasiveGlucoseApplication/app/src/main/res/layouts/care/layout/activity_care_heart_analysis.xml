@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeHeartAnalysisActivity"
+    tools:context=".care.CareHeartAnalysisActivity"
     android:background="@color/android_blue_100">
     <com.factor.bouncy.BouncyNestedScrollView
         android:layout_width="match_parent"
@@ -23,11 +23,11 @@
                 android:background="@drawable/ripple_android_blue_100_radius_20"
                 android:focusable="true"
                 android:clickable="true"
-                android:id="@+id/homeHeartAnalysis_btn_back"
+                android:id="@+id/careHeartAnalysis_btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/homeHeartAnalysis_imageView_back"
+                    android:id="@+id/careHeartAnalysis_imageView_back"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     app:tint="@color/toss_black_500" />
@@ -84,7 +84,7 @@
                     android:layout_height="match_parent">
                     <ImageView
                         android:adjustViewBounds="true"
-                        android:id="@+id/homeHeartAnalysis_imageView_detail_background"
+                        android:id="@+id/careHeartAnalysis_imageView_detail_background"
                         android:layout_width="200dp"
                         android:layout_height="185dp"
                         android:src="@drawable/background_image_detail"/>
@@ -106,7 +106,7 @@
                         android:orientation="vertical">
 
                         <com.gigamole.navigationtabstrip.NavigationTabStrip
-                            android:id="@+id/homeHeartAnalysis_nts_averageChart"
+                            android:id="@+id/careHeartAnalysis_nts_averageChart"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="16dp"
@@ -122,7 +122,7 @@
                             app:nts_weight="3dp" />
 
                         <TextView
-                            android:id="@+id/homeHeartAnalysis_textView_periodAverage"
+                            android:id="@+id/careHeartAnalysis_textView_periodAverage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -133,7 +133,7 @@
                             android:textSize="18dp" />
 
                         <com.github.mikephil.charting.charts.CombinedChart
-                            android:id="@+id/homeHeartAnalysis_averageChart"
+                            android:id="@+id/careHeartAnalysis_averageChart"
                             android:layout_width="match_parent"
                             android:layout_height="256dp"
                             android:layout_margin="16dp" />
@@ -173,7 +173,7 @@
                                     <com.airbnb.lottie.LottieAnimationView
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:id="@+id/homeHeartAnalysis_lottie"
+                                        android:id="@+id/careHeartAnalysis_lottie"
                                         app:lottie_rawRes="@raw/lottie_thermometer_average"
                                         app:lottie_autoPlay="false"/>
                                     <LinearLayout
@@ -184,7 +184,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/homeHeartAnalysis_textView_averageValue"
+                                            android:id="@+id/careHeartAnalysis_textView_averageValue"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
@@ -194,7 +194,7 @@
                                         <TextView
                                             android:gravity="center"
                                             android:visibility="gone"
-                                            android:id="@+id/homeHeartAnalysis_textView_averageUnit"
+                                            android:id="@+id/careHeartAnalysis_textView_averageUnit"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
@@ -231,7 +231,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/homeHeartAnalysis_textView_maxValue"
+                                            android:id="@+id/careHeartAnalysis_textView_maxValue"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
@@ -240,7 +240,7 @@
                                             android:textSize="27dp" />
                                         <TextView
                                             android:visibility="gone"
-                                            android:id="@+id/homeHeartAnalysis_textView_maxUnit"
+                                            android:id="@+id/careHeartAnalysis_textView_maxUnit"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
@@ -271,7 +271,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/homeHeartAnalysis_textView_minValue"
+                                            android:id="@+id/careHeartAnalysis_textView_minValue"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
@@ -280,7 +280,7 @@
                                             android:textSize="27dp" />
                                         <TextView
                                             android:visibility="gone"
-                                            android:id="@+id/homeHeartAnalysis_textView_minUnit"
+                                            android:id="@+id/careHeartAnalysis_textView_minUnit"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/ps_regular"
@@ -322,7 +322,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/homeHeartAnalysis_textView_periodNormalDays"
+                    android:id="@+id/careHeartAnalysis_textView_periodNormalDays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
@@ -339,7 +339,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/homeHeartAnalysis_textView_periodNormalSum"
+                    android:id="@+id/careHeartAnalysis_textView_periodNormalSum"
                     android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -360,7 +360,7 @@
                     android:orientation="vertical">
 
                     <com.gigamole.navigationtabstrip.NavigationTabStrip
-                        android:id="@+id/homeHeartAnalysis_nts_abnormalChart"
+                        android:id="@+id/careHeartAnalysis_nts_abnormalChart"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="16dp"
@@ -376,7 +376,7 @@
                         app:nts_weight="3dp" />
 
                     <TextView
-                        android:id="@+id/homeHeartAnalysis_textView_periodNormal"
+                        android:id="@+id/careHeartAnalysis_textView_periodNormal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -388,7 +388,7 @@
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:layout_margin="16dp"
-                        android:id="@+id/homeHeartAnalysis_normalChart"
+                        android:id="@+id/careHeartAnalysis_normalChart"
                         android:layout_width="match_parent"
                         android:layout_height="256dp"/>
                 </LinearLayout>
@@ -422,7 +422,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/homeHeartAnalysis_textView_periodAbnormalDays"
+                    android:id="@+id/careHeartAnalysis_textView_periodAbnormalDays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
@@ -439,7 +439,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/homeHeartAnalysis_textView_periodAbnormalSum"
+                    android:id="@+id/careHeartAnalysis_textView_periodAbnormalSum"
                     android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -459,7 +459,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <com.gigamole.navigationtabstrip.NavigationTabStrip
-                        android:id="@+id/homeHeartAnalysis_nts_normalChart"
+                        android:id="@+id/careHeartAnalysis_nts_normalChart"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="16dp"
@@ -476,7 +476,7 @@
 
 
                     <TextView
-                        android:id="@+id/homeHeartAnalysis_textView_periodAbnormal"
+                        android:id="@+id/careHeartAnalysis_textView_periodAbnormal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -488,7 +488,7 @@
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:layout_margin="16dp"
-                        android:id="@+id/homeHeartAnalysis_abnormalChart"
+                        android:id="@+id/careHeartAnalysis_abnormalChart"
                         android:layout_width="match_parent"
                         android:layout_height="256dp"/>
                 </LinearLayout>

@@ -1,9 +1,12 @@
 package com.example.newnoninvasiveglucoseapplication.care
 
+import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
@@ -15,6 +18,10 @@ import java.util.*
 class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityCareProtectingMenuBinding.inflate(layoutInflater) }
     private lateinit var protectingData: ProtectorData
+    
+    companion object {
+        var _protectingPhoneNumber: String? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,33 +47,43 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
         protectingData = ProtectorData(id, nickname, phoneNumber, birthDay, sex)
         Log.d("로그", "HomeProtectingMenuActivity - init : 보호 대상자 정보 :  $protectingData")
 
-        binding.homeProtectingMenuTextViewNickname.text = nickname
-        binding.homeProtectingMenuTextViewAge.text = changeBirthDayToAge(birthDay)
-        binding.homeProtectingMenuTextViewSex.text = changeSexToString(sex)
+        //전역변수 저장
+        _protectingPhoneNumber = phoneNumber
+
+        binding.careProtectingMenuTextViewNickname.text = nickname
+        binding.careProtectingMenuTextViewAge.text = changeBirthDayToAge(birthDay)
+        binding.careProtectingMenuTextViewSex.text = changeSexToString(sex)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeProtectingMenuLayoutThermometer -> {
-
+            binding.careProtectingMenuLayoutThermometer -> {
+                val intent = Intent(applicationContext, CareThermometerFullChartActivity::class.java)
+                startActivity(intent)
             }
-            binding.homeProtectingMenuLayoutThermometerAnalysis -> {
-
+            binding.careProtectingMenuLayoutThermometerAnalysis -> {
+                val intent = Intent(applicationContext, CareThermometerAnalysisActivity::class.java)
+                startActivity(intent)
             }
-            binding.homeProtectingMenuLayoutHeart -> {
-
+            binding.careProtectingMenuLayoutHeart -> {
+                val intent = Intent(applicationContext, CareHeartFullChartActivity::class.java)
+                startActivity(intent)
             }
-            binding.homeProtectingMenuLayoutHeartAnalysis -> {
-
+            binding.careProtectingMenuLayoutHeartAnalysis -> {
+                val intent = Intent(applicationContext, CareHeartAnalysisActivity::class.java)
+                startActivity(intent)
             }
-            binding.homeProtectingMenuLayoutGlucose -> {
-
+            binding.careProtectingMenuLayoutGlucose -> {
+                val intent = Intent(applicationContext, CareGlucoseFullChartActivity::class.java)
+                startActivity(intent)
             }
-            binding.homeProtectingMenuLayoutGlucoseAnalysis -> {
-
+            binding.careProtectingMenuLayoutGlucoseAnalysis -> {
+                val intent = Intent(applicationContext, CareGlucoseAnalysisActivity::class.java)
+                startActivity(intent)
             }
 
-            binding.homeProtectingMenuBtnBack -> {
+            binding.careProtectingMenuBtnBack -> {
                 finish()
             }
         }
@@ -75,8 +92,8 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(this)
-        glide.load(R.drawable.icon_color_profile).into(binding.homeProtectingMenuImageViewProfile)
-        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeProtectingMenuImageViewBack)
+        glide.load(R.drawable.icon_color_profile).into(binding.careProtectingMenuImageViewProfile)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careProtectingMenuImageViewBack)
     }
 
     //생년월일로 나이 계산
@@ -93,4 +110,9 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
         else "여성"
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        _protectingPhoneNumber = null
+    }
 }

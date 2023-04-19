@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeGlucoseFullChartActivity"
+    tools:context=".care.CareGlucoseFullChartActivity"
     android:background="@color/android_blue_100"
     android:orientation="vertical"
     android:weightSum="1">
@@ -20,7 +20,7 @@
             android:background="@drawable/ripple_android_blue_100_radius_20"
             android:focusable="true"
             android:clickable="true"
-            android:id="@+id/homeGlucoseFullChart_btn_back"
+            android:id="@+id/careGlucoseFullChart_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
@@ -51,7 +51,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:id="@+id/homeGlucoseFullChart_imageView_calendar"
+                android:id="@+id/careGlucoseFullChart_imageView_calendar"
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
         </LinearLayout>
@@ -81,7 +81,7 @@
             android:layout_height="72dp"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/homeGlucoseFullChart_textView_average"
+                android:id="@+id/careGlucoseFullChart_textView_average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="38dp"
@@ -90,7 +90,7 @@
                 android:fontFamily="@font/ps_bold"/>
 
             <TextView
-                android:id="@+id/homeGlucoseFullChart_textView_unit"
+                android:id="@+id/careGlucoseFullChart_textView_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ps_regular"
@@ -101,7 +101,7 @@
 
         <TextView
             android:gravity="bottom"
-            android:id="@+id/homeGlucoseFullChart_textView_date"
+            android:id="@+id/careGlucoseFullChart_textView_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="21dp"
@@ -111,14 +111,14 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/homeGlucoseFullChart_layout"
+        android:id="@+id/careGlucoseFullChart_layout"
         android:background="@color/android_blue_100"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:orientation="horizontal">
         <com.github.mikephil.charting.charts.ScatterChart
-            android:id="@+id/homeGlucoseFullChart_scatterChart"
+            android:id="@+id/careGlucoseFullChart_scatterChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <com.airbnb.lottie.LottieAnimationView
@@ -126,7 +126,7 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/homeGlucoseFullChart_lottie"
+            android:id="@+id/careGlucoseFullChart_lottie"
             app:lottie_rawRes="@raw/lottie_no_data"
             app:lottie_autoPlay="false"/>
     </LinearLayout>
@@ -135,7 +135,7 @@
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:id="@+id/homeGlucoseFullChart_lottie_swipe"
+        android:id="@+id/careGlucoseFullChart_lottie_swipe"
         app:lottie_rawRes="@raw/lottie_swipe_available"
         app:lottie_autoPlay="true"/>
 </LinearLayout>

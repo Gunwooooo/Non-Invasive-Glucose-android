@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
-import com.example.newnoninvasiveglucoseapplication.care.HomeProtectingMenuActivity
+import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeProtectorBinding
 import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
 import com.example.newnoninvasiveglucoseapplication.model.UserData
@@ -147,7 +147,7 @@ class HomeProtectorActivity : AppCompatActivity(), View.OnClickListener {
                 customDialog.dismiss()
                 
                 //보호 대상자 메뉴로 이동 (보호 대상자 정보 함께 보내기)
-                val intent = Intent(applicationContext, HomeProtectingMenuActivity::class.java)
+                val intent = Intent(applicationContext, CareProtectingMenuActivity::class.java)
                 intent.putExtra("protectingDataId", protectorData.id)
                 intent.putExtra("protectingDataNickname", protectorData.nickname)
                 intent.putExtra("protectingDataPhoneNumber", protectorData.phoneNumber)

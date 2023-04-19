@@ -19,6 +19,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.ScatterData
 import com.github.mikephil.charting.data.ScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.R
+import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareHeartFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeHeartFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
@@ -32,7 +34,7 @@ import java.util.*
 import kotlin.math.roundToInt
 
 class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeHeartFullChartBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityCareHeartFullChartBinding.inflate(layoutInflater) }
 
     private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
 
@@ -54,7 +56,7 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         setHeartScatterChart()
 
         //캘린더 이미지 넣기
-        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeHeartFullChartImageViewCalendar)
+        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.careHeartFullChartImageViewCalendar)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -65,17 +67,17 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         //스와이프 리스너 설정
         setLayoutSwipeListener()
 
-        binding.homeHeartFullChartImageViewCalendar.setOnClickListener(this)
-        binding.homeHeartFullChartBtnBack.setOnClickListener(this)
+        binding.careHeartFullChartImageViewCalendar.setOnClickListener(this)
+        binding.careHeartFullChartBtnBack.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeHeartFullChartBtnBack -> {
+            binding.careHeartFullChartBtnBack -> {
                 finish()
             }
-            binding.homeHeartFullChartImageViewCalendar -> {
+            binding.careHeartFullChartImageViewCalendar -> {
                 CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
@@ -85,19 +87,19 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun setLayoutSwipeListener() {
-        binding.homeHeartFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
+        binding.careHeartFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
 
             override fun onSwipeLeft() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
                 now.add(Calendar.DAY_OF_MONTH, 1)
-                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                binding.careHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
 
             override fun onSwipeRight() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
                 now.add(Calendar.DAY_OF_MONTH, -1)
-                binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                binding.careHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
         })
@@ -110,7 +112,7 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
         val year = now.get(Calendar.YEAR)
         val month = now.get(Calendar.MONTH)
         val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
-        binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+        binding.careHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     //데이터피커 리스너 설정
@@ -118,7 +120,7 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            binding.homeHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+            binding.careHeartFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
             retrofitGetBodyDataAsDate(year, month, dayOfMonth)
         }
         return datePickerDialogListener
@@ -152,7 +154,7 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     //체온 차트 설정
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setHeartScatterChart() {
-        val homeHeartFullChartScatterChart = binding.homeHeartFullChartScatterChart
+        val homeHeartFullChartScatterChart = binding.careHeartFullChartScatterChart
         //마커 뷰 설정
 //        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         homeHeartFullChartScatterChart.run {
@@ -182,12 +184,12 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                     if(x1 < x2) {
                         Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
                         now.add(Calendar.DAY_OF_MONTH, -1)
-                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        binding.careHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                         retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                     } else if(x1 > x2) {
                         Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
                         now.add(Calendar.DAY_OF_MONTH, 1)
-                        binding.homeHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+                        binding.careHeartFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                         retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
                     }
                 }
@@ -252,7 +254,7 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private fun retrofitGetBodyDataAsDate(year: Int, month: Int, day: Int) {
         customProgressDialog.show(supportFragmentManager, "common_progress_dialog")
         Log.d("로그", "HomeHeartFullChartActivity - retrofitGetBodyDataAsDate : date : $year-$month-$day")
-        RetrofitManager.instance.getBodyDataAsDate(LoginedUserClient.phoneNumber!!, year, month + 1, day, completion = {
+        RetrofitManager.instance.getBodyDataAsDate(_protectingPhoneNumber!!, year, month + 1, day, completion = {
                 completionResponse, response ->
             customProgressDialog.dismiss()
             when(completionResponse) {
@@ -260,7 +262,7 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                     when(response!!.code()) {
                         200 -> {
                             //스와이프 애니메이션 표시
-                            binding.homeHeartFullChartLottieSwipe.playAnimation()
+                            binding.careHeartFullChartLottieSwipe.playAnimation()
 
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
@@ -286,27 +288,27 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeHeartFullChartScatterChart.visibility = View.GONE
-                                binding.homeHeartFullChartLottie.visibility = View.VISIBLE
-                                binding.homeHeartFullChartLottie.playAnimation()
-                                binding.homeHeartFullChartTextViewAverage.text = "데이터 없음"
-                                binding.homeHeartFullChartTextViewUnit.visibility = View.GONE
+                                binding.careHeartFullChartScatterChart.visibility = View.GONE
+                                binding.careHeartFullChartLottie.visibility = View.VISIBLE
+                                binding.careHeartFullChartLottie.playAnimation()
+                                binding.careHeartFullChartTextViewAverage.text = "데이터 없음"
+                                binding.careHeartFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
                             //평균값 표시
                             average /= list.size
                             
                             //데이터가 있을 경우
-                            binding.homeHeartFullChartTextViewUnit.visibility = View.VISIBLE
-                            binding.homeHeartFullChartTextViewAverage.visibility = View.VISIBLE
-                            binding.homeHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
-                            binding.homeHeartFullChartScatterChart.visibility = View.VISIBLE
-                            binding.homeHeartFullChartLottie.visibility = View.GONE
-                            binding.homeHeartFullChartTextViewUnit.text = "BPM"
+                            binding.careHeartFullChartTextViewUnit.visibility = View.VISIBLE
+                            binding.careHeartFullChartTextViewAverage.visibility = View.VISIBLE
+                            binding.careHeartFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.careHeartFullChartScatterChart.visibility = View.VISIBLE
+                            binding.careHeartFullChartLottie.visibility = View.GONE
+                            binding.careHeartFullChartTextViewUnit.text = "BPM"
 
-                            binding.homeHeartFullChartScatterChart.data = heartScatterData
-                            binding.homeHeartFullChartScatterChart.invalidate()
-                            binding.homeHeartFullChartScatterChart.animateX(2000)
+                            binding.careHeartFullChartScatterChart.data = heartScatterData
+                            binding.careHeartFullChartScatterChart.invalidate()
+                            binding.careHeartFullChartScatterChart.animateX(2000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }

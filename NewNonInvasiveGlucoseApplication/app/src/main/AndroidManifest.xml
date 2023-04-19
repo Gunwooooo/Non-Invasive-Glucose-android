@@ -25,6 +25,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewNonInvasiveGlucoseApplication.NoActionBar"
         tools:targetApi="31">
+
+        <activity
+            android:name=".care.CareThermometerFullChartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".care.CareThermometerAnalysisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".care.CareGlucoseAnalysisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".care.CareHeartAnalysisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".care.CareGlucoseFullChartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".care.CareHeartFullChartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".care.CareProtectingMenuActivity"
             android:exported="false"

@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
+import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareThermometerAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeThermometerAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
@@ -34,7 +36,7 @@ import kotlin.math.roundToInt
 
 class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     private val customChartManager by lazy { CustomChartManager.getInstance(applicationContext)}
-    private val binding by lazy { ActivityHomeThermometerAnalysisBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityCareThermometerAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
 
     //평균 체온 인덱스 순서 저장
@@ -51,9 +53,9 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        binding.homeThermometerAnalysisNtsAverageChart.setTabIndex(0, true)
-        binding.homeThermometerAnalysisNtsAbnormalChart.setTabIndex(0, true)
-        binding.homeThermometerAnalysisNtsNormalChart.setTabIndex(0, true)
+        binding.careThermometerAnalysisNtsAverageChart.setTabIndex(0, true)
+        binding.careThermometerAnalysisNtsAbnormalChart.setTabIndex(0, true)
+        binding.careThermometerAnalysisNtsNormalChart.setTabIndex(0, true)
 
         //초기 글라이드로 이미지 불러오기
         setImageViewWithGlide()
@@ -76,12 +78,12 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         setPeriodTextView(7, 1)
         setPeriodTextView(7, 2)
 
-        binding.homeThermometerAnalysisBtnBack.setOnClickListener(this)
+        binding.careThermometerAnalysisBtnBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeThermometerAnalysisBtnBack -> {
+            binding.careThermometerAnalysisBtnBack -> {
                 finish()
             }
         }
@@ -90,8 +92,8 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail).into(binding.homeThermometerAnalysisImageViewDetailBackground)
-        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeThermometerAnalysisImageViewBack)
+        glide.load(R.drawable.background_image_detail).into(binding.careThermometerAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careThermometerAnalysisImageViewBack)
     }
 
 
@@ -125,7 +127,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     //평균 체온 차트 설정
     private fun setThermometerCombineChart() {
-        val homeThermometerAnalysisAverageChart = binding.homeThermometerAnalysisAverageChart
+        val homeThermometerAnalysisAverageChart = binding.careThermometerAnalysisAverageChart
 
         //마커 뷰 설정
 //        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
@@ -135,22 +137,22 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             //그래프 터치시 값 변경 리스너
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val index = averageThermometerIndexList.indexOf((e!!.x / 3).toInt())
-                val candleData = binding.homeThermometerAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
-                val scatterData = binding.homeThermometerAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
+                val candleData = binding.careThermometerAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
+                val scatterData = binding.careThermometerAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
 
                 val minVal = min(candleData.high, candleData.low)
                 val maxVal = max(candleData.high, candleData.low)
                 val averageVal = scatterData.y
 
-                binding.homeThermometerAnalysisTextViewMinValue.text = "$minVal"
-                binding.homeThermometerAnalysisTextViewMaxValue.text = "$maxVal"
-                binding.homeThermometerAnalysisTextViewAverageValue.text = "$averageVal"
-                binding.homeThermometerAnalysisTextViewMaxUnit.visibility = View.VISIBLE
-                binding.homeThermometerAnalysisTextViewMinUnit.visibility = View.VISIBLE
-                binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.VISIBLE
+                binding.careThermometerAnalysisTextViewMinValue.text = "$minVal"
+                binding.careThermometerAnalysisTextViewMaxValue.text = "$maxVal"
+                binding.careThermometerAnalysisTextViewAverageValue.text = "$averageVal"
+                binding.careThermometerAnalysisTextViewMaxUnit.visibility = View.VISIBLE
+                binding.careThermometerAnalysisTextViewMinUnit.visibility = View.VISIBLE
+                binding.careThermometerAnalysisTextViewAverageUnit.visibility = View.VISIBLE
 
                 //로티 시작하기
-                binding.homeThermometerAnalysisLottie.playAnimation()
+                binding.careThermometerAnalysisLottie.playAnimation()
             }
             override fun onNothingSelected() {
             }
@@ -226,7 +228,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     //체온 차트 설정
     private fun setThermometerAbnormalChart() {
-        val barThermometerDay = binding.homeThermometerAnalysisAbnormalChart
+        val barThermometerDay = binding.careThermometerAnalysisAbnormalChart
         barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
@@ -289,7 +291,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     }
 
     private fun setThermometerNormalChart() {
-        val barThermometerDay = binding.homeThermometerAnalysisNormalChart
+        val barThermometerDay = binding.careThermometerAnalysisNormalChart
 
         barThermometerDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -347,18 +349,18 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
         when(flag) {
             //평균
             0 -> {
-                binding.homeThermometerAnalysisTextViewMinValue.text = "-"
-                binding.homeThermometerAnalysisTextViewMaxValue.text = "-"
-                binding.homeThermometerAnalysisTextViewAverageValue.text = "-"
-                binding.homeThermometerAnalysisTextViewMaxUnit.visibility = View.GONE
-                binding.homeThermometerAnalysisTextViewMinUnit.visibility = View.GONE
-                binding.homeThermometerAnalysisTextViewAverageUnit.visibility = View.GONE
-                binding.homeThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+                binding.careThermometerAnalysisTextViewMinValue.text = "-"
+                binding.careThermometerAnalysisTextViewMaxValue.text = "-"
+                binding.careThermometerAnalysisTextViewAverageValue.text = "-"
+                binding.careThermometerAnalysisTextViewMaxUnit.visibility = View.GONE
+                binding.careThermometerAnalysisTextViewMinUnit.visibility = View.GONE
+                binding.careThermometerAnalysisTextViewAverageUnit.visibility = View.GONE
+                binding.careThermometerAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
             }
             //정상 빈도수
-            1 -> binding.homeThermometerAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
+            1 -> binding.careThermometerAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
             //비정상 빈도수
-            2 -> binding.homeThermometerAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
+            2 -> binding.careThermometerAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
         }
     }
@@ -366,7 +368,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     //평균 체온 차트 일수 변경 리스너
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTabStripSelectedIndexListener() {
-        binding.homeThermometerAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.careThermometerAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
 
             override fun onStartTabSelected(title: String?, index: Int) {
                 //7, 30, 90 데이터 가져오기
@@ -376,20 +378,20 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeThermometerAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.careThermometerAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
                 retrofitGetAnalysisThermometerNormal(daysArray[index])
-                binding.homeThermometerAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
+                binding.careThermometerAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 1)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeThermometerAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.careThermometerAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
                 retrofitGetAnalysisThermometerAbnormal(daysArray[index])
-                binding.homeThermometerAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
+                binding.careThermometerAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 2)
             }
@@ -405,7 +407,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //평균, 최대, 최소 일수별 체온 가져오기
     private fun retrofitGetAnalysisThermometerAverage(day : Int) {
-        RetrofitManager.instance.getAnalysisThermometerAverage(LoginedUserClient.phoneNumber!!, day, completion = {
+        RetrofitManager.instance.getAnalysisThermometerAverage(_protectingPhoneNumber!!, day, completion = {
             completionResponse, response -> 
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -437,10 +439,10 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
                             //차트 다시 그리기
-                            binding.homeThermometerAnalysisAverageChart.clear()
-                            binding.homeThermometerAnalysisAverageChart.data = combinedData
-                            binding.homeThermometerAnalysisAverageChart.invalidate()
-                            binding.homeThermometerAnalysisAverageChart.animateXY(1000, 1000)
+                            binding.careThermometerAnalysisAverageChart.clear()
+                            binding.careThermometerAnalysisAverageChart.data = combinedData
+                            binding.careThermometerAnalysisAverageChart.invalidate()
+                            binding.careThermometerAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
@@ -456,7 +458,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     //정상 범위 체온 빈도수 가져오기
     private fun retrofitGetAnalysisThermometerNormal(day : Int) {
-        RetrofitManager.instance.getAnalysisThermometerNormal(LoginedUserClient.phoneNumber!!, day, completion = {
+        RetrofitManager.instance.getAnalysisThermometerNormal(_protectingPhoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -475,13 +477,13 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
                             val barDataSet = BarData(setThermometerNormalData(listBarData))
-                            binding.homeThermometerAnalysisNormalChart.data = barDataSet
-                            binding.homeThermometerAnalysisNormalChart.invalidate()
-                            binding.homeThermometerAnalysisNormalChart.animateY( 1000)
+                            binding.careThermometerAnalysisNormalChart.data = barDataSet
+                            binding.careThermometerAnalysisNormalChart.invalidate()
+                            binding.careThermometerAnalysisNormalChart.animateY( 1000)
 
 
                             //총 개수 카운트
-                            binding.homeThermometerAnalysisTextViewPeriodNormalSum.text = sum.toString()
+                            binding.careThermometerAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
                     }
                 }
@@ -494,7 +496,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     //정상 범위 체온 빈도수 가져오기
     private fun retrofitGetAnalysisThermometerAbnormal(day : Int) {
-        RetrofitManager.instance.getAnalysisThermometerAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
+        RetrofitManager.instance.getAnalysisThermometerAbnormal(_protectingPhoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -512,11 +514,11 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
                             val barDataSet = BarData(setThermometerAbnormalData(listBarData))
-                            binding.homeThermometerAnalysisAbnormalChart.data = barDataSet
-                            binding.homeThermometerAnalysisAbnormalChart.invalidate()
-                            binding.homeThermometerAnalysisAbnormalChart.animateY( 1000)
+                            binding.careThermometerAnalysisAbnormalChart.data = barDataSet
+                            binding.careThermometerAnalysisAbnormalChart.invalidate()
+                            binding.careThermometerAnalysisAbnormalChart.animateY( 1000)
 
-                            binding.homeThermometerAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
+                            binding.careThermometerAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }
                     }
                 }

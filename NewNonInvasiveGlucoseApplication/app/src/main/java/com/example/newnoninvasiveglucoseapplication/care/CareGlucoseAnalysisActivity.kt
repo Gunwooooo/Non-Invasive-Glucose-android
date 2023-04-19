@@ -10,7 +10,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeGlucoseAnalysisBinding
+import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
+import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareGlucoseAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
@@ -33,7 +34,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
-    private val binding by lazy { ActivityHomeGlucoseAnalysisBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityCareGlucoseAnalysisBinding.inflate(layoutInflater) }
     private val daysArray = intArrayOf(7, 30, 90)
 
     //평균 혈당 인덱스 순서 저장
@@ -50,9 +51,9 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        binding.homeGlucoseAnalysisNtsAverageChart.setTabIndex(0, true)
-        binding.homeGlucoseAnalysisNtsAbnormalChart.setTabIndex(0, true)
-        binding.homeGlucoseAnalysisNtsNormalChart.setTabIndex(0, true)
+        binding.careGlucoseAnalysisNtsAverageChart.setTabIndex(0, true)
+        binding.careGlucoseAnalysisNtsAbnormalChart.setTabIndex(0, true)
+        binding.careGlucoseAnalysisNtsNormalChart.setTabIndex(0, true)
 
         //초기 글라이드로 이미지 불러오기
         setImageViewWithGlide()
@@ -75,12 +76,12 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         setPeriodTextView(7, 1)
         setPeriodTextView(7, 2)
 
-        binding.homeGlucoseAnalysisBtnBack.setOnClickListener(this)
+        binding.careGlucoseAnalysisBtnBack.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.homeGlucoseAnalysisBtnBack -> {
+            binding.careGlucoseAnalysisBtnBack -> {
                 finish()
             }
         }
@@ -89,8 +90,8 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail).into(binding.homeGlucoseAnalysisImageViewDetailBackground)
-        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.homeGlucoseAnalysisImageViewBack)
+        glide.load(R.drawable.background_image_detail).into(binding.careGlucoseAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careGlucoseAnalysisImageViewBack)
     }
 
 
@@ -124,7 +125,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //평균 혈당 차트 설정
     private fun setGlucoseCombineChart() {
-        val homeGlucoseAnalysisAverageChart = binding.homeGlucoseAnalysisAverageChart
+        val homeGlucoseAnalysisAverageChart = binding.careGlucoseAnalysisAverageChart
 
         //마커 뷰 설정
 //        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
@@ -135,22 +136,22 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             //그래프 터치시 값 변경 리스너
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val index = averageGlucoseIndexList.indexOf((e!!.x / 3).toInt())
-                val candleData = binding.homeGlucoseAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
-                val scatterData = binding.homeGlucoseAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
+                val candleData = binding.careGlucoseAnalysisAverageChart.data.candleData.dataSets[0].getEntryForIndex(index)
+                val scatterData = binding.careGlucoseAnalysisAverageChart.data.scatterData.dataSets[0].getEntryForIndex(index)
 
                 val minVal = min(candleData.high, candleData.low)
                 val maxVal = max(candleData.high, candleData.low)
                 val averageVal = scatterData.y
 
-                binding.homeGlucoseAnalysisTextViewMinValue.text = "$minVal"
-                binding.homeGlucoseAnalysisTextViewMaxValue.text = "$maxVal"
-                binding.homeGlucoseAnalysisTextViewAverageValue.text = "$averageVal"
-                binding.homeGlucoseAnalysisTextViewMaxUnit.visibility = View.VISIBLE
-                binding.homeGlucoseAnalysisTextViewMinUnit.visibility = View.VISIBLE
-                binding.homeGlucoseAnalysisTextViewAverageUnit.visibility = View.VISIBLE
+                binding.careGlucoseAnalysisTextViewMinValue.text = "$minVal"
+                binding.careGlucoseAnalysisTextViewMaxValue.text = "$maxVal"
+                binding.careGlucoseAnalysisTextViewAverageValue.text = "$averageVal"
+                binding.careGlucoseAnalysisTextViewMaxUnit.visibility = View.VISIBLE
+                binding.careGlucoseAnalysisTextViewMinUnit.visibility = View.VISIBLE
+                binding.careGlucoseAnalysisTextViewAverageUnit.visibility = View.VISIBLE
 
                 //로티 시작하기
-                binding.homeGlucoseAnalysisLottie.playAnimation()
+                binding.careGlucoseAnalysisLottie.playAnimation()
             }
             override fun onNothingSelected() {
             }
@@ -226,7 +227,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //혈당 차트 설정
     private fun setGlucoseAbnormalChart() {
-        val barGlucoseDay = binding.homeGlucoseAnalysisAbnormalChart
+        val barGlucoseDay = binding.careGlucoseAnalysisAbnormalChart
         barGlucoseDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
             description.isEnabled = false
@@ -289,7 +290,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setGlucoseNormalChart() {
-        val barGlucoseDay = binding.homeGlucoseAnalysisNormalChart
+        val barGlucoseDay = binding.careGlucoseAnalysisNormalChart
 
         barGlucoseDay.run {
             setScaleEnabled(false) //핀치 줌 안되도록
@@ -346,16 +347,16 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
         val start = now.minusDays(period - 1).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         when(flag) {
             0 -> {
-                binding.homeGlucoseAnalysisTextViewMinValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewMaxValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewAverageValue.text = "-"
-                binding.homeGlucoseAnalysisTextViewMaxUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewMinUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewAverageUnit.visibility = View.GONE
-                binding.homeGlucoseAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
+                binding.careGlucoseAnalysisTextViewMinValue.text = "-"
+                binding.careGlucoseAnalysisTextViewMaxValue.text = "-"
+                binding.careGlucoseAnalysisTextViewAverageValue.text = "-"
+                binding.careGlucoseAnalysisTextViewMaxUnit.visibility = View.GONE
+                binding.careGlucoseAnalysisTextViewMinUnit.visibility = View.GONE
+                binding.careGlucoseAnalysisTextViewAverageUnit.visibility = View.GONE
+                binding.careGlucoseAnalysisTextViewPeriodAverage.text = "$start  ~  $end"
             }
-            1 -> binding.homeGlucoseAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
-            2 -> binding.homeGlucoseAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
+            1 -> binding.careGlucoseAnalysisTextViewPeriodNormal.text = "$start  ~  $end"
+            2 -> binding.careGlucoseAnalysisTextViewPeriodAbnormal.text = "$start  ~  $end"
 
         }
     }
@@ -363,7 +364,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     //평균 혈당 차트 일수 변경 리스너
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTabStripSelectedIndexListener() {
-        binding.homeGlucoseAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.careGlucoseAnalysisNtsAverageChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
 
             override fun onStartTabSelected(title: String?, index: Int) {
                 //7, 30, 90 데이터 가져오기
@@ -373,20 +374,20 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeGlucoseAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.careGlucoseAnalysisNtsAbnormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
                 retrofitGetAnalysisGlucoseNormal(daysArray[index])
-                binding.homeGlucoseAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
+                binding.careGlucoseAnalysisTextViewPeriodNormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 1)
             }
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-        binding.homeGlucoseAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
+        binding.careGlucoseAnalysisNtsNormalChart.onTabStripSelectedIndexListener = object : NavigationTabStrip.OnTabStripSelectedIndexListener {
             override fun onStartTabSelected(title: String?, index: Int) {
                 retrofitGetAnalysisGlucoseAbnormal(daysArray[index])
-                binding.homeGlucoseAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
+                binding.careGlucoseAnalysisTextViewPeriodAbnormalDays.text = daysArray[index].toString()
 
                 setPeriodTextView(daysArray[index].toLong(), 2)
             }
@@ -402,7 +403,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //평균, 최대, 최소 일수별 혈당 가져오기
     private fun retrofitGetAnalysisGlucoseAverage(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseAverage(LoginedUserClient.phoneNumber!!, day, completion = {
+        RetrofitManager.instance.getAnalysisGlucoseAverage(_protectingPhoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -436,10 +437,10 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                             combinedData.setData(ScatterData(candleScatterDataSet.scatterDataSet))
 
                             //차트 다시 그리기
-                            binding.homeGlucoseAnalysisAverageChart.clear()
-                            binding.homeGlucoseAnalysisAverageChart.data = combinedData
-                            binding.homeGlucoseAnalysisAverageChart.invalidate()
-                            binding.homeGlucoseAnalysisAverageChart.animateXY(1000, 1000)
+                            binding.careGlucoseAnalysisAverageChart.clear()
+                            binding.careGlucoseAnalysisAverageChart.data = combinedData
+                            binding.careGlucoseAnalysisAverageChart.invalidate()
+                            binding.careGlucoseAnalysisAverageChart.animateXY(1000, 1000)
                         }
                     }
                 }
@@ -455,7 +456,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //정상 범위 혈당 빈도수 가져오기
     private fun retrofitGetAnalysisGlucoseNormal(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseNormal(LoginedUserClient.phoneNumber!!, day, completion = {
+        RetrofitManager.instance.getAnalysisGlucoseNormal(_protectingPhoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -474,11 +475,11 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
                             val barDataSet = BarData(setGlucoseNormalData(listBarData))
-                            binding.homeGlucoseAnalysisNormalChart.data = barDataSet
-                            binding.homeGlucoseAnalysisNormalChart.invalidate()
-                            binding.homeGlucoseAnalysisNormalChart.animateY( 1000)
+                            binding.careGlucoseAnalysisNormalChart.data = barDataSet
+                            binding.careGlucoseAnalysisNormalChart.invalidate()
+                            binding.careGlucoseAnalysisNormalChart.animateY( 1000)
 
-                            binding.homeGlucoseAnalysisTextViewPeriodNormalSum.text = sum.toString()
+                            binding.careGlucoseAnalysisTextViewPeriodNormalSum.text = sum.toString()
                         }
                     }
                 }
@@ -491,7 +492,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     //정상 범위 혈당 빈도수 가져오기
     private fun retrofitGetAnalysisGlucoseAbnormal(day : Int) {
-        RetrofitManager.instance.getAnalysisGlucoseAbnormal(LoginedUserClient.phoneNumber!!, day, completion = {
+        RetrofitManager.instance.getAnalysisGlucoseAbnormal(_protectingPhoneNumber!!, day, completion = {
                 completionResponse, response ->
             when(completionResponse) {
                 CompletionResponse.OK -> {
@@ -509,11 +510,11 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                                 listBarData.add(BarEntry(i.toFloat(), value.toFloat()))
                             }
                             val barDataSet = BarData(setGlucoseAbnormalData(listBarData))
-                            binding.homeGlucoseAnalysisAbnormalChart.data = barDataSet
-                            binding.homeGlucoseAnalysisAbnormalChart.invalidate()
-                            binding.homeGlucoseAnalysisAbnormalChart.animateY( 1000)
+                            binding.careGlucoseAnalysisAbnormalChart.data = barDataSet
+                            binding.careGlucoseAnalysisAbnormalChart.invalidate()
+                            binding.careGlucoseAnalysisAbnormalChart.animateY( 1000)
 
-                            binding.homeGlucoseAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
+                            binding.careGlucoseAnalysisTextViewPeriodAbnormalSum.text = sum.toString()
                         }
                     }
                 }
