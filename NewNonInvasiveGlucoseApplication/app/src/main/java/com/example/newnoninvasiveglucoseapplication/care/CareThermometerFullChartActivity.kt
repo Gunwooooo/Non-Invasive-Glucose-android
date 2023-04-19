@@ -55,10 +55,14 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
+
+        //스테이터스바 색상 변경
+        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
+
         setThermometerScatterChart()
 
-        //캘린더 이미지 넣기
-        Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.careThermometerFullChartImageViewCalendar)
+        //이미지 넣기
+        setImageViewWithGlide()
 
         //오늘 날짜 설정
         setTodayDate()
@@ -84,6 +88,14 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
         }
     }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(applicationContext)
+        glide.load(R.drawable.ic_baseline_calendar_month_24).into(binding.careThermometerFullChartImageViewCalendar)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careThermometerFullChartImageViewBack)
+    }
+
 
     //초기 오늘 날짜 표시 되도록 설정
     @SuppressLint("SetTextI18n")
@@ -133,7 +145,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.teal_700)
+            color = ContextCompat.getColor(applicationContext, R.color.iphone_green_200)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             setScatterShape(ScatterChart.ScatterShape.CIRCLE)
 //            lineWidth = 2F //선 굵기
@@ -163,7 +175,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             isDragEnabled = false
 //            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
+            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.toss_black_600))
 //            marker = markerView
 
             //스와이프 제스처 이벤트 설정
@@ -210,8 +222,9 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //                labelCount = 12
                 granularity = 10800f  //X축 간격
                 textSize = 12f
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
-//                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
+                gridColor =
+                    ContextCompat.getColor(applicationContext, R.color.white)    //x그리드 색깔 변경
 //                animateXY(1000, 1000)
 //                setDrawLabels(true)
 //                setDrawAxisLine(false)
@@ -222,9 +235,9 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 textSize = 15f
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.white)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기
@@ -232,9 +245,9 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 textSize = 15f
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.white)    //y그리드 색깔 변경
                 isEnabled = true  //오른쪽 y축 없애기
             }
             legend.run {
@@ -242,7 +255,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(15f, 15f, 15f, 15f)
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }

@@ -16,7 +16,6 @@ import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
@@ -51,6 +50,10 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
+
+        //스테이터스바 색상 변경
+        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
+
         binding.careGlucoseAnalysisNtsAverageChart.setTabIndex(0, true)
         binding.careGlucoseAnalysisNtsAbnormalChart.setTabIndex(0, true)
         binding.careGlucoseAnalysisNtsNormalChart.setTabIndex(0, true)
@@ -90,7 +93,7 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail).into(binding.careGlucoseAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.background_image_detail_black).into(binding.careGlucoseAnalysisImageViewDetailBackground)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careGlucoseAnalysisImageViewBack)
     }
 

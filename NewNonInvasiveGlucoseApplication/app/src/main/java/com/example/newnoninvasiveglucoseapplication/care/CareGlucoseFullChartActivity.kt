@@ -53,10 +53,16 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
+
+        //스테이터스바 색상 변경
+        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
+
         setGlucoseScatterChart()
 
-        //캘린더 이미지 넣기
+        //이미지 넣기
+        setImageViewWithGlide()
         Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.careGlucoseFullChartImageViewCalendar)
+        Glide.with(this).load(R.drawable.ic_baseline_arrow_back_24).into(binding.careGlucoseFullChartImageViewBack)
 
         //오늘 날짜 설정
         setTodayDate()
@@ -81,6 +87,13 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
             }
         }
+    }
+
+    //초기 글라이드로 이미지 불러오기
+    private fun setImageViewWithGlide() {
+        val glide = Glide.with(applicationContext)
+        glide.load(R.drawable.ic_baseline_calendar_month_24).into(binding.careGlucoseFullChartImageViewCalendar)
+        glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careGlucoseFullChartImageViewBack)
     }
 
     //초기 오늘 날짜 표시 되도록 설정
@@ -127,12 +140,12 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 
     //심박수 라인 데이터 생성성
     private fun makeGlucoseSet(values : ArrayList<Entry>) : ScatterDataSet {
-        val glucoseLineDataSet = ScatterDataSet(values, "체온")
+        val glucoseLineDataSet = ScatterDataSet(values, "혈당")
         return glucoseLineDataSet.apply {
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
             setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
+            color = ContextCompat.getColor(applicationContext, R.color.iphone_blue_200)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             setScatterShape(ScatterChart.ScatterShape.CIRCLE)
 //            lineWidth = 2F //선 굵기
@@ -163,7 +176,7 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
             isDragEnabled = false
 //            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
+            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.toss_black_600))
 //            marker = markerView
             animateX(1000)
             //스와이프 제스처 이벤트 설정
@@ -208,8 +221,9 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //                labelCount = 6
                 granularity = 10800f  //X축 간격
                 textSize = 12f
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
-//                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
+                gridColor =
+                    ContextCompat.getColor(applicationContext, R.color.white)    //x그리드 색깔 변경
 //                animateXY(1000, 1000)
             }
             axisLeft.run { //왼쪽 Y축
@@ -218,9 +232,9 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 axisMaximum = 140F   //최대값
                 isEnabled = true
                 textSize = 15f
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.white)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축
                 setDrawAxisLine(true)  //좌측 선 없애기
@@ -228,16 +242,16 @@ class CareGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 axisMaximum = 140F   //최대값
                 isEnabled = true
                 textSize = 15f
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.white)    //y그리드 색깔 변경
             }
             legend.run {
                 isEnabled = true //레전드 아이콘 표시
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(15f, 15f, 15f, 15f)
-                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
+                textColor = ContextCompat.getColor(applicationContext, R.color.white)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }

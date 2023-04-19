@@ -86,8 +86,7 @@
                         android:adjustViewBounds="true"
                         android:id="@+id/homeHeartAnalysis_imageView_detail_background"
                         android:layout_width="200dp"
-                        android:layout_height="185dp"
-                        android:src="@drawable/background_image_detail"/>
+                        android:layout_height="185dp"/>
                 </LinearLayout>
             </LinearLayout>
 

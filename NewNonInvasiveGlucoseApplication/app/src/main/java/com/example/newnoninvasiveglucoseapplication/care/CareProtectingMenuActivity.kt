@@ -53,6 +53,14 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
         binding.careProtectingMenuTextViewNickname.text = nickname
         binding.careProtectingMenuTextViewAge.text = changeBirthDayToAge(birthDay)
         binding.careProtectingMenuTextViewSex.text = changeSexToString(sex)
+
+        binding.careProtectingMenuLayoutThermometer.setOnClickListener(this)
+        binding.careProtectingMenuLayoutThermometerAnalysis.setOnClickListener(this)
+        binding.careProtectingMenuLayoutHeart.setOnClickListener(this)
+        binding.careProtectingMenuLayoutHeartAnalysis.setOnClickListener(this)
+        binding.careProtectingMenuLayoutGlucose.setOnClickListener(this)
+        binding.careProtectingMenuLayoutGlucoseAnalysis.setOnClickListener(this)
+        binding.careProtectingMenuBtnBack.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -94,6 +102,13 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
         val glide = Glide.with(this)
         glide.load(R.drawable.icon_color_profile).into(binding.careProtectingMenuImageViewProfile)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careProtectingMenuImageViewBack)
+
+        glide.load(R.drawable.icon_color_thermometer).into(binding.careProtectingMenuImageViewThermometer)
+        glide.load(R.drawable.icon_color_thermometer_analysis).into(binding.careProtectingMenuImageViewThermometerAnalysis)
+        glide.load(R.drawable.icon_color_heart).into(binding.careProtectingMenuImageViewHeart)
+        glide.load(R.drawable.icon_color_heart_analysis).into(binding.careProtectingMenuImageViewHeartAnalysis)
+        glide.load(R.drawable.icon_color_glucose).into(binding.careProtectingMenuImageViewGlucose)
+        glide.load(R.drawable.icon_color_glucose_analysis).into(binding.careProtectingMenuImageViewGlucoseAnalysis)
     }
 
     //생년월일로 나이 계산

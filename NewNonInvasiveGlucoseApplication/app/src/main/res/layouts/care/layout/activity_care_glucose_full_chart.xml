@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".care.CareGlucoseFullChartActivity"
-    android:background="@color/android_blue_100"
+    android:background="@color/toss_black_600"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -17,17 +17,16 @@
         <LinearLayout
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/ripple_android_blue_100_radius_20"
             android:focusable="true"
             android:clickable="true"
             android:id="@+id/careGlucoseFullChart_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/careGlucoseFullChart_imageView_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_arrow_back_24"
-                app:tint="@color/toss_black_500" />
+                app:tint="@color/white" />
             <TextView
                 android:layout_marginTop="3dp"
                 android:gravity="center"
@@ -35,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Home"
-                android:textColor="@color/toss_black_700"
+                android:textColor="@color/white"
                 android:textSize="18dp"
                 android:fontFamily="@font/ps_regular"/>
         </LinearLayout>
@@ -53,7 +52,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:id="@+id/careGlucoseFullChart_imageView_calendar"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                app:tint="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:text="평균 혈당"
-            android:textColor="@color/toss_black_200"
+            android:textColor="@color/toss_black_150"
             android:fontFamily="@font/ps_regular"/>
 
         <LinearLayout
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="38dp"
                 android:text=""
-                android:textColor="@color/toss_black_700"
+                android:textColor="@color/white"
                 android:fontFamily="@font/ps_bold"/>
 
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ps_regular"
                 android:text=""
-                android:textColor="@color/toss_black_700"
+                android:textColor="@color/white"
                 android:textSize="24dp" />
         </LinearLayout>
 
@@ -106,13 +106,13 @@
             android:layout_height="wrap_content"
             android:textSize="21dp"
             android:text=""
-            android:textColor="@color/toss_black_500"
+            android:textColor="@color/toss_black_100"
             android:fontFamily="@font/ps_regular"/>
 
     </LinearLayout>
     <LinearLayout
         android:id="@+id/careGlucoseFullChart_layout"
-        android:background="@color/android_blue_100"
+        android:background="@color/toss_black_600"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
@@ -127,7 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/careGlucoseFullChart_lottie"
-            app:lottie_rawRes="@raw/lottie_no_data"
+            app:lottie_rawRes="@raw/lottie_no_data_black"
             app:lottie_autoPlay="false"/>
     </LinearLayout>
 
