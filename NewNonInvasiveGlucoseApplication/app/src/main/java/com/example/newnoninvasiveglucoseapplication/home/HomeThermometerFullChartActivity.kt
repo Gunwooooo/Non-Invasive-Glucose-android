@@ -20,9 +20,7 @@ import com.example.newnoninvasiveglucoseapplication.util.*
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.ScatterData
-import com.github.mikephil.charting.data.ScatterDataSet
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import org.json.JSONArray
@@ -51,7 +49,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        setThermometerScatterChart()
+        setThermometerLineChart()
 
         //캘린더 이미지 넣기
         Glide.with(this).load(R.drawable.ic_baseline_calendar_month_24).into(binding.homeThermometerFullChartImageViewCalendar)
@@ -123,88 +121,90 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     }
 
     //심박수 라인 데이터 생성성
-    private fun makeThermometerSet(values : ArrayList<Entry>) : ScatterDataSet {
-        val thermometerLineDataSet = ScatterDataSet(values, "체온")
+    private fun makeThermometerSet(values : ArrayList<Entry>) : LineDataSet {
+        val thermometerLineDataSet = LineDataSet(values, "체온")
         return thermometerLineDataSet.apply {
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+//            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.teal_700)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
-            setScatterShape(ScatterChart.ScatterShape.CIRCLE)
-//            lineWidth = 2F //선 굵기
-//            circleRadius = 3F
-//            circleHoleRadius = 1F
+//            setScatterShape(ScatterChart.ScatterShape.CIRCLE)
+            lineWidth = 2F //선 굵기
+            circleRadius = 3F
+            circleHoleRadius = 1F
 //            setDrawCircles(true)   //동그란거 없애기
-            setDrawValues(true)
-//            setCircleColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
+            setDrawValues(false)
+            setCircleColor(ContextCompat.getColor(applicationContext, R.color.teal_700))
             valueTextSize = 0F
             isHighlightEnabled = true   //클릭시 마크 보이게
-            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
+            setDrawHorizontalHighlightIndicator(true)  //가로 하이라이트 줄 없애기
+            setDrawVerticalHighlightIndicator(true) //세로 하이라이트 줄 없애기
+            highLightColor = ContextCompat.getColor(applicationContext, R.color.circle_red_100) //클릭시 보이는 선 색깔
 //            setDrawCircleHole(true)
-            scatterShapeSize = 11f
+//            scatterShapeSize = 11f
         }
     }
 
     //체온 차트 설정
-    private fun setThermometerScatterChart() {
-        val homeFullChartScatterChart = binding.homeThermometerFullChartScatterChart
+    private fun setThermometerLineChart() {
+        val homeFullChartLineChart = binding.homeThermometerFullChartLineChart
         //마커 뷰 설정
-        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
-        homeFullChartScatterChart.run {
-            setScaleEnabled(false) //핀치 줌 안되도록
+//        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
+        homeFullChartLineChart.run {
+            setScaleEnabled(true) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = false
+            isDragEnabled = true
 //            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
 
             //스와이프 제스처 이벤트 설정
-            onChartGestureListener = object : OnChartGestureListener {
-                override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
-                override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
-                override fun onChartLongPressed(me: MotionEvent?) {}
-                override fun onChartDoubleTapped(me: MotionEvent?) {}
-                override fun onChartSingleTapped(me: MotionEvent?) {}
-                //스와이프 이벤트 설정
-                @SuppressLint("SetTextI18n")
-                override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
-                    val x1 = me1!!.x
-                    val x2 = me2!!.x
-                    Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : $velocityX     $velocityY")
-                    //오른쪽으로 스와이프 -> 이전 날짜 호출
-                    if(x1 < x2) {
-                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
-                        now.add(Calendar.DAY_OF_MONTH, -1)
-                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
-                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
-                    } else if(x1 > x2) {
-                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
-                        now.add(Calendar.DAY_OF_MONTH, 1)
-                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
-                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
-                    }
-                }
-                override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
-                override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
-            }
+//            onChartGestureListener = object : OnChartGestureListener {
+//                override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+//                override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
+//                override fun onChartLongPressed(me: MotionEvent?) {}
+//                override fun onChartDoubleTapped(me: MotionEvent?) {}
+//                override fun onChartSingleTapped(me: MotionEvent?) {}
+//                //스와이프 이벤트 설정
+//                @SuppressLint("SetTextI18n")
+//                override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
+//                    val x1 = me1!!.x
+//                    val x2 = me2!!.x
+//                    Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : $velocityX     $velocityY")
+//                    //오른쪽으로 스와이프 -> 이전 날짜 호출
+//                    if(x1 < x2) {
+//                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
+//                        now.add(Calendar.DAY_OF_MONTH, -1)
+//                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+//                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+//                    } else if(x1 > x2) {
+//                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
+//                        now.add(Calendar.DAY_OF_MONTH, 1)
+//                        binding.homeThermometerFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
+//                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+//                    }
+//                }
+//                override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
+//                override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
+//            }
             animateX(1000)
+//            setVisibleXRangeMaximum(28800f)
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((thermometerLineData.entryCount).toFloat())
 //            moveViewToX(3f);
             xAxis.run { //아래 라벨 X축
                 axisMinimum = 0f
                 axisMaximum = 85399f
+//                granularity = 2220f
 //                spaceMin = 10800f
 //                spaceMax = 10800f
                 setDrawGridLines(true)   //배경 그리드 추가
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                labelCount = 12
-                granularity = 10800f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
@@ -214,8 +214,8 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 20F   //최소값
-                axisMaximum = 40F   //최대값
+                axisMinimum = 27F   //최소값
+                axisMaximum = 42F   //최대값
                 isEnabled = true
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -224,8 +224,8 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기
-                axisMinimum = 20F   //최소값
-                axisMaximum = 40F   //최대값
+                axisMinimum = 27F   //최소값
+                axisMaximum = 42F   //최대값
                 isEnabled = true
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
@@ -282,11 +282,11 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                             list.sortBy { it.x }
 
                             //리스트 가져와서 차트 새로 그리기
-                            val thermometerScatterData = ScatterData(makeThermometerSet(list))
+                            val thermometerLineData = LineData(makeThermometerSet(list))
     
                             //데이터가 없으면 종료
                             if(list.size == 0) {
-                                binding.homeThermometerFullChartScatterChart.visibility = View.GONE
+                                binding.homeThermometerFullChartLineChart.visibility = View.GONE
                                 binding.homeThermometerFullChartLottie.visibility = View.VISIBLE
                                 binding.homeThermometerFullChartLottie.playAnimation()
                                 binding.homeThermometerFullChartTextViewAverage.text = "데이터 없음"
@@ -300,13 +300,15 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                             binding.homeThermometerFullChartTextViewUnit.visibility = View.VISIBLE
                             binding.homeThermometerFullChartTextViewAverage.visibility = View.VISIBLE
                             binding.homeThermometerFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
-                            binding.homeThermometerFullChartScatterChart.visibility = View.VISIBLE
+                            binding.homeThermometerFullChartLineChart.visibility = View.VISIBLE
                             binding.homeThermometerFullChartLottie.visibility = View.GONE
                             binding.homeThermometerFullChartTextViewUnit.text = "℃"
 
-                            binding.homeThermometerFullChartScatterChart.data = thermometerScatterData
-                            binding.homeThermometerFullChartScatterChart.invalidate()
-                            binding.homeThermometerFullChartScatterChart.animateX(2000)
+                            binding.homeThermometerFullChartLineChart.data = thermometerLineData
+                            binding.homeThermometerFullChartLineChart.xAxis.granularity = 3600f  //X축 간격
+                            binding.homeThermometerFullChartLineChart.setVisibleXRangeMaximum(18000f)
+                            binding.homeThermometerFullChartLineChart.invalidate()
+                            binding.homeThermometerFullChartLineChart.animateX(2000)
                         }
                         else -> Toast.makeText(applicationContext, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                     }
