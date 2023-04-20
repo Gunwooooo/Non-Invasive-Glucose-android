@@ -31,16 +31,6 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     app:tint="@color/toss_black_500" />
-                <TextView
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Home"
-                    android:textColor="@color/toss_black_700"
-                    android:textSize="18dp"
-                    android:fontFamily="@font/ps_regular"/>
             </LinearLayout>
 
             <LinearLayout

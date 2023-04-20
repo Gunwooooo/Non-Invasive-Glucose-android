@@ -34,7 +34,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Home"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:fontFamily="@font/ps_regular"/>

@@ -57,9 +57,9 @@
             android:id="@+id/userSetConnectDevice_textView_skipConnect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="👨‍👩‍👦 장치 연결 없이 보호자 기능만 이용할게요"
+            android:text="장치 연결 없이 보호자 기능만 이용할게요"
             android:textColor="@color/toss_black_500"
-            android:textSize="15dp"
+            android:textSize="16dp"
             android:fontFamily="@font/ps_regular"/>
     </LinearLayout>
     <LinearLayout

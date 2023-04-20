@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetConnectDeviceBinding
 import com.example.newnoninvasiveglucoseapplication.home.HomeActivity
+import com.example.newnoninvasiveglucoseapplication.home.HomeProtectorActivity
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants.DEVICE_NAME
 import com.example.newnoninvasiveglucoseapplication.util.Constants.SCAN_PERIOD
@@ -70,6 +71,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         binding.userSetConnectDeviceTextViewSkipConnect.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         binding.userSetConnectDeviceLottie.setOnClickListener(this)
+        binding.userSetConnectDeviceLayoutSkipConnect.setOnClickListener(this)
 
         //키보드 넣기
         if (activity != null && requireActivity().currentFocus != null) {
@@ -96,7 +98,10 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 scanLeDevice(true)
             }
             binding.userSetConnectDeviceLayoutSkipConnect -> {
-
+                //공유하기
+                startActivity(Intent(context, HomeProtectorActivity::class.java))
+//                val mActivity = activity as UserActivity
+//                mActivity.finish()
             }
         }
     }

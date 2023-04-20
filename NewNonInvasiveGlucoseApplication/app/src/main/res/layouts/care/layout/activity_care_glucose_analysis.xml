@@ -36,7 +36,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Menu"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     android:fontFamily="@font/ps_regular"/>
@@ -138,7 +138,7 @@
 
                         <View
                             android:layout_width="wrap_content"
-                            android:layout_height="2dp"
+                            android:layout_height="1dp"
                             android:background="@color/toss_black_600" />
 
 
