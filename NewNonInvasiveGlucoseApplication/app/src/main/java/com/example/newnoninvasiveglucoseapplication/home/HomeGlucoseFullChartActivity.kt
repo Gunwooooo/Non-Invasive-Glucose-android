@@ -23,8 +23,10 @@ import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeGluc
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.*
+import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import org.json.JSONArray
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -96,6 +98,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
         val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            now.set(year, month, dayOfMonth)
             binding.homeGlucoseFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
             retrofitGetBodyDataAsDate(year, month, dayOfMonth)
         }
@@ -106,10 +109,11 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun setLayoutSwipeListener() {
-        binding.homeGlucoseFullChartLayout.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
+        binding.homeGlucoseFullChartLottieSwipe.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
             override fun onSwipeLeft() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
                 now.add(Calendar.DAY_OF_MONTH, 1)
+                binding.homeGlucoseFullChartTextViewTime.text = "평균 체온"
                 binding.homeGlucoseFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
@@ -117,6 +121,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
             override fun onSwipeRight() {
                 Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
                 now.add(Calendar.DAY_OF_MONTH, -1)
+                binding.homeGlucoseFullChartTextViewTime.text = "평균 체온"
                 binding.homeGlucoseFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
@@ -129,7 +134,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
         return glucoseLineDataSet.apply {
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
-            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
+//            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             setScatterShape(ScatterChart.ScatterShape.CIRCLE)
@@ -137,14 +142,15 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
 //            circleRadius = 3F
 //            circleHoleRadius = 1F
 //            setDrawCircles(true)   //동그란거 없애기
-            setDrawValues(true)
-//            setCircleColor(ContextCompat.getColor(applicationContext, R.color.toss_black_500))
+            setDrawValues(false)
+//            setCircleColor(ContextCompat.getColor(applicationContext, R.color.teal_700))
             valueTextSize = 0F
             isHighlightEnabled = true   //클릭시 마크 보이게
-            setDrawHorizontalHighlightIndicator(false)  //가로 하이라이트 줄 없애기
-            setDrawVerticalHighlightIndicator(false) //세로 하이라이트 줄 없애기
-            scatterShapeSize = 11f
+            setDrawHorizontalHighlightIndicator(true)  //가로 하이라이트 줄 없애기
+            setDrawVerticalHighlightIndicator(true) //세로 하이라이트 줄 없애기
+            highLightColor = ContextCompat.getColor(applicationContext, R.color.circle_red_100) //클릭시 보이는 선 색깔
 //            setDrawCircleHole(true)
+            scatterShapeSize = 11f
         }
     }
 
@@ -155,44 +161,37 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
         //마커 뷰 설정
 //        val markerView = CustomMarkerViewManager(applicationContext, R.layout.custom_marker_view)
         homeGlucoseFullChartScatterChart.run {
-            setScaleEnabled(false) //핀치 줌 안되도록
+            setScaleEnabled(true) //핀치 줌 안되도록
             description.isEnabled = false
             isDoubleTapToZoomEnabled = false   //더블 탭 줌 불가능
-            isDragEnabled = false
+            isDragEnabled = true
 //            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
             setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
             animateX(1000)
             //스와이프 제스처 이벤트 설정
-            onChartGestureListener = object : OnChartGestureListener {
-                override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
-                override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
-                override fun onChartLongPressed(me: MotionEvent?) {}
-                override fun onChartDoubleTapped(me: MotionEvent?) {}
-                override fun onChartSingleTapped(me: MotionEvent?) {}
-                //스와이프 이벤트 설정
+
+            //클릭 리스너 설정
+            setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+                //그래프 터치시 값 변경 리스너
                 @SuppressLint("SetTextI18n")
-                override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
-                    val x1 = me1!!.x
-                    val x2 = me2!!.x
-                    Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : $velocityX     $velocityY")
-                    //오른쪽으로 스와이프 -> 이전 날짜 호출
-                    if(x1 < x2) {
-                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 이전날짜 호출")
-                        now.add(Calendar.DAY_OF_MONTH, -1)
-                        binding.homeGlucoseFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
-                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
-                    } else if(x1 > x2) {
-                        Log.d("로그", "HomeThermometerFullChartActivity - onChartFling : 다음날짜 호출")
-                        now.add(Calendar.DAY_OF_MONTH, 1)
-                        binding.homeGlucoseFullChartTextViewDate.text = "${now.get(Calendar.YEAR)}년 ${now.get(Calendar.MONTH) + 1}월 ${now.get(Calendar.DAY_OF_MONTH)}일"
-                        retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
-                    }
+                override fun onValueSelected(e: Entry?, h: Highlight?) {
+                    Log.d("로그", "HomeThermometerFullChartActivity - onValueSelected : ${e!!.x}  ${e.y}")
+//                    binding.homeThermometerFullChartTextViewTime
+                    val hour = (e.x / 3600).toInt() % 12
+                    var aa = "오전"
+                    if(e.x / 3600 > 12)
+                        aa = "오후"
+
+                    val minute = String.format("%02d", (e.x % 3600 / 60).toInt())
+                    binding.homeGlucoseFullChartTextViewValue.text = e.y.toString()
+                    binding.homeGlucoseFullChartTextViewTime.text = "$aa ${hour}시 ${minute}분"
                 }
-                override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {}
-                override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {}
-            }
+                override fun onNothingSelected() {
+                }
+            })
+
 
             notifyDataSetChanged()  //차트 값 변동을 감지함
 //            moveViewToX((glucoseLineData.entryCount).toFloat())
@@ -204,7 +203,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = CustomChartManager.CustomTimeXAxisFormatter()
 //                labelCount = 6
-                granularity = 10800f  //X축 간격
+//                granularity = 10800f  //X축 간격
                 textSize = 12f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
 //                gridColor = ContextCompat.getColor(requireContext(), R.color.toss_black_100)  //x그리그 색깔 변경
@@ -285,7 +284,7 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                                 binding.homeGlucoseFullChartScatterChart.visibility = View.GONE
                                 binding.homeGlucoseFullChartLottie.visibility = View.VISIBLE
                                 binding.homeGlucoseFullChartLottie.playAnimation()
-                                binding.homeGlucoseFullChartTextViewAverage.text = "데이터 없음"
+                                binding.homeGlucoseFullChartTextViewValue.text = "데이터 없음"
                                 binding.homeGlucoseFullChartTextViewUnit.visibility = View.GONE
                                 return@getBodyDataAsDate
                             }
@@ -295,13 +294,21 @@ class HomeGlucoseFullChartActivity : AppCompatActivity(), View.OnClickListener {
                             
                             //데이터가 있을 경우
                             binding.homeGlucoseFullChartTextViewUnit.visibility = View.VISIBLE
-                            binding.homeGlucoseFullChartTextViewAverage.visibility = View.VISIBLE
-                            binding.homeGlucoseFullChartTextViewAverage.text = ((average * 10).roundToInt() / 10F).toString()
+                            binding.homeGlucoseFullChartTextViewValue.visibility = View.VISIBLE
+                            binding.homeGlucoseFullChartTextViewValue.text = ((average * 10).roundToInt() / 10F).toString()
                             binding.homeGlucoseFullChartScatterChart.visibility = View.VISIBLE
                             binding.homeGlucoseFullChartLottie.visibility = View.GONE
                             binding.homeGlucoseFullChartTextViewUnit.text = "mg/dL"
 
+                            //차트 새로 찍기
+                            binding.homeGlucoseFullChartScatterChart.clear()
                             binding.homeGlucoseFullChartScatterChart.data = glucoseScatterData
+                            binding.homeGlucoseFullChartScatterChart.xAxis.granularity = 1800f  //X축 간격
+//                            binding.homeGlucoseFullChartScatterChart.setVisibleXRangeMaximum(18000f)
+//                            var centerPoint = binding.homeGlucoseFullChartScatterChart.data.xMax - 9000
+//                            if(centerPoint < 0) centerPoint = 0F
+                            binding.homeGlucoseFullChartScatterChart.fitScreen()
+//                            binding.homeGlucoseFullChartScatterChart.moveViewToX(centerPoint)  //출력 값이 중앙에 오도록 표시
                             binding.homeGlucoseFullChartScatterChart.invalidate()
                             binding.homeGlucoseFullChartScatterChart.animateX(2000)
                         }

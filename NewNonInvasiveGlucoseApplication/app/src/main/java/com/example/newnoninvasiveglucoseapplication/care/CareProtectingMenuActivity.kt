@@ -9,10 +9,14 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareProtectingMenuBinding
 
 import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
+import com.example.newnoninvasiveglucoseapplication.retrofit.API
+import com.example.newnoninvasiveglucoseapplication.util.Constants
+import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import java.util.*
 
 class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
@@ -35,9 +39,6 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
         //스테이터스바 색상 변경
         window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
 
-        //글라이드로 이미지 불러오기
-        setImageViewWithGlide()
-
         //보호 대상자 정보 받기
         val id = intent.getIntExtra("protectingDataId", 0)
         val nickname = intent.getStringExtra("protectingDataNickname")!!
@@ -49,6 +50,9 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
 
         //전역변수 저장
         _protectingPhoneNumber = phoneNumber
+
+        //글라이드로 이미지 불러오기
+        setImageViewWithGlide()
 
         binding.careProtectingMenuTextViewNickname.text = nickname
         binding.careProtectingMenuTextViewAge.text = changeBirthDayToAge(birthDay)
@@ -102,6 +106,13 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
         val glide = Glide.with(this)
         glide.load(R.drawable.icon_color_profile).into(binding.careProtectingMenuImageViewProfile)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careProtectingMenuImageViewBack)
+
+        //프로필 이미지 가져오기
+        val sb = StringBuilder()
+        sb.append(API.PHR_PROFILE_BASE_URL).append(_protectingPhoneNumber).append(Constants.PROFILE_IMAGE_NAME)
+        glide.load(sb.toString()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+            .placeholder(R.drawable.icon_color_profile).circleCrop().into(binding.careProtectingMenuImageViewProfile)
+
 
         glide.load(R.drawable.icon_color_thermometer).into(binding.careProtectingMenuImageViewThermometer)
         glide.load(R.drawable.icon_color_thermometer_analysis).into(binding.careProtectingMenuImageViewThermometerAnalysis)

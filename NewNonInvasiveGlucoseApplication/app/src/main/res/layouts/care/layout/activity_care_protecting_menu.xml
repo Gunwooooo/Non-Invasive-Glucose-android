@@ -34,7 +34,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -112,32 +112,32 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_marginTop="24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:background="@drawable/background_layout_android_blue_100_radius_20">
-                    <LinearLayout
-                        android:layout_margin="4dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="@drawable/ripple_android_blue_100_radius_20"
-                        android:id="@+id/careProtectingMenu_layout_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="메시지"
-                            android:textSize="18dp"
-                            android:fontFamily="@font/ps_bold"
-                            android:textColor="@color/toss_black_700"/>
-                    </LinearLayout>
-                </LinearLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_marginTop="24dp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:background="@drawable/background_layout_android_blue_100_radius_20">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_margin="4dp"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:background="@drawable/ripple_android_blue_100_radius_20"-->
+<!--                        android:id="@+id/careProtectingMenu_layout_message"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent">-->
+<!--                        <TextView-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:text="메시지"-->
+<!--                            android:textSize="18dp"-->
+<!--                            android:fontFamily="@font/ps_bold"-->
+<!--                            android:textColor="@color/toss_black_700"/>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
                 <LinearLayout
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="36dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

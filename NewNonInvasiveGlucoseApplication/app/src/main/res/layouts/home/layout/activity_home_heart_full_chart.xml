@@ -59,6 +59,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/homeHeartFullChart_textView_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
@@ -72,7 +73,7 @@
             android:layout_height="72dp"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/homeHeartFullChart_textView_average"
+                android:id="@+id/homeHeartFullChart_textView_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="38dp"
@@ -121,9 +122,22 @@
             app:lottie_rawRes="@raw/lottie_no_data"
             app:lottie_autoPlay="false"/>
     </LinearLayout>
-
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/toss_black_150" />
+    <TextView
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="날짜 스와이프 ZONE"
+        android:textSize="13dp"
+        android:fontFamily="@font/ps_regular"
+        android:textColor="@color/toss_black_200"/>
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/homeHeartFullChart_lottie_swipe"
