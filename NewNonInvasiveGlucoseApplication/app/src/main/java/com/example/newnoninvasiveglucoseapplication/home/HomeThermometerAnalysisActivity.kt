@@ -213,7 +213,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     /////////////////////////////////////////////   비정상 바 차트   ///////////////////////////////////////
     private fun setThermometerAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "비정상 체온 빈도수")
+        val barDataSet = BarDataSet(values, "비정상 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -277,7 +277,7 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     /////////////////////////////////////////////   정상 바 차트   ///////////////////////////////////////
     private fun setThermometerNormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "정상 체온 빈도수")
+        val barDataSet = BarDataSet(values, "정상 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시

@@ -54,9 +54,6 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
 
-        //스테이터스바 색상 변경
-        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
-
         binding.careThermometerAnalysisNtsAverageChart.setTabIndex(0, true)
         binding.careThermometerAnalysisNtsAbnormalChart.setTabIndex(0, true)
         binding.careThermometerAnalysisNtsNormalChart.setTabIndex(0, true)
@@ -96,7 +93,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail_black).into(binding.careThermometerAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.background_image_detail).into(binding.careThermometerAnalysisImageViewDetailBackground)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careThermometerAnalysisImageViewBack)
     }
 
@@ -218,7 +215,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     /////////////////////////////////////////////   비정상 바 차트   ///////////////////////////////////////
     private fun setThermometerAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "비정상 체온 빈도수")
+        val barDataSet = BarDataSet(values, "비정상 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -282,7 +279,7 @@ class CareThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 
     /////////////////////////////////////////////   정상 바 차트   ///////////////////////////////////////
     private fun setThermometerNormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "정상 체온 빈도수")
+        val barDataSet = BarDataSet(values, "정상 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시

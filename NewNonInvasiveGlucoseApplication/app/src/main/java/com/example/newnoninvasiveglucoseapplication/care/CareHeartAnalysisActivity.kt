@@ -53,9 +53,6 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
 
-        //스테이터스바 색상 변경
-        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
-
         binding.careHeartAnalysisNtsAverageChart.setTabIndex(0, true)
         binding.careHeartAnalysisNtsAbnormalChart.setTabIndex(0, true)
         binding.careHeartAnalysisNtsNormalChart.setTabIndex(0, true)
@@ -95,7 +92,7 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
     //초기 글라이드로 이미지 불러오기
     private fun setImageViewWithGlide() {
         val glide = Glide.with(applicationContext)
-        glide.load(R.drawable.background_image_detail_black).into(binding.careHeartAnalysisImageViewDetailBackground)
+        glide.load(R.drawable.background_image_detail).into(binding.careHeartAnalysisImageViewDetailBackground)
         glide.load(R.drawable.ic_baseline_arrow_back_24).into(binding.careHeartAnalysisImageViewBack)
     }
 
@@ -218,7 +215,7 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     /////////////////////////////////////////////   비정상 바 차트   ///////////////////////////////////////
     private fun setHeartAbnormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "비정상 심박수 빈도수")
+        val barDataSet = BarDataSet(values, "비정상 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_red_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시
@@ -281,7 +278,7 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
 
     /////////////////////////////////////////////   정상 바 차트   ///////////////////////////////////////
     private fun setHeartNormalData(values : ArrayList<BarEntry>) : BarDataSet {
-        val barDataSet = BarDataSet(values, "정상 심박수 빈도수")
+        val barDataSet = BarDataSet(values, "정상 빈도수")
         barDataSet.run {
             color = ContextCompat.getColor(applicationContext, R.color.text_blue_200)
             valueFormatter = CustomChartManager.CustomIntegerYAxisFormatter() //데이터 소수점 표시

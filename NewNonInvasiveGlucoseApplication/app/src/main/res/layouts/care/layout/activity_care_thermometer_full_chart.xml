@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".care.CareThermometerFullChartActivity"
-    android:background="@color/toss_black_600"
+    android:background="@color/android_blue_100"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -26,17 +26,7 @@
                 android:id="@+id/careThermometerFullChart_imageView_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:tint="@color/white" />
-            <TextView
-                android:layout_marginTop="3dp"
-                android:gravity="center"
-                android:layout_marginStart="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:fontFamily="@font/ps_regular"/>
+                app:tint="@color/toss_black_500" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginEnd="16dp"
@@ -45,15 +35,24 @@
             android:gravity="end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="보호자 화면입니다"
+                android:fontFamily="@font/ps_regular"
+                android:textSize="13dp"
+                android:textColor="@color/toss_black_200"/>
+
             <ImageView
+                android:layout_marginStart="8dp"
                 android:adjustViewBounds="true"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:id="@+id/careThermometerFullChart_imageView_calendar"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:tint="@color/white" />
+                android:layout_height="30dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -73,7 +72,7 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:text="평균 체온"
-            android:textColor="@color/toss_black_150"
+            android:textColor="@color/toss_black_200"
             android:fontFamily="@font/ps_regular"/>
 
         <LinearLayout
@@ -87,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="38dp"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/toss_black_700"
                 android:fontFamily="@font/ps_bold"/>
 
             <TextView
@@ -96,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ps_regular"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/toss_black_700"
                 android:textSize="24dp" />
         </LinearLayout>
 
@@ -108,13 +107,13 @@
             android:layout_height="wrap_content"
             android:textSize="21dp"
             android:text=""
-            android:textColor="@color/toss_black_100"
+            android:textColor="@color/toss_black_500"
             android:fontFamily="@font/ps_regular"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/careThermometerFullChart_layout"
         android:gravity="center"
-        android:background="@color/toss_black_600"
+        android:background="@color/android_blue_100"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
@@ -146,7 +145,7 @@
         android:text="날짜 스와이프 ZONE"
         android:textSize="13dp"
         android:fontFamily="@font/ps_regular"
-        android:textColor="@color/toss_black_150"/>
+        android:textColor="@color/toss_black_200"/>
     <com.airbnb.lottie.LottieAnimationView
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"

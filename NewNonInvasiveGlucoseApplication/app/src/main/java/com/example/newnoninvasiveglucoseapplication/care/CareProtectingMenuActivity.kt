@@ -37,7 +37,7 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
     private fun init() {
 
         //스테이터스바 색상 변경
-        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
+//        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
 
         //보호 대상자 정보 받기
         val id = intent.getIntExtra("protectingDataId", 0)
@@ -132,8 +132,8 @@ class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {
 
     //성별 T,f -> 남성 여성
     private fun changeSexToString(sex: String) : String {
-        return if(sex == "T") "남성"
-        else "여성"
+        return if(sex == "T") "남"
+        else "여"
     }
 
     override fun onDestroy() {

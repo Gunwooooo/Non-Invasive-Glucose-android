@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".care.CareThermometerAnalysisActivity"
-    android:background="@color/toss_black_600">
+    android:background="@color/android_blue_100">
     <com.factor.bouncy.BouncyNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,30 +16,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/toss_black_600"
+            android:background="@color/android_blue_100"
             android:padding="16dp">
-
             <LinearLayout
-                android:focusable="true"
-                android:clickable="true"
-                android:id="@+id/careThermometerAnalysis_btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/careThermometerAnalysis_imageView_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:tint="@color/white" />
-                <TextView
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:layout_marginStart="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:id="@+id/careThermometerAnalysis_btn_back"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    android:fontFamily="@font/ps_regular"/>
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/careThermometerAnalysis_imageView_back"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:tint="@color/toss_black_500" />
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="보호자 화면입니다"
+                        android:fontFamily="@font/ps_regular"
+                        android:textSize="13dp"
+                        android:textColor="@color/toss_black_200"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -60,7 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="체온 데이터"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:fontFamily="@font/ps_bold"
                             android:textSize="21dp"/>
                     </LinearLayout>
@@ -73,7 +80,7 @@
                             android:fontFamily="@font/ps_bold"
                             android:gravity="bottom"
                             android:text="평균 체온"
-                            android:textColor="@color/white"
+                            android:textColor="@color/toss_black_700"
                             android:textSize="21dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -94,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:background="@drawable/background_layout_android_blue_100_radius_20"
+                    android:background="@drawable/background_layout_white_radius_20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -139,14 +146,14 @@
                         <View
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
-                            android:background="@color/toss_black_600" />
+                            android:background="@color/android_blue_100" />
 
 
                         <LinearLayout
                             android:layout_margin="4dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ripple_android_blue_100_radius_20"
+                            android:background="@drawable/ripple_white_radius_20"
                             android:orientation="horizontal"
                             android:padding="16dp"
                             android:weightSum="1">
@@ -300,7 +307,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="정상 체온"
-                    android:textColor="@color/white"
+                    android:textColor="@color/toss_black_700"
                     android:fontFamily="@font/ps_bold"
                     android:textSize="21dp"/>
             </LinearLayout>
@@ -316,7 +323,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="최근 "
-                    android:textColor="@color/toss_black_150"
+                    android:textColor="@color/toss_black_500"
                     android:textSize="18dp" />
 
                 <TextView
@@ -333,7 +340,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="일 총 빈도수"
-                    android:textColor="@color/toss_black_150"
+                    android:textColor="@color/toss_black_500"
                     android:textSize="18dp" />
 
                 <TextView
@@ -348,7 +355,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@drawable/background_layout_android_blue_100_radius_20"
+                android:background="@drawable/background_layout_white_radius_20"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -401,7 +408,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="비정상 체온"
-                    android:textColor="@color/white"
+                    android:textColor="@color/toss_black_700"
                     android:fontFamily="@font/ps_bold"
                     android:textSize="21dp"/>
             </LinearLayout>
@@ -417,7 +424,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="최근 "
-                    android:textColor="@color/toss_black_150"
+                    android:textColor="@color/toss_black_500"
                     android:textSize="18dp" />
 
                 <TextView
@@ -434,7 +441,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ps_regular"
                     android:text="일 총 빈도수"
-                    android:textColor="@color/toss_black_150"
+                    android:textColor="@color/toss_black_500"
                     android:textSize="18dp" />
 
                 <TextView
@@ -449,7 +456,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@drawable/background_layout_android_blue_100_radius_20"
+                android:background="@drawable/background_layout_white_radius_20"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

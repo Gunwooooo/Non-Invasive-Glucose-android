@@ -217,7 +217,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기
@@ -227,7 +227,7 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //y그리드 색깔 변경
                 isEnabled = true  //오른쪽 y축 없애기
             }
             legend.run {

@@ -58,9 +58,6 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
 
-        //스테이터스바 색상 변경
-        window.statusBarColor = ContextCompat.getColor(baseContext, R.color.toss_black_600)
-
         setThermometerScatterChart()
 
         //이미지 넣기
@@ -150,7 +147,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //            mode = LineDataSet.Mode.LINEAR
 //            cubicIntensity = 0.2F //베지어 곡선 휘는 정도
 //            setDrawHorizontalHighlightIndicator(false)  //클릭 시 선 보이게 하기
-            color = ContextCompat.getColor(applicationContext, R.color.iphone_green_200)
+            color = ContextCompat.getColor(applicationContext, R.color.teal_700)
             valueFormatter = CustomChartManager.CustomDecimalYAxisFormatter() //데이터 소수점 표시
             setScatterShape(ScatterChart.ScatterShape.CIRCLE)
 //            lineWidth = 2F //선 굵기
@@ -181,7 +178,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             isDragEnabled = true
 //            isScaleXEnabled = false //가로 확대 없애기
 //            enableScroll()
-            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.toss_black_600))
+            setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.android_blue_100))
 //            marker = markerView
 
             //클릭 리스너 설정
@@ -218,9 +215,9 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
 //                labelCount = 12
                 granularity = 10800f  //X축 간격
                 textSize = 12f
-                textColor = ContextCompat.getColor(applicationContext, R.color.white)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.white)    //x그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //x그리드 색깔 변경
 //                animateXY(1000, 1000)
 //                setDrawLabels(true)
 //                setDrawAxisLine(false)
@@ -231,9 +228,9 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 textSize = 15f
-                textColor = ContextCompat.getColor(applicationContext, R.color.white)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.white)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //y그리드 색깔 변경
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기
@@ -241,9 +238,9 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 textSize = 15f
-                textColor = ContextCompat.getColor(applicationContext, R.color.white)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
-                    ContextCompat.getColor(applicationContext, R.color.white)    //y그리드 색깔 변경
+                    ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //y그리드 색깔 변경
                 isEnabled = true  //오른쪽 y축 없애기
             }
             legend.run {
@@ -251,7 +248,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 form = Legend.LegendForm.CIRCLE
                 textSize = 16f
                 setExtraOffsets(15f, 15f, 15f, 15f)
-                textColor = ContextCompat.getColor(applicationContext, R.color.white)
+                textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             }
