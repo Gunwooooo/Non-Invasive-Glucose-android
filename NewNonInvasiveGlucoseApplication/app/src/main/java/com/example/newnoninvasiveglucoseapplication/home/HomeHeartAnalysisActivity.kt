@@ -385,11 +385,7 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
             override fun onEndTabSelected(title: String?, index: Int) {
             }
         }
-
-
     }
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //평균, 최대, 최소 일수별 심박수 가져오기

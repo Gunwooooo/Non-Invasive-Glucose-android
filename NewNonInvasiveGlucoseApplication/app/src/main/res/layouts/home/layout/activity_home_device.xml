@@ -42,6 +42,7 @@
             android:fontFamily="@font/ps_bold"
             android:textSize="16dp"/>
         <TextView
+            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="버전 1.0.0"
@@ -50,29 +51,39 @@
             android:textColor="@color/toss_black_200"/>
 
         <LinearLayout
+            android:gravity="start|center_vertical"
+            android:background="@drawable/background_layout_white_radius_20"
             android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자동 데이터 기록"
+                android:textSize="18dp"
+                android:fontFamily="@font/ps_regular"
+                android:layout_weight="1"
+                android:textColor="@color/toss_black_600"/>
+            <Switch
+                android:layout_marginEnd="16dp"
+                android:id="@+id/homeDevice_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <FrameLayout
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/background_iphone_green_100_ring_shape">
-                <LinearLayout
-                    android:layout_gravity="center"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="@drawable/background_iphone_green_200_ring_shape"/>
-            </FrameLayout>
+            android:text="20분마다 장치가 연결되어 있으면 자동으로 데이터를 측정 기록합니다."
+            android:textColor="@color/toss_black_200"
+            android:fontFamily="@font/ps_regular"
+            android:textSize="14dp"/>
 
-            <TextView
-                android:layout_marginStart="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Connected"
-                android:textSize="16dp"
-                android:fontFamily="@font/ps_regular"
-                android:textColor="@color/toss_black_500"/>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

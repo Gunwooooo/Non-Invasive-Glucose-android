@@ -98,10 +98,8 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 scanLeDevice(true)
             }
             binding.userSetConnectDeviceLayoutSkipConnect -> {
-                //공유하기
+                //공유하기로 이동하기
                 startActivity(Intent(context, HomeProtectorActivity::class.java))
-//                val mActivity = activity as UserActivity
-//                mActivity.finish()
             }
         }
     }
@@ -168,6 +166,9 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 //스캔 종료
                 scanLeDevice(false)
 
+                //broadcast로 20분마다 데이터 가져오기 설정
+                val alarmIntent = Intent(context, )
+                
                 //홈액티비티 실행
                 startActivity(Intent(context, HomeActivity::class.java))
                 val mActivity = activity as UserActivity

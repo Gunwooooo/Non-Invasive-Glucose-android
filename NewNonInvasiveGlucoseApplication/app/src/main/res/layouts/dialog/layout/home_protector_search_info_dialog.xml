@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:gravity="start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="해당 사용자가 맞나요?"
-            android:textSize="24dp"
-            android:fontFamily="@font/ps_bold"
-            android:textColor="@color/toss_black_700"/>
+<!--        <TextView-->
+<!--            android:gravity="start"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="보호자 "-->
+<!--            android:textSize="24dp"-->
+<!--            android:fontFamily="@font/ps_bold"-->
+<!--            android:textColor="@color/toss_black_700"/>-->
 
         <LinearLayout
             android:layout_marginTop="24dp"
@@ -117,13 +117,13 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="보호자로 등록 시, 해당 사용자가 내 건강정보를 조회할 수 있습니다."
+        android:text="[제 3자에 대한 정보 제공 동의]\n해당 사용자가 내 건강정보를 조회할 수 있습니다."
         android:textSize="15dp"
-        android:fontFamily="@font/ps_bold"
+        android:fontFamily="@font/ps_regular"
         android:textColor="@color/text_red_200"/>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -141,7 +141,7 @@
                 android:stateListAnimator="@null"
                 android:text="아니요"
                 android:textColor="@color/toss_black_200"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dip"
@@ -158,9 +158,9 @@
                 android:background="@drawable/btn_border_blue"
                 android:fontFamily="@font/ps_regular"
                 android:stateListAnimator="@null"
-                android:text="예"
+                android:text="동의하고 계속하기"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="13dp" />
         </LinearLayout>
 
     </LinearLayout>
