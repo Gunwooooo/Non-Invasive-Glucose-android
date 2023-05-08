@@ -59,9 +59,11 @@
     <color name="iphone_yellow">#FADF70</color>
     <color name="iphone_green_100">#EEF3D7</color>
     <color name="iphone_green_200">#DFFF28</color>
+    <color name="iphone_green_light_200">#77DFFF28</color>
 
     <color name="iphone_green_500">#D7DD1A</color>
-    <color name="iphone_green_700">#C9E623</color>
+    <color name="iphone_green_thermometer_700">#0FC9E623</color>
+    <color name="iphone_green_heart_700">#0AC9E623</color>
     <!--    <color name="iphone_red_200">#e53653</color>-->
     <color name="iphone_red_200">#F42749</color>
     <color name="iphone_red_500">#D85113</color>

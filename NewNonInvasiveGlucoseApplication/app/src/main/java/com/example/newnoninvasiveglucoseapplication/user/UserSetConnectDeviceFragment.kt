@@ -167,7 +167,7 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
                 scanLeDevice(false)
 
                 //broadcast로 20분마다 데이터 가져오기 설정
-                val alarmIntent = Intent(context, )
+//                val alarmIntent = Intent(context, )
                 
                 //홈액티비티 실행
                 startActivity(Intent(context, HomeActivity::class.java))

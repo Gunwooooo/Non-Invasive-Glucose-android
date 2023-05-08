@@ -80,7 +80,7 @@
             android:layout_marginEnd="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20분마다 장치가 연결되어 있으면 자동으로 데이터를 측정 기록합니다."
+            android:text="장치가 연결되어 있으면 20분마다 자동으로 데이터를 측정 기록합니다."
             android:textColor="@color/toss_black_200"
             android:fontFamily="@font/ps_regular"
             android:textSize="14dp"/>

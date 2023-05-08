@@ -25,6 +25,7 @@ import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeHear
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.*
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
@@ -228,6 +229,17 @@ class CareHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //y그리드 색깔 변경
+
+                //배경 색 추가하기
+                val increment = 0.1F
+                var metricLine = 60F
+                for (i in 0..250) {
+                    val llRange = LimitLine(metricLine, "")
+                    llRange.lineColor = ContextCompat.getColor(applicationContext, R.color.iphone_green_heart_700)
+                    llRange.lineWidth = 1f
+                    this.addLimitLine(llRange)
+                    metricLine += increment
+                }
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기

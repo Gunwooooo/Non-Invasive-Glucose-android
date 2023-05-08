@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothGattDescriptor
 import android.content.Intent
 import android.os.*
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -17,11 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeBinding
 import com.example.newnoninvasiveglucoseapplication.model.BodyData
@@ -32,6 +26,12 @@ import com.example.newnoninvasiveglucoseapplication.util.*
 import com.example.newnoninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.example.newnoninvasiveglucoseapplication.util.Constants._bluetoothResultDevice
 import com.example.newnoninvasiveglucoseapplication.util.Constants._checkBluetoothTimer
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import org.json.JSONArray
 import java.io.File
 import java.time.LocalDateTime
@@ -543,7 +543,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 10F   //최소값
+                axisMinimum = 33F   //최소값
                 axisMaximum = 40F   //최대값
                 isEnabled = true
                 animateX(500)
@@ -552,7 +552,19 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+
+                //배경 색 추가하기
+                val increment = 0.01F
+                var metricLine = 35F
+                for (i in 0..250) {
+                    val llRange = LimitLine(metricLine, "")
+                    llRange.lineColor = ContextCompat.getColor(applicationContext, R.color.iphone_green_thermometer_700)
+                    llRange.lineWidth = 1f
+                    this.addLimitLine(llRange)
+                    metricLine += increment
+                }
             }
+
             axisRight.run { //오른쪽 y축
                 isEnabled = false  //오른쪽 y축 없애기
             }
@@ -597,8 +609,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 0F   //최소값
-                axisMaximum = 150F   //최대값
+                axisMinimum = 30F   //최소값
+                axisMaximum = 130F   //최대값
                 isEnabled = true
                 animateX(500)
                 animateY(1000)
@@ -606,6 +618,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+
+                //배경 색 추가하기
+                val increment = 0.1F
+                var metricLine = 60F
+                for (i in 0..250) {
+                    val llRange = LimitLine(metricLine, "")
+                    llRange.lineColor = ContextCompat.getColor(applicationContext, R.color.iphone_green_heart_700)
+                    llRange.lineWidth = 1f
+                    this.addLimitLine(llRange)
+                    metricLine += increment
+                }
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기
@@ -659,6 +682,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_150)    //y그리드 색깔 변경
+
+                //배경 색 추가하기
+                val increment = 0.1F
+                var metricLine = 70F
+                for (i in 0..300) {
+                    val llRange = LimitLine(metricLine, "")
+                    llRange.lineColor = ContextCompat.getColor(applicationContext, R.color.iphone_green_heart_700)
+                    llRange.lineWidth = 1f
+                    this.addLimitLine(llRange)
+                    metricLine += increment
+                }
             }
             axisRight.run { //오른쪽 y축축
                 isEnabled = false  //오른쪽 y축 없애기

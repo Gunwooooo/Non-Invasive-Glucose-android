@@ -19,6 +19,7 @@ import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.*
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
@@ -211,18 +212,29 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
             axisLeft.run { //왼쪽 Y축
                 setDrawAxisLine(false)  //좌측 선 없애기
-                axisMinimum = 27F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 33F   //최소값
+                axisMaximum = 40F   //최대값
                 isEnabled = true
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
                 gridColor =
                     ContextCompat.getColor(applicationContext, R.color.toss_black_700)    //y그리드 색깔 변경
+
+                //배경 색 추가하기
+                val increment = 0.01F
+                var metricLine = 35F
+                for (i in 0..250) {
+                    val llRange = LimitLine(metricLine, "")
+                    llRange.lineColor = ContextCompat.getColor(applicationContext, R.color.iphone_green_thermometer_700)
+                    llRange.lineWidth = 1f
+                    this.addLimitLine(llRange)
+                    metricLine += increment
+                }
             }
             axisRight.run { //오른쪽 y축축
                 setDrawAxisLine(true)  //좌측 선 없애기
-                axisMinimum = 27F   //최소값
-                axisMaximum = 42F   //최대값
+                axisMinimum = 33F   //최소값
+                axisMaximum = 40F   //최대값
                 isEnabled = true
                 textSize = 15f
                 textColor = ContextCompat.getColor(applicationContext, R.color.toss_black_700)
