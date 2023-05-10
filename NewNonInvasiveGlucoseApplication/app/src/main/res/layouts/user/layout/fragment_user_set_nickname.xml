@@ -8,6 +8,7 @@
     tools:context=".user.UserSetNicknameFragment"
     android:orientation="vertical"
     android:weightSum="1"
+    android:padding="16dp"
     android:background="@color/android_blue_100">
 
     <LinearLayout
@@ -18,11 +19,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/ps_bold"
         android:text="닉네임을 입력해주세요."
         android:textColor="@color/toss_black_700"
-        android:textSize="22dp" />
+        android:textSize="18dp" />
 
 
     <EditText
@@ -30,23 +31,24 @@
         android:hint="닉네임"
         android:paddingStart="16dp"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:textSize="22dp"
+        android:layout_height="54dp"
+        android:textSize="18dp"
         android:importantForAutofill="no"
         android:background="@drawable/selector_color_edittext"
         android:inputType="text"
+        android:imeOptions="actionNext"
         android:privateImeOptions="defaultInputmode=korean">
         <requestFocus />
     </EditText>
     <Button
         android:id="@+id/userSetNickname_btn_next"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:text="확인"
-        android:textSize="22dp"
+        android:textSize="18dp"
         android:textColor="@color/white"
         android:fontFamily="@font/ps_bold"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
+        android:layout_height="54dp"
         android:stateListAnimator="@null"
         android:enabled="false"
         android:background="@drawable/btn_border_blue"/>

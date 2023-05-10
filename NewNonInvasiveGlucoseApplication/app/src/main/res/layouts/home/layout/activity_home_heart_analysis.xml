@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/homeHeartAnalysis_imageView_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     app:tint="@color/toss_black_500" />
             </LinearLayout>
 
@@ -485,7 +485,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="25dp"/>
         </LinearLayout>
     </com.factor.bouncy.BouncyNestedScrollView>
 </LinearLayout>

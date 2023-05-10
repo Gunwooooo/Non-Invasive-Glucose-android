@@ -7,8 +7,6 @@
     android:padding="16dp"
     android:backgroundTint="@color/android_blue_100">
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,7 +21,7 @@
 <!--            android:textColor="@color/toss_black_700"/>-->
 
         <LinearLayout
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -31,11 +29,11 @@
                 android:adjustViewBounds="true"
                 android:id="@+id/homeProtectorSearchInfoDialog_imageView_profile"
                 android:layout_gravity="bottom"
-                android:layout_width="80dp"
-                android:layout_height="80dp" />
+                android:layout_width="110dp"
+                android:layout_height="110dp" />
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -47,7 +45,7 @@
                 android:gravity="center_vertical"
                 android:text="         "
                 android:textColor="@color/toss_black_700"
-                android:textSize="21dp" />
+                android:textSize="18dp" />
 
         </LinearLayout>
 
@@ -61,8 +59,8 @@
 
             <ImageView
                 android:layout_marginStart="16dp"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/icon_no_color_birthday"
                 app:tint="@color/toss_black_170" />
             <TextView
@@ -74,13 +72,13 @@
                 android:text=""
                 android:textColor="@color/toss_black_170"
                 android:fontFamily="@font/ps_regular"
-                android:textSize="21dp"/>
+                android:textSize="16dp"/>
 
 
             <ImageView
                 android:layout_marginStart="16dp"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/icon_no_color_gender"
                 app:tint="@color/toss_black_170" />
 
@@ -92,12 +90,12 @@
                 android:text=""
                 android:textColor="@color/toss_black_170"
                 android:fontFamily="@font/ps_regular"
-                android:textSize="21dp"/>
+                android:textSize="16dp"/>
 
             <ImageView
                 android:layout_marginStart="16dp"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/icon_no_color_phone"
                 app:tint="@color/toss_black_170" />
             <TextView
@@ -108,24 +106,24 @@
                 android:text=""
                 android:textColor="@color/toss_black_170"
                 android:fontFamily="@font/ps_regular"
-                android:textSize="21dp"/>
+                android:textSize="16dp"/>
         </LinearLayout>
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="[제 3자에 대한 정보 제공 동의]\n해당 사용자가 내 건강정보를 조회할 수 있습니다."
-        android:textSize="15dp"
+        android:textSize="14dp"
         android:fontFamily="@font/ps_regular"
         android:textColor="@color/text_red_200"/>
 
     <LinearLayout
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="54dp"
         android:orientation="horizontal"
         android:gravity="center">
         <LinearLayout

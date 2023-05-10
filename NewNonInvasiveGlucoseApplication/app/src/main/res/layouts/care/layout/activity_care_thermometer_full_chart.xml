@@ -24,8 +24,8 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/careThermometerFullChart_imageView_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 app:tint="@color/toss_black_500" />
         </LinearLayout>
         <LinearLayout
@@ -51,8 +51,8 @@
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:id="@+id/careThermometerFullChart_imageView_calendar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
         </LinearLayout>
     </LinearLayout>
 

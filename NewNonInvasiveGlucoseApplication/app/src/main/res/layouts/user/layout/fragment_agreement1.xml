@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".user.Agreement1Fragment"
+    android:padding="16dp"
     android:background="@color/android_blue_100">
     <TextView
         android:id="@+id/agreement1_textView"

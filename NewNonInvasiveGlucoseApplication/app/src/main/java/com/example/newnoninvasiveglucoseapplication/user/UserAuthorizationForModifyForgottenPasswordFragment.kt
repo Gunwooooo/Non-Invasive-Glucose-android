@@ -1,12 +1,16 @@
 package com.example.newnoninvasiveglucoseapplication.user
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -18,6 +22,7 @@ import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.example.newnoninvasiveglucoseapplication.util.NaverCloudServiceManager
+import com.jakewharton.rxbinding4.widget.textChanges
 
 class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<FragmentUserAuthorizationForModifyForgottenPasswordBinding>
     (FragmentUserAuthorizationForModifyForgottenPasswordBinding::inflate), View.OnClickListener {
@@ -36,6 +41,7 @@ class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<Fragmen
         init()
     }
 
+    @SuppressLint("CheckResult")
     private fun init() {
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
@@ -51,8 +57,22 @@ class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<Fragmen
         binding.userAuthorizationForModifyForgottenPasswordEditTextPhoneNumber.setOnClickListener(this)
         binding.userAuthorizationForModifyForgottenPasswordBtnGetAuthNum.setOnClickListener(this)
 
-        //에딧 텍스트 체인지 리스너
-        setEditTextTextChanged()
+        //에딧텍스트 문자열 subscribe
+        binding.userAuthorizationForModifyForgottenPasswordEditTextInputAuthNum.textChanges().subscribe {
+            binding.userAuthorizationForModifyForgottenPasswordBtnNext.isEnabled = it.isNotEmpty()
+        }
+
+        //에딧 텍스트 키보드 완료 리스너 구현
+        binding.userAuthorizationForModifyForgottenPasswordEditTextInputAuthNum.setOnEditorActionListener(object: TextView.OnEditorActionListener {
+            //에딧 텍스트 검색 아이콘 클릭 이벤트 처리
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.userAuthorizationForModifyForgottenPasswordBtnNext.performClick()
+                    return true
+                }
+                return false
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -77,21 +97,8 @@ class UserAuthorizationForModifyForgottenPasswordFragment : BaseFragment<Fragmen
             binding.userAuthorizationForModifyForgottenPasswordBtnGetAuthNum -> {
                 //인증 번호 생성 후 retrofit으로 사용자에게 문자 전송
                 retrofitSendSMSAuthCode()
-
             }
         }
-    }
-
-    //텍스트 비어있을 경우 버튼 색상 변경 이벤트
-    private fun setEditTextTextChanged() {
-        binding.userAuthorizationForModifyForgottenPasswordEditTextInputAuthNum.addTextChangedListener(object :
-            TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userAuthorizationForModifyForgottenPasswordBtnNext.isEnabled = s?.length != 0
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
     }
 
     //인증 번호 보내는 함수

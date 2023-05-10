@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:backgroundTint="@color/android_blue_100">
     <LinearLayout
-        android:layout_margin="10dp"
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="보호자를 해제할까요?"
-            android:textSize="21dp"
+            android:textSize="18dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
 <!--        <TextView-->
@@ -30,9 +30,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="54dp"
         android:orientation="horizontal"
         android:gravity="center">
         <LinearLayout

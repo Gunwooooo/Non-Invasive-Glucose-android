@@ -1,11 +1,15 @@
 package com.example.newnoninvasiveglucoseapplication.user
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.CompoundButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
@@ -17,6 +21,7 @@ import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.Constants._prefs
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
+import com.jakewharton.rxbinding4.widget.textChanges
 
 class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>(FragmentUserCheckPasswordBinding::inflate), View.OnClickListener  {
 
@@ -28,6 +33,7 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         init()
     }
 
+    @SuppressLint("CheckResult")
     private fun init() {
         //액션바 다시 보이게하기(뒤로가기)
         val mActivity = activity as UserActivity
@@ -45,19 +51,24 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         binding.userCheckPasswordEditTextPhoneNumber.setOnClickListener(this)
         binding.userCheckPasswordTextViewForgetPassword.setOnClickListener(this)
 
-        setEditTextTextChanged()
-    }
+        //에딧텍스트 문자열 subscribe
+        binding.userCheckPasswordEditTextPassword.textChanges().subscribe {
+            binding.userCheckPasswordBtnNext.isEnabled = it.isNotEmpty()
+        }
 
-    //텍스트 비어있을 경우 버튼 색상 변경 이벤트
-    private fun setEditTextTextChanged() {
-        binding.userCheckPasswordEditTextPassword.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userCheckPasswordBtnNext.isEnabled = s?.length != 0
+        //에딧 텍스트 키보드 완료 리스너 구현
+        binding.userCheckPasswordEditTextPassword.setOnEditorActionListener(object: TextView.OnEditorActionListener {
+            //에딧 텍스트 검색 아이콘 클릭 이벤트 처리
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.userCheckPasswordBtnNext.performClick()
+                    return true
+                }
+                return false
             }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
         })
     }
+
 
 
     override fun onClick(v: View?) {

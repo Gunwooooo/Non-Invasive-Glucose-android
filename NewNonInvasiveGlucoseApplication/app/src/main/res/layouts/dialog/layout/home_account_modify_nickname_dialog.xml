@@ -6,8 +6,7 @@
     android:padding="16dp"
     android:backgroundTint="@color/android_blue_100">
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -16,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="닉네임 변경"
-            android:textSize="24dp"
+            android:textSize="18dp"
             android:fontFamily="@font/ps_bold"
             android:textColor="@color/toss_black_700"/>
 
@@ -27,8 +26,9 @@
             android:paddingStart="16dp"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:textSize="22dp"
+            android:textSize="18dp"
             android:importantForAutofill="no"
+            android:imeOptions="actionNext"
             android:background="@drawable/selector_color_edittext"
             android:inputType="text"
             android:privateImeOptions="defaultInputmode=korean"/>
@@ -45,9 +45,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="54dp"
         android:orientation="horizontal"
         android:gravity="center">
         <LinearLayout

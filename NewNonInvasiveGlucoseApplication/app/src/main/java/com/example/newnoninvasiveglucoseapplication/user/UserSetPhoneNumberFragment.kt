@@ -7,8 +7,11 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
@@ -48,6 +51,18 @@ class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBindin
         binding.userSetPhoneNumberEditTextPhoneNumber.textChanges().subscribe {
             binding.userSetPhoneNumberBtnNext.isEnabled = it.isNotEmpty()
         }
+
+        //에딧 텍스트 키보드 완료 리스너 구현
+        binding.userSetPhoneNumberEditTextPhoneNumber.setOnEditorActionListener(object: TextView.OnEditorActionListener {
+            //에딧 텍스트 검색 아이콘 클릭 이벤트 처리
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.userSetPhoneNumberBtnNext.performClick()
+                    return true
+                }
+                return false
+            }
+        })
 
         //키보드 출력하기
         showSoftInput()

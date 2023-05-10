@@ -8,6 +8,7 @@
     tools:context=".user.UserSetConnectDeviceFragment"
     android:orientation="vertical"
     android:weightSum="1"
+    android:padding="16dp"
     android:background="@color/android_blue_100">
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,17 +19,17 @@
         android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/ps_bold"
         android:text="장치를 연결할게요!\n장치의 전원을 켜고, 가운데 전원 버튼을 눌러주세요."
         android:textColor="@color/toss_black_700"
-        android:textSize="22dp" />
+        android:textSize="18dp" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:focusable="true"
         android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:id="@+id/userSetConnectDevice_lottie"
         app:lottie_rawRes="@raw/lottie_connect"
         app:lottie_autoPlay="true"
@@ -36,17 +37,17 @@
 
 <!--    <Button-->
 <!--        android:id="@+id/userSetConnectDevice_btn_next"-->
-<!--        android:layout_marginTop="15dp"-->
+<!--        android:layout_marginTop="16dp"-->
 <!--        android:text="연결하기"-->
-<!--        android:textSize="22dp"-->
+<!--        android:textSize="18dp"-->
 <!--        android:textColor="@color/white"-->
 <!--        android:fontFamily="@font/ps_bold"-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="63dp"-->
+<!--        android:layout_height="54dp"-->
 <!--        android:stateListAnimator="@null"-->
 <!--        android:background="@drawable/btn_border_blue"/>-->
     <LinearLayout
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/userSetConnectDevice_layout_skipConnect"
         android:clickable="true"
         android:focusable="true"

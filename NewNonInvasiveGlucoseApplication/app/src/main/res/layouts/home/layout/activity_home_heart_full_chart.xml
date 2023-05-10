@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/ic_baseline_arrow_back_24"
                 app:tint="@color/toss_black_500" />
         </LinearLayout>
@@ -43,8 +43,8 @@
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:id="@+id/homeHeartFullChart_imageView_calendar"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
         </LinearLayout>
     </LinearLayout>
 

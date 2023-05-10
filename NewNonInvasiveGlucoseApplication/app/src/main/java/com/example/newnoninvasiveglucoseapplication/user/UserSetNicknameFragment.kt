@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetNicknameBinding
@@ -32,6 +35,18 @@ class UserSetNicknameFragment : BaseFragment<FragmentUserSetNicknameBinding>(Fra
         binding.userSetNicknameEditTextNickname.textChanges().subscribe {
             binding.userSetNicknameBtnNext.isEnabled = it.isNotEmpty()
         }
+
+        //에딧 텍스트 키보드 완료 리스너 구현
+        binding.userSetNicknameEditTextNickname.setOnEditorActionListener(object: TextView.OnEditorActionListener {
+            //에딧 텍스트 검색 아이콘 클릭 이벤트 처리
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.userSetNicknameBtnNext.performClick()
+                    return true
+                }
+                return false
+            }
+        })
     }
 
 

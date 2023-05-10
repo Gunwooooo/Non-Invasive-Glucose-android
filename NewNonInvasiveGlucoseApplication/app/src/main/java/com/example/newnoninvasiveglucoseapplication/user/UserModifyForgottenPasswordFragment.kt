@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.CompoundButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
@@ -18,6 +21,7 @@ import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
+import com.jakewharton.rxbinding4.widget.textChanges
 import org.json.JSONObject
 import java.util.regex.Pattern
 
@@ -31,6 +35,7 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
         init()
     }
 
+    @SuppressLint("CheckResult")
     private fun init() {
         val mActivity = activity as UserActivity
         mActivity.setProgressDialogValueAndVisible(56, View.VISIBLE)
@@ -38,23 +43,23 @@ class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgo
 
         binding.userModifyForgottenPasswordBtnNext.setOnClickListener(this)
 
-        setEditTextTextChanged()
-    }
+        //에딧 텍스트 subscribe
+        binding.userModifyForgottenPasswordEditTextPassword.textChanges().subscribe { password ->
+            binding.userModifyForgottenPasswordEditTextPasswordCheck.textChanges().subscribe {
+                binding.userModifyForgottenPasswordBtnNext.isEnabled = password.isNotEmpty() && it.isNotEmpty()
+            }
+        }
 
-    private fun setEditTextTextChanged() {
-        binding.userModifyForgottenPasswordEditTextPassword.addTextChangedListener(object: TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userModifyForgottenPasswordBtnNext.isEnabled = s?.length != 0 && binding.userModifyForgottenPasswordEditTextPasswordCheck.text.isNotEmpty()
+        //에딧 텍스트 키보드 완료 리스너 구현
+        binding.userModifyForgottenPasswordEditTextPasswordCheck.setOnEditorActionListener(object: TextView.OnEditorActionListener {
+            //에딧 텍스트 검색 아이콘 클릭 이벤트 처리
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.userModifyForgottenPasswordBtnNext.performClick()
+                    return true
+                }
+                return false
             }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
-        binding.userModifyForgottenPasswordEditTextPasswordCheck.addTextChangedListener(object: TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.userModifyForgottenPasswordBtnNext.isEnabled = s?.length != 0 && binding.userModifyForgottenPasswordEditTextPassword.text.isNotEmpty()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
         })
     }
 
