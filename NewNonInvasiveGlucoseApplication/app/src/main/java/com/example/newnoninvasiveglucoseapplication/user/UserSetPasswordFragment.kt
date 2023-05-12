@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -88,7 +89,7 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
 //                    resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
 //                    return
 //                }
-
+                Log.d("로그", "UserSetPasswordFragment - onClick : AWEFAWEFAWEFAWEF")
                 _userData.password = binding.userSetPasswordEditTextPassword.text.toString()
 
                 val mActivity = activity as UserActivity
