@@ -9,25 +9,26 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.*
+import android.util.TypedValue
+import android.view.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.github.mikephil.charting.data.CandleDataSet
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.pavlospt.roundedletterview.RoundedLetterView
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.model.UserData
-import com.example.newnoninvasiveglucoseapplication.retrofit.API
 import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
+import com.example.newnoninvasiveglucoseapplication.span.GravityDotSpan
 import com.example.newnoninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
 import com.jakewharton.rxbinding4.widget.textChanges
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.wang.avi.AVLoadingIndicatorView
 import java.util.*
 
@@ -37,6 +38,9 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     private var stringData1 = ""
     private var stringData2 = ""
     private var stringData3 = ""
+
+    lateinit var calendarDay : CalendarDay
+
     private var mUserData = userData
 
     //원 버튼 다이어로그
@@ -69,6 +73,16 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     }
 
     //String을 전달하는 투 버튼 다이어로그
+    private var twoButtonWithOneCalendarDataDialogListener: TwoButtonWithOneCalendarDataDialogListener? = null
+    interface TwoButtonWithOneCalendarDataDialogListener {
+        fun onPositiveClicked(calendarDay: CalendarDay)
+        fun onNegativeClicked()
+    }
+    fun setTwoButtonWithOneCalendarDataDialogListener(customDialogListener: TwoButtonWithOneCalendarDataDialogListener) {
+        this.twoButtonWithOneCalendarDataDialogListener = customDialogListener
+    }
+
+    //String을 전달하는 투 버튼 다이어로그
     private var twoButtonWithThreeDataDialogListener: TwoButtonWithThreeDataDialogListener? = null
     interface TwoButtonWithThreeDataDialogListener {
         fun onPositiveClicked(data1: String, data2: String, data3: String)
@@ -92,7 +106,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     }
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater = requireActivity().layoutInflater
@@ -101,6 +115,8 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
 
         var positiveButton : Button? = null
         var negativeButton : Button? = null
+        var positiveTextView : TextView? = null
+        var negativeTextView : TextView? = null
         stringData1 = ""
         stringData2 = ""
         stringData3 = ""
@@ -255,9 +271,51 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                 val indicatorView = view.findViewById(R.id.commonProgressDialog_indicator) as AVLoadingIndicatorView
                 indicatorView.show()
             }
+            //달력 다이어로그
+            R.layout.common_calendar_dialog -> {
+                positiveTextView = view.findViewById(R.id.commonCalendarDialog_textView_positive) as TextView
+                negativeTextView = view.findViewById(R.id.commonCalendarDialog_textView_negative) as TextView
+                val calendarView = view.findViewById(R.id.commonCalendarDialog_calendar) as MaterialCalendarView
+
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+                //오늘 날짜 표시하기
+                calendarView.setDateSelected(CalendarDay.from(year, month + 1, dayOfMonth), true)
+
+                //calendarDay 값 오늘날짜로 초기화하기
+                calendarDay = CalendarDay.from(year, month + 1, dayOfMonth)
+
+                //선택된 날짜 반환하기
+                calendarView.setOnDateChangedListener { widget, date, selected ->
+                    calendarDay = date
+                }
+
+                //데이터 있는 부분 붉은색 점 표시하기
+                val mDayViewDecorator = object : DayViewDecorator {
+                    override fun shouldDecorate(day: CalendarDay?): Boolean {
+                        if(day!!.year == 2023 && day.month == 5 && day.day == 8)
+                             return true
+                        return false
+                    }
+
+                    override fun decorate(view: DayViewFacade?) {
+                        //캘린더에 붉은 점 표시하기
+                        val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2F, resources.displayMetrics)
+                        val padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8F, resources.displayMetrics)
+                        val gravityDotSpan = GravityDotSpan(radius, ContextCompat.getColor(mContext, R.color.circle_red_100), padding, Gravity.TOP and Gravity.END)
+                        view!!.addSpan(gravityDotSpan)
+                    }
+                }
+                calendarView.addDecorators(mDayViewDecorator)
+            }
         }
         positiveButton?.setOnClickListener(this)
         negativeButton?.setOnClickListener(this)
+        positiveTextView?.setOnClickListener(this)
+        negativeTextView?.setOnClickListener(this)
         return builder.create()
     }
 
@@ -286,20 +344,30 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
             R.id.homeProtectingDeleteDialog_btn_positive, R.id.homeProtectorDeleteDialog_btn_positive,
             R.id.homeAccountDeleteUserDialog_btn_positive, R.id.homeProtectingInfoDialog_btn_positive,
             R.id.homeAccountLogoutUserDialog_btn_positive, R.id.homeProtectorSearchInfoDialog_btn_positive,
+
             -> twoButtonDialogListener?.onPositiveClicked()
 
             //투 버튼 네가티브 리스너 연결
             R.id.homeProtectingDeleteDialog_btn_negative, R.id.homeProtectorDeleteDialog_btn_negative,
             R.id.homeAccountDeleteUserDialog_btn_negative, R.id.homeProtectingInfoDialog_btn_negative,
             R.id.homeAccountLogoutUserDialog_btn_negative, R.id.homeProtectorSearchInfoDialog_btn_negative,
+
             -> twoButtonDialogListener?.onNegativeClicked()
 
 
             //데이터 전달이 있는 투 버튼 리스너 연결
             R.id.homeAccountModifySexDialog_btn_positive, R.id.homeAccountModifyNicknameDialog_btn_positive,
+
             -> twoButtonWithOneDataDialogListener?.onPositiveClicked(stringData1)
             R.id.homeAccountModifySexDialog_btn_negative, R.id.homeAccountModifyNicknameDialog_btn_negative,
+
             -> twoButtonWithOneDataDialogListener?.onNegativeClicked()
+
+            //캘린더 데이터를 전달하는 투 버튼 리스너 연결
+            R.id.commonCalendarDialog_textView_positive,
+            -> twoButtonWithOneCalendarDataDialogListener?.onPositiveClicked(calendarDay)
+            R.id.commonCalendarDialog_textView_negative,
+            -> twoButtonWithOneCalendarDataDialogListener?.onNegativeClicked()
 
             //데이터 전달이 세 개 있는 투 버튼 리스너 연결
             R.id.homeAccountModifyPasswordDialog_btn_positive

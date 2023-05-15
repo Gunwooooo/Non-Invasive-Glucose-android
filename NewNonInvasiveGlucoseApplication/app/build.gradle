@@ -103,4 +103,7 @@ dependencies {
     //rxjava
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
+    // 확장달력 Material Calendar View
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
+
 }

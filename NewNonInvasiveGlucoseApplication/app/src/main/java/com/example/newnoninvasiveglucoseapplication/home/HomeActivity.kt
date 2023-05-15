@@ -783,8 +783,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("MissingPermission")
     override fun onDestroy() {
         super.onDestroy()
-        
-        Log.wtf("로그", "디스트로이 호출됨")
 
         //데이터 받아온 횟수 초기화
         dataCount = 0

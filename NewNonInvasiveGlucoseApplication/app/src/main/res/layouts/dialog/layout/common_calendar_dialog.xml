@@ -1,0 +1,50 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shape_white_radius_20"
+    android:padding="16dp"
+    android:backgroundTint="@color/android_blue_100">
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/commonCalendarDialog_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/commonCalendarDialog_textView_negative"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/ripple_android_blue_100_radius_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:fontFamily="@font/ps_regular"
+            android:textSize="18dp"
+            android:textColor="@color/teal_700"/>
+
+        <TextView
+            android:id="@+id/commonCalendarDialog_textView_positive"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/ripple_android_blue_100_radius_20"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:fontFamily="@font/ps_regular"
+            android:textSize="18dp"
+            android:textColor="@color/teal_700"/>
+    </LinearLayout>
+
+</LinearLayout>
