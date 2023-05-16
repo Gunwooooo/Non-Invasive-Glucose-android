@@ -79,30 +79,9 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             binding.homeThermometerFullChartBtnBack -> {
                 finish()
             }
-            //달력 다이어로그 처리
+            //달력 다이어로그 출력시키기
             binding.homeThermometerFullChartImageViewCalendar -> {
-//                CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
-                customCalendarDialog.setTwoButtonWithOneCalendarDataDialogListener(object : CustomDialogManager.TwoButtonWithOneCalendarDataDialogListener {
-                    @SuppressLint("SetTextI18n")
-                    //날짜 설정 후 데이터 가져오기
-                    override fun onPositiveClicked(calendarDay: CalendarDay) {
-                        customCalendarDialog.dismiss()
-
-                        Log.d("로그", "HomeThermometerFullChartActivity - onPositiveClicked : ${calendarDay.year} ${calendarDay.month} ${calendarDay.day}")
-                        val year = calendarDay.year
-                        val month = calendarDay.month - 1
-                        val dayOfMonth = calendarDay.day
-                        now.set(year, month, dayOfMonth)
-                        binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
-
-                        retrofitGetBodyDataAsDate(year, month, dayOfMonth)
-                    }
-
-                    override fun onNegativeClicked() {
-                        customCalendarDialog.dismiss()
-                    }
-                })
-                customCalendarDialog.show(supportFragmentManager, "common_calendar_dialog")
+                showCommonCalendarDialog()
             }
         }
     }
@@ -115,16 +94,6 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         val month = now.get(Calendar.MONTH)
         val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
         binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
-    }
-
-    //데이터피커 리스너 설정
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
-    private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
-        val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-
-        }
-        return datePickerDialogListener
     }
     
     //스와이프 리스너 설정
@@ -147,6 +116,32 @@ class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 retrofitGetBodyDataAsDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
             }
         })
+    }
+    
+    //MaterialCalendarView 다이어로그 생성
+    private fun showCommonCalendarDialog() {
+        customCalendarDialog.setTwoButtonWithOneCalendarDataDialogListener(object : CustomDialogManager.TwoButtonWithOneCalendarDataDialogListener {
+            @SuppressLint("SetTextI18n")
+            //날짜 설정 후 데이터 가져오기
+            override fun onPositiveClicked(calendarDay: CalendarDay) {
+                customCalendarDialog.dismiss()
+
+                Log.d("로그", "HomeThermometerFullChartActivity - onPositiveClicked : ${calendarDay.year} ${calendarDay.month} ${calendarDay.day}")
+                val year = calendarDay.year
+                val month = calendarDay.month - 1
+                val dayOfMonth = calendarDay.day
+                now.set(year, month, dayOfMonth)
+                binding.homeThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+
+                retrofitGetBodyDataAsDate(year, month, dayOfMonth)
+            }
+
+            override fun onNegativeClicked() {
+                customCalendarDialog.dismiss()
+            }
+        })
+        //retrofit통신으로 데이터가 있는 날짜 가져오기
+        customCalendarDialog.show(supportFragmentManager, "common_calendar_dialog")
     }
 
     //심박수 라인 데이터 생성성

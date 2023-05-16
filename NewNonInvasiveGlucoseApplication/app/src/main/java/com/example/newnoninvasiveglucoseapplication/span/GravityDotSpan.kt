@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.text.style.LineBackgroundSpan
 
+//캘린더에 데이터 있는 날짜 표시를 위한 span
 class GravityDotSpan(radius : Float, color: Int, padding : Float, gravity : Int) : LineBackgroundSpan{
     private var radius = 0f
     private var color = 0
@@ -26,10 +27,7 @@ class GravityDotSpan(radius : Float, color: Int, padding : Float, gravity : Int)
             paint.color = color
         }
 
-//        //붉은색 설정
-//        paint.color = color
-
-        //오른쪽 위에 표시점 위치시키기
+        //오른쪽 위에 표시점 위치 시키기
         canvas.drawCircle(right - radius - padding, top.toFloat(), radius, paint)
 
         paint.color = oldColor

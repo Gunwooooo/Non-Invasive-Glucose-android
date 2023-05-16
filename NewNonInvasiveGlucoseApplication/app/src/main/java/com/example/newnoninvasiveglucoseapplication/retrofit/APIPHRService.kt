@@ -194,4 +194,13 @@ interface APIPHRService {
         @Field("phoneNumber") phoneNumber: String?,
         @Field("day") day: Int?,
     ): Call<ResponseBody>
+
+    //달력에 데이터 있는 날짜를 표시하기 위해 데이터 있는 날짜 가져오기
+    @FormUrlEncoded
+    @POST("/wellink/calendar/hasDataMonth")
+    fun getDataExistDates(
+        @Field("phoneNumber") phoneNumber: String?,
+        @Field("year") year: Int?,
+        @Field("month") month: Int?,
+    ): Call<ResponseBody>
 }

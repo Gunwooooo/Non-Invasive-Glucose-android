@@ -9,12 +9,15 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.ArrayMap
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
@@ -22,22 +25,36 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.model.UserData
 import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
+import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
+import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.span.GravityDotSpan
 import com.example.newnoninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
+import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient.phoneNumber
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener
 import com.wang.avi.AVLoadingIndicatorView
+import kotlinx.coroutines.*
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Retrofit
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class CustomDialogManager(private val mContext: Context, private val layout: Int, userData: UserData?) : DialogFragment(), View.OnClickListener {
 
+//    private val customProgressDialog by lazy { CustomDialogManager(mContext, R.layout.common_progress_dialog, null) }
+
     private var stringData1 = ""
     private var stringData2 = ""
     private var stringData3 = ""
+
+    //날짜별 데이터 유무 저장할 ArrayMap 선언
+    private var hashMap: HashMap<Int, Boolean>? = HashMap()
 
     lateinit var calendarDay : CalendarDay
 
@@ -282,6 +299,8 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                 val month = calendar.get(Calendar.MONTH)
                 val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
+
+
                 //오늘 날짜 표시하기
                 calendarView.setDateSelected(CalendarDay.from(year, month + 1, dayOfMonth), true)
 
@@ -293,11 +312,21 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                     calendarDay = date
                 }
 
+                calendarView.setOnMonthChangedListener { widget, date ->
+                    //해당 년도, 월에 데이터 유무 가져오기
+                    retrofitGetDataExistDates(date.year, date.month)
+                }
+
+                //해당 월에 데이터 유무 가져오기
+                retrofitGetDataExistDates(year, month + 1)
+
                 //데이터 있는 부분 붉은색 점 표시하기
                 val mDayViewDecorator = object : DayViewDecorator {
                     override fun shouldDecorate(day: CalendarDay?): Boolean {
-                        if(day!!.year == 2023 && day.month == 5 && day.day == 8)
-                             return true
+                        //해당 날짜에 데이터가 true이면
+                        if(hashMap!![day!!.day]!!) {
+                            return true
+                        }
                         return false
                     }
 
@@ -310,6 +339,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                     }
                 }
                 calendarView.addDecorators(mDayViewDecorator)
+
             }
         }
         positiveButton?.setOnClickListener(this)
@@ -375,6 +405,34 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
             R.id.homeAccountModifyPasswordDialog_btn_negative
             -> twoButtonWithThreeDataDialogListener?.onNegativeClicked()
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private fun retrofitGetDataExistDates(year: Int, month: Int) {
+        RetrofitManager.instance.getDataExistDates(phoneNumber!!, year, month, completion = { completionResponse, response ->
+                when (completionResponse) {
+                    CompletionResponse.OK -> {
+                        //날짜별 boolean 저장할 변수 선언
+                        when (response!!.code()) {
+                            200 -> {
+                                hashMap!!.clear()
+                                //로그인 된 유저 데이터 제이슨으로 파싱하기
+                                val jsonObject = JSONObject(response.body()!!.string())
+                                //키 개수만큼 HashSet에 넣기
+                                jsonObject.keys().forEach { num ->
+                                    val bool = jsonObject.getBoolean(num)
+                                    hashMap!![num.toInt()] = bool
+                                }
+                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : hash 사이즈 : ${hashMap!!.size}")
+
+                            }
+                        }
+                    }
+                    CompletionResponse.FAIL -> {
+                        Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : 통신 실패")
+                    }
+                }
+            })
     }
 }
 
