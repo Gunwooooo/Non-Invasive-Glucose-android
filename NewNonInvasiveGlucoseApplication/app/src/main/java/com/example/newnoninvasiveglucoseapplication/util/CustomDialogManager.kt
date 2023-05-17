@@ -54,7 +54,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     private var stringData3 = ""
 
     //날짜별 데이터 유무 저장할 ArrayMap 선언
-    private var hashMap: HashMap<Int, Boolean>? = HashMap()
+    private lateinit var hashMap: HashMap<Int, Boolean>
 
     lateinit var calendarDay : CalendarDay
 
@@ -312,34 +312,14 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                     calendarDay = date
                 }
 
-                calendarView.setOnMonthChangedListener { widget, date ->
-                    //해당 년도, 월에 데이터 유무 가져오기
-                    retrofitGetDataExistDates(date.year, date.month)
-                }
-
                 //해당 월에 데이터 유무 가져오기
-                retrofitGetDataExistDates(year, month + 1)
+                retrofitGetDataExistDates(year, month + 1, calendarView)
 
-                //데이터 있는 부분 붉은색 점 표시하기
-                val mDayViewDecorator = object : DayViewDecorator {
-                    override fun shouldDecorate(day: CalendarDay?): Boolean {
-                        //해당 날짜에 데이터가 true이면
-                        if(hashMap!![day!!.day]!!) {
-                            return true
-                        }
-                        return false
-                    }
-
-                    override fun decorate(view: DayViewFacade?) {
-                        //캘린더에 붉은 점 표시하기
-                        val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2F, resources.displayMetrics)
-                        val padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8F, resources.displayMetrics)
-                        val gravityDotSpan = GravityDotSpan(radius, ContextCompat.getColor(mContext, R.color.circle_red_100), padding, Gravity.TOP and Gravity.END)
-                        view!!.addSpan(gravityDotSpan)
-                    }
-                }
-                calendarView.addDecorators(mDayViewDecorator)
-
+//                //스와이프 이벤트 설정
+//                calendarView.setOnMonthChangedListener { widget, date ->
+//                    //해당 년도, 월에 데이터 유무 가져오기
+//                    retrofitGetDataExistDates(date.year, date.month, calendarView)
+//                }
             }
         }
         positiveButton?.setOnClickListener(this)
@@ -408,23 +388,43 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    private fun retrofitGetDataExistDates(year: Int, month: Int) {
+    private fun retrofitGetDataExistDates(year: Int, month: Int, calendarView: MaterialCalendarView) {
         RetrofitManager.instance.getDataExistDates(phoneNumber!!, year, month, completion = { completionResponse, response ->
                 when (completionResponse) {
                     CompletionResponse.OK -> {
                         //날짜별 boolean 저장할 변수 선언
                         when (response!!.code()) {
                             200 -> {
-                                hashMap!!.clear()
+                                hashMap = HashMap()
                                 //로그인 된 유저 데이터 제이슨으로 파싱하기
                                 val jsonObject = JSONObject(response.body()!!.string())
                                 //키 개수만큼 HashSet에 넣기
                                 jsonObject.keys().forEach { num ->
                                     val bool = jsonObject.getBoolean(num)
-                                    hashMap!![num.toInt()] = bool
+                                    hashMap[num.toInt()] = bool
                                 }
-                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : hash 사이즈 : ${hashMap!!.size}")
+                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : hash 사이즈 : ${hashMap.size}")
 
+
+                                //데이터 있는 부분 붉은색 점 표시하기
+                                val mDayViewDecorator = object : DayViewDecorator {
+                                    override fun shouldDecorate(day: CalendarDay?): Boolean {
+                                        //해당 날짜에 데이터가 true이면
+                                        if(hashMap[day!!.day]!!) {
+                                            return true
+                                        }
+                                        return false
+                                    }
+
+                                    override fun decorate(view: DayViewFacade?) {
+                                        //캘린더에 붉은 점 표시하기
+                                        val radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2F, resources.displayMetrics)
+                                        val padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8F, resources.displayMetrics)
+                                        val gravityDotSpan = GravityDotSpan(radius, ContextCompat.getColor(mContext, R.color.circle_red_100), padding, Gravity.TOP and Gravity.END)
+                                        view!!.addSpan(gravityDotSpan)
+                                    }
+                                }
+                                calendarView.addDecorators(mDayViewDecorator)
                             }
                         }
                     }
