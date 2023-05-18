@@ -58,7 +58,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     private var stringData3 = ""
 
     //날짜별 데이터 유무 저장할 ArrayMap 선언
-    private lateinit var hashSet: HashSet<String>
+    private var hashSet: HashSet<String> = HashSet()
 
     lateinit var calendarDay : CalendarDay
 
@@ -303,26 +303,20 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                 val year = calendar.get(Calendar.YEAR)
                 val month = calendar.get(Calendar.MONTH)
                 val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-                
+
                 //오늘 날짜 표시하기
                 calendarView.setDateSelected(CalendarDay.from(year, month + 1, dayOfMonth), true)
 
                 //calendarDay 값 오늘 날짜로 초기화 하기
                 calendarDay = CalendarDay.from(year, month + 1, dayOfMonth)
 
-                //선택된 날짜 반환 하기
+                //선택된 날짜 반환 리스너
                 calendarView.setOnDateChangedListener { widget, date, selected ->
                     calendarDay = date
                 }
 
                 //해당 월에 데이터 유무 가져 오기
                 retrofitGetDataExistDates(calendarView)
-
-//                //스와이프 이벤트 설정
-//                calendarView.setOnMonthChangedListener { widget, date ->
-//                    //해당 년도, 월에 데이터 유무 가져오기
-//                    retrofitGetDataExistDates(date.year, date.month, calendarView)
-//                }
             }
         }
         positiveButton?.setOnClickListener(this)
@@ -401,7 +395,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                             200 -> {
 //                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : ${response.body()!!.string()}")
 
-                                hashSet = HashSet()
+                                hashSet.clear()
                                 //로그인 된 유저 데이터 제이슨으로 파싱하기
                                 val jsonObject = JSONObject(response.body()!!.string())
 
@@ -410,10 +404,6 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                                     val localDateString = dateTime.split('T')[0]
                                     hashSet.add(localDateString)
                                 }
-                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : hash 사이즈 : ${hashSet.size}")
-
-                                val calendar = Calendar.getInstance()
-                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : $calendar")
 
                                 //데이터 있는 부분 붉은색 점 표시하기
                                 val mDayViewDecorator = object : DayViewDecorator {
@@ -422,6 +412,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                                         val month = day.month
                                         val dayOfMonth = day.day
 
+                                        //해당 날짜가 hashSet에 있으면 점 찍기
                                         val calendar = Calendar.getInstance()
                                         calendar.set(year, month - 1, dayOfMonth)
                                         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
