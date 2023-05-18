@@ -400,8 +400,8 @@ class RetrofitManager {
     }
 
     //달력에 데이터 있는 날짜를 표시하기 위해 데이터 있는 날짜 가져오기
-    fun getDataExistDates(phoneNumber: String, year: Int, month: Int, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.getDataExistDates(phoneNumber, year, month) ?: return
+    fun getDataExistDates(phoneNumber: String, completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
+        val call = apiPHRService?.getDataExistDates(phoneNumber) ?: return
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

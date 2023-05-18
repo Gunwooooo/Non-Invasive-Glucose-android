@@ -200,7 +200,5 @@ interface APIPHRService {
     @POST("/wellink/calendar/hasDataMonth")
     fun getDataExistDates(
         @Field("phoneNumber") phoneNumber: String?,
-        @Field("year") year: Int?,
-        @Field("month") month: Int?,
     ): Call<ResponseBody>
 }

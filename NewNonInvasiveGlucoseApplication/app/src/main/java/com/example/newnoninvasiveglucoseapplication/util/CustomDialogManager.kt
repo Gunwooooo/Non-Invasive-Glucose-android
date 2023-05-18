@@ -41,6 +41,10 @@ import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Retrofit
+import java.text.Format
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -54,7 +58,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     private var stringData3 = ""
 
     //날짜별 데이터 유무 저장할 ArrayMap 선언
-    private lateinit var hashMap: HashMap<Int, Boolean>
+    private lateinit var hashSet: HashSet<String>
 
     lateinit var calendarDay : CalendarDay
 
@@ -294,26 +298,25 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
                 negativeTextView = view.findViewById(R.id.commonCalendarDialog_textView_negative) as TextView
                 val calendarView = view.findViewById(R.id.commonCalendarDialog_calendar) as MaterialCalendarView
 
+                //오늘 날짜 가져오기
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
                 val month = calendar.get(Calendar.MONTH)
                 val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-
-
-
+                
                 //오늘 날짜 표시하기
                 calendarView.setDateSelected(CalendarDay.from(year, month + 1, dayOfMonth), true)
 
-                //calendarDay 값 오늘날짜로 초기화하기
+                //calendarDay 값 오늘 날짜로 초기화 하기
                 calendarDay = CalendarDay.from(year, month + 1, dayOfMonth)
 
-                //선택된 날짜 반환하기
+                //선택된 날짜 반환 하기
                 calendarView.setOnDateChangedListener { widget, date, selected ->
                     calendarDay = date
                 }
 
-                //해당 월에 데이터 유무 가져오기
-                retrofitGetDataExistDates(year, month + 1, calendarView)
+                //해당 월에 데이터 유무 가져 오기
+                retrofitGetDataExistDates(calendarView)
 
 //                //스와이프 이벤트 설정
 //                calendarView.setOnMonthChangedListener { widget, date ->
@@ -387,30 +390,44 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    private fun retrofitGetDataExistDates(year: Int, month: Int, calendarView: MaterialCalendarView) {
-        RetrofitManager.instance.getDataExistDates(phoneNumber!!, year, month, completion = { completionResponse, response ->
+    /////////////////////////////////// ///////////////////////////////////////////////////////////
+    //데이터 있는 날짜 캘린더에 표시하기 위해 전체 날짜 데이터 유무 가져오기
+    private fun retrofitGetDataExistDates(calendarView: MaterialCalendarView) {
+        RetrofitManager.instance.getDataExistDates(phoneNumber!!, completion = { completionResponse, response ->
                 when (completionResponse) {
                     CompletionResponse.OK -> {
                         //날짜별 boolean 저장할 변수 선언
                         when (response!!.code()) {
                             200 -> {
-                                hashMap = HashMap()
+//                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : ${response.body()!!.string()}")
+
+                                hashSet = HashSet()
                                 //로그인 된 유저 데이터 제이슨으로 파싱하기
                                 val jsonObject = JSONObject(response.body()!!.string())
-                                //키 개수만큼 HashSet에 넣기
-                                jsonObject.keys().forEach { num ->
-                                    val bool = jsonObject.getBoolean(num)
-                                    hashMap[num.toInt()] = bool
-                                }
-                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : hash 사이즈 : ${hashMap.size}")
 
+                                //키 개수만큼 HashSet에 넣기
+                                jsonObject.keys().forEach { dateTime ->
+                                    val localDateString = dateTime.split('T')[0]
+                                    hashSet.add(localDateString)
+                                }
+                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : hash 사이즈 : ${hashSet.size}")
+
+                                val calendar = Calendar.getInstance()
+                                Log.d("로그", "CustomDialogManager - retrofitGetDataExistDates : $calendar")
 
                                 //데이터 있는 부분 붉은색 점 표시하기
                                 val mDayViewDecorator = object : DayViewDecorator {
                                     override fun shouldDecorate(day: CalendarDay?): Boolean {
+                                        val year = day!!.year
+                                        val month = day.month
+                                        val dayOfMonth = day.day
+
+                                        val calendar = Calendar.getInstance()
+                                        calendar.set(year, month - 1, dayOfMonth)
+                                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+
                                         //해당 날짜에 데이터가 true이면
-                                        if(hashMap[day!!.day]!!) {
+                                        if(hashSet.contains(sdf)) {
                                             return true
                                         }
                                         return false
