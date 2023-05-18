@@ -25,7 +25,7 @@ import com.example.newnoninvasiveglucoseapplication.util.NaverCloudServiceManage
 import com.jakewharton.rxbinding4.widget.textChanges
 
 class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBinding>(FragmentUserSetAuthorizationBinding::inflate), View.OnClickListener {
-    private val customProgressDialog by lazy { CustomDialogManager(requireContext(), R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(requireContext(), R.layout.common_progress_dialog, null, null) }
     private var countDownTimer: CountDownTimer? = null
 
     companion object {

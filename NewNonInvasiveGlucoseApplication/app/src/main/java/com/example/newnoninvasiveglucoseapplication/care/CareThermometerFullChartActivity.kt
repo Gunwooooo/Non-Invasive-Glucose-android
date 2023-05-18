@@ -30,6 +30,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import org.json.JSONArray
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -40,7 +41,8 @@ import kotlin.math.roundToInt
 class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityCareThermometerFullChartBinding.inflate(layoutInflater) }
 
-    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null, null) }
+    private val customCalendarDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_calendar_dialog, null, _protectingPhoneNumber) }
 
     //현재 선택된 날짜 가지고 있기
     private val now by lazy { Calendar.getInstance() }
@@ -84,7 +86,7 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
                 finish()
             }
             binding.careThermometerFullChartImageViewCalendar -> {
-                CustomDatePickerDialogManager(this).makeDatePickerDialog(setDatePickerDialogListener()).show()
+                showCommonCalendarDialog()
             }
         }
     }
@@ -105,18 +107,6 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
         val month = now.get(Calendar.MONTH)
         val dayOfMonth = now.get(Calendar.DAY_OF_MONTH)
         binding.careThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
-    }
-
-    //데이터피커 리스너 설정
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
-    private fun setDatePickerDialogListener() : DatePickerDialog.OnDateSetListener {
-        val datePickerDialogListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            now.set(year, month, dayOfMonth)
-            binding.careThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
-            retrofitGetBodyDataAsDate(year, month, dayOfMonth)
-        }
-        return datePickerDialogListener
     }
     
     //스와이프 리스너 설정
@@ -140,6 +130,32 @@ class CareThermometerFullChartActivity : AppCompatActivity(), View.OnClickListen
             }
         })
     }
+
+    //MaterialCalendarView 다이어로그 생성
+    private fun showCommonCalendarDialog() {
+        customCalendarDialog.setTwoButtonWithOneCalendarDataDialogListener(object : CustomDialogManager.TwoButtonWithOneCalendarDataDialogListener {
+            @SuppressLint("SetTextI18n")
+            //날짜 설정 후 데이터 가져오기
+            override fun onPositiveClicked(calendarDay: CalendarDay) {
+                customCalendarDialog.dismiss()
+
+                val year = calendarDay.year
+                val month = calendarDay.month - 1
+                val dayOfMonth = calendarDay.day
+                now.set(year, month, dayOfMonth)
+                binding.careThermometerFullChartTextViewDate.text = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+
+                retrofitGetBodyDataAsDate(year, month, dayOfMonth)
+            }
+
+            override fun onNegativeClicked() {
+                customCalendarDialog.dismiss()
+            }
+        })
+        //retrofit통신으로 데이터가 있는 날짜 가져오기
+        customCalendarDialog.show(supportFragmentManager, "common_calendar_dialog")
+    }
+
 
     //심박수 라인 데이터 생성성
     private fun makeThermometerSet(values : ArrayList<Entry>) : ScatterDataSet {

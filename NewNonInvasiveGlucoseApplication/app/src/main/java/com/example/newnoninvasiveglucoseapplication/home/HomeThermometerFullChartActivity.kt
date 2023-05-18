@@ -39,8 +39,8 @@ import kotlin.math.roundToInt
 class HomeThermometerFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeThermometerFullChartBinding.inflate(layoutInflater) }
 
-    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
-    private val customCalendarDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_calendar_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null, null) }
+    private val customCalendarDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_calendar_dialog, null, LoginedUserClient.phoneNumber) }
 
     //현재 선택된 날짜 가지고 있기
     private val now by lazy { Calendar.getInstance() }

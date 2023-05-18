@@ -38,7 +38,7 @@ import java.util.regex.Pattern
 
 
 class HomeAccountActivity : View.OnClickListener, BaseActivity() {
-    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null, null) }
 
     private val PERM_STORAGE = 99   //외부 저장소 권한 처리
 
@@ -119,7 +119,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //닉네임 변경 다이어로그 호출
     private fun showModifyNicknameDialog() {
-        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_nickname_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_nickname_dialog, null, null)
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 customDialog.dismiss()
@@ -143,7 +143,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
     //보호자 삭제 다이어로그 호출
     private fun showModifySexDialog() {
         Log.d("로그", "HomeAccountActivity - showModifySexDialog : 다이어로그 호출됨")
-        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_sex_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_sex_dialog, null, null)
         customDialog.setTwoButtonWithOneDataDialogListener(object : CustomDialogManager.TwoButtonWithOneDataDialogListener {
             override fun onPositiveClicked(data: String) {
                 customDialog.dismiss()
@@ -168,7 +168,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //비밀번호 변경 다이어로그 출력
     private fun showModifyPasswordDialog() {
-        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_password_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_modify_password_dialog, null, null)
         customDialog.setTwoButtonWithThreeDataDialogListener(object : CustomDialogManager.TwoButtonWithThreeDataDialogListener {
             override fun onPositiveClicked(data1: String, data2: String, data3: String) {
                 customDialog.dismiss()
@@ -205,7 +205,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //회원 탈퇴 다이어로그 출력
     private fun showDeleteUserDialog() {
-        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_delete_user_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_delete_user_dialog, null, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
             override fun onPositiveClicked() {
                 //회원탈퇴 retrofit 통신 필요
@@ -222,7 +222,7 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
 
     //로그아웃 다이어로그 출력
     private fun showLogoutUserDialog() {
-        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_logout_user_dialog, null)
+        val customDialog = CustomDialogManager(applicationContext, R.layout.home_account_logout_user_dialog, null, null)
         customDialog.setTwoButtonDialogListener(object : CustomDialogManager.TwoButtonDialogListener {
             override fun onPositiveClicked() {
                 customDialog.dismiss()

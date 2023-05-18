@@ -45,7 +45,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
     private var waitTime = 0L
 
-    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null, null) }
 
     private val glide by lazy { Glide.with(this) }
 

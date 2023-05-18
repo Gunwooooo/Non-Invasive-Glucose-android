@@ -49,9 +49,9 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-class CustomDialogManager(private val mContext: Context, private val layout: Int, userData: UserData?) : DialogFragment(), View.OnClickListener {
+class CustomDialogManager(private val mContext: Context, private val layout: Int, userData: UserData?, loginedPhoneNumber: String?) : DialogFragment(), View.OnClickListener {
 
-//    private val customProgressDialog by lazy { CustomDialogManager(mContext, R.layout.common_progress_dialog, null) }
+//    private val customProgressDialog by lazy { CustomDialogManager(mContext, R.layout.common_progress_dialog, null, null) }
 
     private var stringData1 = ""
     private var stringData2 = ""
@@ -63,6 +63,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     lateinit var calendarDay : CalendarDay
 
     private var mUserData = userData
+    private var mLoginedPhoneNumber = loginedPhoneNumber
 
     //원 버튼 다이어로그
     private var oneButtonDialogListener: OneButtonDialogListener? = null
@@ -387,7 +388,7 @@ class CustomDialogManager(private val mContext: Context, private val layout: Int
     /////////////////////////////////// ///////////////////////////////////////////////////////////
     //데이터 있는 날짜 캘린더에 표시하기 위해 전체 날짜 데이터 유무 가져오기
     private fun retrofitGetDataExistDates(calendarView: MaterialCalendarView) {
-        RetrofitManager.instance.getDataExistDates(phoneNumber!!, completion = { completionResponse, response ->
+        RetrofitManager.instance.getDataExistDates(mLoginedPhoneNumber!!, completion = { completionResponse, response ->
                 when (completionResponse) {
                     CompletionResponse.OK -> {
                         //날짜별 boolean 저장할 변수 선언

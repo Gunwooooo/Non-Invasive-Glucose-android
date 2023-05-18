@@ -38,8 +38,8 @@ import kotlin.math.roundToInt
 class HomeHeartFullChartActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeHeartFullChartBinding.inflate(layoutInflater) }
 
-    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null) }
-    private val customCalendarDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_calendar_dialog, null) }
+    private val customProgressDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_progress_dialog, null, null) }
+    private val customCalendarDialog by lazy { CustomDialogManager(applicationContext, R.layout.common_calendar_dialog, null, LoginedUserClient.phoneNumber) }
 
     private lateinit var heartScatterData : ScatterData
 
