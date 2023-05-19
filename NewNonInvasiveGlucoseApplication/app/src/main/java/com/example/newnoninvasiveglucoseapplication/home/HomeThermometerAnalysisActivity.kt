@@ -427,7 +427,12 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisThermometerAverage
+                            if(jsonArray.length() == 0) {
+                                //차트 다시 그리기
+                                binding.homeThermometerAnalysisAverageChart.clear()
+                                binding.homeThermometerAnalysisAverageChart.invalidate()
+                                return@getAnalysisThermometerAverage
+                            }
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
@@ -478,7 +483,11 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisThermometerNormal
+                            if(jsonArray.length() == 0) {
+                                binding.homeThermometerAnalysisNormalChart.clear()
+                                binding.homeThermometerAnalysisNormalChart.invalidate()
+                                return@getAnalysisThermometerNormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
@@ -516,7 +525,9 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisThermometerAbnormal
+                            if(jsonArray.length() == 0) {
+                                return@getAnalysisThermometerAbnormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0

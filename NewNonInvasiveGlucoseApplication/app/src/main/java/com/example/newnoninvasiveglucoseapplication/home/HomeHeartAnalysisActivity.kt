@@ -409,7 +409,11 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisHeartAverage
+                            if(jsonArray.length() == 0) {
+                                binding.homeHeartAnalysisAverageChart.clear()
+                                binding.homeHeartAnalysisAverageChart.invalidate()
+                                return@getAnalysisHeartAverage
+                            }
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()

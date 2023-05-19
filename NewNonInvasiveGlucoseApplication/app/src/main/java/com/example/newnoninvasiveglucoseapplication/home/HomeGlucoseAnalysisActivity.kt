@@ -475,7 +475,11 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseNormal
+                            if(jsonArray.length() == 0) {
+                                binding.homeGlucoseAnalysisNormalChart.clear()
+                                binding.homeGlucoseAnalysisNormalChart.invalidate()
+                                return@getAnalysisGlucoseNormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
