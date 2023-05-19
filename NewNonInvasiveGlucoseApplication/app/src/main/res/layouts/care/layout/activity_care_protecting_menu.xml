@@ -173,7 +173,7 @@
                 <!--                    android:layout_height="36dp"-->
                 <!--                    android:background="@drawable/background_layout_android_blue_100_radius_20">-->
                 <!--                    <LinearLayout-->
-                <!--                        android:layout_margin="4dp"-->
+                <!--                        android:layout_margin="2dp"-->
                 <!--                        android:clickable="true"-->
                 <!--                        android:focusable="true"-->
                 <!--                        android:background="@drawable/ripple_android_blue_100_radius_20"-->
@@ -211,7 +211,7 @@
                             android:background="@drawable/background_layout_white_radius_20"
                             android:layout_width="0dip">
                             <LinearLayout
-                                android:layout_margin="4dp"
+                                android:layout_margin="2dp"
                                 android:gravity="center"
                                 android:padding="24dp"
                                 android:background="@drawable/ripple_white_radius_20"
@@ -245,7 +245,7 @@
                             android:background="@drawable/background_layout_white_radius_20"
                             android:layout_width="0dip">
                             <LinearLayout
-                                android:layout_margin="4dp"
+                                android:layout_margin="2dp"
                                 android:gravity="center"
                                 android:padding="24dp"
                                 android:background="@drawable/ripple_white_radius_20"
@@ -286,7 +286,7 @@
                             android:background="@drawable/background_layout_white_radius_20"
                             android:layout_width="0dip">
                             <LinearLayout
-                                android:layout_margin="4dp"
+                                android:layout_margin="2dp"
                                 android:gravity="center"
                                 android:padding="24dp"
                                 android:background="@drawable/ripple_white_radius_20"
@@ -320,7 +320,7 @@
                             android:background="@drawable/background_layout_white_radius_20"
                             android:layout_width="0dip">
                             <LinearLayout
-                                android:layout_margin="4dp"
+                                android:layout_margin="2dp"
                                 android:gravity="center"
                                 android:padding="24dp"
                                 android:background="@drawable/ripple_white_radius_20"
@@ -361,7 +361,7 @@
                             android:background="@drawable/background_layout_white_radius_20"
                             android:layout_width="0dip">
                             <LinearLayout
-                                android:layout_margin="4dp"
+                                android:layout_margin="2dp"
                                 android:gravity="center"
                                 android:padding="24dp"
                                 android:background="@drawable/ripple_white_radius_20"
@@ -395,7 +395,7 @@
                             android:background="@drawable/background_layout_white_radius_20"
                             android:layout_width="0dip">
                             <LinearLayout
-                                android:layout_margin="4dp"
+                                android:layout_margin="2dp"
                                 android:gravity="center"
                                 android:padding="24dp"
                                 android:background="@drawable/ripple_white_radius_20"
