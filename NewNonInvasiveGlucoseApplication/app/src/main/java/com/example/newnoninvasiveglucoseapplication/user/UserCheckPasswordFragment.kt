@@ -69,8 +69,6 @@ class UserCheckPasswordFragment : BaseFragment<FragmentUserCheckPasswordBinding>
         })
     }
 
-
-
     override fun onClick(v: View?) {
         val mActivity = activity as UserActivity
         when(v) {

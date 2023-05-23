@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.*
 import android.util.Log
 import android.view.View
+import android.widget.Chronometer.OnChronometerTickListener
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -64,8 +65,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     var dataCount = 0
 
     //스레드 종료 시점 구현
-    var tryConnectCount = 0
     var stopFlag = false
+
+    //chronometer 일시정지를 위한 시간 저장 변수
+    var chronometerPauseOffset = 0L
+    var chronometerIsRunning = false
     
     //타이머 태스크 정의 (timer 새로운 객체로 생성되는 것을 방지)
     var timerTask: TimerTask = object : TimerTask() {
@@ -103,7 +107,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "SetTextI18n")
     private fun init() {
         //데이터 받아오는 횟수 초기화
         dataCount = 0
@@ -116,6 +120,18 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         setHeartLineChart()
         setGlucoseLineChart()
 
+        //chronometer 시간 형식 00:00:00으로 만들기
+        binding.homeChronometerTime.onChronometerTickListener = OnChronometerTickListener {
+            val time: Long = SystemClock.elapsedRealtime() - it.base
+            val h = (time / 3600000).toInt()
+            val m = (time - h * 3600000).toInt() / 60000
+            val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+            val hh = if (h < 10) "0$h" else h.toString() + ""
+            val mm = if (m < 10) "0$m" else m.toString() + ""
+            val ss = if (s < 10) "0$s" else s.toString() + ""
+            it.text = "$hh:$mm:$ss"
+        }
+        binding.homeChronometerTime.base = SystemClock.elapsedRealtime()
 
         //실시간 데이터 표시
         refreshRealTimeData()
@@ -209,14 +225,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             //가트 연결이 해제됐을 경우 자동으로 연결 체크
 
             if(!bluetoothGattConnected) {
-                //연결 시도 횟수 카운트
-                tryConnectCount++
-                
-                //120번 연결 시도 했으면 종료 시키고 토스트 출력
-//                if(tryConnectCount == 1000) {
-//                    Toast.makeText(applicationContext, "기기와 연결에 실패했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
-//                    stopFlag = true
-//                }
 
                 Log.d("로그", "HomeActivity - refreshRealTimeData : ####ㄴㅇㄹ##  기기명 : ${_bluetoothResultDevice} - @@ 연결 시도   #######")
                 //연결안됨 뷰 변경
@@ -248,8 +256,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             //시간 업데이트
-            val now = LocalDateTime.now()
-            binding.homeTextViewTime.text = now.format(DateTimeFormatter.ofPattern("a hh:mm"))
+//            val now = LocalDateTime.now()
+//            binding.homeTextViewTime.text = now.format(DateTimeFormatter.ofPattern("a hh:mm"))
+
         }
 
         //1초에 한번씩 찍기
@@ -282,9 +291,17 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             super.onConnectionStateChange(gatt, status, newState)
             val timer = Timer()
             //연결 시도 횟수 초기화
-            tryConnectCount = 0
             when(newState) {
                 BluetoothGatt.STATE_CONNECTED -> {
+                    //타이머 시작
+                    if(!chronometerIsRunning) {
+                        //일시정지했던 시간으로 계산
+                        binding.homeChronometerTime.base = SystemClock.elapsedRealtime() - chronometerPauseOffset
+                        binding.homeChronometerTime.start()
+                        chronometerIsRunning = true
+                    }
+
+
                     //가트 연결 상태 확인 전역 변수
                     bluetoothGattConnected = true
 
@@ -300,7 +317,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     //스레드 종료
                     stopFlag = true
 
-//                    getRealTimeThread?.interrupt()
+                    //타이머 일시정지
+                    if(chronometerIsRunning) {
+                        binding.homeChronometerTime.stop()
+                        //일시정지 한 시간 저장하기
+                        chronometerPauseOffset = SystemClock.elapsedRealtime() - binding.homeChronometerTime.base
+                        chronometerIsRunning = false
+                    }
+
 
                    //블루투스 해제
                     bluetoothGattConnected = false
@@ -330,6 +354,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             super.onServicesDiscovered(gatt, status)
             when(status) {
                 BluetoothGatt.GATT_SUCCESS -> {
+
                     Log.d("로그", "CustomBluetoothManager - onServicesDiscovered : 연결 성공함")
                     val str = gatt!!.getService(Constants.UART_UUID).getCharacteristic(Constants.TX_CHAR_UUID)
                     if (bluetoothGatt!!.setCharacteristicNotification(str, true)) {
