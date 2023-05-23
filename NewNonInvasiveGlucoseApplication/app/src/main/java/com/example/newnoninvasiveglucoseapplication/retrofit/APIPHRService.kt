@@ -32,6 +32,7 @@ interface APIPHRService {
     //로그인 된 회원 정보 조회
     @POST("/wellink/user/info")
     fun infoLoginedUser(
+        @Header("refresh_token") refreshToken : String?,
     ): Call<ResponseBody>
 
     //회원 탈퇴

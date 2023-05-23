@@ -267,9 +267,13 @@ class HomeAccountActivity : View.OnClickListener, BaseActivity() {
                             //로그인 된 유저 데이터 제이슨으로 파싱하기
                             val jsonArray = JSONArray(response.body()?.string())
                             //유저 토큰 만료 시간 저장
-                            LoginedUserClient.exp = jsonArray.getJSONObject(0).getLong("exp")
+                            LoginedUserClient.accessTokenExp = jsonArray.getJSONObject(0).getLong("exp")
+
+                            //리프레쉬 토큰 만료 시간 가져오기
+                            LoginedUserClient.refreshTokenExp = jsonArray.getJSONObject(1).getLong("exp")
+
                             //유저 개인 정보 담기
-                            val jsonObjectUser = jsonArray.getJSONObject(1)
+                            val jsonObjectUser = jsonArray.getJSONObject(2)
                             LoginedUserClient.phoneNumber = jsonObjectUser!!.getString("phoneNumber")
                             val nickname = jsonObjectUser.getString("nickname")
                             binding.homeAccountTextViewNickname.text = nickname

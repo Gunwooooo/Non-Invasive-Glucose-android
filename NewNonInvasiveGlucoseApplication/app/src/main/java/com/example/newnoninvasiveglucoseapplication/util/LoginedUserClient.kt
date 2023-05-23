@@ -6,7 +6,8 @@ import com.example.newnoninvasiveglucoseapplication.util.Constants
 object LoginedUserClient {
     var authorization: String? = ""
     var refreshToken: String? = ""
-    var exp: Long? = 0
+    var accessTokenExp: Long? = 0
+    var refreshTokenExp: Long? = 0
 //    var nickname: String? = ""
     var phoneNumber: String? = ""
 //    var sex: String? = ""

@@ -9,6 +9,7 @@ import com.example.newnoninvasiveglucoseapplication.retrofit.API.NAVER_SMS_URL
 import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
 import com.example.newnoninvasiveglucoseapplication.util.Constants.NAVER_ACCESS_KEY
 import com.example.newnoninvasiveglucoseapplication.util.Constants.NAVER_SERVICE_ID
+import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient.refreshToken
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -93,7 +94,7 @@ class RetrofitManager {
 
     //로그인 유저 데이터 가져오기
     fun infoLoginedUser(completion: (CompletionResponse, Response<ResponseBody>?) -> Unit) {
-        val call = apiPHRService?.infoLoginedUser() ?: return
+        val call = apiPHRService?.infoLoginedUser(refreshToken) ?: return
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 completion(CompletionResponse.OK, response)

@@ -60,11 +60,18 @@ object RetrofitClient {
             if(accessToken != null && accessToken != "") {
                 //헤더에 추가
                 newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
-                val expireDate = LoginedUserClient.exp?.times(1000)
+                val accessTokenExp = LoginedUserClient.accessTokenExp?.times(1000)
                 //만기일 체크
-                Log.d("로그", "RetrofitClient - getPHRServiceClient : ${System.currentTimeMillis()}  -  ${expireDate}")
-                if(System.currentTimeMillis() >= expireDate!!) {
+                Log.d("로그", "RetrofitClient - getPHRServiceClient : ${System.currentTimeMillis()}  -  ${accessTokenExp}")
+                if(System.currentTimeMillis() >= accessTokenExp!!) {
                     Log.d("로그", "RetrofitClient - getPHRServiceClient : AT토큰이 만료되었습니다!!!")
+                    //refresh token 만기 시간을 지났는지 체크하기
+                    val refreshTokenExp = LoginedUserClient.refreshTokenExp?.times(1000)
+                    if(System.currentTimeMillis() >= refreshTokenExp!!) {
+                        Log.d("로그", "RetrofitClient - getPHRServiceClient : 리프레쉬 토큰 만기됨!!!")
+                    } else {
+                        Log.d("로그", "RetrofitClient - getPHRServiceClient : 리프레쉬 토큰은 만기 안됨!!!")
+                    }
 //                    LoginedUserClient.authorization = null
                     //RT를 서버에 보내고
                     //서버에서 RT의 일치 여부 확인
@@ -73,6 +80,8 @@ object RetrofitClient {
                     //AT를 다시 newRequest에 넣기
                     //(불일치 하거나 만기일이 지났을 경우 처음 로그인 화면으로 이동)
 //                    newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()
+                } else {
+                    Log.d("로그", "RetrofitClient - getPHRServiceClient : AT토큰 만료 안됨~~")
                 }
             } else {
                 //토큰이 없는 경우
