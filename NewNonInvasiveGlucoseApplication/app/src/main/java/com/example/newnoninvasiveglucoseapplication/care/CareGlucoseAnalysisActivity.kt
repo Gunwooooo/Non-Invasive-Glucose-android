@@ -423,7 +423,11 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAverage
+                            if(jsonArray.length() == 0) {
+                                binding.careGlucoseAnalysisAverageChart.clear()
+                                binding.careGlucoseAnalysisAverageChart.invalidate()
+                                return@getAnalysisGlucoseAverage
+                            }
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
@@ -476,7 +480,11 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseNormal
+                            if(jsonArray.length() == 0) {
+                                binding.careGlucoseAnalysisNormalChart.clear()
+                                binding.careGlucoseAnalysisNormalChart.invalidate()
+                                return@getAnalysisGlucoseNormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
@@ -512,7 +520,11 @@ class CareGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAbnormal
+                            if(jsonArray.length() == 0) {
+                                binding.careGlucoseAnalysisAbnormalChart.clear()
+                                binding.careGlucoseAnalysisAbnormalChart.invalidate()
+                                return@getAnalysisGlucoseAbnormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0

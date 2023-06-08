@@ -416,7 +416,11 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisHeartAverage
+                            if(jsonArray.length() == 0) {
+                                binding.careHeartAnalysisAverageChart.clear()
+                                binding.careHeartAnalysisAverageChart.invalidate()
+                                return@getAnalysisHeartAverage
+                            }
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
@@ -469,7 +473,11 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisHeartNormal
+                            if(jsonArray.length() == 0) {
+                                binding.careHeartAnalysisNormalChart.clear()
+                                binding.careHeartAnalysisNormalChart.invalidate()
+                                return@getAnalysisHeartNormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
@@ -505,7 +513,11 @@ class CareHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisHeartAbnormal
+                            if(jsonArray.length() == 0) {
+                                binding.careHeartAnalysisAbnormalChart.clear()
+                                binding.careHeartAnalysisAbnormalChart.invalidate()
+                                return@getAnalysisHeartAbnormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0

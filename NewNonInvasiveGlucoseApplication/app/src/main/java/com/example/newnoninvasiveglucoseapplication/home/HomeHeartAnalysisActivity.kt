@@ -466,7 +466,11 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisHeartNormal
+                            if(jsonArray.length() == 0) {
+                                binding.homeHeartAnalysisNormalChart.clear()
+                                binding.homeHeartAnalysisNormalChart.invalidate()
+                                return@getAnalysisHeartNormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             //총 개수 카운트
@@ -502,7 +506,11 @@ class HomeHeartAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisHeartAbnormal
+                            if(jsonArray.length() == 0) {
+                                binding.homeHeartAnalysisAbnormalChart.clear()
+                                binding.homeHeartAnalysisAbnormalChart.invalidate()
+                                return@getAnalysisHeartAbnormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0

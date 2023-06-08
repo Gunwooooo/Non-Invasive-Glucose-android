@@ -220,6 +220,7 @@
                         android:layout_height="21dp"
                         app:tint="@color/circle_red_100" />
                     <Chronometer
+                        android:visibility="invisible"
                         android:layout_weight="1"
                         android:layout_marginStart="4dp"
                         android:id="@+id/home_chronometer_time"

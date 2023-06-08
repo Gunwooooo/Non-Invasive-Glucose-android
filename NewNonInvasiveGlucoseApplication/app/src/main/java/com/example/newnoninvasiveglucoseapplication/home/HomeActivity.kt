@@ -298,6 +298,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                         //일시정지했던 시간으로 계산
                         binding.homeChronometerTime.base = SystemClock.elapsedRealtime() - chronometerPauseOffset
                         binding.homeChronometerTime.start()
+                        binding.homeChronometerTime.visibility = View.VISIBLE
                         chronometerIsRunning = true
                     }
 

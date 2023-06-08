@@ -526,6 +526,8 @@ class HomeThermometerAnalysisActivity : AppCompatActivity(), View.OnClickListene
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
                             if(jsonArray.length() == 0) {
+                                binding.homeThermometerAnalysisAbnormalChart.clear()
+                                binding.homeThermometerAnalysisAbnormalChart.invalidate()
                                 return@getAnalysisThermometerAbnormal
                             }
 

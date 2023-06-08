@@ -422,7 +422,11 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
                             //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAverage
+                            if(jsonArray.length() == 0) {
+                                binding.homeGlucoseAnalysisAverageChart.clear()
+                                binding.homeGlucoseAnalysisAverageChart.invalidate()
+                                return@getAnalysisGlucoseAverage
+                            }
 
                             val listCandleData: ArrayList<CandleEntry> = ArrayList()
                             val listScatterData: MutableList<Entry> = ArrayList()
@@ -515,7 +519,11 @@ class HomeGlucoseAnalysisActivity : AppCompatActivity(), View.OnClickListener {
                         200 -> {
 //                            //서버에서 건강 데이터 리스트 받아오기
                             val jsonArray = JSONArray(response.body()!!.string())
-                            if(jsonArray.length() == 0) return@getAnalysisGlucoseAbnormal
+                            if(jsonArray.length() == 0) {
+                                binding.homeGlucoseAnalysisAbnormalChart.clear()
+                                binding.homeGlucoseAnalysisAbnormalChart.invalidate()
+                                return@getAnalysisGlucoseAbnormal
+                            }
 
                             val listBarData: ArrayList<BarEntry> = ArrayList()
                             var sum = 0
