@@ -67,9 +67,6 @@ class UserSetConnectDeviceFragment : BaseFragment<FragmentUserSetConnectDeviceBi
         mActivity.setProgressDialogValueAndVisible(99, View.GONE)
         mActivity.setPrevFragment(UserSetAgreementFragment())
 
-        //텍스트에 밑줄 넣기
-        binding.userSetConnectDeviceTextViewSkipConnect.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-
         binding.userSetConnectDeviceLottie.setOnClickListener(this)
         binding.userSetConnectDeviceLayoutSkipConnect.setOnClickListener(this)
 
