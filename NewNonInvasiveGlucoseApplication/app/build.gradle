@@ -85,6 +85,7 @@ dependencies {
 
     //BouncyNestedScrollView
     implementation 'com.github.valkriaine:Bouncy:2.3'
+
     //nts
     implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
 
