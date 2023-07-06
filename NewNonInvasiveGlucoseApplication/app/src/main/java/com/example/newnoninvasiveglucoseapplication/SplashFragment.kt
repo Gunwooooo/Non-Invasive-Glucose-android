@@ -7,12 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentSplashBinding
 import com.example.newnoninvasiveglucoseapplication.db.PreferenceManager
 import com.example.newnoninvasiveglucoseapplication.model.UserData
-import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL
-import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.user.UserActivity

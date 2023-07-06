@@ -65,17 +65,16 @@ object RetrofitClient {
                 Log.d("로그", "RetrofitClient - getPHRServiceClient : ${System.currentTimeMillis()}  -  ${accessTokenExp}")
                 //AT토큰 만료 체크
                 if(System.currentTimeMillis() >= accessTokenExp!!) {
-                    Log.d("로그", "RetrofitClient - getPHRServiceClient : AT토큰이 만료되었습니다!!!")
+                    Log.d("로그", "RetrofitClient - getPHRServiceClient : AT토큰이 만료되었습니다")
                     //refresh token 만기 시간을 지났는지 체크하기
                     val refreshTokenExp = LoginedUserClient.refreshTokenExp?.times(1000)
                     if(System.currentTimeMillis() >= refreshTokenExp!!) {
                         //로그아웃 하여 초기화면으로 이동
-                        val intent =
-                        Log.d("로그", "RetrofitClient - getPHRServiceClient : 리프레쉬 토큰 만기됨!!!")
+                        Log.d("로그", "RetrofitClient - getPHRServiceClient : 리프레쉬 토큰 만기됨")
                     } else {
                         //리프레쉬 토큰도 함께 보내기
                         //AT 재발급 받기
-                        Log.d("로그", "RetrofitClient - getPHRServiceClient : 리프레쉬 토큰은 만기 안됨!!!")
+                        Log.d("로그", "RetrofitClient - getPHRServiceClient : 리프레쉬 토큰은 만기 안됨")
                     }
 //                    LoginedUserClient.authorization = null
 //                    newRequest = chain.request().newBuilder().addHeader("Authorization", accessToken).build()

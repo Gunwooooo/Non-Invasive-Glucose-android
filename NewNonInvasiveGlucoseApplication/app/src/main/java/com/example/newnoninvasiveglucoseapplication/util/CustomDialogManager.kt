@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.ArrayMap
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -17,7 +16,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
@@ -29,24 +27,15 @@ import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.span.GravityDotSpan
 import com.example.newnoninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient.phoneNumber
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.OnMonthChangedListener
 import com.wang.avi.AVLoadingIndicatorView
-import kotlinx.coroutines.*
-import org.json.JSONArray
 import org.json.JSONObject
-import retrofit2.Retrofit
-import java.text.Format
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.HashMap
 
 
 class CustomDialogManager(private val mContext: Context, private val layout: Int, userData: UserData?, loginedPhoneNumber: String?) : DialogFragment(), View.OnClickListener {

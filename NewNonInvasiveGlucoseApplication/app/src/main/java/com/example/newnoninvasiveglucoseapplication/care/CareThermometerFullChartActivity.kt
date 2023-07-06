@@ -1,11 +1,9 @@
 package com.example.newnoninvasiveglucoseapplication.care
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -15,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareThermometerFullChartBinding
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeThermometerFullChartBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.*
@@ -27,8 +24,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.ScatterData
 import com.github.mikephil.charting.data.ScatterDataSet
 import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.ChartTouchListener
-import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import org.json.JSONArray

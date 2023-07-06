@@ -4,16 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetAuthorizationBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
@@ -67,14 +61,14 @@ class UserSetAuthorizationFragment : BaseFragment<FragmentUserSetAuthorizationBi
             binding.userSetAuthorizationBtnNext -> {
                 mActivity.changeFragmentTransaction(UserSetNicknameFragment())
 //                인증번호가 일치할 경우, 불일치 경우
-//                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
-//                    countDowntimer?.cancel()
-//                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
-//                    mActivity.changeFragmentTransaction(UserSetNicknameFragment())
-//                } else {
-//                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
-//                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
-//                }
+                if(smsAuthCode == binding.userSetAuthorizationEditTextInputAuthNum.text.toString()) {
+                    countDownTimer?.cancel()
+                    Toast.makeText(requireContext(), "인증을 성공했어요.", Toast.LENGTH_SHORT).show()
+                    mActivity.changeFragmentTransaction(UserSetNicknameFragment())
+                } else {
+                    Toast.makeText(requireContext(), "인증번호가 일치하지 않아요.", Toast.LENGTH_SHORT).show()
+                    binding.userSetAuthorizationEditTextInputAuthNum.setText("")
+                }
             }
 
             binding.userSetAuthorizationEditTextPhoneNumber -> {

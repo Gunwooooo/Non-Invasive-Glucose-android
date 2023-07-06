@@ -1,18 +1,13 @@
 package com.example.newnoninvasiveglucoseapplication.user
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserModifyForgottenPasswordBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
@@ -22,7 +17,6 @@ import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.jakewharton.rxbinding4.widget.textChanges
-import org.json.JSONObject
 import java.util.regex.Pattern
 
 class UserModifyForgottenPasswordFragment : BaseFragment<FragmentUserModifyForgottenPasswordBinding>(

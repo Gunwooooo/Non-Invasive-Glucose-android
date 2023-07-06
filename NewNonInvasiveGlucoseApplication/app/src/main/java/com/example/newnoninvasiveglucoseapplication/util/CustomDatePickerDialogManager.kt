@@ -2,15 +2,6 @@ package com.example.newnoninvasiveglucoseapplication.util
 
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.res.Resources.getSystem
-import android.os.Build
-import android.os.Bundle
-import android.widget.DatePicker
-import android.widget.NumberPicker
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.example.newnoninvasiveglucoseapplication.R
-import java.time.LocalDateTime
 import java.util.*
 
 class CustomDatePickerDialogManager(context: Context) {

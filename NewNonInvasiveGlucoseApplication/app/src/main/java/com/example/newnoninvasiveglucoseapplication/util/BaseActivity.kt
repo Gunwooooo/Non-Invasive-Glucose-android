@@ -1,7 +1,6 @@
 package com.example.newnoninvasiveglucoseapplication.util
 
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 

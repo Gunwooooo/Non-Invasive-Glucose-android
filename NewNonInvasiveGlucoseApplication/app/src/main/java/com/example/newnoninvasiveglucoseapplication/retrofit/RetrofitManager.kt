@@ -2,8 +2,6 @@ package com.example.newnoninvasiveglucoseapplication.retrofit
 
 import android.util.Log
 import com.example.newnoninvasiveglucoseapplication.model.BodyData
-import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.example.newnoninvasiveglucoseapplication.model.UserData
 import com.example.newnoninvasiveglucoseapplication.retrofit.API.NAVER_SMS_URL
 import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_BASE_URL

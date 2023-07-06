@@ -2,19 +2,14 @@ package com.example.newnoninvasiveglucoseapplication.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Paint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.example.newnoninvasiveglucoseapplication.R
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.DecimalFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class CustomChartManager(val context: Context) {

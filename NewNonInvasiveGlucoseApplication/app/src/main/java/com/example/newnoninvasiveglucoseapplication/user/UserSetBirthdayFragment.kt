@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetBirthdayBinding
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData

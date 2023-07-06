@@ -2,14 +2,10 @@ package com.example.newnoninvasiveglucoseapplication.user
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetNicknameBinding
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData

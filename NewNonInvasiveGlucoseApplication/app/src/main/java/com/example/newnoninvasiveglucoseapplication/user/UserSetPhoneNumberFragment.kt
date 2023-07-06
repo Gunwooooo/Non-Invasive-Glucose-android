@@ -3,9 +3,6 @@ package com.example.newnoninvasiveglucoseapplication.user
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -13,7 +10,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetPhoneNumberBinding
 import com.example.newnoninvasiveglucoseapplication.model.UserData
@@ -23,7 +19,6 @@ import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.jakewharton.rxbinding4.widget.textChanges
-import kotlinx.coroutines.CoroutineScope
 
 
 class UserSetPhoneNumberFragment : BaseFragment<FragmentUserSetPhoneNumberBinding>(FragmentUserSetPhoneNumberBinding::inflate), View.OnClickListener {

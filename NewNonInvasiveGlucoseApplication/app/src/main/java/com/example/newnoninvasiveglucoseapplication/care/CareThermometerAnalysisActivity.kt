@@ -12,12 +12,10 @@ import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareThermometerAnalysisBinding
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeThermometerAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend

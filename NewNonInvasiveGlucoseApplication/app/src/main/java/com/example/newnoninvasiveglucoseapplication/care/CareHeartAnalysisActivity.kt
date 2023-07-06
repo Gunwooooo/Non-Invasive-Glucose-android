@@ -2,22 +2,20 @@ package com.example.newnoninvasiveglucoseapplication.care
 
 import android.annotation.SuppressLint
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.care.CareProtectingMenuActivity.Companion._protectingPhoneNumber
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareHeartAnalysisBinding
-import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeHeartAnalysisBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.CandleScatterDataSet
 import com.example.newnoninvasiveglucoseapplication.util.CustomChartManager
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.gigamole.navigationtabstrip.NavigationTabStrip
 import com.github.mikephil.charting.charts.ScatterChart
 import com.github.mikephil.charting.components.Legend
@@ -30,7 +28,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import org.json.JSONArray
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt

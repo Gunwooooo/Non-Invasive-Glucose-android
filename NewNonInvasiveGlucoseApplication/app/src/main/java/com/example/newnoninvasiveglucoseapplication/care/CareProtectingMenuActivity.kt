@@ -2,21 +2,18 @@ package com.example.newnoninvasiveglucoseapplication.care
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityCareProtectingMenuBinding
-
 import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
 import com.example.newnoninvasiveglucoseapplication.retrofit.API
 import com.example.newnoninvasiveglucoseapplication.util.Constants
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import java.util.*
 
 class CareProtectingMenuActivity : AppCompatActivity(), View.OnClickListener {

@@ -2,16 +2,12 @@ package com.example.newnoninvasiveglucoseapplication.user
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetPasswordBinding
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
@@ -78,17 +74,17 @@ class UserSetPasswordFragment : BaseFragment<FragmentUserSetPasswordBinding>(Fra
     override fun onClick(v: View?) {
         when(v) {
             binding.userSetPasswordBtnNext -> {
-//                //비밀번호 일치 여부 체크
-//                if(checkPasswordNotSame()) {
-//                    resetPasswordEditTextWithToast("비밀번호가 서로 일치하지 않습니다.")
-//                    return
-//                }
-//
-//                //비밀번호 정규식 체크
-//                if(!checkPasswordRegex()) {
-//                    resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
-//                    return
-//                }
+                //비밀번호 일치 여부 체크
+                if(checkPasswordNotSame()) {
+                    resetPasswordEditTextWithToast("비밀번호가 서로 일치하지 않습니다.")
+                    return
+                }
+
+                //비밀번호 정규식 체크
+                if(!checkPasswordRegex()) {
+                    resetPasswordEditTextWithToast("영문자, 특수문자, 숫자 3개를 조합하여 8자리 이상 입력해 주세요.")
+                    return
+                }
                 Log.d("로그", "UserSetPasswordFragment - onClick : AWEFAWEFAWEFAWEF")
                 _userData.password = binding.userSetPasswordEditTextPassword.text.toString()
 

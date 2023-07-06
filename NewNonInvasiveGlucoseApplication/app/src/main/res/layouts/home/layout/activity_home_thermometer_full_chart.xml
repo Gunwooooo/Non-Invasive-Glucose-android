@@ -90,7 +90,6 @@
                 android:textSize="24dp" />
         </LinearLayout>
 
-
         <TextView
             android:gravity="bottom"
             android:id="@+id/homeThermometerFullChart_textView_date"

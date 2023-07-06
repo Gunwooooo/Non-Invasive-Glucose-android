@@ -8,18 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.github.pavlospt.roundedletterview.RoundedLetterView
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.model.ProtectorData
-import com.example.newnoninvasiveglucoseapplication.retrofit.API
 import com.example.newnoninvasiveglucoseapplication.retrofit.API.PHR_PROFILE_BASE_URL
-import com.example.newnoninvasiveglucoseapplication.util.Constants
 import com.example.newnoninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
-import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 
 class ProtectorAdapter(var context: Context, var data: ArrayList<ProtectorData>) : RecyclerView.Adapter<ProtectorAdapter.VH>() {
 

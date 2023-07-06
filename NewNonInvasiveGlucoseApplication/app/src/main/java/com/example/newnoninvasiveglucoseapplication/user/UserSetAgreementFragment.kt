@@ -6,13 +6,11 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import com.example.newnoninvasiveglucoseapplication.R
-import com.example.newnoninvasiveglucoseapplication.user.Agreement1Fragment
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserSetAgreementBinding
 import com.example.newnoninvasiveglucoseapplication.model.UserData
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
-import com.example.newnoninvasiveglucoseapplication.util.Constants
 import com.example.newnoninvasiveglucoseapplication.util.Constants._prefs
 import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager

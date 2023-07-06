@@ -2,23 +2,19 @@ package com.example.newnoninvasiveglucoseapplication.user
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.FragmentUserCheckPasswordBinding
 import com.example.newnoninvasiveglucoseapplication.retrofit.CompletionResponse
 import com.example.newnoninvasiveglucoseapplication.retrofit.RetrofitManager
 import com.example.newnoninvasiveglucoseapplication.util.BaseFragment
-import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.Constants._prefs
+import com.example.newnoninvasiveglucoseapplication.util.Constants._userData
 import com.example.newnoninvasiveglucoseapplication.util.CustomDialogManager
 import com.example.newnoninvasiveglucoseapplication.util.LoginedUserClient
 import com.jakewharton.rxbinding4.widget.textChanges

@@ -2,16 +2,12 @@ package com.example.newnoninvasiveglucoseapplication.home
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.example.newnoninvasiveglucoseapplication.R
 import com.example.newnoninvasiveglucoseapplication.databinding.ActivityHomeCropImageBinding
 import com.example.newnoninvasiveglucoseapplication.util.Constants.PROFILE_IMAGE_NAME
@@ -23,7 +19,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 
 class HomeCropImageActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivityHomeCropImageBinding.inflate(layoutInflater) }

@@ -1,11 +1,9 @@
 package com.example.newnoninvasiveglucoseapplication.util
 
 import android.content.Context
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import kotlin.math.abs
 
 abstract class OnSwipeTouchListener(context: Context?) : View.OnTouchListener {
     companion object {
